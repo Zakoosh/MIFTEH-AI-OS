@@ -1,8 +1,13 @@
 from fastapi import APIRouter
-from app.missions.mission_registry import get_project_missions
+from app.missions.mission_registry import get_project_missions, list_all_missions
 from app.missions.mission_runner import run_project_mission
 
 router = APIRouter()
+
+
+@router.get("/missions")
+def get_all_missions():
+    return list_all_missions()
 
 
 @router.get("/missions/{project_id}")

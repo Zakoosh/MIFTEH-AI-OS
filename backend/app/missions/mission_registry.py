@@ -1,4 +1,32 @@
 MISSIONS = {
+    "mifteh": {
+        "project": "MIFTEH AI OS",
+        "goal": "Build and operate the central dashboard for managing projects, agents, missions, reports, and errors.",
+        "active_missions": [
+            {
+                "id": "build-dashboard",
+                "title": "Build MIFTEH AI OS monitoring dashboard",
+                "agents": [
+                    "product/product-manager.md",
+                    "design/design-ui-designer.md",
+                    "design/design-ux-architect.md",
+                    "engineering/engineering-frontend-developer.md",
+                    "support/support-analytics-reporter.md",
+                    "specialized/agents-orchestrator.md"
+                ],
+                "output": [
+                    "dashboard structure",
+                    "UI layout",
+                    "agent activity panels",
+                    "project status widgets",
+                    "reports viewer",
+                    "error monitoring",
+                    "mission control interface"
+                ]
+            }
+        ]
+    },
+
     "yallaplays": {
         "project": "YallaPlays",
         "goal": "Continuously grow and improve the HTML5 game platform.",
@@ -112,4 +140,11 @@ def get_project_missions(project_id: str):
     return {
         "project_id": project_id,
         **MISSIONS[project_id]
+    }
+
+
+def list_all_missions():
+    return {
+        "projects_count": len(MISSIONS),
+        "projects": MISSIONS
     }

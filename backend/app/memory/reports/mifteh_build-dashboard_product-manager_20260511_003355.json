@@ -1,0 +1,11 @@
+{
+  "project_id": "mifteh",
+  "agent": "build-dashboard_product-manager",
+  "created_at": "2026-05-11T00:33:55.927192",
+  "report": {
+    "mode": "offline_mock",
+    "success": false,
+    "error": "Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}",
+    "content": "\nOFFLINE MOCK REPORT\n\nOpenAI quota/API is currently unavailable.\n\nThe system successfully:\n1. Loaded the selected agency agent\n2. Loaded project context\n3. Built the execution prompt\n4. Reached the AI execution layer\n\nNext action:\n- Fix OpenAI quota later\n- Re-run the same endpoint\n- The real agent report will replace this mock output\n\nThis confirms the MIFTEH AI OS execution pipeline is structurally working.\n"
+  }
+}
