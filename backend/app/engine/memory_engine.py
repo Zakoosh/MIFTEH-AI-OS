@@ -1,15 +1,21 @@
 import json
 from datetime import datetime
 from pathlib import Path
+import re
 
 REPORTS_DIR = Path("app/memory/reports")
+
+
+def safe_name(value: str):
+    return re.sub(r"[^a-zA-Z0-9_-]", "-", value)
 
 
 def save_agent_report(project_id: str, agent_name: str, content):
 
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
 
-    filename = f"{project_id}_{agent_name}.json"
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    filename = f"{safe_name(project_id)}_{safe_name(agent_name)}_{timestamp}.json"
 
     data = {
         "project_id": project_id,
@@ -21,7 +27,10 @@ def save_agent_report(project_id: str, agent_name: str, content):
     with open(REPORTS_DIR / filename, "w", encoding="utf-8") as file:
         json.dump(data, file, indent=2, ensure_ascii=False)
 
-    return data
+    return {
+        "file": filename,
+        **data
+    }
 
 
 def list_agent_reports():
@@ -41,6 +50,8 @@ def list_agent_reports():
             })
         except Exception:
             pass
+
+    reports.sort(key=lambda x: x.get("created_at") or "", reverse=True)
 
     return {
         "reports_count": len(reports),
