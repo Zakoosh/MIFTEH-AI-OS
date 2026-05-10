@@ -1,18 +1,16 @@
-async function loadJSON(url) {
+ï»¿async function loadJSON(url) {
     const response = await fetch(url, { cache: "no-store" });
 
     if (!response.ok) {
-        throw new Error(Request failed: );
+        throw new Error("Request failed: " + url);
     }
 
     return response.json();
 }
 
-
 function setText(id, value) {
     document.getElementById(id).innerText = value;
 }
-
 
 async function loadDashboard() {
     const feed = document.getElementById("activity-feed");
@@ -31,7 +29,7 @@ async function loadDashboard() {
 
         let missionCount = 0;
 
-        Object.values(missions.projects || {}).forEach(project => {
+        Object.values(missions.projects || {}).forEach(function(project) {
             missionCount += project.active_missions.length;
         });
 
@@ -47,18 +45,17 @@ async function loadDashboard() {
             return;
         }
 
-        reports.latest_reports.forEach(report => {
+        reports.latest_reports.forEach(function(report) {
             const item = document.createElement("div");
             item.className = "activity-item";
 
             const status = report.success ? "SUCCESS" : "FAILED / OFFLINE";
 
-            item.innerHTML = 
-                <strong></strong>
-                › 
-                <br/>
-                <small> ·  · </small>
-            ;
+            item.innerHTML =
+                "<strong>" + report.project_id + "</strong>" +
+                " -> " + report.agent +
+                "<br/>" +
+                "<small>" + status + " | " + report.mode + " | " + report.created_at + "</small>";
 
             feed.appendChild(item);
         });
@@ -66,14 +63,10 @@ async function loadDashboard() {
     } catch (error) {
         console.error(error);
 
-        feed.innerHTML = 
-            <div class='activity-item'>
-                Backend connection error. Make sure FastAPI is running on port 8000.
-            </div>
-        ;
+        feed.innerHTML =
+            "<div class='activity-item'>Backend connection error. Make sure FastAPI is running on port 8000.</div>";
     }
 }
 
 loadDashboard();
-
 setInterval(loadDashboard, 10000);
