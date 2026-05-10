@@ -26,9 +26,12 @@ def execute_single_agent(project_id: str):
     return {
         "status": "completed" if result["success"] else "offline_completed",
         "project": matched["project"],
+        "project_id": project_id,
         "agent": first_agent["name"],
         "division": first_agent["division"],
         "mode": result["mode"],
+        "success": result["success"],
+        "report_file": saved["file"],
         "saved_report": saved
     }
 
@@ -59,7 +62,7 @@ def execute_all_project_agents(project_id: str, limit: int = 3):
             "division": agent["division"],
             "mode": result["mode"],
             "success": result["success"],
-            "report_file": f"{project_id}_{agent['name']}.json"
+            "report_file": saved["file"]
         })
 
     return {
