@@ -1,7 +1,7 @@
-MISSIONS = {
+﻿MISSIONS = {
     "mifteh": {
         "project": "MIFTEH AI OS",
-        "goal": "Build and operate the central dashboard for managing projects, agents, missions, reports, and errors.",
+        "goal": "Build, monitor, and continuously improve the central AI operating dashboard.",
         "active_missions": [
             {
                 "id": "build-dashboard",
@@ -22,6 +22,31 @@ MISSIONS = {
                     "reports viewer",
                     "error monitoring",
                     "mission control interface"
+                ]
+            },
+            {
+                "id": "improve-dashboard",
+                "title": "Continuously improve dashboard design, content, commands, monitoring, and analytics",
+                "agents": [
+                    "product/product-manager.md",
+                    "design/design-ui-designer.md",
+                    "design/design-ux-architect.md",
+                    "design/design-whimsy-injector.md",
+                    "engineering/engineering-frontend-developer.md",
+                    "support/support-analytics-reporter.md",
+                    "testing/testing-reality-checker.md",
+                    "testing/testing-performance-benchmarker.md",
+                    "specialized/agents-orchestrator.md"
+                ],
+                "output": [
+                    "UI/UX improvements",
+                    "dashboard content improvements",
+                    "monitoring widgets",
+                    "agent status panels",
+                    "mission control improvements",
+                    "error and quota visibility",
+                    "performance recommendations",
+                    "implementation-ready frontend tasks"
                 ]
             }
         ]
