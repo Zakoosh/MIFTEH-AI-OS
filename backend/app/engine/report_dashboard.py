@@ -1,4 +1,4 @@
-import json
+﻿import json
 from pathlib import Path
 from collections import defaultdict
 
@@ -6,10 +6,10 @@ REPORTS_DIR = Path("app/memory/reports")
 
 
 def load_all_reports():
-
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
 
     reports = []
+    broken_files = []
 
     for file in REPORTS_DIR.glob("*.json"):
         try:
@@ -18,25 +18,31 @@ def load_all_reports():
 
             reports.append({
                 "file": file.name,
-                "project_id": data.get("project_id"),
-                "agent": data.get("agent"),
-                "created_at": data.get("created_at"),
-                "mode": report.get("mode"),
-                "success": report.get("success"),
+                "project_id": data.get("project_id", "unknown"),
+                "agent": data.get("agent", "unknown"),
+                "created_at": data.get("created_at", ""),
+                "mode": report.get("mode", "unknown"),
+                "success": bool(report.get("success", False)),
                 "error": report.get("error"),
                 "content_preview": str(report.get("content", ""))[:300]
             })
-        except Exception:
-            pass
+        except Exception as error:
+            broken_files.append({
+                "file": file.name,
+                "error": str(error)
+            })
 
     reports.sort(key=lambda x: x.get("created_at") or "", reverse=True)
 
-    return reports
+    return {
+        "reports": reports,
+        "broken_files": broken_files
+    }
 
 
 def reports_dashboard():
-
-    reports = load_all_reports()
+    loaded = load_all_reports()
+    reports = loaded["reports"]
 
     by_project = defaultdict(int)
     by_agent = defaultdict(int)
@@ -58,16 +64,18 @@ def reports_dashboard():
         "total_reports": len(reports),
         "success_count": success_count,
         "failed_count": failed_count,
+        "broken_files_count": len(loaded["broken_files"]),
+        "broken_files": loaded["broken_files"],
         "by_project": dict(by_project),
         "by_agent": dict(by_agent),
         "by_mode": dict(by_mode),
-        "latest_reports": reports[:10]
+        "latest_reports": reports[:25]
     }
 
 
 def reports_by_project(project_id: str):
-
-    reports = load_all_reports()
+    loaded = load_all_reports()
+    reports = loaded["reports"]
 
     filtered = [
         report for report in reports
@@ -82,8 +90,8 @@ def reports_by_project(project_id: str):
 
 
 def reports_by_agent(agent_name: str):
-
-    reports = load_all_reports()
+    loaded = load_all_reports()
+    reports = loaded["reports"]
 
     filtered = [
         report for report in reports

@@ -1,4 +1,4 @@
-*{
+﻿*{
     margin:0;
     padding:0;
     box-sizing:border-box;
@@ -7,7 +7,7 @@
 body{
     background:#0f172a;
     color:white;
-    font-family:Arial;
+    font-family:Arial, sans-serif;
 }
 
 .layout{
@@ -24,21 +24,28 @@ body{
 
 .sidebar h1{
     margin-bottom:30px;
+    font-size:36px;
+    line-height:1.1;
 }
 
 .menu{
     display:flex;
     flex-direction:column;
-    gap:10px;
+    gap:12px;
 }
 
 .menu button{
-    padding:14px;
+    padding:15px;
     border:none;
     background:#1e293b;
     color:white;
     cursor:pointer;
     border-radius:10px;
+    font-weight:bold;
+}
+
+.menu button:hover{
+    background:#334155;
 }
 
 .main{
@@ -54,8 +61,8 @@ body{
 }
 
 .status{
-    padding:10px 20px;
-    border-radius:20px;
+    padding:12px 25px;
+    border-radius:30px;
     font-size:14px;
 }
 
@@ -72,24 +79,59 @@ body{
 }
 
 .card{
-    background:#111827;
+    background:linear-gradient(180deg,#111827,#0b1220);
     padding:25px;
-    border-radius:15px;
+    border-radius:18px;
+    border:1px solid #1e293b;
 }
 
 .card p{
     margin-top:15px;
-    font-size:40px;
+    font-size:44px;
     font-weight:bold;
 }
 
 .panel{
     background:#111827;
     padding:25px;
-    border-radius:15px;
+    border-radius:18px;
+    border:1px solid #1e293b;
+    margin-bottom:25px;
 }
 
-.activity-item{
+.panel h3{
+    margin-bottom:20px;
+}
+
+.activity-item,
+.list-item{
     padding:15px;
     border-bottom:1px solid #1e293b;
+    line-height:1.5;
+}
+
+.badge{
+    display:inline-block;
+    padding:4px 10px;
+    border-radius:999px;
+    background:#1e293b;
+    color:#93c5fd;
+    margin-left:8px;
+    font-size:12px;
+}
+
+.error{
+    color:#fca5a5;
+}
+
+.success{
+    color:#86efac;
+}
+
+.tab{
+    display:none;
+}
+
+.tab.active{
+    display:block;
 }
