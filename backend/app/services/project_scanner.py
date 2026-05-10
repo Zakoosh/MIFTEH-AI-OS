@@ -12,6 +12,18 @@ IGNORE_DIRS = {
     "build"
 }
 
+ALLOWED_EXTENSIONS = {
+    ".html",
+    ".js",
+    ".ts",
+    ".tsx",
+    ".css",
+    ".md",
+    ".json",
+    ".py",
+    ".txt"
+}
+
 
 def scan_project(project_id: str):
 
@@ -82,4 +94,46 @@ def read_project_file(project_id: str, file_path: str):
         "project": project["name"],
         "file": file_path,
         "content": content
+    }
+
+
+def search_project(project_id: str, query: str):
+
+    if project_id not in PROJECTS:
+        return None
+
+    project = PROJECTS[project_id]
+    root_path = Path(project["path"]).resolve()
+
+    results = []
+
+    for file in root_path.rglob("*"):
+
+        if any(part in IGNORE_DIRS for part in file.parts):
+            continue
+
+        if not file.is_file():
+            continue
+
+        if file.suffix not in ALLOWED_EXTENSIONS:
+            continue
+
+        if file.stat().st_size > 300000:
+            continue
+
+        content = file.read_text(encoding="utf-8", errors="ignore")
+
+        if query.lower() in content.lower() or query.lower() in file.name.lower():
+            results.append({
+                "file": str(file.relative_to(root_path)),
+                "name": file.name,
+                "suffix": file.suffix,
+                "preview": content[:500]
+            })
+
+    return {
+        "project": project["name"],
+        "query": query,
+        "matches": len(results),
+        "results": results[:25]
     }
