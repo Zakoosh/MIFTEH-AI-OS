@@ -26,6 +26,11 @@ def get_reports_dashboard():
     return reports_dashboard()
 
 
+@router.get("/reports/summary")
+def get_reports_summary():
+    return reports_dashboard()
+
+
 @router.get("/reports/project/{project_id}")
 def get_project_reports(project_id: str):
     return reports_by_project(project_id)
