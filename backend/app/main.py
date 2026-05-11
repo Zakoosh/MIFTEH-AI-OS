@@ -13,6 +13,7 @@ from app.api.orchestrator import router as orchestrator_router
 from app.api.memory_ai import router as memory_ai_router
 from app.api.strategy import router as strategy_router
 from app.api.executive import router as executive_router
+from app.api.production import router as production_router
 from app.admin.middleware import AdminSessionMiddleware
 from app.admin.routes import router as admin_router
 
@@ -40,6 +41,7 @@ app.include_router(orchestrator_router)
 app.include_router(memory_ai_router)
 app.include_router(strategy_router)
 app.include_router(executive_router)
+app.include_router(production_router)
 app.include_router(admin_router)
 
 

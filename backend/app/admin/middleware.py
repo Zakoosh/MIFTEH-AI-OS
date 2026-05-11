@@ -6,7 +6,6 @@ from app.admin.session import validate_session_token
 
 
 PROTECTED_PREFIXES = (
-    "/admin/ai-os",
     "/admin/os",
 )
 
