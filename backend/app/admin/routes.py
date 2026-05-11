@@ -77,7 +77,7 @@ async def admin_login(request: Request):
         key=SESSION_COOKIE_NAME,
         value=create_session_token(email),
         httponly=True,
-        secure=False,
+        secure=request.url.scheme == "https",
         samesite="lax",
         max_age=60 * 60 * 8,
     )
