@@ -1,0 +1,76 @@
+{
+  "workspace_root": "/workspace",
+  "projects": [
+    {
+      "project_id": "mifteh",
+      "name": "MIFTEH-AI-OS",
+      "local_path": "/workspace/MIFTEH-AI-OS",
+      "project_type": "ai-platform",
+      "available": false,
+      "repository": {
+        "git_branch": "",
+        "git_status": "",
+        "last_commit": "",
+        "is_git_repo": false
+      },
+      "linked_agents": [],
+      "linked_missions": [
+        "build-dashboard",
+        "improve-dashboard"
+      ]
+    },
+    {
+      "project_id": "agency-agents",
+      "name": "agency-agents-main",
+      "local_path": "/workspace/agency-agents-main",
+      "project_type": "agent-library",
+      "available": true,
+      "repository": {
+        "git_branch": "",
+        "git_status": "",
+        "last_commit": "",
+        "is_git_repo": false
+      },
+      "linked_agents": [],
+      "linked_missions": []
+    },
+    {
+      "project_id": "yallaplays",
+      "name": "YallaPlays",
+      "local_path": "/workspace/YallaPlays",
+      "project_type": "game-platform",
+      "available": false,
+      "repository": {
+        "git_branch": "",
+        "git_status": "",
+        "last_commit": "",
+        "is_git_repo": false
+      },
+      "linked_agents": [],
+      "linked_missions": [
+        "create-new-games",
+        "seo-growth",
+        "performance-qa"
+      ]
+    },
+    {
+      "project_id": "fionera",
+      "name": "Fionera",
+      "local_path": "/workspace/Fionera",
+      "project_type": "investment-platform",
+      "available": false,
+      "repository": {
+        "git_branch": "",
+        "git_status": "",
+        "last_commit": "",
+        "is_git_repo": false
+      },
+      "linked_agents": [],
+      "linked_missions": [
+        "finance-intelligence",
+        "dashboard-product",
+        "security-cleanup"
+      ]
+    }
+  ]
+}
