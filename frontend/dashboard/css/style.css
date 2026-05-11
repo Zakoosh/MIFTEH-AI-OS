@@ -231,8 +231,8 @@ button{
 }
 
 .hero-card{
-    padding:30px;
-    min-height:180px;
+    padding:24px;
+    min-height:140px;
     display:flex;
     flex-direction:column;
     justify-content:center;
@@ -321,6 +321,19 @@ button{
 
 .overview-metrics-grid{
     grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+}
+
+.overview-metrics-grid .card{
+    padding:14px 16px;
+}
+
+.overview-metrics-grid .card p{
+    font-size:28px;
+    margin-top:8px;
+}
+
+.overview-metrics-grid .card small{
+    display:none;
 }
 
 .stack{
