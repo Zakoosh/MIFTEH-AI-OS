@@ -212,7 +212,7 @@ button{
 .hero-grid,
 .grid.two{
     display:grid;
-    grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);
+    grid-template-columns:minmax(0,1fr);
     gap:20px;
     margin-bottom:20px;
 }
@@ -489,10 +489,12 @@ button{
     .project-grid{
         grid-template-columns:repeat(2,minmax(0,1fr));
     }
+}
 
+@media (min-width:1500px){
     .hero-grid,
     .grid.two{
-        grid-template-columns:1fr;
+        grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);
     }
 }
 
