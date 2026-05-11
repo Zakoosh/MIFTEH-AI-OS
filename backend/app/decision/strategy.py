@@ -8,6 +8,8 @@ MISSION_AREA_KEYWORDS = {
     "security": ["security", "cleanup", "api key", "risk"],
     "analytics": ["analytics", "watchlist", "intelligence", "report"],
     "monetization": ["monetization", "growth", "revenue"],
+    "branding": ["brand", "branding", "positioning", "messaging"],
+    "conversion": ["conversion", "funnel", "landing", "acquisition"],
     "automation": ["automation", "orchestration", "mission", "agent"],
     "scalability": ["scalability", "architecture", "memory", "coordination"],
 }
@@ -22,6 +24,9 @@ def continuous_focus_areas(project_id: str) -> list[str]:
 
     if project_id == "mifteh":
         return ["automation", "scalability", "analytics", "developer experience", "security"]
+
+    if project_id == "mifteh-main-site":
+        return ["SEO", "UI/UX", "performance", "branding", "analytics", "conversion", "automation", "scalability"]
 
     return CONTINUOUS_IMPROVEMENT_AREAS
 

@@ -9,5 +9,11 @@ PROJECTS = {
         "name": "Fionera",
         "path": r"D:\Projects\fionera-main",
         "type": "investment-platform"
+    },
+
+    "mifteh-main-site": {
+        "name": "MIFTEH Main Site",
+        "path": "/workspace/mifteh-main-site",
+        "type": "business-platform"
     }
 }

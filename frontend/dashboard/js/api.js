@@ -61,7 +61,12 @@
             orchestratorStatus: fetchJSON("/orchestrator/status"),
             orchestratorRecommendations: fetchJSON("/orchestrator/recommendations"),
             orchestratorCycles: fetchJSON("/orchestrator/cycles"),
-            orchestratorTelemetry: fetchJSON("/orchestrator/telemetry")
+            orchestratorTelemetry: fetchJSON("/orchestrator/telemetry"),
+            memoryPatterns: fetchJSON("/memory-ai/patterns"),
+            memorySuccesses: fetchJSON("/memory-ai/successes"),
+            memoryFailures: fetchJSON("/memory-ai/failures"),
+            memoryRecommendations: fetchJSON("/memory-ai/recommendations"),
+            memoryHeuristics: fetchJSON("/memory-ai/heuristics")
         };
 
         const data = {};

@@ -10,9 +10,11 @@ IMPROVEMENT_AREAS = [
     "SEO",
     "UI/UX",
     "performance",
+    "branding",
     "security",
     "monetization",
     "analytics",
+    "conversion",
     "automation",
     "scalability",
 ]

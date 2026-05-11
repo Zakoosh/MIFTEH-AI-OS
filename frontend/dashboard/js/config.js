@@ -5,8 +5,10 @@ window.MIFTEH_CONFIG = {
         "UI/UX",
         "SEO",
         "performance",
+        "branding",
         "security",
         "analytics",
+        "conversion",
         "monetization",
         "automation",
         "scalability"
