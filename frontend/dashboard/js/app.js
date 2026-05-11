@@ -60,7 +60,8 @@
             "git-status-list",
             "automation-status",
             "orchestrator-status",
-            "memory-patterns"
+            "memory-patterns",
+            "strategy-overview"
         ].forEach(function(id) {
             ui.setHTML(id, "<div class='skeleton'></div><div class='skeleton'></div>");
         });

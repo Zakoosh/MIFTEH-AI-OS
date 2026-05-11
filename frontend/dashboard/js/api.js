@@ -66,7 +66,11 @@
             memorySuccesses: fetchJSON("/memory-ai/successes"),
             memoryFailures: fetchJSON("/memory-ai/failures"),
             memoryRecommendations: fetchJSON("/memory-ai/recommendations"),
-            memoryHeuristics: fetchJSON("/memory-ai/heuristics")
+            memoryHeuristics: fetchJSON("/memory-ai/heuristics"),
+            strategyOverview: fetchJSON("/strategy/overview"),
+            strategyProjects: fetchJSON("/strategy/projects"),
+            strategyRoadmaps: fetchJSON("/strategy/roadmaps"),
+            strategyOpportunities: fetchJSON("/strategy/opportunities")
         };
 
         const data = {};
