@@ -70,7 +70,12 @@
             strategyOverview: fetchJSON("/strategy/overview"),
             strategyProjects: fetchJSON("/strategy/projects"),
             strategyRoadmaps: fetchJSON("/strategy/roadmaps"),
-            strategyOpportunities: fetchJSON("/strategy/opportunities")
+            strategyOpportunities: fetchJSON("/strategy/opportunities"),
+            executiveOverview: fetchJSON("/executive/overview"),
+            executivePriorities: fetchJSON("/executive/priorities"),
+            executiveResources: fetchJSON("/executive/resources"),
+            executiveRecommendations: fetchJSON("/executive/recommendations"),
+            executiveMetrics: fetchJSON("/executive/metrics")
         };
 
         const data = {};

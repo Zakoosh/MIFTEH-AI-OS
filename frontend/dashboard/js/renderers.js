@@ -480,6 +480,95 @@
         );
     }
 
+    function renderExecutive(data) {
+        const overview = data.executiveOverview || {};
+        const priorities = data.executivePriorities || {};
+        const resources = data.executiveResources || {};
+        const recommendations = data.executiveRecommendations || {};
+        const metrics = data.executiveMetrics || {};
+
+        const overviewCards = [
+            ui.metricCard("Company Focus", overview.company_focus || "growth", "Current portfolio mode"),
+            ui.metricCard("Priority Project", overview.highest_priority_project || "none", "Executive attention"),
+            ui.metricCard("Recommendations", (overview.recommendations || []).length, "Executive actions"),
+            ui.metricCard("Priorities", (overview.priorities || []).length, "Company objectives")
+        ].join("");
+
+        const allocationRows = (resources.allocations || []).map(function(item) {
+            return ui.listItem(
+                item.project_id + " -> " + item.allocation_percent + "%",
+                item.project || "Portfolio project",
+                (item.rationale || []).slice(0, 3).map(function(reason) {
+                    return ui.chip(reason);
+                }).join(" ")
+            );
+        }).join("");
+
+        const priorityRows = (priorities.priorities || []).slice(0, 6).map(function(item) {
+            return ui.listItem(
+                item.priority,
+                item.domain + " | urgency " + item.urgency + " | impact " + item.impact,
+                item.projects.map(function(project) {
+                    return ui.chip(project);
+                }).join(" ")
+            );
+        }).join("");
+
+        ui.setHTML(
+            "executive-overview",
+            "<div class='cards'>" + overviewCards + "</div>"
+                + "<div class='section-label'>Resource Distribution</div>"
+                + (allocationRows || ui.empty("No resource allocation available."))
+                + "<div class='section-label'>Company Priorities</div>"
+                + (priorityRows || ui.empty("No company priorities available."))
+        );
+
+        const recommendationRows = (recommendations.recommendations || []).slice(0, 6).map(function(item) {
+            return ui.listItem(
+                item.executive_recommendation,
+                "impact " + item.expected_impact + " | priority " + item.priority,
+                item.projects.map(function(project) {
+                    return ui.chip(project);
+                }).join(" ")
+            );
+        }).join("");
+
+        const metricLabels = {
+            portfolio_projects: "Portfolio projects",
+            strategic_opportunities: "Strategic opportunities",
+            memory_patterns: "Memory patterns",
+            orchestrator_recommendations: "Orchestrator planning signals",
+            portfolio_risks: "Portfolio risks"
+        };
+
+        const metricRows = (metrics.metrics || []).map(function(item) {
+            const label = metricLabels[item.name] || item.name;
+            return ui.listItem(
+                label + ": " + item.value,
+                item.trend,
+                ui.escapeHTML(item.interpretation)
+            );
+        }).join("");
+
+        const memoryRows = (metrics.memory_signals || []).slice(0, 5).map(function(item) {
+            return ui.listItem(
+                item.project_id + " -> " + item.signal,
+                "confidence " + item.confidence,
+                ui.escapeHTML(item.recommendation)
+            );
+        }).join("");
+
+        ui.setHTML(
+            "executive-intelligence",
+            "<div class='section-label'>Executive Recommendations</div>"
+                + (recommendationRows || ui.empty("No executive recommendations available."))
+                + "<div class='section-label'>Memory Signals</div>"
+                + (memoryRows || ui.empty("No memory signals available."))
+                + "<div class='section-label'>Business Metrics</div>"
+                + (metricRows || ui.empty("No business metrics available."))
+        );
+    }
+
     function renderAll(data) {
         renderOverview(data);
         renderProjects(data);
@@ -491,6 +580,7 @@
         renderOrchestrator(data);
         renderMemoryAI(data);
         renderStrategy(data);
+        renderExecutive(data);
     }
 
     window.MIFTEH_RENDERERS = {

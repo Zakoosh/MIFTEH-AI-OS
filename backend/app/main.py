@@ -12,6 +12,7 @@ from app.api.decision import router as decision_router
 from app.api.orchestrator import router as orchestrator_router
 from app.api.memory_ai import router as memory_ai_router
 from app.api.strategy import router as strategy_router
+from app.api.executive import router as executive_router
 
 app = FastAPI(title="MIFTEH AI OS")
 
@@ -34,6 +35,7 @@ app.include_router(decision_router)
 app.include_router(orchestrator_router)
 app.include_router(memory_ai_router)
 app.include_router(strategy_router)
+app.include_router(executive_router)
 
 
 @app.get("/")
