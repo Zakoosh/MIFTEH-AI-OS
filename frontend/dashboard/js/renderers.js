@@ -798,6 +798,74 @@
         );
     }
 
+    function renderImprovements(data) {
+        const yalla = data.improvementsYallaPlays || {};
+        const fionera = data.improvementsFionera || {};
+        const seo = data.improvementsSeo || {};
+        const ux = data.improvementsUx || {};
+        const roadmap = data.improvementsRoadmap || {};
+
+        const yallaRows = (yalla.proposals || []).slice(0, 6).map(function(item) {
+            return ui.listItem(
+                item.project + " -> " + item.proposal,
+                item.improvement_type + " | impact " + item.expected_impact + " | effort " + item.estimated_effort,
+                ui.badge(item.priority, ui.priorityTone(item.priority))
+                    + " " + item.affected_modules.slice(0, 3).map(function(module) { return ui.chip(module); }).join(" ")
+            );
+        }).join("");
+
+        const fioneraRows = (fionera.proposals || []).slice(0, 6).map(function(item) {
+            return ui.listItem(
+                item.project + " -> " + item.proposal,
+                item.improvement_type + " | impact " + item.expected_impact + " | effort " + item.estimated_effort,
+                ui.badge(item.priority, ui.priorityTone(item.priority))
+                    + " " + item.affected_modules.slice(0, 3).map(function(module) { return ui.chip(module); }).join(" ")
+            );
+        }).join("");
+
+        ui.setHTML(
+            "improvements-projects",
+            "<div class='section-label'>YallaPlays Proposals</div>"
+                + (yallaRows || ui.empty("No YallaPlays proposals."))
+                + "<div class='section-label'>Fionera Proposals</div>"
+                + (fioneraRows || ui.empty("No Fionera proposals."))
+        );
+
+        const roadmapRows = (roadmap.roadmap || []).slice(0, 10).map(function(item) {
+            return ui.listItem(
+                "#" + item.sequence + " " + item.project + " -> " + item.proposal,
+                "impact " + item.estimated_impact + " | effort " + item.estimated_effort,
+                ui.badge(item.priority, ui.priorityTone(item.priority))
+            );
+        }).join("");
+
+        const seoRows = (seo.proposals || []).slice(0, 5).map(function(item) {
+            return ui.listItem(
+                item.project + " SEO",
+                item.proposal,
+                ui.badge(item.priority, ui.priorityTone(item.priority))
+            );
+        }).join("");
+
+        const uxRows = (ux.proposals || []).slice(0, 5).map(function(item) {
+            return ui.listItem(
+                item.project + " UX",
+                item.proposal,
+                ui.badge(item.priority, ui.priorityTone(item.priority))
+            );
+        }).join("");
+
+        ui.setHTML(
+            "improvements-roadmap",
+            "<div class='section-label'>Prioritized Roadmap</div>"
+                + (roadmapRows || ui.empty("No roadmap proposals."))
+                + "<div class='section-label'>SEO Focus</div>"
+                + (seoRows || ui.empty("No SEO proposals."))
+                + "<div class='section-label'>UX Focus</div>"
+                + (uxRows || ui.empty("No UX proposals."))
+        );
+    }
+
     function renderAll(data) {
         renderOverview(data);
         renderProjects(data);
@@ -813,6 +881,7 @@
         renderProduction(data);
         renderExecution(data);
         renderIntegration(data);
+        renderImprovements(data);
     }
 
     window.MIFTEH_RENDERERS = {

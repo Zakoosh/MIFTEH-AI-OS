@@ -89,7 +89,12 @@
             integrationYallaPlays: fetchJSON("/integration/yallaplays"),
             integrationFionera: fetchJSON("/integration/fionera"),
             integrationSeoGaps: fetchJSON("/integration/seo-gaps"),
-            integrationAssets: fetchJSON("/integration/assets")
+            integrationAssets: fetchJSON("/integration/assets"),
+            improvementsYallaPlays: fetchJSON("/improvements/yallaplays"),
+            improvementsFionera: fetchJSON("/improvements/fionera"),
+            improvementsSeo: fetchJSON("/improvements/seo"),
+            improvementsUx: fetchJSON("/improvements/ux"),
+            improvementsRoadmap: fetchJSON("/improvements/roadmap")
         };
 
         const data = {};
