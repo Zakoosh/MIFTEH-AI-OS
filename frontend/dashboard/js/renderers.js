@@ -718,6 +718,86 @@
         );
     }
 
+    function renderIntegration(data) {
+        const projects = data.integrationProjects || {};
+        const yalla = data.integrationYallaPlays || {};
+        const fionera = data.integrationFionera || {};
+        const seo = data.integrationSeoGaps || {};
+        const assets = data.integrationAssets || {};
+
+        const projectRows = (projects.projects || []).map(function(project) {
+            return ui.listItem(
+                project.project_id,
+                project.repository_available ? (project.files_scanned + " files scanned") : "repository unavailable",
+                ui.badge(project.repository_available ? "connected" : "unavailable", project.repository_available ? "success" : "warning")
+                    + " " + ui.chip(project.safe_apply_previews + " safe previews")
+            );
+        }).join("");
+
+        const yallaSummary = ui.listItem(
+            "YallaPlays",
+            (yalla.games_detected || 0) + " games detected | " + (yalla.seo_gaps || []).length + " SEO gaps",
+            (yalla.missing_categories || []).slice(0, 4).map(function(category) {
+                return ui.chip("missing " + category, "warning");
+            }).join(" ")
+        );
+
+        const fioneraSummary = ui.listItem(
+            "Fionera",
+            (fionera.watchlists_detected || 0) + " watchlists detected | " + (fionera.dashboards_detected || 0) + " dashboard files",
+            (fionera.missing_features || []).slice(0, 4).map(function(feature) {
+                return ui.chip(feature, "warning");
+            }).join(" ")
+        );
+
+        ui.setHTML(
+            "integration-projects",
+            "<div class='section-label'>Repository Projects</div>"
+                + (projectRows || ui.empty("No integration projects available."))
+                + "<div class='section-label'>Project Awareness</div>"
+                + yallaSummary
+                + fioneraSummary
+        );
+
+        const seoRows = (seo.seo_gaps || []).slice(0, 8).map(function(gap) {
+            return ui.listItem(
+                gap.project_id + " -> " + gap.page,
+                gap.issue,
+                ui.badge(gap.priority, ui.priorityTone(gap.priority))
+            );
+        }).join("");
+
+        const assetRows = (assets.assets || []).map(function(asset) {
+            return ui.listItem(
+                asset.project_id,
+                asset.images + " images | " + asset.scripts + " scripts | " + asset.stylesheets + " stylesheets",
+                ui.chip(asset.data_files + " repository data files")
+            );
+        }).join("");
+
+        const previewRows = []
+            .concat(yalla.apply_previews || [])
+            .concat(fionera.apply_previews || [])
+            .slice(0, 6)
+            .map(function(preview) {
+                return ui.listItem(
+                    preview.project_id + " -> " + preview.title,
+                    preview.operation,
+                    ui.badge(preview.destructive ? "blocked" : "safe preview", preview.destructive ? "warning" : "success")
+                );
+            }).join("");
+
+        ui.setHTML(
+            "integration-gaps",
+            "<div class='section-label'>SEO Gaps</div>"
+                + (seoRows || ui.empty("No SEO gaps detected."))
+                + "<div class='section-label'>Assets</div>"
+                + (assetRows || ui.empty("No asset data available."))
+                + "<div class='section-label'>Safe Apply Previews</div>"
+                + (previewRows || ui.empty("No safe apply previews available."))
+        );
+    }
+
     function renderAll(data) {
         renderOverview(data);
         renderProjects(data);
@@ -732,6 +812,7 @@
         renderExecutive(data);
         renderProduction(data);
         renderExecution(data);
+        renderIntegration(data);
     }
 
     window.MIFTEH_RENDERERS = {
