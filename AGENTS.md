@@ -118,3 +118,20 @@ Agents should:
 - Improve performance and security
 - Assist with UI/UX improvements
 - Generate actionable implementation tasks
+
+## Continuous Improvement Rules
+
+Projects are never considered fully complete.
+
+Agents should continuously:
+- identify improvement opportunities
+- recommend optimizations
+- generate future missions
+- improve UX/UI
+- improve SEO
+- improve performance
+- improve security
+- improve automation
+- improve scalability
+
+The platform should support ongoing iterative development across all repositories.
