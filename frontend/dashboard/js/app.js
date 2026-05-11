@@ -1,165 +1,113 @@
-﻿let cachedReports = null;
-let cachedMissions = null;
+﻿(function() {
+    const api = window.MIFTEH_API;
+    const ui = window.MIFTEH_UI;
+    const renderers = window.MIFTEH_RENDERERS;
+    const config = window.MIFTEH_CONFIG;
 
-async function loadJSON(url) {
-    const response = await fetch(url, { cache: "no-store" });
-    if (!response.ok) {
-        throw new Error("Request failed: " + url);
-    }
-    return response.json();
-}
+    let refreshTimer = null;
+    let isLoading = false;
 
-function setText(id, value) {
-    document.getElementById(id).innerText = value;
-}
-
-function showTab(tabId) {
-    document.querySelectorAll(".tab").forEach(function(tab) {
-        tab.classList.remove("active");
-    });
-
-    document.getElementById(tabId).classList.add("active");
-}
-
-function renderDashboard(reports, missions) {
-    const projectsCount = reports.by_project ? Object.keys(reports.by_project).length : 0;
-    const agentsCount = reports.by_agent ? Object.keys(reports.by_agent).length : 0;
-
-    let missionCount = 0;
-    Object.values(missions.projects || {}).forEach(function(project) {
-        missionCount += project.active_missions.length;
-    });
-
-    setText("projects-count", projectsCount);
-    setText("reports-count", reports.total_reports || 0);
-    setText("agents-count", agentsCount);
-    setText("missions-count", missionCount);
-
-    const feed = document.getElementById("activity-feed");
-    feed.innerHTML = "";
-
-    (reports.latest_reports || []).slice(0, 10).forEach(function(report) {
-        const item = document.createElement("div");
-        item.className = "activity-item";
-
-        const status = report.success ? "SUCCESS" : "FAILED / OFFLINE";
-
-        item.innerHTML =
-            "<strong>" + report.project_id + "</strong>" +
-            " -> " + report.agent +
-            "<br/>" +
-            "<small>" + status + " | " + report.mode + " | " + report.created_at + "</small>";
-
-        feed.appendChild(item);
-    });
-}
-
-function renderProjects(reports) {
-    const list = document.getElementById("projects-list");
-    list.innerHTML = "";
-
-    Object.entries(reports.by_project || {}).forEach(function(entry) {
-        const item = document.createElement("div");
-        item.className = "list-item";
-        item.innerHTML = "<strong>" + entry[0] + "</strong><span class='badge'>" + entry[1] + " reports</span>";
-        list.appendChild(item);
-    });
-}
-
-function renderMissions(missions) {
-    const list = document.getElementById("missions-list");
-    list.innerHTML = "";
-
-    Object.entries(missions.projects || {}).forEach(function(entry) {
-        const projectId = entry[0];
-        const project = entry[1];
-
-        const header = document.createElement("div");
-        header.className = "list-item";
-        header.innerHTML = "<strong>" + project.project + "</strong><br/><small>" + project.goal + "</small>";
-        list.appendChild(header);
-
-        project.active_missions.forEach(function(mission) {
-            const item = document.createElement("div");
-            item.className = "list-item";
-            item.innerHTML =
-                "<strong>" + mission.title + "</strong>" +
-                "<span class='badge'>" + mission.id + "</span>" +
-                "<br/><small>Agents: " + mission.agents.length + " | Project: " + projectId + "</small>";
-            list.appendChild(item);
+    function showTab(tabId) {
+        document.querySelectorAll(".tab").forEach(function(tab) {
+            tab.classList.remove("active");
         });
-    });
-}
 
-function renderAgents(reports) {
-    const list = document.getElementById("agents-list");
-    list.innerHTML = "";
+        document.querySelectorAll("[data-tab-target]").forEach(function(button) {
+            button.classList.toggle("active", button.dataset.tabTarget === tabId);
+        });
 
-    Object.entries(reports.by_agent || {}).forEach(function(entry) {
-        const item = document.createElement("div");
-        item.className = "list-item";
-        item.innerHTML = "<strong>" + entry[0] + "</strong><span class='badge'>" + entry[1] + " runs</span>";
-        list.appendChild(item);
-    });
-}
+        const tab = document.getElementById(tabId);
+        if (tab) {
+            tab.classList.add("active");
+        }
+    }
 
-function renderReports(reports) {
-    const list = document.getElementById("reports-list");
-    list.innerHTML = "";
+    function setRefreshState(state, message) {
+        const element = ui.byId("refresh-state");
+        if (!element) {
+            return;
+        }
 
-    (reports.latest_reports || []).forEach(function(report) {
-        const item = document.createElement("div");
-        item.className = "list-item";
-        item.innerHTML =
-            "<strong>" + report.file + "</strong>" +
-            "<br/><small>" + report.project_id + " | " + report.agent + " | " + report.mode + "</small>";
-        list.appendChild(item);
-    });
-}
+        element.className = "status " + state;
+        element.innerText = message;
+    }
 
-function renderErrors(reports) {
-    const list = document.getElementById("errors-list");
-    list.innerHTML = "";
+    function setGlobalError(message) {
+        const element = ui.byId("global-error");
+        if (!element) {
+            return;
+        }
 
-    if (reports.broken_files_count > 0) {
-        reports.broken_files.forEach(function(file) {
-            const item = document.createElement("div");
-            item.className = "list-item error";
-            item.innerHTML = "<strong>" + file.file + "</strong><br/><small>" + file.error + "</small>";
-            list.appendChild(item);
+        if (!message) {
+            element.classList.add("hidden");
+            element.innerText = "";
+            return;
+        }
+
+        element.classList.remove("hidden");
+        element.innerText = message;
+    }
+
+    function renderSkeletons() {
+        [
+            "overview-metrics",
+            "projects-grid",
+            "mission-priorities",
+            "decisions-list",
+            "reports-list",
+            "git-status-list",
+            "automation-status"
+        ].forEach(function(id) {
+            ui.setHTML(id, "<div class='skeleton'></div><div class='skeleton'></div>");
         });
     }
 
-    (reports.latest_reports || []).filter(function(report) {
-        return !report.success;
-    }).forEach(function(report) {
-        const item = document.createElement("div");
-        item.className = "list-item error";
-        item.innerHTML =
-            "<strong>" + report.project_id + " -> " + report.agent + "</strong>" +
-            "<br/><small>" + report.mode + " | " + report.created_at + "</small>";
-        list.appendChild(item);
-    });
-}
+    async function refreshDashboard() {
+        if (isLoading) {
+            return;
+        }
 
-async function loadDashboard() {
-    try {
-        cachedReports = await loadJSON("http://127.0.0.1:8000/reports/summary");
-        cachedMissions = await loadJSON("http://127.0.0.1:8000/missions");
+        isLoading = true;
+        setRefreshState("loading", "SYNCING");
+        setGlobalError("");
 
-        renderDashboard(cachedReports, cachedMissions);
-        renderProjects(cachedReports);
-        renderMissions(cachedMissions);
-        renderAgents(cachedReports);
-        renderReports(cachedReports);
-        renderErrors(cachedReports);
-
-    } catch (error) {
-        console.error(error);
-        document.getElementById("activity-feed").innerHTML =
-            "<div class='activity-item'>Backend connection error. Make sure FastAPI is running on port 8000.</div>";
+        try {
+            const data = await api.loadCommandCenterData();
+            renderers.renderAll(data);
+            setRefreshState("online", "LIVE");
+        } catch (error) {
+            console.error(error);
+            setRefreshState("error", "DEGRADED");
+            setGlobalError("Backend connection error. Make sure FastAPI is running on port 8000 and the Intelligence/Decision layers are available.");
+        } finally {
+            isLoading = false;
+        }
     }
-}
 
-loadDashboard();
-setInterval(loadDashboard, 10000);
+    function bindNavigation() {
+        document.querySelectorAll("[data-tab-target]").forEach(function(button) {
+            button.addEventListener("click", function() {
+                showTab(button.dataset.tabTarget);
+            });
+        });
+    }
+
+    function startAutoRefresh() {
+        if (refreshTimer) {
+            clearInterval(refreshTimer);
+        }
+
+        refreshTimer = setInterval(refreshDashboard, config.refreshMs);
+    }
+
+    function initDashboard() {
+        bindNavigation();
+        ui.byId("refresh-button").addEventListener("click", refreshDashboard);
+        renderSkeletons();
+        refreshDashboard();
+        startAutoRefresh();
+    }
+
+    window.showTab = showTab;
+    document.addEventListener("DOMContentLoaded", initDashboard);
+})();
