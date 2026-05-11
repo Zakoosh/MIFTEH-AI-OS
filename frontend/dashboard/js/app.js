@@ -61,7 +61,8 @@
             "automation-status",
             "orchestrator-status",
             "memory-patterns",
-            "strategy-overview"
+            "strategy-overview",
+            "executive-overview"
         ].forEach(function(id) {
             ui.setHTML(id, "<div class='skeleton'></div><div class='skeleton'></div>");
         });
