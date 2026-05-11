@@ -486,10 +486,20 @@ button{
 
 .tab{
     display:none;
+    padding-bottom:40px;
 }
 
 .tab.active{
     display:block;
+}
+
+.section-label{
+    color:var(--soft);
+    font-size:13px;
+    font-weight:900;
+    letter-spacing:.12em;
+    margin:8px 0 2px;
+    text-transform:uppercase;
 }
 
 .skeleton{

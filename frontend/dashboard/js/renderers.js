@@ -375,9 +375,12 @@
 
         ui.setHTML(
             "memory-patterns",
-            (patternRows || ui.empty("No adaptive patterns detected yet."))
-                + successRows
-                + failureRows
+            "<div class='section-label'>Detected Patterns</div>"
+                + (patternRows || ui.empty("No adaptive patterns detected yet."))
+                + "<div class='section-label'>Success Memory</div>"
+                + (successRows || ui.empty("No success memory yet."))
+                + "<div class='section-label'>Failure Memory</div>"
+                + (failureRows || ui.empty("No failure memory yet."))
         );
 
         const recommendationRows = (recommendations.recommendations || []).slice(0, 8).map(function(item) {
@@ -399,8 +402,10 @@
 
         ui.setHTML(
             "memory-recommendations",
-            (recommendationRows || ui.empty("No adaptive recommendations yet."))
-                + heuristicRows
+            "<div class='section-label'>Adaptive Recommendations</div>"
+                + (recommendationRows || ui.empty("No adaptive recommendations yet."))
+                + "<div class='section-label'>Heuristics</div>"
+                + (heuristicRows || ui.empty("No heuristics available."))
         );
     }
 

@@ -20,6 +20,8 @@
         if (tab) {
             tab.classList.add("active");
         }
+
+        window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
     function setRefreshState(state, message) {
