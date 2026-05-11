@@ -553,10 +553,10 @@
             "executive-intelligence",
             "<div class='section-label'>Executive Recommendations</div>"
                 + (recommendationRows || ui.empty("No executive recommendations available."))
-                + "<div class='section-label'>Business Metrics</div>"
-                + (metricRows || ui.empty("No business metrics available."))
                 + "<div class='section-label'>Memory Signals</div>"
                 + (memoryRows || ui.empty("No memory signals available."))
+                + "<div class='section-label'>Business Metrics</div>"
+                + (metricRows || ui.empty("No business metrics available."))
         );
     }
 
