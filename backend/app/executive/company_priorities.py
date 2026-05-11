@@ -49,8 +49,15 @@ def build_company_priorities(strategy_overview: object) -> list[CompanyPriority]
             projects=["portfolio"],
         ))
 
-    for opportunity in getattr(portfolio, "cross_project_opportunities", [])[:6] if portfolio else []:
+    business_domains = {"growth", "conversion", "SEO", "branding", "automation", "analytics", "scalability"}
+    for opportunity in getattr(portfolio, "cross_project_opportunities", []) if portfolio else []:
+        if "fail" in opportunity.opportunity.lower():
+            continue
+
         domain = opportunity.domain if opportunity.domain != "optimization" else "growth"
+        if domain not in business_domains:
+            continue
+
         urgency = round(opportunity.confidence * 100)
         impact = 85 if opportunity.priority == "high" else 65
         priorities.append(CompanyPriority(
@@ -62,7 +69,7 @@ def build_company_priorities(strategy_overview: object) -> list[CompanyPriority]
         ))
 
     priorities.sort(key=lambda item: item.urgency * 0.45 + item.impact * 0.55, reverse=True)
-    return priorities[:10]
+    return priorities[:6]
 
 
 def company_focus(priorities: list[CompanyPriority]) -> str:

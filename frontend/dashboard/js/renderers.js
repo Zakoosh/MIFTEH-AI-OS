@@ -533,9 +533,18 @@
             );
         }).join("");
 
+        const metricLabels = {
+            portfolio_projects: "Portfolio projects",
+            strategic_opportunities: "Strategic opportunities",
+            memory_patterns: "Memory patterns",
+            orchestrator_recommendations: "Orchestrator planning signals",
+            portfolio_risks: "Portfolio risks"
+        };
+
         const metricRows = (metrics.metrics || []).map(function(item) {
+            const label = metricLabels[item.name] || item.name;
             return ui.listItem(
-                item.name + ": " + item.value,
+                label + ": " + item.value,
                 item.trend,
                 ui.escapeHTML(item.interpretation)
             );
