@@ -42,3 +42,79 @@ The frontend fetches from `http://127.0.0.1:8000` — the backend must be runnin
 - Never create random agents unless explicitly required
 - Match missions to existing agent roles first
 - Prefer specialized agents over generic execution
+
+Current persistence layer uses JSON reports.
+Future roadmap may include SQLite or PostgreSQL.
+
+## AI Provider Strategy
+
+Priority order:
+1. OpenAI
+2. Gemini
+3. Offline mock mode
+
+If providers fail:
+- Save report
+- Return graceful fallback response
+- Keep pipeline operational
+
+
+## Report Rules
+
+All agents should generate structured reports.
+
+Reports should include:
+- Summary
+- Findings
+- Risks
+- Suggested actions
+- Priority level
+
+
+
+## Mission Workflow
+
+Standard execution flow:
+
+1. Scan project
+2. Detect issues
+3. Match suitable agents
+4. Generate reports
+5. Generate safe actions
+6. Preview changes
+7. Apply approved changes
+8. Save reports
+
+
+## Active Projects
+
+### MIFTEH AI OS
+AI orchestration platform.
+
+### YallaPlays
+HTML5 gaming platform focused on SEO, performance, and monetization.
+
+### Fionera
+Finance and investment dashboard focused on analytics, charts, and security.
+
+
+## Safe File Modification Rules
+
+- Prefer `replace_in_file` operations over rewriting full files
+- Never modify `.env` files
+- Never expose secrets, API keys, or tokens
+- Never delete important project files automatically
+- Always preview risky changes before applying
+
+
+## Automation Goal
+
+The long-term goal is continuous autonomous project improvement.
+
+Agents should:
+- Monitor projects continuously
+- Detect improvements automatically
+- Suggest safe code changes
+- Improve performance and security
+- Assist with UI/UX improvements
+- Generate actionable implementation tasks
