@@ -642,6 +642,82 @@
         );
     }
 
+    function renderExecution(data) {
+        const pipelines = data.executionPipelines || {};
+        const previews = data.executionPreviews || {};
+        const validations = data.executionValidation || {};
+        const history = data.executionHistory || {};
+
+        const pipelineCards = [
+            ui.metricCard("Pipelines", (pipelines.pipelines || []).length, "Controlled execution"),
+            ui.metricCard("Previews", (previews.previews || []).length, "Generated"),
+            ui.metricCard("Validated", (validations.validations || []).filter(function(item) { return item.validated; }).length, "Ready checks"),
+            ui.metricCard("History", (history.executions || []).length, "Recorded runs")
+        ].join("");
+
+        const pipelineRows = (pipelines.pipelines || []).map(function(pipeline) {
+            return ui.listItem(
+                pipeline.pipeline,
+                pipeline.project_id + " | " + pipeline.description,
+                ui.badge("preview required", "warning")
+                    + " " + ui.badge(pipeline.deployment_allowed ? "deploy allowed" : "no deploy", pipeline.deployment_allowed ? "warning" : "success")
+            );
+        }).join("");
+
+        const scheduleRows = (pipelines.scheduler_candidates || []).slice(0, 5).map(function(item) {
+            return ui.listItem(
+                item.pipeline,
+                item.recommended_cadence + " | " + item.scheduler_mode,
+                ui.chip("manual apply required")
+            );
+        }).join("");
+
+        ui.setHTML(
+            "execution-pipelines",
+            "<div class='cards'>" + pipelineCards + "</div>"
+                + "<div class='section-label'>Execution Pipelines</div>"
+                + (pipelineRows || ui.empty("No execution pipelines available."))
+                + "<div class='section-label'>Scheduling Bridge</div>"
+                + (scheduleRows || ui.empty("No scheduler candidates available."))
+        );
+
+        const previewRows = (previews.previews || []).map(function(preview) {
+            const validation = preview.validation || {};
+            return ui.listItem(
+                preview.pipeline,
+                preview.summary,
+                ui.badge(validation.ready_for_apply ? "ready for apply" : "review", validation.ready_for_apply ? "success" : "warning")
+                    + " " + ui.chip(preview.items.length + " items")
+            );
+        }).join("");
+
+        const validationRows = (validations.validations || []).map(function(validation) {
+            return ui.listItem(
+                validation.pipeline,
+                validation.validated ? "Validated with no blocking errors" : (validation.errors || []).join(", "),
+                ui.badge(validation.ready_for_apply ? "ready" : "blocked", validation.ready_for_apply ? "success" : "warning")
+            );
+        }).join("");
+
+        const historyRows = (history.executions || []).slice(0, 5).map(function(entry) {
+            return ui.listItem(
+                entry.pipeline,
+                entry.created_at + " | " + entry.project_id,
+                ui.badge(entry.ready_for_apply ? "ready" : entry.status, entry.ready_for_apply ? "success" : "warning")
+            );
+        }).join("");
+
+        ui.setHTML(
+            "execution-previews",
+            "<div class='section-label'>Previews</div>"
+                + (previewRows || ui.empty("No execution previews available."))
+                + "<div class='section-label'>Validation</div>"
+                + (validationRows || ui.empty("No validation results available."))
+                + "<div class='section-label'>Execution History</div>"
+                + (historyRows || ui.empty("No execution history yet."))
+        );
+    }
+
     function renderAll(data) {
         renderOverview(data);
         renderProjects(data);
@@ -655,6 +731,7 @@
         renderStrategy(data);
         renderExecutive(data);
         renderProduction(data);
+        renderExecution(data);
     }
 
     window.MIFTEH_RENDERERS = {

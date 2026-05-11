@@ -63,7 +63,8 @@
             "memory-patterns",
             "strategy-overview",
             "executive-overview",
-            "production-overview"
+            "production-overview",
+            "execution-pipelines"
         ].forEach(function(id) {
             ui.setHTML(id, "<div class='skeleton'></div><div class='skeleton'></div>");
         });
