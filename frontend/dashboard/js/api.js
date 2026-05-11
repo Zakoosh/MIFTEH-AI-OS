@@ -75,7 +75,12 @@
             executivePriorities: fetchJSON("/executive/priorities"),
             executiveResources: fetchJSON("/executive/resources"),
             executiveRecommendations: fetchJSON("/executive/recommendations"),
-            executiveMetrics: fetchJSON("/executive/metrics")
+            executiveMetrics: fetchJSON("/executive/metrics"),
+            productionOverview: fetchJSON("/production/overview"),
+            productionYallaGames: fetchJSON("/production/yallaplays/games"),
+            productionYallaSeo: fetchJSON("/production/yallaplays/seo"),
+            productionFioneraInsights: fetchJSON("/production/fionera/insights"),
+            productionMiftehRecommendations: fetchJSON("/production/mifteh/recommendations")
         };
 
         const data = {};

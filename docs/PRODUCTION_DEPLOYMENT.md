@@ -5,7 +5,6 @@
 For the current production phase, MIFTEH AI OS should be embedded inside the existing MIFTEH Admin Panel instead of deployed as a standalone platform.
 
 Target routes:
-- `mifteh.com/admin/ai-os`
 - `mifteh.com/admin/os`
 
 The admin panel becomes the unified AI-powered operations center for:
@@ -21,7 +20,7 @@ The admin panel becomes the unified AI-powered operations center for:
 
 The AI OS dashboard remains modular and portable:
 - Dashboard assets stay in `frontend/dashboard/`.
-- The backend serves protected admin routes from `/admin/ai-os/` and `/admin/os/`.
+- The backend serves the protected admin route from `/admin/os/`.
 - The dashboard API base URL resolves to the same origin in admin production and to `http://127.0.0.1:8000` on the local static dev server.
 - Future standalone deployment to Vercel, Railway, or another host remains possible because the dashboard is still isolated from admin-specific implementation details.
 
@@ -47,9 +46,6 @@ Rules:
 ## Route protection
 
 Protected routes:
-- `/admin/ai-os`
-- `/admin/ai-os/`
-- `/admin/ai-os/*`
 - `/admin/os`
 - `/admin/os/`
 - `/admin/os/*`
@@ -76,8 +72,7 @@ Future extensions should add:
 
 The existing admin sidebar should add an AI OS navigation item:
 - Label: `AI OS`
-- Target: `/admin/ai-os`
-- Alternate target: `/admin/os`
+- Target: `/admin/os`
 
 The embedded dashboard should preserve MIFTEH branding and continue to expose:
 - System Overview
@@ -103,10 +98,10 @@ Keep deployment modular:
 ## Validation checklist
 
 Before production release:
-- Unauthenticated `/admin/ai-os/` redirects to `/admin/login`.
+- Unauthenticated `/admin/os/` redirects to `/admin/login`.
 - Invalid login is rejected.
 - Valid environment-configured login sets an HTTP-only session cookie.
-- Authenticated `/admin/ai-os/` loads the dashboard.
+- Authenticated `/admin/os/` loads the dashboard.
 - `/admin/session` reports session state.
 - Dashboard API calls work from the admin route.
 - Existing local static dashboard still works.

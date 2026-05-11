@@ -569,6 +569,79 @@
         );
     }
 
+    function renderProduction(data) {
+        const overview = data.productionOverview || {};
+        const yallaGames = data.productionYallaGames || {};
+        const yallaSeo = data.productionYallaSeo || {};
+        const fionera = data.productionFioneraInsights || {};
+        const mifteh = data.productionMiftehRecommendations || {};
+
+        const overviewCards = [
+            ui.metricCard("Mode", overview.mode || "safe preview", "Production policy"),
+            ui.metricCard("Projects", (overview.projects || []).length, "Mission targets"),
+            ui.metricCard("Apply Ready", Object.values(overview.implementation_allowed || {}).filter(Boolean).length, "YallaPlays + Fionera"),
+            ui.metricCard("Proposal Only", (overview.proposal_only || []).length, "MIFTEH Main Site")
+        ].join("");
+
+        const policyRows = Object.entries(overview.implementation_allowed || {}).map(function(entry) {
+            return ui.listItem(
+                entry[0],
+                entry[1] ? "generation + implementation allowed" : "recommendation/proposal mode only",
+                ui.badge(entry[1] ? "apply ready" : "proposal only", entry[1] ? "success" : "warning")
+            );
+        }).join("");
+
+        ui.setHTML(
+            "production-overview",
+            "<div class='cards'>" + overviewCards + "</div>"
+                + "<div class='section-label'>Execution Policy</div>"
+                + (policyRows || ui.empty("No production policy available."))
+        );
+
+        const gameRows = (yallaGames.games || []).slice(0, 4).map(function(game) {
+            return ui.listItem(
+                game.game_idea,
+                game.seo_title + " | mobile " + game.mobile_score,
+                ui.chip(game.category) + " " + ui.badge("implementation-ready", "success")
+            );
+        }).join("");
+
+        const insightRows = (fionera.insights || []).slice(0, 4).map(function(insight) {
+            return ui.listItem(
+                insight.symbol + " -> " + insight.trend,
+                insight.insight,
+                ui.badge(insight.recommended_watchlist ? "watchlist" : "monitor", insight.recommended_watchlist ? "success" : "")
+            );
+        }).join("");
+
+        const miftehRows = (mifteh.landing || []).slice(0, 4).map(function(item) {
+            return ui.listItem(
+                item.landing_recommendation,
+                item.domain + " | impact " + item.expected_impact,
+                ui.badge("proposal only", "warning")
+            );
+        }).join("");
+
+        const seoRows = (yallaSeo.seo || []).slice(0, 3).map(function(item) {
+            return ui.listItem(
+                item.page,
+                item.seo_title,
+                ui.badge(item.priority, ui.priorityTone(item.priority))
+            );
+        }).join("");
+
+        ui.setHTML(
+            "production-outputs",
+            "<div class='section-label'>YallaPlays Game + SEO Pipeline</div>"
+                + (gameRows || ui.empty("No YallaPlays game ideas."))
+                + seoRows
+                + "<div class='section-label'>Fionera Finance Insights</div>"
+                + (insightRows || ui.empty("No Fionera insights."))
+                + "<div class='section-label'>MIFTEH Proposal Mode</div>"
+                + (miftehRows || ui.empty("No MIFTEH recommendations."))
+        );
+    }
+
     function renderAll(data) {
         renderOverview(data);
         renderProjects(data);
@@ -581,6 +654,7 @@
         renderMemoryAI(data);
         renderStrategy(data);
         renderExecutive(data);
+        renderProduction(data);
     }
 
     window.MIFTEH_RENDERERS = {

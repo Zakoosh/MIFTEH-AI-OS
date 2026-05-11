@@ -72,7 +72,7 @@ async def admin_login(request: Request):
     if email != configured_email or password != configured_password:
         return HTMLResponse(_login_page("Invalid admin credentials."), status_code=401)
 
-    response = RedirectResponse(url="/admin/ai-os/", status_code=303)
+    response = RedirectResponse(url="/admin/os/", status_code=303)
     response.set_cookie(
         key=SESSION_COOKIE_NAME,
         value=create_session_token(email),
@@ -101,32 +101,14 @@ def admin_session(request: Request):
     }
 
 
-@router.get("/ai-os")
-def admin_ai_os_redirect():
-    return RedirectResponse(url="/admin/ai-os/", status_code=307)
-
-
 @router.get("/os")
 def admin_os_redirect():
     return RedirectResponse(url="/admin/os/", status_code=307)
 
 
-@router.get("/ai-os/")
-def admin_ai_os_index():
-    return FileResponse(_dashboard_file("index.html"))
-
-
 @router.get("/os/")
 def admin_os_index():
     return FileResponse(_dashboard_file("index.html"))
-
-
-@router.get("/ai-os/{asset_path:path}")
-def admin_ai_os_asset(asset_path: str):
-    file_path = _dashboard_file(asset_path)
-    if not file_path.is_file():
-        return JSONResponse(status_code=404, content={"success": False, "error": "Asset not found"})
-    return FileResponse(file_path)
 
 
 @router.get("/os/{asset_path:path}")
