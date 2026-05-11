@@ -75,6 +75,30 @@ def validate_branch_name(branch_name: str) -> str:
     return cleaned
 
 
+def validate_git_ref(ref_name: str, label: str = "ref") -> str:
+    cleaned = ref_name.strip()
+
+    if not cleaned:
+        raise GitSafetyError(f"{label} is required")
+
+    if cleaned.startswith("-") or cleaned.startswith("/") or cleaned.endswith("/"):
+        raise GitSafetyError(f"{label} has an invalid boundary character")
+
+    if cleaned.endswith(".lock"):
+        raise GitSafetyError(f"{label} cannot end with .lock")
+
+    if any(token in cleaned for token in BLOCKED_BRANCH_TOKENS):
+        raise GitSafetyError(f"{label} contains a blocked token")
+
+    if any(char in cleaned for char in BLOCKED_BRANCH_CHARS):
+        raise GitSafetyError(f"{label} contains an unsafe character")
+
+    if any(part in BLOCKED_BRANCH_PARTS for part in cleaned.split("/")):
+        raise GitSafetyError(f"{label} contains an invalid path segment")
+
+    return cleaned
+
+
 def resolve_repo_file(repo_root: Path, file_path: str) -> str:
     candidate = Path(file_path)
     absolute_path = candidate if candidate.is_absolute() else repo_root / candidate

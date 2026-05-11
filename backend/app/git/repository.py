@@ -65,6 +65,13 @@ class GitRepository:
                 success=False,
                 error="git command timed out",
             )
+        except OSError as exc:
+            return GitCommandResult(
+                command=command,
+                return_code=1,
+                success=False,
+                error=str(exc),
+            )
 
         return GitCommandResult(
             command=command,

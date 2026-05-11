@@ -2,7 +2,7 @@ from typing import Optional
 
 from app.git.models import GitBranchResult
 from app.git.repository import load_repository
-from app.git.safety import GitSafetyError, validate_branch_name
+from app.git.safety import GitSafetyError, validate_branch_name, validate_git_ref
 
 
 def create_branch(
@@ -13,12 +13,13 @@ def create_branch(
 ) -> GitBranchResult:
     try:
         safe_branch = validate_branch_name(branch_name)
+        safe_base_branch = validate_git_ref(base_branch, "base_branch") if base_branch else None
         repository = load_repository(project_id)
 
         args = ["switch", "-c", safe_branch] if checkout else ["branch", safe_branch]
 
-        if base_branch:
-            args.append(base_branch.strip())
+        if safe_base_branch:
+            args.append(safe_base_branch)
 
         result = repository.run(args)
 
@@ -27,7 +28,7 @@ def create_branch(
                 success=False,
                 project_id=project_id,
                 branch_name=safe_branch,
-                base_branch=base_branch,
+                base_branch=safe_base_branch,
                 checked_out=False,
                 error=result.error or "Unable to create branch",
             )
@@ -36,7 +37,7 @@ def create_branch(
             success=True,
             project_id=project_id,
             branch_name=safe_branch,
-            base_branch=base_branch,
+            base_branch=safe_base_branch,
             checked_out=checkout,
             repository=repository.info(),
         )

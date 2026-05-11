@@ -76,8 +76,6 @@ def generate_patch_file(
             error="No changes available for patch generation",
         )
 
-    PATCH_DIR.mkdir(parents=True, exist_ok=True)
-
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
     branch = diff_result.repository.branch if diff_result.repository else "unknown"
     filename = (
@@ -86,8 +84,20 @@ def generate_patch_file(
         f"{timestamp}.patch"
     )
     patch_path = PATCH_DIR / filename
-    patch_path.write_text(diff_result.diff, encoding="utf-8")
-    patch = _patch_file_from_path(patch_path)
+    try:
+        PATCH_DIR.mkdir(parents=True, exist_ok=True)
+        patch_path.write_text(diff_result.diff, encoding="utf-8")
+        patch = _patch_file_from_path(patch_path)
+    except OSError as exc:
+        return GitPatchResult(
+            success=False,
+            project_id=project_id,
+            repository=diff_result.repository,
+            staged=staged,
+            base_ref=base_ref,
+            patches=list_patch_files(),
+            error=str(exc),
+        )
 
     return GitPatchResult(
         success=True,
