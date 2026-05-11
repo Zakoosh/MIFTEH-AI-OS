@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>MIFTEH AI OS Command Center</title>
-    <link rel="stylesheet" href="css/style.css?v=execution-1"/>
+    <link rel="stylesheet" href="css/style.css?v=integration-1"/>
 </head>
 <body>
     <div class="layout">
@@ -31,6 +31,7 @@
                 <button data-tab-target="executive">Executive</button>
                 <button data-tab-target="production">Production</button>
                 <button data-tab-target="execution">Execution</button>
+                <button data-tab-target="integration">Repositories</button>
             </div>
 
             <div class="sidebar-note">
@@ -344,13 +345,42 @@
                     </div>
                 </div>
             </section>
+
+            <section id="integration" class="tab">
+                <div class="panel">
+                    <div class="panel-title">
+                        <div>
+                            <p class="eyebrow">Repository Intelligence</p>
+                            <h3>Real Project Integration</h3>
+                        </div>
+                        <span class="badge">Read + Preview</span>
+                    </div>
+                    <p class="muted">Read-only project awareness, SEO gap analysis, asset tracking, and safe apply previews for YallaPlays and Fionera.</p>
+                </div>
+                <div class="grid two">
+                    <div class="panel">
+                        <div class="panel-title">
+                            <h3>Repository Awareness</h3>
+                            <span class="badge">Project Scan</span>
+                        </div>
+                        <div id="integration-projects" class="stack"></div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-title">
+                            <h3>Gaps + Assets</h3>
+                            <span class="badge">Safe Apply Preview</span>
+                        </div>
+                        <div id="integration-gaps" class="stack"></div>
+                    </div>
+                </div>
+            </section>
         </main>
     </div>
 
-    <script src="js/config.js?v=execution-1"></script>
-    <script src="js/api.js?v=execution-1"></script>
-    <script src="js/components.js?v=execution-1"></script>
-    <script src="js/renderers.js?v=execution-1"></script>
-    <script src="js/app.js?v=execution-1"></script>
+    <script src="js/config.js?v=integration-1"></script>
+    <script src="js/api.js?v=integration-1"></script>
+    <script src="js/components.js?v=integration-1"></script>
+    <script src="js/renderers.js?v=integration-1"></script>
+    <script src="js/app.js?v=integration-1"></script>
 </body>
 </html>

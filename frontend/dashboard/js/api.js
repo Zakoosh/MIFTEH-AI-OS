@@ -84,7 +84,12 @@
             executionPipelines: fetchJSON("/execution/pipelines"),
             executionPreviews: fetchJSON("/execution/previews"),
             executionValidation: fetchJSON("/execution/validation"),
-            executionHistory: fetchJSON("/execution/history")
+            executionHistory: fetchJSON("/execution/history"),
+            integrationProjects: fetchJSON("/integration/projects"),
+            integrationYallaPlays: fetchJSON("/integration/yallaplays"),
+            integrationFionera: fetchJSON("/integration/fionera"),
+            integrationSeoGaps: fetchJSON("/integration/seo-gaps"),
+            integrationAssets: fetchJSON("/integration/assets")
         };
 
         const data = {};

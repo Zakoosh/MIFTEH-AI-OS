@@ -15,6 +15,7 @@ from app.api.strategy import router as strategy_router
 from app.api.executive import router as executive_router
 from app.api.production import router as production_router
 from app.api.execution import router as execution_router
+from app.api.integration import router as integration_router
 from app.admin.middleware import AdminSessionMiddleware
 from app.admin.routes import router as admin_router
 
@@ -44,6 +45,7 @@ app.include_router(strategy_router)
 app.include_router(executive_router)
 app.include_router(production_router)
 app.include_router(execution_router)
+app.include_router(integration_router)
 app.include_router(admin_router)
 
 
