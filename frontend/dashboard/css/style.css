@@ -55,6 +55,7 @@ button{
     flex-direction:column;
     gap:28px;
     z-index:10;
+    overflow-y:auto;
 }
 
 .brand{
@@ -123,12 +124,13 @@ button{
 }
 
 .sidebar-note{
-    margin-top:auto;
-    padding:16px;
+    margin-top:0;
+    padding:12px;
     border:1px solid var(--border);
     border-radius:18px;
     background:rgba(15,23,42,.75);
     line-height:1.5;
+    font-size:12px;
 }
 
 .sidebar-note strong,

@@ -402,10 +402,10 @@
 
         ui.setHTML(
             "memory-recommendations",
-            "<div class='section-label'>Adaptive Recommendations</div>"
-                + (recommendationRows || ui.empty("No adaptive recommendations yet."))
-                + "<div class='section-label'>Heuristics</div>"
+            "<div class='section-label'>Heuristics</div>"
                 + (heuristicRows || ui.empty("No heuristics available."))
+                + "<div class='section-label'>Adaptive Recommendations</div>"
+                + (recommendationRows || ui.empty("No adaptive recommendations yet."))
         );
     }
 
