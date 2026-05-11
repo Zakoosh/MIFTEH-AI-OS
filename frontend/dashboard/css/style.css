@@ -313,6 +313,7 @@ button{
 .mini-card{
     padding:16px;
     line-height:1.5;
+    overflow-wrap:anywhere;
 }
 
 .list-item,
@@ -343,6 +344,12 @@ button{
     gap:12px;
     color:var(--muted);
     font-size:14px;
+}
+
+.metric-row strong,
+.meta-row strong{
+    color:var(--text);
+    white-space:nowrap;
 }
 
 .progress{
@@ -407,6 +414,8 @@ button{
     padding:16px;
     border-radius:18px;
     background:rgba(15,23,42,.35);
+    overflow-wrap:anywhere;
+    white-space:normal;
 }
 
 .tab{
