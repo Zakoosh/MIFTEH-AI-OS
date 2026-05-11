@@ -47,12 +47,14 @@ button{
     background:rgba(9,15,28,.92);
     padding:24px;
     border-right:1px solid var(--border);
-    position:sticky;
+    position:fixed;
     top:0;
+    left:0;
     height:100vh;
     display:flex;
     flex-direction:column;
     gap:28px;
+    z-index:10;
 }
 
 .brand{
@@ -140,7 +142,7 @@ button{
     width:100%;
     padding:28px;
     max-width:1600px;
-    margin:0 auto;
+    margin:0 auto 0 292px;
 }
 
 .topbar{
@@ -531,6 +533,7 @@ button{
         width:100%;
         height:auto;
         position:relative;
+        left:auto;
     }
 
     .menu{
@@ -540,6 +543,7 @@ button{
 
     .main{
         padding:18px;
+        margin:0;
     }
 
     .topbar{
