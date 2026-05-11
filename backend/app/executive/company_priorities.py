@@ -15,6 +15,9 @@ DOMAIN_KEYWORDS = {
 
 def _domain_for_text(text: str) -> str:
     lower = text.lower()
+    if "optimization" in lower:
+        return "growth"
+
     for domain, keywords in DOMAIN_KEYWORDS.items():
         if any(keyword.lower() in lower for keyword in keywords):
             return domain
@@ -47,11 +50,12 @@ def build_company_priorities(strategy_overview: object) -> list[CompanyPriority]
         ))
 
     for opportunity in getattr(portfolio, "cross_project_opportunities", [])[:6] if portfolio else []:
+        domain = opportunity.domain if opportunity.domain != "optimization" else "growth"
         urgency = round(opportunity.confidence * 100)
         impact = 85 if opportunity.priority == "high" else 65
         priorities.append(CompanyPriority(
             priority=opportunity.opportunity,
-            domain=opportunity.domain,
+            domain=domain,
             urgency=urgency,
             impact=impact,
             projects=[opportunity.project_id],

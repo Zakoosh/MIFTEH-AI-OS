@@ -2,6 +2,9 @@ from app.executive.models import ExecutiveRecommendation
 
 
 def highest_priority_project(resource_distribution: dict[str, int], priorities: list) -> str:
+    if resource_distribution:
+        return max(resource_distribution, key=resource_distribution.get)
+
     priority_projects = [
         project
         for priority in priorities[:5]
@@ -11,9 +14,6 @@ def highest_priority_project(resource_distribution: dict[str, int], priorities: 
 
     if priority_projects:
         return priority_projects[0]
-
-    if resource_distribution:
-        return max(resource_distribution, key=resource_distribution.get)
 
     return ""
 
