@@ -76,6 +76,10 @@ def company_focus(priorities: list[CompanyPriority]) -> str:
     if not priorities:
         return "growth"
 
+    growth_domains = {"growth", "conversion", "SEO", "branding"}
+    if any(priority.domain in growth_domains for priority in priorities):
+        return "growth"
+
     domain_scores: dict[str, int] = {}
     for priority in priorities:
         domain_scores[priority.domain] = domain_scores.get(priority.domain, 0) + priority.impact + priority.urgency
