@@ -4,6 +4,7 @@ from app.missions.models import MissionRequest, MissionResult, AgentResult
 from app.missions.planner import build_execution_plan
 from app.missions.dispatcher import dispatch_agent
 from app.missions.memory import save_mission_result, load_mission_result, list_mission_history
+from app.reports.generator import generate_reports_from_mission
 
 
 def execute_mission(request: MissionRequest) -> dict:
@@ -52,8 +53,16 @@ def execute_mission(request: MissionRequest) -> dict:
 
     execution_id = save_mission_result(mission_result)
 
+    structured_reports = generate_reports_from_mission(
+        agent_results=agent_results,
+        mission_id=plan["mission_id"],
+        project_id=request.project_id,
+    )
+    report_ids = [r.report_id for r in structured_reports]
+
     return {
         "execution_id": execution_id,
+        "structured_report_ids": report_ids,
         **mission_result.model_dump(),
     }
 
