@@ -744,7 +744,7 @@
 
         const fioneraSummary = ui.listItem(
             "Fionera",
-            (fionera.watchlists_detected || 0) + " watchlists | " + (fionera.dashboards_detected || 0) + " dashboards",
+            (fionera.watchlists_detected || 0) + " watchlists detected | " + (fionera.dashboards_detected || 0) + " dashboard files",
             (fionera.missing_features || []).slice(0, 4).map(function(feature) {
                 return ui.chip(feature, "warning");
             }).join(" ")
@@ -771,7 +771,7 @@
             return ui.listItem(
                 asset.project_id,
                 asset.images + " images | " + asset.scripts + " scripts | " + asset.stylesheets + " stylesheets",
-                ui.chip(asset.data_files + " data files")
+                ui.chip(asset.data_files + " repository data files")
             );
         }).join("");
 
