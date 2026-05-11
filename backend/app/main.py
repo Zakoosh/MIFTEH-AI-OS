@@ -8,6 +8,7 @@ from app.api.missions import router as missions_router
 from app.api.registry import router as registry_router
 from app.api.mission_engine import router as mission_engine_router
 from app.api.intelligence import router as intelligence_router
+from app.api.decision import router as decision_router
 
 app = FastAPI(title="MIFTEH AI OS")
 
@@ -26,6 +27,7 @@ app.include_router(mission_engine_router)
 app.include_router(missions_router)
 app.include_router(registry_router)
 app.include_router(intelligence_router)
+app.include_router(decision_router)
 
 
 @app.get("/")
