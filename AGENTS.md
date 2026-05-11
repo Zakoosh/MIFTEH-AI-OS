@@ -123,10 +123,23 @@ Agents should:
 
 Projects are never considered fully complete.
 
+All projects should support continuous improvement cycles across:
+- UI/UX
+- SEO
+- performance
+- security
+- analytics
+- monetization
+- content
+- automation
+- developer experience
+
 Agents should continuously:
 - identify improvement opportunities
 - recommend optimizations
 - generate future missions
+- prioritize ongoing optimizations
+- track project evolution over time
 - improve UX/UI
 - improve SEO
 - improve performance
@@ -134,4 +147,10 @@ Agents should continuously:
 - improve automation
 - improve scalability
 
+Project-specific improvement examples:
+- YallaPlays: continuously add new games, improve game SEO, improve mobile UX, improve monetization, and optimize loading performance.
+- Fionera: continuously improve dashboards, finance intelligence, security posture, analytics, and watchlists.
+- MIFTEH AI OS: continuously improve orchestration, automation, mission intelligence, memory systems, and agent coordination.
+
 The platform should support ongoing iterative development across all repositories.
+The architecture should remain extensible, iterative, and optimization-oriented rather than assuming static completion states.
