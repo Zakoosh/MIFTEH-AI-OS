@@ -3,81 +3,185 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>MIFTEH AI OS</title>
+    <title>MIFTEH AI OS Command Center</title>
     <link rel="stylesheet" href="css/style.css"/>
 </head>
 <body>
     <div class="layout">
         <aside class="sidebar">
-            <h1>MIFTEH<br/>AI</h1>
+            <div class="brand">
+                <span class="brand-mark">M</span>
+                <div>
+                    <h1>MIFTEH AI</h1>
+                    <p>Command Center</p>
+                </div>
+            </div>
 
             <div class="menu">
-                <button onclick="showTab('dashboard')">Dashboard</button>
-                <button onclick="showTab('projects')">Projects</button>
-                <button onclick="showTab('missions')">Missions</button>
-                <button onclick="showTab('agents')">Agents</button>
-                <button onclick="showTab('reports')">Reports</button>
-                <button onclick="showTab('errors')">Errors</button>
+                <button class="active" data-tab-target="overview">System Overview</button>
+                <button data-tab-target="projects">Projects Monitor</button>
+                <button data-tab-target="missions">Mission Control</button>
+                <button data-tab-target="decisions">AI Decisions</button>
+                <button data-tab-target="reports">Reports Center</button>
+                <button data-tab-target="git">Git Activity</button>
+                <button data-tab-target="automation">Automation</button>
+            </div>
+
+            <div class="sidebar-note">
+                <strong>Continuous Improvement</strong>
+                <span>Projects never reach a static done state.</span>
             </div>
         </aside>
 
         <main class="main">
             <div class="topbar">
-                <h2>AI Operations Center</h2>
-                <div class="status online">SYSTEM ONLINE</div>
+                <div>
+                    <p class="eyebrow">Live AI operational control center</p>
+                    <h2>Continuous Project Orchestration</h2>
+                </div>
+                <div class="topbar-actions">
+                    <div id="refresh-state" class="status loading">SYNCING</div>
+                    <button id="refresh-button" class="ghost-button">Refresh</button>
+                </div>
             </div>
 
-            <section id="dashboard" class="tab active">
-                <div class="cards">
-                    <div class="card"><h3>Projects</h3><p id="projects-count">0</p></div>
-                    <div class="card"><h3>Reports</h3><p id="reports-count">0</p></div>
-                    <div class="card"><h3>Agents</h3><p id="agents-count">0</p></div>
-                    <div class="card"><h3>Missions</h3><p id="missions-count">0</p></div>
+            <div id="global-error" class="alert hidden"></div>
+
+            <section id="overview" class="tab active">
+                <div class="hero-grid">
+                    <div class="hero-card">
+                        <p class="eyebrow">System Overview</p>
+                        <h3 id="hero-recommendation">Loading command intelligence...</h3>
+                        <p id="hero-subtitle">Aggregating missions, reports, decisions, automation, and git signals.</p>
+                    </div>
+                    <div class="panel compact">
+                        <h3>Improvement Loop</h3>
+                        <div id="improvement-areas" class="chip-row"></div>
+                    </div>
                 </div>
 
-                <div class="panel">
-                    <h3>Recent Activity</h3>
-                    <div id="activity-feed"></div>
+                <div class="cards" id="overview-metrics"></div>
+
+                <div class="grid two">
+                    <div class="panel">
+                        <div class="panel-title">
+                            <h3>Operational Insights</h3>
+                            <span class="badge">Decision Layer</span>
+                        </div>
+                        <div id="insights-feed" class="stack"></div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-title">
+                            <h3>Recent Activity</h3>
+                            <span class="badge">Reports</span>
+                        </div>
+                        <div id="activity-feed" class="stack"></div>
+                    </div>
                 </div>
             </section>
 
             <section id="projects" class="tab">
                 <div class="panel">
-                    <h3>Projects</h3>
-                    <div id="projects-list"></div>
+                    <div class="panel-title">
+                        <h3>Projects Monitor</h3>
+                        <span class="badge">Health + Risk + Git</span>
+                    </div>
+                    <div id="projects-grid" class="project-grid"></div>
                 </div>
             </section>
 
             <section id="missions" class="tab">
-                <div class="panel">
-                    <h3>Missions Control</h3>
-                    <div id="missions-list"></div>
+                <div class="grid two">
+                    <div class="panel">
+                        <div class="panel-title">
+                            <h3>Mission Priorities</h3>
+                            <span class="badge">Ranked</span>
+                        </div>
+                        <div id="mission-priorities" class="stack"></div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-title">
+                            <h3>Scheduled + History</h3>
+                            <span class="badge">Mission Control</span>
+                        </div>
+                        <div id="mission-history" class="stack"></div>
+                    </div>
                 </div>
             </section>
 
-            <section id="agents" class="tab">
+            <section id="decisions" class="tab">
                 <div class="panel">
-                    <h3>Active Agents</h3>
-                    <div id="agents-list"></div>
+                    <div class="panel-title">
+                        <h3>AI Decisions Panel</h3>
+                        <span class="badge">Advisory Plans</span>
+                    </div>
+                    <div id="decisions-list" class="stack"></div>
                 </div>
             </section>
 
             <section id="reports" class="tab">
-                <div class="panel">
-                    <h3>Reports</h3>
-                    <div id="reports-list"></div>
+                <div class="grid two">
+                    <div class="panel">
+                        <div class="panel-title">
+                            <h3>Latest Reports</h3>
+                            <span class="badge">Findings</span>
+                        </div>
+                        <div id="reports-list" class="stack"></div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-title">
+                            <h3>Risks + Actions</h3>
+                            <span class="badge">Continuous Improvement</span>
+                        </div>
+                        <div id="risk-actions-list" class="stack"></div>
+                    </div>
                 </div>
             </section>
 
-            <section id="errors" class="tab">
-                <div class="panel">
-                    <h3>Errors / Offline Status</h3>
-                    <div id="errors-list"></div>
+            <section id="git" class="tab">
+                <div class="grid two">
+                    <div class="panel">
+                        <div class="panel-title">
+                            <h3>Repository State</h3>
+                            <span class="badge">Git Automation</span>
+                        </div>
+                        <div id="git-status-list" class="stack"></div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-title">
+                            <h3>Patches + Diffs</h3>
+                            <span class="badge">Safe Changes</span>
+                        </div>
+                        <div id="git-activity-list" class="stack"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="automation" class="tab">
+                <div class="grid two">
+                    <div class="panel">
+                        <div class="panel-title">
+                            <h3>Scheduler Status</h3>
+                            <span class="badge">Queue</span>
+                        </div>
+                        <div id="automation-status" class="stack"></div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-title">
+                            <h3>Workers + Cooldowns</h3>
+                            <span class="badge">Automation Monitor</span>
+                        </div>
+                        <div id="automation-history" class="stack"></div>
+                    </div>
                 </div>
             </section>
         </main>
     </div>
 
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/components.js"></script>
+    <script src="js/renderers.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>
