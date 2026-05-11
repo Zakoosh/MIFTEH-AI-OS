@@ -56,7 +56,8 @@
             "decisions-list",
             "reports-list",
             "git-status-list",
-            "automation-status"
+            "automation-status",
+            "orchestrator-status"
         ].forEach(function(id) {
             ui.setHTML(id, "<div class='skeleton'></div><div class='skeleton'></div>");
         });

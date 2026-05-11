@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>MIFTEH AI OS Command Center</title>
-    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="css/style.css?v=orchestrator-3"/>
 </head>
 <body>
     <div class="layout">
@@ -25,6 +25,7 @@
                 <button data-tab-target="reports">Reports Center</button>
                 <button data-tab-target="git">Git Activity</button>
                 <button data-tab-target="automation">Automation</button>
+                <button data-tab-target="orchestrator">Orchestrator</button>
             </div>
 
             <div class="sidebar-note">
@@ -60,7 +61,7 @@
                     </div>
                 </div>
 
-                <div class="cards" id="overview-metrics"></div>
+                <div class="cards overview-metrics-grid" id="overview-metrics"></div>
 
                 <div class="grid two">
                     <div class="panel">
@@ -175,13 +176,32 @@
                     </div>
                 </div>
             </section>
+
+            <section id="orchestrator" class="tab">
+                <div class="grid two">
+                    <div class="panel">
+                        <div class="panel-title">
+                            <h3>Autonomous Mission Orchestrator</h3>
+                            <span class="badge">Planning Only</span>
+                        </div>
+                        <div id="orchestrator-status" class="stack"></div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-title">
+                            <h3>Optimization Feedback</h3>
+                            <span class="badge">Telemetry</span>
+                        </div>
+                        <div id="orchestrator-telemetry" class="stack"></div>
+                    </div>
+                </div>
+            </section>
         </main>
     </div>
 
-    <script src="js/config.js"></script>
-    <script src="js/api.js"></script>
-    <script src="js/components.js"></script>
-    <script src="js/renderers.js"></script>
-    <script src="js/app.js"></script>
+    <script src="js/config.js?v=orchestrator-3"></script>
+    <script src="js/api.js?v=orchestrator-3"></script>
+    <script src="js/components.js?v=orchestrator-3"></script>
+    <script src="js/renderers.js?v=orchestrator-3"></script>
+    <script src="js/app.js?v=orchestrator-3"></script>
 </body>
 </html>
