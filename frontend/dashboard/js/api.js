@@ -80,7 +80,11 @@
             productionYallaGames: fetchJSON("/production/yallaplays/games"),
             productionYallaSeo: fetchJSON("/production/yallaplays/seo"),
             productionFioneraInsights: fetchJSON("/production/fionera/insights"),
-            productionMiftehRecommendations: fetchJSON("/production/mifteh/recommendations")
+            productionMiftehRecommendations: fetchJSON("/production/mifteh/recommendations"),
+            executionPipelines: fetchJSON("/execution/pipelines"),
+            executionPreviews: fetchJSON("/execution/previews"),
+            executionValidation: fetchJSON("/execution/validation"),
+            executionHistory: fetchJSON("/execution/history")
         };
 
         const data = {};
