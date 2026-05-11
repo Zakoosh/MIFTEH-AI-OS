@@ -283,6 +283,64 @@
         ui.setHTML("automation-history", history || ui.empty("No automation history yet."));
     }
 
+    function renderOrchestrator(data) {
+        const status = data.orchestratorStatus || {};
+        const recommendations = data.orchestratorRecommendations || {};
+        const cycles = data.orchestratorCycles || {};
+        const telemetry = data.orchestratorTelemetry || {};
+
+        const statusCards = [
+            ui.metricCard("Mode", status.mode || "advisory", "No autonomous execution"),
+            ui.metricCard("Projects", status.projects_monitored || 0, "Monitored"),
+            ui.metricCard("Recommendations", status.recommendations_count || 0, "Cycle output"),
+            ui.metricCard("Blocked", status.blocked_count || 0, "Needs review")
+        ].join("");
+
+        const recommendationRows = (recommendations.recommendations || []).slice(0, 8).map(function(item) {
+            return ui.listItem(
+                item.project_id + " -> " + item.mission_id,
+                "Optimization " + item.optimization_score + " | " + item.scheduler_action,
+                ui.badge(item.priority, ui.priorityTone(item.priority))
+                    + " " + (item.improvement_areas || []).slice(0, 3).map(function(area) {
+                        return ui.chip(area);
+                    }).join(" ")
+            );
+        }).join("");
+
+        const cycleRows = (cycles.cycles || []).slice(0, 4).map(function(cycle) {
+            return ui.listItem(
+                cycle.cycle_id,
+                ui.formatDate(cycle.completed_at || cycle.started_at),
+                ui.badge(cycle.status, cycle.status === "blocked" ? "warning" : "success")
+                    + " " + ui.chip(cycle.recommendations_count + " recommendations")
+            );
+        }).join("");
+
+        ui.setHTML(
+            "orchestrator-status",
+            "<div class='cards'>" + statusCards + "</div>"
+                + (recommendationRows || ui.empty("No orchestrator recommendations yet."))
+                + (cycleRows || "")
+        );
+
+        const telemetryCards = [
+            ui.metricCard("Cycles", telemetry.cycles_total || 0, "Recorded"),
+            ui.metricCard("Avg Score", telemetry.average_optimization_score || 0, "Optimization"),
+            ui.metricCard("Total Recs", telemetry.recommendations_total || 0, "All cycles"),
+            ui.metricCard("Blocked", telemetry.blocked_total || 0, "Safeguards")
+        ].join("");
+
+        const areaRows = Object.entries(telemetry.by_area || {}).map(function(entry) {
+            return ui.listItem(entry[0], entry[1] + " recommendations", ui.chip("continuous improvement"));
+        }).join("");
+
+        ui.setHTML(
+            "orchestrator-telemetry",
+            "<div class='cards'>" + telemetryCards + "</div>"
+                + (areaRows || ui.empty("Telemetry will populate after orchestration cycles run."))
+        );
+    }
+
     function renderAll(data) {
         renderOverview(data);
         renderProjects(data);
@@ -291,6 +349,7 @@
         renderReports(data);
         renderGit(data);
         renderAutomation(data);
+        renderOrchestrator(data);
     }
 
     window.MIFTEH_RENDERERS = {

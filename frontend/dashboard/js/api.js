@@ -57,7 +57,11 @@
             decisionOverview: fetchJSON("/decision/overview"),
             decisionPlans: fetchJSON("/decision/plans"),
             decisionRecommendations: fetchJSON("/decision/recommendations"),
-            decisionPriorities: fetchJSON("/decision/priorities")
+            decisionPriorities: fetchJSON("/decision/priorities"),
+            orchestratorStatus: fetchJSON("/orchestrator/status"),
+            orchestratorRecommendations: fetchJSON("/orchestrator/recommendations"),
+            orchestratorCycles: fetchJSON("/orchestrator/cycles"),
+            orchestratorTelemetry: fetchJSON("/orchestrator/telemetry")
         };
 
         const data = {};
