@@ -152,6 +152,59 @@
                 ]
             }
         ]
+    },
+
+    "mifteh-main-site": {
+        "project": "MIFTEH Main Site",
+        "goal": "Continuously improve the business platform for branding, conversion, SEO, analytics, automation, and scalability.",
+        "active_missions": [
+            {
+                "id": "brand-conversion-growth",
+                "title": "Improve branding, conversion, and business platform messaging",
+                "agents": [
+                    "product/product-manager.md",
+                    "marketing/marketing-growth-hacker.md",
+                    "marketing/marketing-content-creator.md",
+                    "design/design-ux-architect.md"
+                ],
+                "output": [
+                    "brand positioning opportunities",
+                    "conversion funnel improvements",
+                    "landing page messaging recommendations",
+                    "analytics and measurement priorities"
+                ]
+            },
+            {
+                "id": "seo-visibility",
+                "title": "Improve SEO visibility and organic acquisition",
+                "agents": [
+                    "marketing/marketing-seo-specialist.md",
+                    "marketing/marketing-content-creator.md",
+                    "engineering/engineering-frontend-developer.md"
+                ],
+                "output": [
+                    "SEO audit findings",
+                    "metadata and structured data opportunities",
+                    "content expansion plan",
+                    "technical SEO implementation tasks"
+                ]
+            },
+            {
+                "id": "site-performance-ux",
+                "title": "Optimize site performance, UI/UX, and scalability",
+                "agents": [
+                    "testing/testing-performance-benchmarker.md",
+                    "design/design-ui-designer.md",
+                    "engineering/engineering-code-reviewer.md"
+                ],
+                "output": [
+                    "performance bottlenecks",
+                    "UI/UX improvements",
+                    "scalability risks",
+                    "implementation-ready optimization tasks"
+                ]
+            }
+        ]
     }
 }
 

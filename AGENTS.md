@@ -97,6 +97,9 @@ HTML5 gaming platform focused on SEO, performance, and monetization.
 ### Fionera
 Finance and investment dashboard focused on analytics, charts, and security.
 
+### MIFTEH Main Site
+Business platform focused on branding, conversion, SEO, analytics, automation, and scalability.
+
 
 ## Safe File Modification Rules
 

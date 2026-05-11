@@ -341,6 +341,74 @@
         );
     }
 
+    function renderMemoryAI(data) {
+        const patterns = data.memoryPatterns || {};
+        const successes = data.memorySuccesses || {};
+        const failures = data.memoryFailures || {};
+        const recommendations = data.memoryRecommendations || {};
+        const heuristics = data.memoryHeuristics || {};
+
+        const patternRows = (patterns.patterns || []).slice(0, 8).map(function(pattern) {
+            return ui.listItem(
+                pattern.pattern,
+                pattern.project_id + " | " + pattern.mission_id + " | confidence " + pattern.confidence,
+                ui.badge(pattern.pattern_type, pattern.pattern_type === "failure" ? "warning" : "success")
+                    + " " + ui.chip(pattern.recommended_frequency)
+            );
+        }).join("");
+
+        const successRows = (successes.successes || []).slice(0, 4).map(function(success) {
+            return ui.listItem(
+                "Success: " + success.project_id + " -> " + success.mission_id,
+                "success rate " + success.success_rate + " | confidence " + success.confidence,
+                ui.chip(success.successes + " success signals", "success")
+            );
+        }).join("");
+
+        const failureRows = (failures.failures || []).slice(0, 4).map(function(failure) {
+            return ui.listItem(
+                "Failure: " + failure.project_id + " -> " + failure.mission_id,
+                "failure rate " + failure.failure_rate + " | retry after " + failure.retry_after_hours + "h",
+                ui.badge(failure.cooldown_recommended ? "cooldown recommended" : "watch", "warning")
+            );
+        }).join("");
+
+        ui.setHTML(
+            "memory-patterns",
+            "<div class='section-label'>Detected Patterns</div>"
+                + (patternRows || ui.empty("No adaptive patterns detected yet."))
+                + "<div class='section-label'>Success Memory</div>"
+                + (successRows || ui.empty("No success memory yet."))
+                + "<div class='section-label'>Failure Memory</div>"
+                + (failureRows || ui.empty("No failure memory yet."))
+        );
+
+        const recommendationRows = (recommendations.recommendations || []).slice(0, 8).map(function(item) {
+            return ui.listItem(
+                item.project_id + " -> " + item.mission_id,
+                "confidence " + item.confidence + " | priority " + item.priority,
+                ui.badge(item.cooldown_recommended ? "cooldown" : "optimize", item.cooldown_recommended ? "warning" : "success")
+                    + " " + ui.escapeHTML(item.recommendation)
+            );
+        }).join("");
+
+        const heuristicRows = (heuristics.heuristics || []).slice(0, 5).map(function(heuristic) {
+            return ui.listItem(
+                heuristic.name,
+                "weight " + heuristic.weight,
+                ui.escapeHTML(heuristic.description)
+            );
+        }).join("");
+
+        ui.setHTML(
+            "memory-recommendations",
+            "<div class='section-label'>Heuristics</div>"
+                + (heuristicRows || ui.empty("No heuristics available."))
+                + "<div class='section-label'>Adaptive Recommendations</div>"
+                + (recommendationRows || ui.empty("No adaptive recommendations yet."))
+        );
+    }
+
     function renderAll(data) {
         renderOverview(data);
         renderProjects(data);
@@ -350,6 +418,7 @@
         renderGit(data);
         renderAutomation(data);
         renderOrchestrator(data);
+        renderMemoryAI(data);
     }
 
     window.MIFTEH_RENDERERS = {

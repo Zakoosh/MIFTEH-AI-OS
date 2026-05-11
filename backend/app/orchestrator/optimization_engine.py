@@ -6,6 +6,8 @@ AREA_WEIGHTS = {
     "performance": 8,
     "SEO": 8,
     "UI/UX": 7,
+    "branding": 6,
+    "conversion": 7,
     "analytics": 6,
     "monetization": 6,
     "automation": 7,

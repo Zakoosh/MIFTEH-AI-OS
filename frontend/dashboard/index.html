@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>MIFTEH AI OS Command Center</title>
-    <link rel="stylesheet" href="css/style.css?v=orchestrator-3"/>
+    <link rel="stylesheet" href="css/style.css?v=memory-ai-5"/>
 </head>
 <body>
     <div class="layout">
@@ -26,6 +26,7 @@
                 <button data-tab-target="git">Git Activity</button>
                 <button data-tab-target="automation">Automation</button>
                 <button data-tab-target="orchestrator">Orchestrator</button>
+                <button data-tab-target="memory-ai">Adaptive Memory</button>
             </div>
 
             <div class="sidebar-note">
@@ -195,13 +196,41 @@
                     </div>
                 </div>
             </section>
+
+            <section id="memory-ai" class="tab">
+                <div class="panel">
+                    <div class="panel-title">
+                        <div>
+                            <p class="eyebrow">Historical Intelligence</p>
+                            <h3>Adaptive AI Memory</h3>
+                        </div>
+                        <span class="badge">Patterns + Heuristics</span>
+                    </div>
+                    <p class="muted">Rule-based learning from reports, mission history, orchestration cycles, and optimization outcomes.</p>
+                </div>
+                <div class="grid two">
+                    <div class="panel">
+                        <div class="panel-title">
+                            <h3>Learning Signals</h3>
+                            <span class="badge">Learning</span>
+                        </div>
+                        <div id="memory-patterns" class="stack"></div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-title">
+                            <h3>Recommendations + Rules</h3>
+                        </div>
+                        <div id="memory-recommendations" class="stack"></div>
+                    </div>
+                </div>
+            </section>
         </main>
     </div>
 
-    <script src="js/config.js?v=orchestrator-3"></script>
-    <script src="js/api.js?v=orchestrator-3"></script>
-    <script src="js/components.js?v=orchestrator-3"></script>
-    <script src="js/renderers.js?v=orchestrator-3"></script>
-    <script src="js/app.js?v=orchestrator-3"></script>
+    <script src="js/config.js?v=memory-ai-5"></script>
+    <script src="js/api.js?v=memory-ai-5"></script>
+    <script src="js/components.js?v=memory-ai-5"></script>
+    <script src="js/renderers.js?v=memory-ai-5"></script>
+    <script src="js/app.js?v=memory-ai-5"></script>
 </body>
 </html>
