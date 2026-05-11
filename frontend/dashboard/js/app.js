@@ -65,7 +65,8 @@
             "executive-overview",
             "production-overview",
             "execution-pipelines",
-            "integration-projects"
+            "integration-projects",
+            "improvements-projects"
         ].forEach(function(id) {
             ui.setHTML(id, "<div class='skeleton'></div><div class='skeleton'></div>");
         });
