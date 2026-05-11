@@ -35,3 +35,10 @@ The frontend fetches from `http://127.0.0.1:8000` — the backend must be runnin
 - **Hardcoded Windows paths**: `app/core/projects.py`, `app/engine/agent_loader.py`, and `app/services/agency_indexer.py` reference `D:\Projects\...` paths. These external project/agent directories don't exist on Linux. Endpoints depending on them will return graceful errors.
 - **OpenAI API key**: Optional. Without `OPENAI_API_KEY` in `backend/.env`, agent execution returns offline mock reports. The dashboard and all read endpoints work without it.
 - **`.env` file**: Copy `backend/.env.example` to `backend/.env` before starting the backend.
+
+## Agent System Rules
+
+- Always reuse agents from `agency-agents-main`
+- Never create random agents unless explicitly required
+- Match missions to existing agent roles first
+- Prefer specialized agents over generic execution
