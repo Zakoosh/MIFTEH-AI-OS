@@ -336,6 +336,36 @@ button{
     gap:14px;
 }
 
+.score-grid{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:10px;
+}
+
+.score-tile{
+    padding:12px;
+    border-radius:16px;
+    border:1px solid var(--border);
+    background:rgba(15,23,42,.72);
+}
+
+.score-tile span{
+    display:block;
+    color:var(--muted);
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+}
+
+.score-tile strong{
+    display:block;
+    margin-top:6px;
+    color:var(--text);
+    font-size:26px;
+    line-height:1;
+}
+
 .metric-row,
 .meta-row{
     display:flex;
