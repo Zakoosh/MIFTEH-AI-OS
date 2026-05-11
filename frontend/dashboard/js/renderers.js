@@ -409,6 +409,77 @@
         );
     }
 
+    function renderStrategy(data) {
+        const overview = data.strategyOverview || {};
+        const projects = data.strategyProjects || {};
+        const roadmaps = data.strategyRoadmaps || {};
+        const opportunities = data.strategyOpportunities || {};
+
+        const portfolioCards = [
+            ui.metricCard("Projects", overview.projects_count || 0, "Portfolio"),
+            ui.metricCard("Opportunities", overview.opportunities_count || 0, "Detected"),
+            ui.metricCard("Priority", overview.highest_priority_project || "none", "Project"),
+            ui.metricCard("Focus", (overview.portfolio_focus || []).length, "Strategic themes")
+        ].join("");
+
+        const projectRows = (projects.projects || []).slice(0, 6).map(function(project) {
+            return ui.listItem(
+                project.project_id + " -> " + project.portfolio_role,
+                "alignment " + project.business_alignment.alignment_score + " | " + project.project_type,
+                (project.strategy_focus || []).slice(0, 4).map(function(focus) {
+                    return ui.chip(focus);
+                }).join(" ")
+            );
+        }).join("");
+
+        const focusRows = (overview.portfolio_focus || []).slice(0, 5).map(function(focus) {
+            return ui.listItem(focus, "portfolio priority", ui.chip("strategy"));
+        }).join("");
+
+        ui.setHTML(
+            "strategy-overview",
+            "<div class='cards'>" + portfolioCards + "</div>"
+                + "<div class='section-label'>Project Strategies</div>"
+                + (projectRows || ui.empty("No project strategies available."))
+                + "<div class='section-label'>Portfolio Focus</div>"
+                + (focusRows || ui.empty("No portfolio focus available."))
+        );
+
+        const roadmapRows = (roadmaps.roadmap_30_day || []).slice(0, 6).map(function(item) {
+            return ui.listItem(
+                item.project_id + " -> " + item.title,
+                "30 day | " + item.focus,
+                ui.badge(item.priority, ui.priorityTone(item.priority))
+            );
+        }).join("");
+
+        const roadmap90Rows = (roadmaps.roadmap_90_day || []).slice(0, 4).map(function(item) {
+            return ui.listItem(
+                item.project_id + " -> " + item.title,
+                "90 day | " + item.focus,
+                ui.badge(item.priority, ui.priorityTone(item.priority))
+            );
+        }).join("");
+
+        const opportunityRows = (opportunities.opportunities || []).slice(0, 6).map(function(item) {
+            return ui.listItem(
+                item.project_id + " -> " + item.opportunity,
+                item.domain + " | confidence " + item.confidence,
+                ui.badge(item.priority, ui.priorityTone(item.priority))
+            );
+        }).join("");
+
+        ui.setHTML(
+            "strategy-roadmaps",
+            "<div class='section-label'>30-Day Roadmap</div>"
+                + (roadmapRows || ui.empty("No 30-day roadmap items."))
+                + "<div class='section-label'>90-Day Roadmap</div>"
+                + (roadmap90Rows || ui.empty("No 90-day roadmap items."))
+                + "<div class='section-label'>Strategic Opportunities</div>"
+                + (opportunityRows || ui.empty("No strategic opportunities."))
+        );
+    }
+
     function renderAll(data) {
         renderOverview(data);
         renderProjects(data);
@@ -419,6 +490,7 @@
         renderAutomation(data);
         renderOrchestrator(data);
         renderMemoryAI(data);
+        renderStrategy(data);
     }
 
     window.MIFTEH_RENDERERS = {
