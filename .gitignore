@@ -1,5 +1,28 @@
-backend/.env
+# Python
 backend/venv/
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+.Python
+
+# Environment — secrets NEVER go in .env.example
+backend/.env
+backend/.env.local
+backend/.env.*.local
 .env
+.env.local
+.env.*.local
+
+# Credentials & keys
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/settings.json
+Thumbs.db
