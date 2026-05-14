@@ -1,0 +1,10 @@
+{
+  "proposal_id": "seo_lp_001",
+  "operation_type": "seo",
+  "target_file": "public/index.html",
+  "before_summary": "[SEO] Current state of public/index.html",
+  "after_summary": "Proposed changes:\n  • title: YallaPlays — Play Free Online Games in Arabic & English\n  • description: Discover hundreds of free online games on YallaPlays. Play instantly, no download needed.\n  • keywords: free online games, Arabic games, play games online, YallaPlays\n  • og_title: YallaPlays — Free Online Games\n  • og_description: Play the best free online games. New games added weekly.\n  • og_image: /assets/og-home.jpg\n  • twitter_card: summary_large_image\n  • canonical_url: https://yallaplays.com/",
+  "changes_count": 8,
+  "simulated": true,
+  "generated_at": "2026-05-12T19:32:01.834888"
+}

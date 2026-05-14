@@ -1,0 +1,15 @@
+{
+  "audit_id": "1ed1a1f7-df6a-4f9f-8586-a8e2e8f7f69f",
+  "operation_id": "op_a699f8ebef72",
+  "proposal_id": "widget_fi_001",
+  "project_id": "fionera",
+  "action": "patch",
+  "status": "success",
+  "actor": "mifteh-apply-engine",
+  "timestamp": "2026-05-12T19:32:01.821529",
+  "details": {
+    "diff_lines": 19,
+    "target_file": "src/config/widgets.json",
+    "simulated": true
+  }
+}

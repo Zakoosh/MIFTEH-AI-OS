@@ -1,0 +1,71 @@
+{
+  "rollout_id": "roex_yallaplays_q3_2026",
+  "project": "yallaplays",
+  "quarter": "Q3-2026",
+  "title": "Yallaplays Q3-2026 Rollout Plan",
+  "total_phases": 3,
+  "total_work_items": 15,
+  "items_delivered": 15,
+  "delivery_rate_pct": 100.0,
+  "all_phases_passed": true,
+  "overall_health": "good",
+  "dry_run": true,
+  "simulated": true,
+  "phases": [
+    {
+      "phase_number": 1,
+      "title": "Foundation",
+      "status": "completed",
+      "work_item_ids": [
+        "wi_yp_009",
+        "wi_yp_010",
+        "wi_yp_011",
+        "wi_yp_012",
+        "wi_yp_013"
+      ],
+      "items_delivered": 5,
+      "health_score": 91.4,
+      "exit_criteria_met": true,
+      "duration_days": 14,
+      "dry_run": true
+    },
+    {
+      "phase_number": 2,
+      "title": "Core Implementation",
+      "status": "completed",
+      "work_item_ids": [
+        "wi_yp_001",
+        "wi_yp_002",
+        "wi_yp_003",
+        "wi_yp_004",
+        "wi_yp_005",
+        "wi_yp_006",
+        "wi_yp_007",
+        "wi_yp_008"
+      ],
+      "items_delivered": 8,
+      "health_score": 93.1,
+      "exit_criteria_met": true,
+      "duration_days": 21,
+      "dry_run": true
+    },
+    {
+      "phase_number": 4,
+      "title": "Optimisation & Launch",
+      "status": "completed",
+      "work_item_ids": [
+        "wi_yp_014",
+        "wi_yp_015"
+      ],
+      "items_delivered": 2,
+      "health_score": 88.4,
+      "exit_criteria_met": true,
+      "duration_days": 14,
+      "dry_run": true
+    }
+  ],
+  "executed_at": "2026-05-12T21:02:32.429174",
+  "validation_passed": true,
+  "rollback_ready": true,
+  "deployment_preview_generated": true
+}

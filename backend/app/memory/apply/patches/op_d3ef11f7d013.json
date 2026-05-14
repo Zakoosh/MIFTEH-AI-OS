@@ -1,0 +1,22 @@
+{
+  "operation_id": "op_d3ef11f7d013",
+  "proposal_id": "seo_manifest_001",
+  "target_file": "public/manifest.json",
+  "original_content": "",
+  "patched_content": "{\n  \"manifest_update\": true,\n  \"name\": \"YallaPlays — Online Games\",\n  \"short_name\": \"YallaPlays\",\n  \"description\": \"Play free online games — no download required\",\n  \"theme_color\": \"#1a1a2e\",\n  \"background_color\": \"#0f3460\",\n  \"display\": \"standalone\"\n}\n",
+  "diff_lines": [
+    "--- a/public/manifest.json",
+    "+++ b/public/manifest.json",
+    "@@ -0,0 +1,9 @@",
+    "+{\n",
+    "+  \"manifest_update\": true,\n",
+    "+  \"name\": \"YallaPlays — Online Games\",\n",
+    "+  \"short_name\": \"YallaPlays\",\n",
+    "+  \"description\": \"Play free online games — no download required\",\n",
+    "+  \"theme_color\": \"#1a1a2e\",\n",
+    "+  \"background_color\": \"#0f3460\",\n",
+    "+  \"display\": \"standalone\"\n",
+    "+}\n"
+  ],
+  "generated_at": "2026-05-12T19:50:44.148977"
+}

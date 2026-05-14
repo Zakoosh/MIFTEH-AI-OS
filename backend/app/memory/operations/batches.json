@@ -1,0 +1,39 @@
+[
+  {
+    "id": "e8dccd9b-3170-48bc-ab20-37c7f39b4537",
+    "project": "yallaplays",
+    "output_type": "content_patch",
+    "outputs": [
+      "9a267468-76a2-4877-a2fc-97994ff66b0a",
+      "39c9769b-aae0-496e-8f19-f40c04d5161d",
+      "beae84b7-5560-474f-a384-bd82e9b3452e",
+      "22349442-3bf3-420a-a1d2-032753013d94",
+      "93fd3556-895f-4f07-8d30-5881dd076a82",
+      "7b61a140-be53-4c21-bdb6-97a3ef6f4020"
+    ],
+    "total_generated": 6,
+    "total_applied": 0,
+    "status": "completed",
+    "started_at": "2026-05-13 06:09:03.828548",
+    "completed_at": "2026-05-13 06:09:03.828498",
+    "metadata": {}
+  },
+  {
+    "id": "baae34a4-b22f-4b7c-a1de-8ee7a3ad377b",
+    "project": "fionera",
+    "output_type": "content_patch",
+    "outputs": [
+      "6c110d60-6a28-4f9b-a57d-8fbf1c819c26",
+      "b54db37b-ab90-44ec-a3e5-1aee6e44310a",
+      "0110420e-cfdd-4254-a93c-24be1a6a7483",
+      "381f5c88-4113-4df8-bd1d-2080cc6b8b4d",
+      "20bc79c9-c8a0-4dae-a53f-01122dcef02c"
+    ],
+    "total_generated": 5,
+    "total_applied": 0,
+    "status": "completed",
+    "started_at": "2026-05-13 06:09:03.854769",
+    "completed_at": "2026-05-13 06:09:03.854720",
+    "metadata": {}
+  }
+]

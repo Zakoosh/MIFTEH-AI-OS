@@ -1,0 +1,56 @@
+[
+  {
+    "success": true,
+    "pr_url": "https://github.com/Zakoosh/Yallaplays/pull/1",
+    "pr_number": 1,
+    "pr_title": "[AI] SEO Page \u2014 Sports Games",
+    "branch": "ai/seo_page/94bacadb",
+    "repo": "Zakoosh/Yallaplays",
+    "files_committed": [
+      "src/pages/games/sports-games/index.tsx",
+      "src/pages/games/sports-games/seo.ts"
+    ],
+    "draft": true,
+    "auto_merge": false,
+    "created_at": "2026-05-13T10:54:42.673947",
+    "output_id": "94bacadb-a00e-471d-a8be-cce9b02efc48"
+  },
+  {
+    "success": true,
+    "pr_url": "https://github.com/Zakoosh/Yallaplays/pull/2",
+    "pr_number": 2,
+    "pr_title": "[AI] Game Recommendations \u2014 10 Trending Games",
+    "branch": "ai/game_recommendation/17ac39a9",
+    "repo": "Zakoosh/Yallaplays",
+    "files_committed": [
+      "src/components/TrendingGamesWidget.tsx",
+      "src/config/recommendation-engine.json",
+      "src/data/trending-games.json"
+    ],
+    "draft": true,
+    "auto_merge": false,
+    "created_at": "2026-05-14T08:17:05.092684",
+    "output_id": "17ac39a9-a001-4140-9030-c959e642dd9a"
+  },
+  {
+    "success": true,
+    "pr_url": "https://github.com/Zakoosh/fionera/pull/1",
+    "pr_number": 1,
+    "pr_title": "[AI] UX Proposals \u2014 5 Improvements",
+    "branch": "ai/ux_proposal/5f27cc75",
+    "repo": "Zakoosh/fionera",
+    "files_committed": [
+      "src/components/EmptyStates.tsx",
+      "src/components/GlobalSearch.tsx",
+      "docs/ux-proposals/onboarding_flow.md",
+      "docs/ux-proposals/dark_mode.md",
+      "docs/ux-proposals/rtl_arabic.md",
+      "docs/ux-proposals/empty_states.md",
+      "docs/ux-proposals/search_upgrade.md"
+    ],
+    "draft": true,
+    "auto_merge": false,
+    "created_at": "2026-05-14T08:17:14.492255",
+    "output_id": "5f27cc75-d909-47b9-8566-e0ed6e9f5e3e"
+  }
+]

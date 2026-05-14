@@ -1,83 +1,279 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>MIFTEH AI OS</title>
-    <link rel="stylesheet" href="css/style.css"/>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MIFTEH OS — miftehos.com</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/css/style.css"/>
 </head>
 <body>
-    <div class="layout">
-        <aside class="sidebar">
-            <h1>MIFTEH<br/>AI</h1>
+<div class="layout">
 
-            <div class="menu">
-                <button onclick="showTab('dashboard')">Dashboard</button>
-                <button onclick="showTab('projects')">Projects</button>
-                <button onclick="showTab('missions')">Missions</button>
-                <button onclick="showTab('agents')">Agents</button>
-                <button onclick="showTab('reports')">Reports</button>
-                <button onclick="showTab('errors')">Errors</button>
-            </div>
-        </aside>
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="brand">MIFTEH OS</div>
+      <div class="sub">miftehos.com</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">Overview</div>
+      <button class="nav-btn active" onclick="showTab('overview',this)"><span class="icon">◈</span> Dashboard</button>
+      <button class="nav-btn" onclick="showTab('loops',this)"><span class="icon">↺</span> Active Loops</button>
+      <button class="nav-btn" onclick="showTab('providers',this)"><span class="icon">⚡</span> AI Providers</button>
+      <button class="nav-btn" onclick="showTab('ai-analytics',this)"><span class="icon">📊</span> AI Analytics</button>
 
-        <main class="main">
-            <div class="topbar">
-                <h2>AI Operations Center</h2>
-                <div class="status online">SYSTEM ONLINE</div>
-            </div>
+      <div class="nav-section">Operations</div>
+      <button class="nav-btn" onclick="showTab('outputs',this)"><span class="icon">◻</span> Generated Outputs</button>
+      <button class="nav-btn" onclick="showTab('previews',this)"><span class="icon">◫</span> Previews</button>
+      <button class="nav-btn" onclick="showTab('repository',this)"><span class="icon">⎇</span> PR-Ready Changes</button>
+      <button class="nav-btn" onclick="showTab('github',this)"><span class="icon">⑂</span> GitHub PRs</button>
 
-            <section id="dashboard" class="tab active">
-                <div class="cards">
-                    <div class="card"><h3>Projects</h3><p id="projects-count">0</p></div>
-                    <div class="card"><h3>Reports</h3><p id="reports-count">0</p></div>
-                    <div class="card"><h3>Agents</h3><p id="agents-count">0</p></div>
-                    <div class="card"><h3>Missions</h3><p id="missions-count">0</p></div>
-                </div>
+      <div class="nav-section">System</div>
+      <button class="nav-btn" onclick="showTab('activity',this)"><span class="icon">≡</span> Activity Feed</button>
+      <button class="nav-btn" onclick="showTab('safety',this)"><span class="icon">⛨</span> Safety &amp; Limits</button>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="system-badge">
+        <div class="system-dot" id="system-dot"></div>
+        <span id="system-status-text">LOADING...</span>
+      </div>
+      <a href="#" onclick="(function(){localStorage.removeItem('mifteh_os_token');window.location.href=(typeof window.MIFTEH_API_BASE!=='undefined'?window.MIFTEH_API_BASE:'')+'/logout';})()" style="display:block;margin-top:10px;font-size:11px;color:#64748b;text-align:center;">Sign out</a>
+    </div>
+  </aside>
 
-                <div class="panel">
-                    <h3>Recent Activity</h3>
-                    <div id="activity-feed"></div>
-                </div>
-            </section>
-
-            <section id="projects" class="tab">
-                <div class="panel">
-                    <h3>Projects</h3>
-                    <div id="projects-list"></div>
-                </div>
-            </section>
-
-            <section id="missions" class="tab">
-                <div class="panel">
-                    <h3>Missions Control</h3>
-                    <div id="missions-list"></div>
-                </div>
-            </section>
-
-            <section id="agents" class="tab">
-                <div class="panel">
-                    <h3>Active Agents</h3>
-                    <div id="agents-list"></div>
-                </div>
-            </section>
-
-            <section id="reports" class="tab">
-                <div class="panel">
-                    <h3>Reports</h3>
-                    <div id="reports-list"></div>
-                </div>
-            </section>
-
-            <section id="errors" class="tab">
-                <div class="panel">
-                    <h3>Errors / Offline Status</h3>
-                    <div id="errors-list"></div>
-                </div>
-            </section>
-        </main>
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-left">
+        <div class="title" id="page-title">AI Operations Center</div>
+        <div class="meta" id="page-meta">Loading...</div>
+      </div>
+      <div class="topbar-right">
+        <span class="last-updated" id="last-updated"></span>
+        <span class="live-badge">● LIVE</span>
+        <button class="refresh-btn" onclick="loadDashboard()">↺ Refresh</button>
+      </div>
     </div>
 
-    <script src="js/app.js"></script>
+    <div class="content">
+
+      <!-- OVERVIEW TAB -->
+      <section id="tab-overview" class="tab active">
+        <div class="cards-grid" id="overview-cards"></div>
+        <div class="panels-row">
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Scheduler Status</div>
+              <span class="panel-badge badge-dim" id="scheduler-badge">–</span>
+            </div>
+            <div id="scheduler-summary"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">AI Provider Health</div>
+              <span class="panel-badge badge-dim" id="provider-badge">–</span>
+            </div>
+            <div id="provider-summary"></div>
+          </div>
+        </div>
+        <div class="panels-row">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Recent Outputs</div></div>
+            <div id="recent-outputs-mini"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">GitHub PRs Created</div></div>
+            <div id="github-mini"></div>
+          </div>
+        </div>
+        <div class="panel full">
+          <div class="panel-header">
+            <div class="panel-title">Activity Feed</div>
+            <span class="panel-badge badge-dim" id="activity-badge-overview">–</span>
+          </div>
+          <div id="activity-mini"></div>
+        </div>
+      </section>
+
+      <!-- LOOPS TAB -->
+      <section id="tab-loops" class="tab">
+        <div class="section-title">Continuous Operation Loops</div>
+        <div class="panel full" style="margin-bottom:16px;">
+          <div class="panel-header">
+            <div class="panel-title">YallaPlays Loops</div>
+            <span class="panel-badge badge-green">6 loops</span>
+          </div>
+          <table class="loops-table">
+            <thead><tr><th>Status</th><th>Loop</th><th>Interval</th><th>Last Run</th><th>Next Run</th><th>Runs</th><th>Success</th><th>Action</th></tr></thead>
+            <tbody id="yp-loops-body"></tbody>
+          </table>
+        </div>
+        <div class="panel full" style="margin-bottom:16px;">
+          <div class="panel-header">
+            <div class="panel-title">Fionera Loops</div>
+            <span class="panel-badge badge-blue">5 loops</span>
+          </div>
+          <table class="loops-table">
+            <thead><tr><th>Status</th><th>Loop</th><th>Interval</th><th>Last Run</th><th>Next Run</th><th>Runs</th><th>Success</th><th>Action</th></tr></thead>
+            <tbody id="fi-loops-body"></tbody>
+          </table>
+        </div>
+        <div class="panel full">
+          <div class="panel-header">
+            <div class="panel-title">Mifteh.com Loops</div>
+            <span class="panel-badge badge-dim">3 loops</span>
+          </div>
+          <table class="loops-table">
+            <thead><tr><th>Status</th><th>Loop</th><th>Interval</th><th>Last Run</th><th>Next Run</th><th>Runs</th><th>Success</th><th>Action</th></tr></thead>
+            <tbody id="mi-loops-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- PROVIDERS TAB -->
+      <section id="tab-providers" class="tab">
+        <div class="section-title">AI Provider Runtime</div>
+        <div class="providers-row" id="providers-cards"></div>
+        <div class="panel full">
+          <div class="panel-header"><div class="panel-title">Cooldown &amp; Retry State</div></div>
+          <div id="providers-detail"></div>
+        </div>
+      </section>
+
+      <!-- AI ANALYTICS TAB -->
+      <section id="tab-ai-analytics" class="tab">
+        <div class="section-title">AI Generation Analytics (Last 7 Days)</div>
+        <div class="cards-grid" id="ai-analytics-cards"></div>
+        <div class="panels-row">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">By Provider</div></div>
+            <div id="ai-by-provider"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">By Project</div></div>
+            <div id="ai-by-project"></div>
+          </div>
+        </div>
+        <div class="panels-row">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">By Operation Type</div></div>
+            <div id="ai-by-optype"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Daily Trend</div></div>
+            <div id="ai-daily-trend"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- OUTPUTS TAB -->
+      <section id="tab-outputs" class="tab">
+        <div class="section-title">Generated Outputs</div>
+        <div class="cards-grid" id="outputs-cards"></div>
+        <div class="panels-row">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">YallaPlays Outputs</div></div>
+            <div id="yp-outputs-list"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Fionera Outputs</div></div>
+            <div id="fi-outputs-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PREVIEWS TAB -->
+      <section id="tab-previews" class="tab">
+        <div class="section-title">HTML Previews</div>
+        <div class="panel full">
+          <div class="panel-header">
+            <div class="panel-title">Generated Previews</div>
+            <span class="panel-badge badge-dim" id="previews-badge">–</span>
+          </div>
+          <div id="previews-list"></div>
+        </div>
+      </section>
+
+      <!-- REPOSITORY TAB -->
+      <section id="tab-repository" class="tab">
+        <div class="section-title">Repository Operations</div>
+        <div class="panel full">
+          <div class="panel-header">
+            <div class="panel-title">PR-Ready Changes</div>
+            <span class="panel-badge badge-dim" id="pr-badge">–</span>
+          </div>
+          <div id="pr-outputs-list"></div>
+        </div>
+      </section>
+
+      <!-- GITHUB TAB -->
+      <section id="tab-github" class="tab">
+        <div class="section-title">GitHub Draft PRs</div>
+        <div class="panels-row">
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Create PR from Latest Output</div>
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;padding:4px 0;">
+              <button class="trigger-btn" style="padding:8px 16px;" onclick="createPR('yallaplays')">⑂ Create YallaPlays PR</button>
+              <button class="trigger-btn" style="padding:8px 16px;" onclick="createPR('fionera')">⑂ Create Fionera PR</button>
+            </div>
+            <div id="pr-create-result" style="margin-top:12px;"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">GitHub Safety</div></div>
+            <div class="safety-grid">
+              <div class="safety-item"><span class="safety-icon">🚫</span><span style="color:var(--green);">No auto-merge</span></div>
+              <div class="safety-item"><span class="safety-icon">🚫</span><span style="color:var(--green);">No auto-deploy</span></div>
+              <div class="safety-item"><span class="safety-icon">✅</span><span style="color:var(--green);">Always draft PRs</span></div>
+              <div class="safety-item"><span class="safety-icon">✅</span><span style="color:var(--green);">Review required</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="panel full">
+          <div class="panel-header">
+            <div class="panel-title">Created PRs</div>
+            <span class="panel-badge badge-dim" id="github-badge">–</span>
+          </div>
+          <div id="github-prs-list"></div>
+        </div>
+      </section>
+
+      <!-- ACTIVITY TAB -->
+      <section id="tab-activity" class="tab">
+        <div class="section-title">Operational Activity</div>
+        <div class="panel full">
+          <div class="panel-header"><div class="panel-title">All Activity</div></div>
+          <div id="activity-full"></div>
+        </div>
+      </section>
+
+      <!-- SAFETY TAB -->
+      <section id="tab-safety" class="tab">
+        <div class="section-title">Safety &amp; Bounded Autonomy</div>
+        <div class="panels-row">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Operational Constraints</div></div>
+            <div id="safety-constraints"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Rate Limits</div></div>
+            <div id="safety-limits"></div>
+          </div>
+        </div>
+        <div class="panel full">
+          <div class="panel-header"><div class="panel-title">Audit Summary</div></div>
+          <div id="safety-audit"></div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<script src="/js/config.js"></script>
+<script src="/js/app.js"></script>
 </body>
 </html>

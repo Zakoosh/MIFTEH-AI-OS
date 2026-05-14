@@ -1,0 +1,11 @@
+{
+  "audit_id": "aud_plan_wi_yp_003_validation_recovery",
+  "plan_id": "plan_wi_yp_003",
+  "run_id": "run_plan_wi_yp_003",
+  "action": "recovery",
+  "actor": "delivery-engine",
+  "status": "recovered",
+  "phase": "validation",
+  "details": "Rolling back to previous stable state; snapshot restored.",
+  "timestamp": "2026-05-12T21:04:55.359329"
+}

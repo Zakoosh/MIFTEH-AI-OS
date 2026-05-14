@@ -1,0 +1,20 @@
+{
+  "consensus_id": "con_7e240910efba",
+  "session_id": "sess_8e82b322f522",
+  "thread_id": "thr_75ac6380b7dc",
+  "individual_scores": {
+    "engineering-code-reviewer": 96.0,
+    "testing-performance-benchmarker": 90.0
+  },
+  "role_weights": {
+    "engineering-code-reviewer": 1.0,
+    "testing-performance-benchmarker": 1.4
+  },
+  "weighted_score": 92.5,
+  "consensus_score": 92.5,
+  "approved": true,
+  "threshold": 75.0,
+  "abstentions": [],
+  "score_spread": 6.0,
+  "timestamp": "2026-05-12T20:03:17.570357"
+}

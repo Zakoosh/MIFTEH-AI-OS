@@ -1,0 +1,20 @@
+{
+  "operation_id": "op_c72a15c8b5a5",
+  "proposal_id": "seo_cat_001",
+  "target_file": "src/data/categories.json",
+  "original_content": "",
+  "patched_content": "{\n  \"category_update\": true,\n  \"category_name\": \"Action Games\",\n  \"display_order\": 1,\n  \"is_featured\": true,\n  \"category_description\": \"Fast-paced action games for all ages\"\n}\n",
+  "diff_lines": [
+    "--- a/src/data/categories.json",
+    "+++ b/src/data/categories.json",
+    "@@ -0,0 +1,7 @@",
+    "+{\n",
+    "+  \"category_update\": true,\n",
+    "+  \"category_name\": \"Action Games\",\n",
+    "+  \"display_order\": 1,\n",
+    "+  \"is_featured\": true,\n",
+    "+  \"category_description\": \"Fast-paced action games for all ages\"\n",
+    "+}\n"
+  ],
+  "generated_at": "2026-05-12T19:49:08.619855"
+}

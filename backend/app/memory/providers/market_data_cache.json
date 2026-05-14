@@ -1,0 +1,45 @@
+{
+  "2222.SR": {
+    "symbol": "2222.SR",
+    "price": 0.0,
+    "source": "twelve_data",
+    "latency_ms": 280.83,
+    "fetched_at": "2026-05-13T09:20:22.610195"
+  },
+  "_cached_at": "2026-05-13T09:20:24.005251",
+  "1120.SR": {
+    "symbol": "1120.SR",
+    "price": 0.0,
+    "source": "twelve_data",
+    "latency_ms": 177.55,
+    "fetched_at": "2026-05-13T09:20:22.790134"
+  },
+  "AAPL": {
+    "symbol": "AAPL",
+    "price": 294.87,
+    "source": "twelve_data",
+    "latency_ms": 255.1,
+    "fetched_at": "2026-05-13T09:20:23.045643"
+  },
+  "MSFT": {
+    "symbol": "MSFT",
+    "price": 407.76001,
+    "source": "twelve_data",
+    "latency_ms": 233.58,
+    "fetched_at": "2026-05-13T09:20:23.279657"
+  },
+  "BTC/USD": {
+    "symbol": "BTC/USD",
+    "price": 81172.39,
+    "source": "twelve_data",
+    "latency_ms": 296.67,
+    "fetched_at": "2026-05-13T09:20:23.577822"
+  },
+  "1180.SR": {
+    "symbol": "1180.SR",
+    "price": 0.0,
+    "source": "twelve_data",
+    "latency_ms": 134.37,
+    "fetched_at": "2026-05-13T09:20:24.005243"
+  }
+}

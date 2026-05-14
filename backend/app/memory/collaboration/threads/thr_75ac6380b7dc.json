@@ -1,0 +1,50 @@
+{
+  "thread_id": "thr_75ac6380b7dc",
+  "session_id": "sess_8e82b322f522",
+  "mission": "seo-growth",
+  "proposal_id": "seo_lp_001",
+  "project_id": "yallaplays",
+  "agents": [
+    "marketing-seo-specialist",
+    "engineering-frontend-developer",
+    "engineering-code-reviewer",
+    "testing-performance-benchmarker"
+  ],
+  "agent_roles": {
+    "marketing-seo-specialist": "implementer",
+    "engineering-frontend-developer": "implementer",
+    "engineering-code-reviewer": "reviewer",
+    "testing-performance-benchmarker": "validator"
+  },
+  "implementers": [
+    "marketing-seo-specialist",
+    "engineering-frontend-developer"
+  ],
+  "reviewers": [
+    "engineering-code-reviewer"
+  ],
+  "validators": [
+    "testing-performance-benchmarker"
+  ],
+  "status": "approved",
+  "contribution_ids": [
+    "ctr_3d35a65795bb",
+    "ctr_a22e69dc56ea",
+    "ctr_7848661de81c",
+    "ctr_95bd7a61c50f"
+  ],
+  "review_ids": [
+    "rev_d90a45ece08d",
+    "rev_9f362e728278",
+    "rev_10de61f1dea4",
+    "rev_9b33ef74f2ab"
+  ],
+  "chain_id": "chain_a86a521c163f",
+  "consensus_score": 92.5,
+  "quality_score": 96.2,
+  "approved": true,
+  "conflicts": 0,
+  "started_at": "2026-05-12T20:03:17.566863",
+  "completed_at": "2026-05-12T20:03:17.570722",
+  "error": ""
+}

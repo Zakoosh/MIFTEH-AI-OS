@@ -1,0 +1,19 @@
+[
+  {
+    "id": "0b5e7c42-ae8b-4d21-a6c7-a2e64e300161",
+    "operation_type": "health_check",
+    "project": "yallaplays",
+    "status": "completed",
+    "trust_score": 0.8,
+    "started_at": "2026-05-13 05:52:34.133381",
+    "completed_at": "2026-05-13 05:52:34.133552",
+    "result_summary": "Health check for yallaplays completed",
+    "cost_estimate": 0.0,
+    "actual_cost": 0.0,
+    "rollback_available": true,
+    "rollback_target": null,
+    "error": null,
+    "metadata": {},
+    "created_at": "2026-05-13 05:52:34.133302"
+  }
+]

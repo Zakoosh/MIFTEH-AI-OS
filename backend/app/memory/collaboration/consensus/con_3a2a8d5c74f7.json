@@ -1,0 +1,22 @@
+{
+  "consensus_id": "con_3a2a8d5c74f7",
+  "session_id": "sess_3de58267d001",
+  "thread_id": "thr_8f1fcf18b995",
+  "individual_scores": {
+    "product-manager": 75.0,
+    "engineering-code-reviewer": 93.0,
+    "testing-performance-benchmarker": 88.0
+  },
+  "role_weights": {
+    "product-manager": 1.0,
+    "engineering-code-reviewer": 1.0,
+    "testing-performance-benchmarker": 1.4
+  },
+  "weighted_score": 85.65,
+  "consensus_score": 85.6,
+  "approved": true,
+  "threshold": 75.0,
+  "abstentions": [],
+  "score_spread": 18.0,
+  "timestamp": "2026-05-12T20:03:17.563190"
+}

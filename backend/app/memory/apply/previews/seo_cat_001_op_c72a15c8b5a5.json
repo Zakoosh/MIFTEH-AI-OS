@@ -1,0 +1,10 @@
+{
+  "proposal_id": "seo_cat_001",
+  "operation_type": "category",
+  "target_file": "src/data/categories.json",
+  "before_summary": "[CATEGORY] Current state of src/data/categories.json",
+  "after_summary": "Proposed changes:\n  • category_name: Action Games\n  • display_order: 1\n  • is_featured: True\n  • category_description: Fast-paced action games for all ages",
+  "changes_count": 4,
+  "simulated": true,
+  "generated_at": "2026-05-12T19:49:08.619441"
+}

@@ -1,0 +1,15 @@
+[
+  {
+    "id": "b72f9267-7cc0-4d45-b0a1-9bdd88b06e1d",
+    "project_id": "yallaplays",
+    "workspace_path": "/workspaces/MIFTEH-AI-OS/backend/app/memory/repository_automation/workspaces/b72f9267-7cc0-4d45-b0a1-9bdd88b06e1d",
+    "change_ids": [
+      "7a115cab-5012-4256-b218-23945c8d70cf"
+    ],
+    "status": "ready",
+    "preview_report": "",
+    "created_at": "2026-05-13 05:52:52.938091",
+    "expires_at": "2026-05-14 05:52:52.938031",
+    "destroyed_at": null
+  }
+]

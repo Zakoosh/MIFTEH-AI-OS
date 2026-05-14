@@ -1,0 +1,14 @@
+{
+  "review_id": "rev_b9cf2acf6f25",
+  "thread_id": "thr_8f1fcf18b995",
+  "session_id": "sess_3de58267d001",
+  "reviewer_agent": "product-manager",
+  "reviewed_agent": "engineering-frontend-developer",
+  "contribution_id": "ctr_ae767884b25c",
+  "score": 75.0,
+  "approved": true,
+  "feedback": "Peer review of engineering-frontend-developer's implementation for 'dashboard-improvement': Implementation is solid and production-ready. Code quality acceptable.",
+  "concerns": [],
+  "role": "reviewer",
+  "timestamp": "2026-05-12T20:03:17.561181"
+}

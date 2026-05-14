@@ -1,0 +1,50 @@
+{
+  "rollout_id": "roex_fionera_q4_2026",
+  "project": "fionera",
+  "quarter": "Q4-2026",
+  "title": "Fionera Q4-2026 Rollout Plan",
+  "total_phases": 2,
+  "total_work_items": 6,
+  "items_delivered": 6,
+  "delivery_rate_pct": 100.0,
+  "all_phases_passed": true,
+  "overall_health": "good",
+  "dry_run": true,
+  "simulated": true,
+  "phases": [
+    {
+      "phase_number": 2,
+      "title": "Core Implementation",
+      "status": "completed",
+      "work_item_ids": [
+        "wi_fi_006",
+        "wi_fi_007"
+      ],
+      "items_delivered": 2,
+      "health_score": 99.3,
+      "exit_criteria_met": true,
+      "duration_days": 21,
+      "dry_run": true
+    },
+    {
+      "phase_number": 3,
+      "title": "Enhancement",
+      "status": "completed",
+      "work_item_ids": [
+        "wi_fi_012",
+        "wi_fi_013",
+        "wi_fi_014",
+        "wi_fi_015"
+      ],
+      "items_delivered": 4,
+      "health_score": 90.1,
+      "exit_criteria_met": true,
+      "duration_days": 21,
+      "dry_run": true
+    }
+  ],
+  "executed_at": "2026-05-12T21:02:32.431324",
+  "validation_passed": true,
+  "rollback_ready": true,
+  "deployment_preview_generated": true
+}

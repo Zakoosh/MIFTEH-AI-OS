@@ -1,0 +1,10 @@
+{
+  "proposal_id": "widget_fi_001",
+  "operation_type": "widget",
+  "target_file": "src/config/widgets.json",
+  "before_summary": "[WIDGET] Current widget config — src/config/widgets.json",
+  "after_summary": "Proposed widget changes:\n  • widget_id: portfolio_heatmap\n  • widget_name: Portfolio Heatmap\n  • data_source: portfolio_api\n  • display_type: heatmap\n  • metrics: ['daily_return', 'allocation', 'volatility']\n  • time_range: 30d\n  • enabled: True",
+  "changes_count": 7,
+  "simulated": true,
+  "generated_at": "2026-05-12T19:32:01.820903"
+}

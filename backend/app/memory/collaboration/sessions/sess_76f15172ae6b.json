@@ -1,0 +1,41 @@
+{
+  "session_id": "sess_76f15172ae6b",
+  "mission": "seo-growth",
+  "proposal_id": "seo_lp_001",
+  "project_id": "yallaplays",
+  "triggered_by": "api",
+  "thread_ids": [
+    "thr_2d0ffea4036f"
+  ],
+  "agents": [
+    "marketing-seo-specialist",
+    "engineering-frontend-developer",
+    "engineering-code-reviewer",
+    "testing-performance-benchmarker"
+  ],
+  "agent_roles": {
+    "marketing-seo-specialist": "implementer",
+    "engineering-frontend-developer": "implementer",
+    "engineering-code-reviewer": "reviewer",
+    "testing-performance-benchmarker": "validator"
+  },
+  "consensus_score": 92.5,
+  "approved": true,
+  "review_status": "approved",
+  "reviewed_by": [
+    "testing-performance-benchmarker",
+    "engineering-code-reviewer"
+  ],
+  "quality_score": 96.2,
+  "conflicts_detected": 0,
+  "conflicts_resolved": 0,
+  "started_at": "2026-05-12T20:03:17.542553",
+  "completed_at": "2026-05-12T20:03:17.548006",
+  "status": "approved",
+  "summary": "Mission 'seo-growth' — 4 agents, consensus 92.5, approved.",
+  "insights": [
+    "Mission 'seo-growth' completed with 4 agents: marketing-seo-specialist, engineering-frontend-developer, engineering-code-reviewer, testing-performance-benchmarker.",
+    "Consensus score: 92.5/100 (threshold: 75.0). Approved.",
+    "All quality control checks passed."
+  ]
+}

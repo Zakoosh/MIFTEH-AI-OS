@@ -1,0 +1,13 @@
+[
+  {
+    "id": "42268252-192e-4f16-96bf-b298b03da6a0",
+    "project_id": "yallaplays",
+    "branch_name": "ai/feature/add-new-feature-to-yallaplays",
+    "base_branch": "main",
+    "purpose": "Add new feature to YallaPlays",
+    "status": "active",
+    "change_ids": [],
+    "created_at": "2026-05-13 05:52:52.935443",
+    "updated_at": "2026-05-13 05:52:52.935447"
+  }
+]

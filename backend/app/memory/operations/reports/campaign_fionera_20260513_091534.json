@@ -1,0 +1,73 @@
+{
+  "project": "fionera",
+  "campaign_run_at": "2026-05-13T09:15:34.480269",
+  "ai_used": true,
+  "total_outputs": 5,
+  "total_errors": 0,
+  "total_cost_usd": 0.0,
+  "total_tokens": 0,
+  "html_previews_saved": 5,
+  "pr_outputs_saved": 5,
+  "preview_files": [
+    "fionera_finance_widget_8f436120.html",
+    "fionera_market_insight_9aab017e.html",
+    "fionera_watchlist_improvement_15cfbfbc.html",
+    "fionera_analytics_dashboard_6cba6eaa.html",
+    "fionera_ux_proposal_b90f1ed2.html"
+  ],
+  "pr_files": [
+    "pr_fionera_finance_widget_8f436120.json",
+    "pr_fionera_market_insight_9aab017e.json",
+    "pr_fionera_watchlist_improvement_15cfbfbc.json",
+    "pr_fionera_analytics_dashboard_6cba6eaa.json",
+    "pr_fionera_ux_proposal_b90f1ed2.json"
+  ],
+  "errors": [],
+  "outputs_summary": [
+    {
+      "id": "8f436120-89e2-49c1-ba5e-e14def295aad",
+      "type": "finance_widget",
+      "title": "Finance Widgets \u2014 5 Components",
+      "status": "generated",
+      "ai_generated": false,
+      "cost_usd": 0.0,
+      "patch_files_count": 4
+    },
+    {
+      "id": "9aab017e-b21c-49a5-a01a-4607f0327c64",
+      "type": "market_insight",
+      "title": "Market Insights \u2014 4 Summaries",
+      "status": "generated",
+      "ai_generated": false,
+      "cost_usd": 0.0,
+      "patch_files_count": 2
+    },
+    {
+      "id": "15cfbfbc-d9a7-4507-9fc7-8b032bcf5fc4",
+      "type": "watchlist_improvement",
+      "title": "Watchlist Improvements \u2014 4 High-Priority Features",
+      "status": "generated",
+      "ai_generated": false,
+      "cost_usd": 0.0,
+      "patch_files_count": 3
+    },
+    {
+      "id": "6cba6eaa-0899-4d43-8b65-3f51a54263fb",
+      "type": "analytics_dashboard",
+      "title": "Analytics Dashboard \u2014 7 Widgets",
+      "status": "generated",
+      "ai_generated": false,
+      "cost_usd": 0.0,
+      "patch_files_count": 4
+    },
+    {
+      "id": "b90f1ed2-5e90-4a7e-9175-3d93a08ac0d4",
+      "type": "ux_proposal",
+      "title": "UX Proposals \u2014 5 Improvements",
+      "status": "generated",
+      "ai_generated": false,
+      "cost_usd": 0.0,
+      "patch_files_count": 7
+    }
+  ]
+}

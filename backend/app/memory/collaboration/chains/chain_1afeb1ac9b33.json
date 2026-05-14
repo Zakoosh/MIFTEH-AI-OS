@@ -1,0 +1,20 @@
+{
+  "chain_id": "chain_1afeb1ac9b33",
+  "thread_id": "thr_8f1fcf18b995",
+  "session_id": "sess_3de58267d001",
+  "review_ids": [
+    "rev_b9cf2acf6f25",
+    "rev_08bebae67a8c",
+    "rev_00e10b048298"
+  ],
+  "reviewers": [
+    "product-manager",
+    "engineering-code-reviewer"
+  ],
+  "validators": [
+    "testing-performance-benchmarker"
+  ],
+  "chain_approved": true,
+  "completed": true,
+  "timestamp": "2026-05-12T20:03:17.561150"
+}

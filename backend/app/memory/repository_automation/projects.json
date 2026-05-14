@@ -1,0 +1,26 @@
+[
+  {
+    "id": "yallaplays",
+    "name": "YallaPlays",
+    "repo_url": "https://github.com/mifteh/yallaplays",
+    "local_path": "/repos/yallaplays",
+    "default_branch": "main",
+    "status": "active",
+    "description": "YallaPlays gaming platform",
+    "created_at": "2026-05-13 05:50:49.699833",
+    "updated_at": "2026-05-13 05:50:49.699837",
+    "metadata": {}
+  },
+  {
+    "id": "fionera",
+    "name": "Fionera",
+    "repo_url": "https://github.com/mifteh/fionera",
+    "local_path": "/repos/fionera",
+    "default_branch": "main",
+    "status": "active",
+    "description": "Fionera platform",
+    "created_at": "2026-05-13 05:50:49.699847",
+    "updated_at": "2026-05-13 05:50:49.699848",
+    "metadata": {}
+  }
+]

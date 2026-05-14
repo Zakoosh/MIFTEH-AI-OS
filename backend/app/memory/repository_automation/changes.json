@@ -1,0 +1,24 @@
+[
+  {
+    "id": "7a115cab-5012-4256-b218-23945c8d70cf",
+    "project_id": "yallaplays",
+    "change_type": "feature",
+    "files_affected": [
+      "src/app.py"
+    ],
+    "description": "Add new feature",
+    "status": "preview",
+    "preview_id": null,
+    "branch_id": null,
+    "diff_summary": "",
+    "risk_level": "low",
+    "created_at": "2026-05-13 05:52:52.926343",
+    "updated_at": "2026-05-13T05:52:52.940733",
+    "metadata": {
+      "validation_passed": true,
+      "validation_issues": [],
+      "pr_id": "999fc275-66c7-462d-b284-e7e30478113f",
+      "workspace_id": "b72f9267-7cc0-4d45-b0a1-9bdd88b06e1d"
+    }
+  }
+]

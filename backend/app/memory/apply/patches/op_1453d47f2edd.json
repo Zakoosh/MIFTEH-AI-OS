@@ -1,0 +1,22 @@
+{
+  "operation_id": "op_1453d47f2edd",
+  "proposal_id": "seo_lp_001",
+  "target_file": "public/index.html",
+  "original_content": "",
+  "patched_content": "<html><head>\n  <meta name=\"title\" content=\"YallaPlays — Play Free Online Games in Arabic & English\" />\n  <meta name=\"description\" content=\"Discover hundreds of free online games on YallaPlays. Play instantly, no download needed.\" />\n  <meta name=\"keywords\" content=\"free online games, Arabic games, play games online, YallaPlays\" />\n  <meta name=\"og_title\" content=\"YallaPlays — Free Online Games\" />\n  <meta name=\"og_description\" content=\"Play the best free online games. New games added weekly.\" />\n  <meta name=\"og_image\" content=\"/assets/og-home.jpg\" />\n  <meta name=\"twitter_card\" content=\"summary_large_image\" />\n  <meta name=\"canonical_url\" content=\"https://yallaplays.com/\" /></head><body></body></html>",
+  "diff_lines": [
+    "--- a/public/index.html",
+    "+++ b/public/index.html",
+    "@@ -0,0 +1,9 @@",
+    "+<html><head>\n",
+    "+  <meta name=\"title\" content=\"YallaPlays — Play Free Online Games in Arabic & English\" />\n",
+    "+  <meta name=\"description\" content=\"Discover hundreds of free online games on YallaPlays. Play instantly, no download needed.\" />\n",
+    "+  <meta name=\"keywords\" content=\"free online games, Arabic games, play games online, YallaPlays\" />\n",
+    "+  <meta name=\"og_title\" content=\"YallaPlays — Free Online Games\" />\n",
+    "+  <meta name=\"og_description\" content=\"Play the best free online games. New games added weekly.\" />\n",
+    "+  <meta name=\"og_image\" content=\"/assets/og-home.jpg\" />\n",
+    "+  <meta name=\"twitter_card\" content=\"summary_large_image\" />\n",
+    "+  <meta name=\"canonical_url\" content=\"https://yallaplays.com/\" /></head><body></body></html>"
+  ],
+  "generated_at": "2026-05-12T19:32:01.835314"
+}

@@ -1,0 +1,29 @@
+{
+  "audit_id": "942a84b3-3f37-4b43-9fe6-99c085a54696",
+  "operation_id": "op_a05b87274ee3",
+  "proposal_id": "seo_lp_001",
+  "project_id": "yallaplays",
+  "action": "validate",
+  "status": "success",
+  "actor": "mifteh-apply-engine",
+  "timestamp": "2026-05-12T19:49:08.616734",
+  "details": {
+    "proposal_id": "seo_lp_001",
+    "valid": true,
+    "risk_level": "low",
+    "checks_passed": [
+      "project_id recognized",
+      "operation_type allowed",
+      "target_file path is safe",
+      "changes dict is non-empty",
+      "no forbidden content in changes",
+      "all field lengths within limits",
+      "all change keys within allowed_fields policy",
+      "risk level 'low' is acceptable",
+      "proposal_id format valid"
+    ],
+    "checks_failed": [],
+    "warnings": [],
+    "message": "Proposal is valid and eligible for apply."
+  }
+}

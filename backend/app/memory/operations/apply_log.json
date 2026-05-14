@@ -1,0 +1,39 @@
+[
+  {
+    "apply_id": "78eb7134-7f33-4661-9279-5e7ef22e9b7f",
+    "output_id": "0110420e-cfdd-4254-a93c-24be1a6a7483",
+    "dry_run": true,
+    "success": true,
+    "result": {
+      "dry_run": true,
+      "all_valid": true,
+      "files_to_change": 3,
+      "validation_results": [
+        {
+          "file_path": "src/components/watchlist/EnhancedWatchlist.tsx",
+          "valid": true,
+          "operation": "create",
+          "content_size": 2826,
+          "issues": []
+        },
+        {
+          "file_path": "src/components/watchlist/PriceAlertModal.tsx",
+          "valid": true,
+          "operation": "create",
+          "content_size": 2059,
+          "issues": []
+        },
+        {
+          "file_path": "src/config/watchlist-features.json",
+          "valid": true,
+          "operation": "create_or_update",
+          "content_size": 1068,
+          "issues": []
+        }
+      ],
+      "rollback_plan": "snapshot_before_apply",
+      "estimated_apply_time_seconds": 1.5
+    },
+    "timestamp": "2026-05-13T06:09:03.867374"
+  }
+]

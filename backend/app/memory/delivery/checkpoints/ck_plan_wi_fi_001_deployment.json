@@ -1,0 +1,28 @@
+{
+  "checkpoint_id": "ck_plan_wi_fi_001_deployment",
+  "plan_id": "plan_wi_fi_001",
+  "run_id": "run_plan_wi_fi_001",
+  "phase": "deployment",
+  "phase_number": 4,
+  "checks_run": 2,
+  "checks_passed": 2,
+  "checks_failed": 0,
+  "blocking_failures": 0,
+  "result": "passed",
+  "details": [
+    {
+      "check": "Staging smoke tests pass",
+      "blocking": true,
+      "passed": true,
+      "message": "Pass"
+    },
+    {
+      "check": "Feature flag active",
+      "blocking": true,
+      "passed": true,
+      "message": "Pass"
+    }
+  ],
+  "timestamp": "2026-05-12T21:03:49.247317",
+  "duration_seconds": 0.4
+}

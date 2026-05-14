@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "dry_run_mode": false,
+  "trust_threshold": 75.0,
+  "rollback_threshold": 20.0,
+  "max_per_cycle": 3,
+  "max_per_day": 10,
+  "trust_gain_on_success": 2.0,
+  "trust_loss_on_failure": 10.0,
+  "initial_trust_score": 80.0,
+  "suspension_threshold": 3,
+  "reinstate_threshold": 60.0
+}

@@ -1,0 +1,17 @@
+[
+  {
+    "id": "6ef950d7-4a07-4bca-89cd-006989823c50",
+    "provider": "mock",
+    "model": "mock-v1",
+    "prompt_tokens": 3,
+    "completion_tokens": 20,
+    "total_tokens": 23,
+    "cost_usd": 0.0,
+    "latency_ms": 220.67,
+    "success": true,
+    "error": null,
+    "task_type": "test",
+    "created_at": "2026-05-13 05:52:34.356959",
+    "metadata": {}
+  }
+]

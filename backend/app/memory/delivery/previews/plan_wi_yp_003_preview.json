@@ -1,0 +1,49 @@
+{
+  "preview_id": "pr_wi_yp_003",
+  "plan_id": "plan_wi_yp_003",
+  "work_item_id": "wi_yp_003",
+  "project": "yallaplays",
+  "title": "Core Web Vitals & Technical SEO Sprint",
+  "summary": "4 files modified, 3 pages affected. Risk level: high. Rollback strategy: available.",
+  "affected_files": [
+    "src/pages/survival-games/index.tsx",
+    "src/components/SEOHead.tsx",
+    "public/sitemap.xml",
+    "src/data/structured-data.json"
+  ],
+  "affected_pages": [
+    "/games/survival-games",
+    "/",
+    "/sitemap.xml"
+  ],
+  "estimated_changes": 104,
+  "risk_level": "high",
+  "rollback_strategy": "Revert metadata and sitemap; re-submit previous canonical sitemap.",
+  "preview_content": {
+    "task_type": "seo_campaign",
+    "total_steps": 7,
+    "phases": [
+      "deployment",
+      "implementation",
+      "preparation",
+      "validation"
+    ],
+    "step_titles": [
+      "Keyword research & gap analysis",
+      "Create / update category landing page",
+      "Generate SEO metadata",
+      "Add JSON-LD structured data",
+      "Internal linking implementation"
+    ],
+    "collaboration_mission": "seo-growth",
+    "apply_proposal_type": "seo",
+    "validation_required": true,
+    "tags": [
+      "cwv",
+      "technical-seo",
+      "performance",
+      "canonical"
+    ]
+  },
+  "generated_at": "2026-05-12T21:04:55.355263"
+}

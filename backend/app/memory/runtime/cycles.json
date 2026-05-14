@@ -1,0 +1,17 @@
+[
+  {
+    "id": "2d213013-396a-4520-a91c-d1da9586ff94",
+    "cycle_number": 1,
+    "project": "yallaplays",
+    "mode": "manual",
+    "operations_planned": 1,
+    "operations_completed": 1,
+    "operations_failed": 0,
+    "operations_skipped": 0,
+    "started_at": "2026-05-13 05:52:34.132756",
+    "completed_at": "2026-05-13 05:52:34.133878",
+    "status": "completed",
+    "total_cost": 0.0,
+    "metadata": {}
+  }
+]

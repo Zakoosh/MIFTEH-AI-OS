@@ -1,0 +1,172 @@
+{
+  "project": "yallaplays",
+  "campaign_run_at": "2026-05-13T09:16:24.319475",
+  "ai_used": true,
+  "total_outputs": 14,
+  "total_errors": 0,
+  "total_cost_usd": 0.0,
+  "total_tokens": 0,
+  "html_previews_saved": 14,
+  "pr_outputs_saved": 14,
+  "preview_files": [
+    "yallaplays_seo_page_11e01648.html",
+    "yallaplays_seo_page_86c2b020.html",
+    "yallaplays_seo_page_45c81324.html",
+    "yallaplays_seo_page_fd703541.html",
+    "yallaplays_seo_page_4c4f0a7d.html",
+    "yallaplays_seo_page_8accab9b.html",
+    "yallaplays_category_page_336ae223.html",
+    "yallaplays_category_page_9e753859.html",
+    "yallaplays_category_page_8c997d6d.html",
+    "yallaplays_category_page_72343174.html",
+    "yallaplays_metadata_patch_72d61dec.html",
+    "yallaplays_mobile_optimization_98d9f2df.html",
+    "yallaplays_internal_linking_a63842ba.html",
+    "yallaplays_game_recommendation_63caf463.html"
+  ],
+  "pr_files": [
+    "pr_yallaplays_seo_page_11e01648.json",
+    "pr_yallaplays_seo_page_86c2b020.json",
+    "pr_yallaplays_seo_page_45c81324.json",
+    "pr_yallaplays_seo_page_fd703541.json",
+    "pr_yallaplays_seo_page_4c4f0a7d.json",
+    "pr_yallaplays_seo_page_8accab9b.json",
+    "pr_yallaplays_category_page_336ae223.json",
+    "pr_yallaplays_category_page_9e753859.json",
+    "pr_yallaplays_category_page_8c997d6d.json",
+    "pr_yallaplays_category_page_72343174.json",
+    "pr_yallaplays_metadata_patch_72d61dec.json",
+    "pr_yallaplays_mobile_optimization_98d9f2df.json",
+    "pr_yallaplays_internal_linking_a63842ba.json",
+    "pr_yallaplays_game_recommendation_63caf463.json"
+  ],
+  "errors": [],
+  "outputs_summary": [
+    {
+      "id": "11e01648-13a7-4aec-9e2f-5bc1a67e8099",
+      "type": "seo_page",
+      "title": "SEO Page \u2014 Action Games",
+      "status": "generated",
+      "ai_generated": false,
+      "cost_usd": 0.0,
+      "patch_files_count": 2
+    },
+    {
+      "id": "86c2b020-3bd0-46d8-b29f-2a9beb8bc7b7",
+      "type": "seo_page",
+      "title": "SEO Page \u2014 Sports Games",
+      "status": "generated",
+      "ai_generated": false,
+      "cost_usd": 0.0,
+      "patch_files_count": 2
+    },
+    {
+      "id": "45c81324-0b10-4cc3-b676-dd9edbaa0a87",
+      "type": "seo_page",
+      "title": "SEO Page \u2014 Racing Games",
+      "status": "generated",
+      "ai_generated": false,
+      "cost_usd": 0.0,
+      "patch_files_count": 2
+    },
+    {
+      "id": "fd703541-92e2-4904-b1bf-c9a8f8d23c6e",
+      "type": "seo_page",
+      "title": "SEO Page \u2014 Puzzle Games",
+      "status": "generated",
+      "ai_generated": false,
+      "cost_usd": 0.0,
+      "patch_files_count": 2
+    },
+    {
+      "id": "4c4f0a7d-2520-4cc1-854d-c7e68a253361",
+      "type": "seo_page",
+      "title": "SEO Page \u2014 Multiplayer Games",
+      "status": "generated",
+      "ai_generated": false,
+      "cost_usd": 0.0,
+      "patch_files_count": 2
+    },
+    {
+      "id": "8accab9b-6f75-4e4d-9610-a2440a330a7e",
+      "type": "seo_page",
+      "title": "SEO Page \u2014 Arabic Games",
+      "status": "generated",
+      "ai_generated": false,
+      "cost_usd": 0.0,
+      "patch_files_count": 2
+    },
+    {
+      "id": "336ae223-a329-4f32-916f-2feb93dfb578",
+      "type": "category_page",
+      "title": "Category Page \u2014 Popular Games",
+      "status": "generated",
+      "ai_generated": false,
+      "cost_usd": 0.0,
+      "patch_files_count": 2
+    },
+    {
+      "id": "9e753859-e885-4d88-9312-123ac8b7f924",
+      "type": "category_page",
+      "title": "Category Page \u2014 Trending Games",
+      "status": "generated",
+      "ai_generated": false,
+      "cost_usd": 0.0,
+      "patch_files_count": 2
+    },
+    {
+      "id": "8c997d6d-b105-4277-b861-36cdce50e97f",
+      "type": "category_page",
+      "title": "Category Page \u2014 New Games",
+      "status": "generated",
+      "ai_generated": false,
+      "cost_usd": 0.0,
+      "patch_files_count": 2
+    },
+    {
+      "id": "72343174-76e0-4635-a1bb-4f844760e70a",
+      "type": "category_page",
+      "title": "Category Page \u2014 Mobile Games",
+      "status": "generated",
+      "ai_generated": false,
+      "cost_usd": 0.0,
+      "patch_files_count": 2
+    },
+    {
+      "id": "72d61dec-cf95-427f-84a0-f94069a578a5",
+      "type": "metadata_patch",
+      "title": "Metadata Patches \u2014 6 Games",
+      "status": "generated",
+      "ai_generated": false,
+      "cost_usd": 0.0,
+      "patch_files_count": 6
+    },
+    {
+      "id": "98d9f2df-4625-4ed8-85fa-47d594aeca1a",
+      "type": "mobile_optimization",
+      "title": "Mobile Optimizations \u2014 8 Improvements",
+      "status": "generated",
+      "ai_generated": false,
+      "cost_usd": 0.0,
+      "patch_files_count": 3
+    },
+    {
+      "id": "a63842ba-f7af-4292-9d01-98c7ea87d317",
+      "type": "internal_linking",
+      "title": "Internal Linking \u2014 8 Opportunities",
+      "status": "generated",
+      "ai_generated": false,
+      "cost_usd": 0.0,
+      "patch_files_count": 3
+    },
+    {
+      "id": "63caf463-a0ee-4942-9353-e65096588b9d",
+      "type": "game_recommendation",
+      "title": "Game Recommendations \u2014 10 Trending Games",
+      "status": "generated",
+      "ai_generated": false,
+      "cost_usd": 0.0,
+      "patch_files_count": 3
+    }
+  ]
+}

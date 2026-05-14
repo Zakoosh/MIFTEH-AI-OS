@@ -1,0 +1,42 @@
+{
+  "session_id": "sess_3de58267d001",
+  "mission": "dashboard-improvement",
+  "proposal_id": "",
+  "project_id": "fionera",
+  "triggered_by": "api",
+  "thread_ids": [
+    "thr_8f1fcf18b995"
+  ],
+  "agents": [
+    "engineering-frontend-developer",
+    "product-manager",
+    "engineering-code-reviewer",
+    "testing-performance-benchmarker"
+  ],
+  "agent_roles": {
+    "engineering-frontend-developer": "implementer",
+    "product-manager": "reviewer",
+    "engineering-code-reviewer": "reviewer",
+    "testing-performance-benchmarker": "validator"
+  },
+  "consensus_score": 85.6,
+  "approved": true,
+  "review_status": "approved",
+  "reviewed_by": [
+    "testing-performance-benchmarker",
+    "product-manager",
+    "engineering-code-reviewer"
+  ],
+  "quality_score": 92.8,
+  "conflicts_detected": 0,
+  "conflicts_resolved": 0,
+  "started_at": "2026-05-12T20:03:17.559454",
+  "completed_at": "2026-05-12T20:03:17.563749",
+  "status": "approved",
+  "summary": "Mission 'dashboard-improvement' — 4 agents, consensus 85.6, approved.",
+  "insights": [
+    "Mission 'dashboard-improvement' completed with 4 agents: engineering-frontend-developer, product-manager, engineering-code-reviewer, testing-performance-benchmarker.",
+    "Consensus score: 85.6/100 (threshold: 75.0). Approved.",
+    "All quality control checks passed."
+  ]
+}

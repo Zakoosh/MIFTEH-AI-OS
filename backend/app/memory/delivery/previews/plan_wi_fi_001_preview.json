@@ -1,0 +1,49 @@
+{
+  "preview_id": "pr_wi_fi_001",
+  "plan_id": "plan_wi_fi_001",
+  "work_item_id": "wi_fi_001",
+  "project": "fionera",
+  "title": "Add AI Portfolio Risk Score Widget",
+  "summary": "4 files modified, 2 pages affected. Risk level: medium. Rollback strategy: available.",
+  "affected_files": [
+    "src/features/feature/index.tsx",
+    "src/api/feature.ts",
+    "src/store/featureSlice.ts",
+    "tests/feature.test.ts"
+  ],
+  "affected_pages": [
+    "/app/feature",
+    "/api/feature"
+  ],
+  "estimated_changes": 112,
+  "risk_level": "medium",
+  "rollback_strategy": "Disable feature flag; roll back database migration if required.",
+  "preview_content": {
+    "task_type": "feature",
+    "total_steps": 8,
+    "phases": [
+      "deployment",
+      "implementation",
+      "preparation",
+      "review"
+    ],
+    "step_titles": [
+      "Technical specification",
+      "API contract design",
+      "Backend implementation",
+      "Frontend implementation",
+      "Unit & integration tests"
+    ],
+    "collaboration_mission": "feature-development",
+    "apply_proposal_type": "widget",
+    "validation_required": true,
+    "tags": [
+      "ai",
+      "risk-score",
+      "widget",
+      "portfolio",
+      "ml"
+    ]
+  },
+  "generated_at": "2026-05-12T21:03:49.244006"
+}

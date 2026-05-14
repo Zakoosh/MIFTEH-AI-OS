@@ -1,0 +1,26 @@
+[
+  {
+    "id": "1772410f-7e32-4028-a0fc-388ae8edc92e",
+    "action": "record_change",
+    "entity_id": "7a115cab-5012-4256-b218-23945c8d70cf",
+    "entity_type": "RepositoryChange",
+    "details": {
+      "status": "draft"
+    },
+    "timestamp": "2026-05-13 05:52:52.926919",
+    "success": true,
+    "error": null
+  },
+  {
+    "id": "8868b140-db15-438c-ab11-6975d12509bc",
+    "action": "update_status",
+    "entity_id": "7a115cab-5012-4256-b218-23945c8d70cf",
+    "entity_type": "RepositoryChange",
+    "details": {
+      "new_status": "preview"
+    },
+    "timestamp": "2026-05-13 05:52:52.941294",
+    "success": true,
+    "error": null
+  }
+]

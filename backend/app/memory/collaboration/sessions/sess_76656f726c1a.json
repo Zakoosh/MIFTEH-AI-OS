@@ -1,0 +1,44 @@
+{
+  "session_id": "sess_76656f726c1a",
+  "mission": "category-optimization",
+  "proposal_id": "",
+  "project_id": "yallaplays",
+  "triggered_by": "api",
+  "thread_ids": [
+    "thr_44519734cbfb"
+  ],
+  "agents": [
+    "marketing-seo-specialist",
+    "marketing-growth-hacker",
+    "product-manager",
+    "testing-reality-checker",
+    "testing-performance-benchmarker"
+  ],
+  "agent_roles": {
+    "marketing-seo-specialist": "implementer",
+    "marketing-growth-hacker": "implementer",
+    "product-manager": "reviewer",
+    "testing-reality-checker": "validator",
+    "testing-performance-benchmarker": "validator"
+  },
+  "consensus_score": 92.1,
+  "approved": true,
+  "review_status": "approved",
+  "reviewed_by": [
+    "testing-performance-benchmarker",
+    "product-manager",
+    "testing-reality-checker"
+  ],
+  "quality_score": 96.0,
+  "conflicts_detected": 0,
+  "conflicts_resolved": 0,
+  "started_at": "2026-05-12T20:03:17.573503",
+  "completed_at": "2026-05-12T20:03:17.579721",
+  "status": "approved",
+  "summary": "Mission 'category-optimization' — 5 agents, consensus 92.1, approved.",
+  "insights": [
+    "Mission 'category-optimization' completed with 5 agents: marketing-seo-specialist, marketing-growth-hacker, product-manager, testing-reality-checker, testing-performance-benchmarker.",
+    "Consensus score: 92.1/100 (threshold: 75.0). Approved.",
+    "All quality control checks passed."
+  ]
+}

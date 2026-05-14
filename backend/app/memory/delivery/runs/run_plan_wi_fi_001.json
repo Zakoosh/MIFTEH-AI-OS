@@ -1,0 +1,487 @@
+{
+  "run_id": "run_plan_wi_fi_001",
+  "plan_id": "plan_wi_fi_001",
+  "work_item_id": "wi_fi_001",
+  "project": "fionera",
+  "title": "Add AI Portfolio Risk Score Widget",
+  "triggered_by": "autonomous",
+  "dry_run": true,
+  "simulated": true,
+  "current_phase": "deployment",
+  "phases_completed": [
+    "preparation",
+    "implementation",
+    "review",
+    "deployment"
+  ],
+  "phases_remaining": [],
+  "completed_steps": 7,
+  "total_steps": 8,
+  "remaining_steps": 1,
+  "health_score": 97.0,
+  "validation_passed": true,
+  "rollback_ready": true,
+  "deployment_preview_generated": true,
+  "recovery_actions": [],
+  "phases": [
+    {
+      "phase_id": "ph_plan_wi_fi_001_preparation",
+      "plan_id": "plan_wi_fi_001",
+      "run_id": "run_plan_wi_fi_001",
+      "phase_name": "preparation",
+      "phase_number": 1,
+      "steps": [
+        {
+          "step_id": "step_wi_fi_001_01",
+          "plan_id": "plan_wi_fi_001",
+          "run_id": "run_plan_wi_fi_001",
+          "sequence": 1,
+          "title": "Technical specification",
+          "phase": "preparation",
+          "estimated_hours": 4.0,
+          "actual_hours": 4.0,
+          "assigned_agent_role": "product-manager",
+          "status": "failed",
+          "validation_required": false,
+          "output": "Step failed: unexpected error during execution (simulated)",
+          "error": "Execution error (simulated)",
+          "simulated": true,
+          "executed_at": "2026-05-12T21:03:49.244941"
+        },
+        {
+          "step_id": "step_wi_fi_001_02",
+          "plan_id": "plan_wi_fi_001",
+          "run_id": "run_plan_wi_fi_001",
+          "sequence": 2,
+          "title": "API contract design",
+          "phase": "preparation",
+          "estimated_hours": 3.0,
+          "actual_hours": 3.0,
+          "assigned_agent_role": "engineering-backend-developer",
+          "status": "completed",
+          "validation_required": false,
+          "output": "API contract defined: 4 endpoints, OpenAPI spec updated",
+          "error": "",
+          "simulated": true,
+          "executed_at": "2026-05-12T21:03:49.244971"
+        }
+      ],
+      "total_steps": 2,
+      "completed_steps": 1,
+      "failed_steps": 1,
+      "status": "completed",
+      "validation_result": {
+        "checkpoint_id": "ck_plan_wi_fi_001_preparation",
+        "plan_id": "plan_wi_fi_001",
+        "run_id": "run_plan_wi_fi_001",
+        "phase": "preparation",
+        "phase_number": 1,
+        "checks_run": 2,
+        "checks_passed": 2,
+        "checks_failed": 0,
+        "blocking_failures": 0,
+        "result": "passed",
+        "details": [
+          {
+            "check": "Spec approved by PM",
+            "blocking": true,
+            "passed": true,
+            "message": "Pass"
+          },
+          {
+            "check": "API contract reviewed",
+            "blocking": true,
+            "passed": true,
+            "message": "Pass"
+          }
+        ],
+        "timestamp": "2026-05-12T21:03:49.245001",
+        "duration_seconds": 0.4
+      },
+      "started_at": "2026-05-12T21:03:49.244986",
+      "completed_at": "2026-05-12T21:03:49.244987",
+      "duration_seconds": 0.7000000000000001,
+      "rollback_available": true
+    },
+    {
+      "phase_id": "ph_plan_wi_fi_001_implementation",
+      "plan_id": "plan_wi_fi_001",
+      "run_id": "run_plan_wi_fi_001",
+      "phase_name": "implementation",
+      "phase_number": 2,
+      "steps": [
+        {
+          "step_id": "step_wi_fi_001_03",
+          "plan_id": "plan_wi_fi_001",
+          "run_id": "run_plan_wi_fi_001",
+          "sequence": 3,
+          "title": "Backend implementation",
+          "phase": "implementation",
+          "estimated_hours": 16.0,
+          "actual_hours": 16.0,
+          "assigned_agent_role": "engineering-backend-developer",
+          "status": "completed",
+          "validation_required": false,
+          "output": "Feature specification reviewed and approved by PM",
+          "error": "",
+          "simulated": true,
+          "executed_at": "2026-05-12T21:03:49.245739"
+        },
+        {
+          "step_id": "step_wi_fi_001_04",
+          "plan_id": "plan_wi_fi_001",
+          "run_id": "run_plan_wi_fi_001",
+          "sequence": 4,
+          "title": "Frontend implementation",
+          "phase": "implementation",
+          "estimated_hours": 12.0,
+          "actual_hours": 12.0,
+          "assigned_agent_role": "engineering-frontend-developer",
+          "status": "completed",
+          "validation_required": false,
+          "output": "API contract defined: 4 endpoints, OpenAPI spec updated",
+          "error": "",
+          "simulated": true,
+          "executed_at": "2026-05-12T21:03:49.245767"
+        }
+      ],
+      "total_steps": 2,
+      "completed_steps": 2,
+      "failed_steps": 0,
+      "status": "completed",
+      "validation_result": {
+        "checkpoint_id": "ck_plan_wi_fi_001_implementation",
+        "plan_id": "plan_wi_fi_001",
+        "run_id": "run_plan_wi_fi_001",
+        "phase": "implementation",
+        "phase_number": 2,
+        "checks_run": 3,
+        "checks_passed": 3,
+        "checks_failed": 0,
+        "blocking_failures": 0,
+        "result": "passed",
+        "details": [
+          {
+            "check": "Backend tests passing",
+            "blocking": true,
+            "passed": true,
+            "message": "Pass"
+          },
+          {
+            "check": "Frontend builds without error",
+            "blocking": true,
+            "passed": true,
+            "message": "Pass"
+          },
+          {
+            "check": "ESLint clean",
+            "blocking": false,
+            "passed": true,
+            "message": "Pass"
+          }
+        ],
+        "timestamp": "2026-05-12T21:03:49.245828",
+        "duration_seconds": 0.6000000000000001
+      },
+      "started_at": "2026-05-12T21:03:49.245787",
+      "completed_at": "2026-05-12T21:03:49.245804",
+      "duration_seconds": 2.8000000000000003,
+      "rollback_available": true
+    },
+    {
+      "phase_id": "ph_plan_wi_fi_001_review",
+      "plan_id": "plan_wi_fi_001",
+      "run_id": "run_plan_wi_fi_001",
+      "phase_name": "review",
+      "phase_number": 3,
+      "steps": [
+        {
+          "step_id": "step_wi_fi_001_05",
+          "plan_id": "plan_wi_fi_001",
+          "run_id": "run_plan_wi_fi_001",
+          "sequence": 5,
+          "title": "Unit & integration tests",
+          "phase": "review",
+          "estimated_hours": 6.0,
+          "actual_hours": 6.0,
+          "assigned_agent_role": "engineering-backend-developer",
+          "status": "completed",
+          "validation_required": true,
+          "output": "Feature specification reviewed and approved by PM",
+          "error": "",
+          "simulated": true,
+          "executed_at": "2026-05-12T21:03:49.246497"
+        },
+        {
+          "step_id": "step_wi_fi_001_06",
+          "plan_id": "plan_wi_fi_001",
+          "run_id": "run_plan_wi_fi_001",
+          "sequence": 6,
+          "title": "QA review",
+          "phase": "review",
+          "estimated_hours": 4.0,
+          "actual_hours": 4.0,
+          "assigned_agent_role": "qa-engineer",
+          "status": "completed",
+          "validation_required": true,
+          "output": "API contract defined: 4 endpoints, OpenAPI spec updated",
+          "error": "",
+          "simulated": true,
+          "executed_at": "2026-05-12T21:03:49.246524"
+        }
+      ],
+      "total_steps": 2,
+      "completed_steps": 2,
+      "failed_steps": 0,
+      "status": "completed",
+      "validation_result": {
+        "checkpoint_id": "ck_plan_wi_fi_001_review",
+        "plan_id": "plan_wi_fi_001",
+        "run_id": "run_plan_wi_fi_001",
+        "phase": "review",
+        "phase_number": 3,
+        "checks_run": 3,
+        "checks_passed": 3,
+        "checks_failed": 0,
+        "blocking_failures": 0,
+        "result": "passed",
+        "details": [
+          {
+            "check": "Unit test coverage \u2265 80%",
+            "blocking": true,
+            "passed": true,
+            "message": "Pass"
+          },
+          {
+            "check": "QA sign-off",
+            "blocking": true,
+            "passed": true,
+            "message": "Pass"
+          },
+          {
+            "check": "Security scan clean",
+            "blocking": true,
+            "passed": true,
+            "message": "Pass"
+          }
+        ],
+        "timestamp": "2026-05-12T21:03:49.246567",
+        "duration_seconds": 0.6000000000000001
+      },
+      "started_at": "2026-05-12T21:03:49.246543",
+      "completed_at": "2026-05-12T21:03:49.246545",
+      "duration_seconds": 1.0,
+      "rollback_available": true
+    },
+    {
+      "phase_id": "ph_plan_wi_fi_001_deployment",
+      "plan_id": "plan_wi_fi_001",
+      "run_id": "run_plan_wi_fi_001",
+      "phase_name": "deployment",
+      "phase_number": 4,
+      "steps": [
+        {
+          "step_id": "step_wi_fi_001_07",
+          "plan_id": "plan_wi_fi_001",
+          "run_id": "run_plan_wi_fi_001",
+          "sequence": 7,
+          "title": "Staging deployment & smoke test",
+          "phase": "deployment",
+          "estimated_hours": 2.0,
+          "actual_hours": 2.0,
+          "assigned_agent_role": "engineering-backend-developer",
+          "status": "completed",
+          "validation_required": true,
+          "output": "Feature specification reviewed and approved by PM",
+          "error": "",
+          "simulated": true,
+          "executed_at": "2026-05-12T21:03:49.247248"
+        },
+        {
+          "step_id": "step_wi_fi_001_08",
+          "plan_id": "plan_wi_fi_001",
+          "run_id": "run_plan_wi_fi_001",
+          "sequence": 8,
+          "title": "Production deployment",
+          "phase": "deployment",
+          "estimated_hours": 2.0,
+          "actual_hours": 2.0,
+          "assigned_agent_role": "engineering-backend-developer",
+          "status": "completed",
+          "validation_required": true,
+          "output": "API contract defined: 4 endpoints, OpenAPI spec updated",
+          "error": "",
+          "simulated": true,
+          "executed_at": "2026-05-12T21:03:49.247275"
+        }
+      ],
+      "total_steps": 2,
+      "completed_steps": 2,
+      "failed_steps": 0,
+      "status": "completed",
+      "validation_result": {
+        "checkpoint_id": "ck_plan_wi_fi_001_deployment",
+        "plan_id": "plan_wi_fi_001",
+        "run_id": "run_plan_wi_fi_001",
+        "phase": "deployment",
+        "phase_number": 4,
+        "checks_run": 2,
+        "checks_passed": 2,
+        "checks_failed": 0,
+        "blocking_failures": 0,
+        "result": "passed",
+        "details": [
+          {
+            "check": "Staging smoke tests pass",
+            "blocking": true,
+            "passed": true,
+            "message": "Pass"
+          },
+          {
+            "check": "Feature flag active",
+            "blocking": true,
+            "passed": true,
+            "message": "Pass"
+          }
+        ],
+        "timestamp": "2026-05-12T21:03:49.247317",
+        "duration_seconds": 0.4
+      },
+      "started_at": "2026-05-12T21:03:49.247297",
+      "completed_at": "2026-05-12T21:03:49.247300",
+      "duration_seconds": 0.4,
+      "rollback_available": true
+    }
+  ],
+  "checkpoints": [
+    {
+      "checkpoint_id": "ck_plan_wi_fi_001_preparation",
+      "plan_id": "plan_wi_fi_001",
+      "run_id": "run_plan_wi_fi_001",
+      "phase": "preparation",
+      "phase_number": 1,
+      "checks_run": 2,
+      "checks_passed": 2,
+      "checks_failed": 0,
+      "blocking_failures": 0,
+      "result": "passed",
+      "details": [
+        {
+          "check": "Spec approved by PM",
+          "blocking": true,
+          "passed": true,
+          "message": "Pass"
+        },
+        {
+          "check": "API contract reviewed",
+          "blocking": true,
+          "passed": true,
+          "message": "Pass"
+        }
+      ],
+      "timestamp": "2026-05-12T21:03:49.245001",
+      "duration_seconds": 0.4
+    },
+    {
+      "checkpoint_id": "ck_plan_wi_fi_001_implementation",
+      "plan_id": "plan_wi_fi_001",
+      "run_id": "run_plan_wi_fi_001",
+      "phase": "implementation",
+      "phase_number": 2,
+      "checks_run": 3,
+      "checks_passed": 3,
+      "checks_failed": 0,
+      "blocking_failures": 0,
+      "result": "passed",
+      "details": [
+        {
+          "check": "Backend tests passing",
+          "blocking": true,
+          "passed": true,
+          "message": "Pass"
+        },
+        {
+          "check": "Frontend builds without error",
+          "blocking": true,
+          "passed": true,
+          "message": "Pass"
+        },
+        {
+          "check": "ESLint clean",
+          "blocking": false,
+          "passed": true,
+          "message": "Pass"
+        }
+      ],
+      "timestamp": "2026-05-12T21:03:49.245828",
+      "duration_seconds": 0.6000000000000001
+    },
+    {
+      "checkpoint_id": "ck_plan_wi_fi_001_review",
+      "plan_id": "plan_wi_fi_001",
+      "run_id": "run_plan_wi_fi_001",
+      "phase": "review",
+      "phase_number": 3,
+      "checks_run": 3,
+      "checks_passed": 3,
+      "checks_failed": 0,
+      "blocking_failures": 0,
+      "result": "passed",
+      "details": [
+        {
+          "check": "Unit test coverage \u2265 80%",
+          "blocking": true,
+          "passed": true,
+          "message": "Pass"
+        },
+        {
+          "check": "QA sign-off",
+          "blocking": true,
+          "passed": true,
+          "message": "Pass"
+        },
+        {
+          "check": "Security scan clean",
+          "blocking": true,
+          "passed": true,
+          "message": "Pass"
+        }
+      ],
+      "timestamp": "2026-05-12T21:03:49.246567",
+      "duration_seconds": 0.6000000000000001
+    },
+    {
+      "checkpoint_id": "ck_plan_wi_fi_001_deployment",
+      "plan_id": "plan_wi_fi_001",
+      "run_id": "run_plan_wi_fi_001",
+      "phase": "deployment",
+      "phase_number": 4,
+      "checks_run": 2,
+      "checks_passed": 2,
+      "checks_failed": 0,
+      "blocking_failures": 0,
+      "result": "passed",
+      "details": [
+        {
+          "check": "Staging smoke tests pass",
+          "blocking": true,
+          "passed": true,
+          "message": "Pass"
+        },
+        {
+          "check": "Feature flag active",
+          "blocking": true,
+          "passed": true,
+          "message": "Pass"
+        }
+      ],
+      "timestamp": "2026-05-12T21:03:49.247317",
+      "duration_seconds": 0.4
+    }
+  ],
+  "collaborative_session_id": "cds_plan_wi_fi_001",
+  "started_at": "2026-05-12T21:03:49.248042",
+  "completed_at": "2026-05-12T21:03:49.248047",
+  "status": "completed",
+  "error": ""
+}

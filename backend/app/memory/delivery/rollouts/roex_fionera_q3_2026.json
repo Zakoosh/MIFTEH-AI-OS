@@ -1,0 +1,86 @@
+{
+  "rollout_id": "roex_fionera_q3_2026",
+  "project": "fionera",
+  "quarter": "Q3-2026",
+  "title": "Fionera Q3-2026 Rollout Plan",
+  "total_phases": 4,
+  "total_work_items": 18,
+  "items_delivered": 18,
+  "delivery_rate_pct": 100.0,
+  "all_phases_passed": true,
+  "overall_health": "good",
+  "dry_run": true,
+  "simulated": true,
+  "phases": [
+    {
+      "phase_number": 1,
+      "title": "Foundation",
+      "status": "completed",
+      "work_item_ids": [
+        "wi_fi_016",
+        "wi_fi_017"
+      ],
+      "items_delivered": 2,
+      "health_score": 89.3,
+      "exit_criteria_met": true,
+      "duration_days": 14,
+      "dry_run": true
+    },
+    {
+      "phase_number": 2,
+      "title": "Core Implementation",
+      "status": "completed",
+      "work_item_ids": [
+        "wi_fi_001",
+        "wi_fi_002",
+        "wi_fi_003",
+        "wi_fi_004",
+        "wi_fi_005",
+        "wi_fi_006",
+        "wi_fi_007",
+        "wi_fi_018"
+      ],
+      "items_delivered": 8,
+      "health_score": 93.8,
+      "exit_criteria_met": true,
+      "duration_days": 21,
+      "dry_run": true
+    },
+    {
+      "phase_number": 3,
+      "title": "Enhancement",
+      "status": "completed",
+      "work_item_ids": [
+        "wi_fi_009",
+        "wi_fi_010",
+        "wi_fi_011",
+        "wi_fi_012",
+        "wi_fi_013",
+        "wi_fi_014",
+        "wi_fi_015"
+      ],
+      "items_delivered": 7,
+      "health_score": 95.1,
+      "exit_criteria_met": true,
+      "duration_days": 21,
+      "dry_run": true
+    },
+    {
+      "phase_number": 4,
+      "title": "Optimisation & Launch",
+      "status": "completed",
+      "work_item_ids": [
+        "wi_fi_008"
+      ],
+      "items_delivered": 1,
+      "health_score": 91.2,
+      "exit_criteria_met": true,
+      "duration_days": 14,
+      "dry_run": true
+    }
+  ],
+  "executed_at": "2026-05-12T21:02:32.430714",
+  "validation_passed": true,
+  "rollback_ready": true,
+  "deployment_preview_generated": true
+}

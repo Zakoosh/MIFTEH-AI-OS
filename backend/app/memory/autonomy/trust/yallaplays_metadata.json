@@ -1,0 +1,15 @@
+{
+  "key": "yallaplays:metadata",
+  "project_id": "yallaplays",
+  "proposal_type": "metadata",
+  "score": 80.0,
+  "apply_count": 0,
+  "success_count": 0,
+  "failure_count": 0,
+  "rollback_count": 0,
+  "rollback_rate": 0.0,
+  "autonomous_apply_allowed": true,
+  "suspended": false,
+  "suspension_reason": "",
+  "last_updated": "2026-05-12T19:48:50.439224"
+}

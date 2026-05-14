@@ -1,0 +1,36 @@
+{
+  "cycle_id": "cycle_9483c6fdab33",
+  "triggered_by": "smoke-test",
+  "dry_run": true,
+  "started_at": "2026-05-12T19:50:44.132393",
+  "completed_at": "2026-05-12T19:50:44.151712",
+  "proposals_evaluated": 11,
+  "proposals_selected": 3,
+  "proposals_applied": 0,
+  "proposals_skipped": 3,
+  "outcome_ids": [
+    "out_97d70f1b4445",
+    "out_9bc94cd401a4",
+    "out_db59319a80ea"
+  ],
+  "trust_updates": {
+    "yallaplays:seo": {
+      "old_score": 80.0,
+      "new_score": 80.0,
+      "action": "no_change"
+    },
+    "yallaplays:category": {
+      "old_score": 80.0,
+      "new_score": 80.0,
+      "action": "no_change"
+    },
+    "yallaplays:manifest": {
+      "old_score": 80.0,
+      "new_score": 80.0,
+      "action": "no_change"
+    }
+  },
+  "status": "completed",
+  "error": "",
+  "summary": "Evaluated 11, selected 3, applied 0, skipped 3."
+}

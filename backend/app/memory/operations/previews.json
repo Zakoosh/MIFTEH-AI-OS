@@ -1,0 +1,1859 @@
+[
+  {
+    "id": "d7db9745-11d3-4d41-8b0b-3eada6b6abc7",
+    "output_id": "6db54f21-adb3-44ae-8096-201369f9cc5c",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# SEO Page Preview \u2014 Action Games\n\n## Meta Tags\n- **Title**: Best Action Games Online \u2014 Play Free on YallaPlays\n- **Description**: Play the best Action Games online for free on YallaPlays. No download needed \u2014 instant play on mobile and desktop. Discover new Action Games daily.\n- **Canonical**: https://yallaplays.com/games/action-games/\n\n## Page Content\n### Free Action Games \u2014 Play Instantly Online\nYallaPlays offers the largest collection of free Action Games in the Arab world. Whether you prefer fast-paced shooters, fighting games, or platformers, find your next favourite game here. All games are playable directly in your browser \u2014 no download, no registration required.\n\n## Target Keywords\n- action-games\n- free action-games\n- action-games online\n- play action-games\n- best action-games 2025\n\n## Structured Data\n- Type: CollectionPage\n- Publisher: YallaPlays\n\n## Files Changed\n- `src/pages/games/action-games/index.tsx`\n- `src/pages/games/action-games/seo.ts`\n\n---\n*Preview-only \u2014 requires approval before apply*\n",
+    "diff_summary": "Creates/updates 2 files for Action Games SEO page",
+    "files_changed": [
+      "src/pages/games/action-games/index.tsx",
+      "src/pages/games/action-games/seo.ts"
+    ],
+    "estimated_impact": {
+      "seo_score_improvement": "+15-25 points",
+      "pages_indexed": 1,
+      "target_keywords": 5,
+      "estimated_organic_traffic_gain": "200-500 visits/month"
+    },
+    "created_at": "2026-05-13 06:07:08.419172",
+    "expires_at": null
+  },
+  {
+    "id": "03e2d884-dbbd-42e6-bba6-d11dd7e2d763",
+    "output_id": "9f98edeb-656f-46e2-bf78-e133b9966ac1",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# Metadata Patches \u2014 6 Games\n\n- **Subway Surfers**: title + description + schema updated\n- **8 Ball Pool**: title + description + schema updated\n- **Candy Crush Saga**: title + description + schema updated\n- **Temple Run**: title + description + schema updated\n- **Ludo Star**: title + description + schema updated\n- **PUBG Mobile**: title + description + schema updated",
+    "diff_summary": "Updates metadata for 6 games across 6 files",
+    "files_changed": [
+      "src/data/games/subway-surfers/metadata.json",
+      "src/data/games/8-ball-pool/metadata.json",
+      "src/data/games/candy-crush/metadata.json",
+      "src/data/games/temple-run/metadata.json",
+      "src/data/games/ludo-star/metadata.json",
+      "src/data/games/pubg-mobile/metadata.json"
+    ],
+    "estimated_impact": {
+      "games_improved": 6,
+      "schema_added": 6,
+      "seo_score_delta": "+5-10 points per game"
+    },
+    "created_at": "2026-05-13 06:07:08.422224",
+    "expires_at": null
+  },
+  {
+    "id": "8c0bfdc2-c91e-41f0-8a50-6fdc209c959d",
+    "output_id": "3eab5f53-7105-4148-8cf0-f085956a6ff3",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# Trending Game Recommendations\n\n## Top Trending\n\n#1 Subway Surfers \u2014 45,200 plays (score: 98)\n#2 8 Ball Pool \u2014 38,100 plays (score: 95)\n#3 Among Us \u2014 29,800 plays (score: 91)\n#4 Ludo Star \u2014 27,400 plays (score: 89)\n#5 PUBG Mobile \u2014 24,100 plays (score: 87)\n#6 Clash of Clans \u2014 21,300 plays (score: 84)",
+    "diff_summary": "Creates trending widget + recommendation engine config (3 files)",
+    "files_changed": [
+      "src/components/TrendingGamesWidget.tsx",
+      "src/config/recommendation-engine.json",
+      "src/data/trending-games.json"
+    ],
+    "estimated_impact": {
+      "ctr_improvement": "+15-25%",
+      "session_depth": "+0.5 pages/session",
+      "retention": "+8%"
+    },
+    "created_at": "2026-05-13 06:07:08.425211",
+    "expires_at": null
+  },
+  {
+    "id": "b38f891f-0065-4bd2-b3b5-9eca9ed4d6ea",
+    "output_id": "43eb7edc-d1b1-4a2e-b2eb-e0f2d6aee95d",
+    "project": "fionera",
+    "preview_html": "",
+    "preview_markdown": "# Finance Widgets \u2014 5 Components\n\n## Live Price Ticker\nReal-time price display with change indicators\n## Portfolio Summary Card\nCompact portfolio overview with P&L\n## Market Movers\nTop gainers and losers for the session\n## Economic Calendar Widget\nUpcoming economic events with impact indicators\n## Market Sentiment Gauge\nFear & Greed index and social sentiment",
+    "diff_summary": "Creates 4 finance widget components",
+    "files_changed": [
+      "src/components/widgets/PriceTicker.tsx",
+      "src/components/widgets/PortfolioSummaryCard.tsx",
+      "src/components/widgets/MarketMovers.tsx",
+      "src/config/widgets.json"
+    ],
+    "estimated_impact": {
+      "user_engagement": "+20%",
+      "data_freshness": "10s refresh",
+      "portfolio_visibility": "improved"
+    },
+    "created_at": "2026-05-13 06:07:08.428129",
+    "expires_at": null
+  },
+  {
+    "id": "f5eae2a0-d425-4a3c-8582-2a188d3425fb",
+    "output_id": "b9640749-6c70-4805-9edd-3208f3c1a460",
+    "project": "fionera",
+    "preview_html": "",
+    "preview_markdown": "# Market Insights Preview\n\n## Weekly Market Outlook\nMarkets this week are influenced by Federal Reserve rate expectations. Key levels to watch on Tadawul (TASI): support at 11,200, resistance at 11,850. Sentiment is cautiously bullish with volume above...\n\n## Sector Rotation Analysis\nCapital is rotating from Technology into Energy. This typically signals a risk-off rotation into defensive names. Monitor ARAMCO, SABIC, STC for entry opportunities....\n\n## Earnings Season Preview\nThis week's key earnings: Saudi Aramco, stc, Al Rajhi Bank. Consensus expects flat to slightly higher EPS vs last quarter. Watch for guidance on forward guidance and dividend policy....\n\n## Technical Setup of the Week\n2222.SR (Aramco) is forming a ascending triangle pattern on the daily chart. Target: SAR 32.50, Stop: SAR 29.80. Confluence with 200-day EMA at SAR 30.20....",
+    "diff_summary": "Generates 4 market insights + InsightCard component",
+    "files_changed": [
+      "src/components/insights/InsightCard.tsx",
+      "src/data/insights/latest.json"
+    ],
+    "estimated_impact": {
+      "user_retention": "+12%",
+      "avg_session_duration": "+45s",
+      "premium_conversions": "+3%"
+    },
+    "created_at": "2026-05-13 06:07:08.431382",
+    "expires_at": null
+  },
+  {
+    "id": "54921ce9-579e-4aaf-9373-d18fa42be9d6",
+    "output_id": "c7fa144a-ebbe-4c86-a006-2a14554f1c53",
+    "project": "fionera",
+    "preview_html": "",
+    "preview_markdown": "# UX Proposals\n\n## Improved Onboarding Flow [CRITICAL]\n**Problem**: High drop-off rate during KYC and account setup\n**Solution**: 5-step progressive onboarding with progress indicator, skip options, and save-and-continue\n**Impact**: +25% onboarding completion rate\n\n## Dark Mode Support [HIGH]\n**Problem**: No dark mode \u2014 causes eye strain for night traders\n**Solution**: System-aware dark mode with manual toggle, persisted in user preferences\n**Impact**: +15% evening session engagement\n\n## Full RTL Arabic Support [CRITICAL]\n**Problem**: Arabic UI is partially RTL \u2014 charts and tables break in Arabic mode\n**Solution**: Full RTL CSS with dir=rtl, RTL-aware chart labels, Arabic number formatting\n**Impact**: +40% Arabic user retention\n\n## Improved Empty States [MEDIUM]\n**Problem**: Empty watchlist/portfolio shows blank page with no guidance\n**Solution**: Illustrated empty states with clear CTAs and sample data preview\n**Impact**: +20% feature discovery\n\n## Global Search Upgrade [HIGH]\n**Problem**: Search only matches exact ticker symbols \u2014 misses company names\n**Solution**: Fuzzy search with company name, ticker, ISIN lookup + recent searches\n**Impact**: +30% symbol discovery rate",
+    "diff_summary": "Creates 7 UX proposal files and components",
+    "files_changed": [
+      "src/components/EmptyStates.tsx",
+      "src/components/GlobalSearch.tsx",
+      "docs/ux-proposals/onboarding_flow.md",
+      "docs/ux-proposals/dark_mode.md",
+      "docs/ux-proposals/rtl_arabic.md",
+      "docs/ux-proposals/empty_states.md",
+      "docs/ux-proposals/search_upgrade.md"
+    ],
+    "estimated_impact": {
+      "onboarding_completion": "+25%",
+      "arabic_retention": "+40%",
+      "search_success": "+30%"
+    },
+    "created_at": "2026-05-13 06:07:08.434756",
+    "expires_at": null
+  },
+  {
+    "id": "973c1237-6bd0-4f4b-997c-3a977de774be",
+    "output_id": "9a267468-76a2-4877-a2fc-97994ff66b0a",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# SEO Page Preview \u2014 Action Games\n\n## Meta Tags\n- **Title**: Best Action Games Online \u2014 Play Free on YallaPlays\n- **Description**: Play the best Action Games online for free on YallaPlays. No download needed \u2014 instant play on mobile and desktop. Discover new Action Games daily.\n- **Canonical**: https://yallaplays.com/games/action-games/\n\n## Page Content\n### Free Action Games \u2014 Play Instantly Online\nYallaPlays offers the largest collection of free Action Games in the Arab world. Whether you prefer fast-paced shooters, fighting games, or platformers, find your next favourite game here. All games are playable directly in your browser \u2014 no download, no registration required.\n\n## Target Keywords\n- action-games\n- free action-games\n- action-games online\n- play action-games\n- best action-games 2025\n\n## Structured Data\n- Type: CollectionPage\n- Publisher: YallaPlays\n\n## Files Changed\n- `src/pages/games/action-games/index.tsx`\n- `src/pages/games/action-games/seo.ts`\n\n---\n*Preview-only \u2014 requires approval before apply*\n",
+    "diff_summary": "Creates/updates 2 files for Action Games SEO page",
+    "files_changed": [
+      "src/pages/games/action-games/index.tsx",
+      "src/pages/games/action-games/seo.ts"
+    ],
+    "estimated_impact": {
+      "seo_score_improvement": "+15-25 points",
+      "pages_indexed": 1,
+      "target_keywords": 5,
+      "estimated_organic_traffic_gain": "200-500 visits/month"
+    },
+    "created_at": "2026-05-13 06:09:03.810569",
+    "expires_at": null
+  },
+  {
+    "id": "a9037a14-9967-4114-b4d2-20ef750839a1",
+    "output_id": "39c9769b-aae0-496e-8f19-f40c04d5161d",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# Category Page \u2014 Popular Games\n\n**URL**: https://yallaplays.com/games/popular/\n\n**Sections**: hero_banner, featured_games, game_grid, newsletter_cta\n\n**Files**: 2 files updated",
+    "diff_summary": "Creates Popular Games category landing page with 4 sections",
+    "files_changed": [
+      "src/pages/games/popular/index.tsx",
+      "src/config/categories/popular.json"
+    ],
+    "estimated_impact": {
+      "new_indexable_page": true,
+      "filter_ux": "improved",
+      "bounce_rate_impact": "-5% estimated"
+    },
+    "created_at": "2026-05-13 06:09:03.814093",
+    "expires_at": null
+  },
+  {
+    "id": "f1adcf54-ccb2-4366-9e20-90a8635de82d",
+    "output_id": "beae84b7-5560-474f-a384-bd82e9b3452e",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# Metadata Patches \u2014 6 Games\n\n- **Subway Surfers**: title + description + schema updated\n- **8 Ball Pool**: title + description + schema updated\n- **Candy Crush Saga**: title + description + schema updated\n- **Temple Run**: title + description + schema updated\n- **Ludo Star**: title + description + schema updated\n- **PUBG Mobile**: title + description + schema updated",
+    "diff_summary": "Updates metadata for 6 games across 6 files",
+    "files_changed": [
+      "src/data/games/subway-surfers/metadata.json",
+      "src/data/games/8-ball-pool/metadata.json",
+      "src/data/games/candy-crush/metadata.json",
+      "src/data/games/temple-run/metadata.json",
+      "src/data/games/ludo-star/metadata.json",
+      "src/data/games/pubg-mobile/metadata.json"
+    ],
+    "estimated_impact": {
+      "games_improved": 6,
+      "schema_added": 6,
+      "seo_score_delta": "+5-10 points per game"
+    },
+    "created_at": "2026-05-13 06:09:03.816801",
+    "expires_at": null
+  },
+  {
+    "id": "179cafb2-6676-4e96-ba80-9402c0e1dc2f",
+    "output_id": "22349442-3bf3-420a-a1d2-032753013d94",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# Mobile Optimizations\n\n## Audit Results (8 checks)\n\n- [HIGH] Viewport Meta Tag: Add <meta name='viewport' content='width=device-width, initial-scale=1'>\n- [HIGH] Touch Target Sizes: Ensure all interactive elements are \u226544x44px\n- [HIGH] Minimum Font Sizes: Base font-size \u226516px to prevent iOS zoom\n- [MEDIUM] Game Canvas Scaling: Add touch event handlers and responsive canvas scaling\n- [MEDIUM] Image Lazy Loading: Add loading='lazy' and proper srcset for thumbnails\n- [MEDIUM] PWA Manifest: Add PWA manifest for home screen installation\n- [MEDIUM] Offline Support: Cache game assets for offline play\n- [MEDIUM] Layout Shift Prevention: Add aspect-ratio to game cards to prevent CLS",
+    "diff_summary": "Applies 3 mobile optimization patches",
+    "files_changed": [
+      "src/styles/mobile-optimizations.css",
+      "public/manifest.json",
+      "src/components/GameEmbed.tsx"
+    ],
+    "estimated_impact": {
+      "mobile_score_improvement": "+20-30 Lighthouse points",
+      "cls_score": "< 0.1 target",
+      "touch_ux": "improved",
+      "pwa_ready": true,
+      "mobile_traffic_impact": "+10-15% engagement"
+    },
+    "created_at": "2026-05-13 06:09:03.819585",
+    "expires_at": null
+  },
+  {
+    "id": "504bb234-095f-4a41-9988-d63ab5bf73b8",
+    "output_id": "93fd3556-895f-4f07-8d30-5881dd076a82",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# Internal Linking Plan\n\n## 8 Link Opportunities\n\n- `/games/action/` \u2192 `/games/shooting/` (Shooting Games) [high]\n- `/games/sports/` \u2192 `/games/football/` (Football Games) [high]\n- `/games/puzzle/` \u2192 `/games/card/` (Card & Board Games) [medium]\n- `/games/racing/` \u2192 `/games/mobile/` (Best Mobile Games) [high]\n- `/` \u2192 `/games/trending/` (Trending Games) [high]\n- `/` \u2192 `/games/new/` (New Games) [high]\n- `/games/multiplayer/` \u2192 `/games/arabic/` (Arabic Games) [medium]\n- `/games/popular/` \u2192 `/games/multiplayer/` (Play With Friends) [high]",
+    "diff_summary": "Adds 3 files for internal linking infrastructure",
+    "files_changed": [
+      "src/components/RelatedCategories.tsx",
+      "src/components/Breadcrumb.tsx",
+      "src/data/internal-links.json"
+    ],
+    "estimated_impact": {
+      "page_authority_flow": "improved",
+      "crawl_depth": "reduced",
+      "seo_score_delta": "+8-12 points",
+      "user_engagement": "+5% pages/session"
+    },
+    "created_at": "2026-05-13 06:09:03.822421",
+    "expires_at": null
+  },
+  {
+    "id": "c0e38a29-fe72-44a0-b1f9-82baafd0953c",
+    "output_id": "7b61a140-be53-4c21-bdb6-97a3ef6f4020",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# Trending Game Recommendations\n\n## Top Trending\n\n#1 Subway Surfers \u2014 45,200 plays (score: 98)\n#2 8 Ball Pool \u2014 38,100 plays (score: 95)\n#3 Among Us \u2014 29,800 plays (score: 91)\n#4 Ludo Star \u2014 27,400 plays (score: 89)\n#5 PUBG Mobile \u2014 24,100 plays (score: 87)\n#6 Clash of Clans \u2014 21,300 plays (score: 84)",
+    "diff_summary": "Creates trending widget + recommendation engine config (3 files)",
+    "files_changed": [
+      "src/components/TrendingGamesWidget.tsx",
+      "src/config/recommendation-engine.json",
+      "src/data/trending-games.json"
+    ],
+    "estimated_impact": {
+      "ctr_improvement": "+15-25%",
+      "session_depth": "+0.5 pages/session",
+      "retention": "+8%"
+    },
+    "created_at": "2026-05-13 06:09:03.825497",
+    "expires_at": null
+  },
+  {
+    "id": "fc3af4b0-45a1-44c8-a771-4af19a713a58",
+    "output_id": "6c110d60-6a28-4f9b-a57d-8fbf1c819c26",
+    "project": "fionera",
+    "preview_html": "",
+    "preview_markdown": "# Finance Widgets \u2014 5 Components\n\n## Live Price Ticker\nReal-time price display with change indicators\n## Portfolio Summary Card\nCompact portfolio overview with P&L\n## Market Movers\nTop gainers and losers for the session\n## Economic Calendar Widget\nUpcoming economic events with impact indicators\n## Market Sentiment Gauge\nFear & Greed index and social sentiment",
+    "diff_summary": "Creates 4 finance widget components",
+    "files_changed": [
+      "src/components/widgets/PriceTicker.tsx",
+      "src/components/widgets/PortfolioSummaryCard.tsx",
+      "src/components/widgets/MarketMovers.tsx",
+      "src/config/widgets.json"
+    ],
+    "estimated_impact": {
+      "user_engagement": "+20%",
+      "data_freshness": "10s refresh",
+      "portfolio_visibility": "improved"
+    },
+    "created_at": "2026-05-13 06:09:03.833685",
+    "expires_at": null
+  },
+  {
+    "id": "a174005b-0b72-494a-841d-df77f87f26a6",
+    "output_id": "b54db37b-ab90-44ec-a3e5-1aee6e44310a",
+    "project": "fionera",
+    "preview_html": "",
+    "preview_markdown": "# Market Insights Preview\n\n## Weekly Market Outlook\nMarkets this week are influenced by Federal Reserve rate expectations. Key levels to watch on Tadawul (TASI): support at 11,200, resistance at 11,850. Sentiment is cautiously bullish with volume above...\n\n## Sector Rotation Analysis\nCapital is rotating from Technology into Energy. This typically signals a risk-off rotation into defensive names. Monitor ARAMCO, SABIC, STC for entry opportunities....\n\n## Earnings Season Preview\nThis week's key earnings: Saudi Aramco, stc, Al Rajhi Bank. Consensus expects flat to slightly higher EPS vs last quarter. Watch for guidance on forward guidance and dividend policy....\n\n## Technical Setup of the Week\n2222.SR (Aramco) is forming a ascending triangle pattern on the daily chart. Target: SAR 32.50, Stop: SAR 29.80. Confluence with 200-day EMA at SAR 30.20....",
+    "diff_summary": "Generates 4 market insights + InsightCard component",
+    "files_changed": [
+      "src/components/insights/InsightCard.tsx",
+      "src/data/insights/latest.json"
+    ],
+    "estimated_impact": {
+      "user_retention": "+12%",
+      "avg_session_duration": "+45s",
+      "premium_conversions": "+3%"
+    },
+    "created_at": "2026-05-13 06:09:03.837498",
+    "expires_at": null
+  },
+  {
+    "id": "16a36587-b85a-48a6-8be6-540e5a1f43c8",
+    "output_id": "0110420e-cfdd-4254-a93c-24be1a6a7483",
+    "project": "fionera",
+    "preview_html": "",
+    "preview_markdown": "# Watchlist Improvements\n\n## Features\n\n- [HIGH] **Price Alerts**: Set price targets with push/email notifications\n- [HIGH] **Per-Symbol News Feed**: Curated news for each watchlisted symbol\n- [MEDIUM] **Bulk Add Symbols**: Add multiple symbols at once via paste/CSV\n- [HIGH] **Advanced Sort & Filter**: Sort by change%, volume, market cap, sector\n- [MEDIUM] **Investment Notes**: Per-symbol private notes and thesis tracking\n- [HIGH] **Watchlist Performance**: Track hypothetical performance of watchlist vs index\n- [LOW] **Drag-to-Reorder**: Reorder watchlist items via drag and drop\n- [MEDIUM] **Export to CSV**: Export watchlist data with current prices",
+    "diff_summary": "Creates 3 watchlist improvement components",
+    "files_changed": [
+      "src/components/watchlist/EnhancedWatchlist.tsx",
+      "src/components/watchlist/PriceAlertModal.tsx",
+      "src/config/watchlist-features.json"
+    ],
+    "estimated_impact": {
+      "user_retention": "+18%",
+      "watchlist_engagement": "+35%",
+      "alert_conversions": "new feature",
+      "premium_signups": "+5%"
+    },
+    "created_at": "2026-05-13 06:09:03.841081",
+    "expires_at": null
+  },
+  {
+    "id": "34264a9b-f143-45cb-8c92-89bf5a0f232e",
+    "output_id": "381f5c88-4113-4df8-bd1d-2080cc6b8b4d",
+    "project": "fionera",
+    "preview_html": "",
+    "preview_markdown": "# Analytics Dashboard\n\n## Widgets\n\n- [CRITICAL] **Portfolio Performance**: Equity curve with benchmark overlay\n- [CRITICAL] **Asset Allocation**: Portfolio breakdown by asset class and sector\n- [HIGH] **Risk Metrics**: Beta, Sharpe ratio, max drawdown, volatility\n- [HIGH] **P&L Calendar**: Daily P&L heatmap (like GitHub contribution graph)\n- [HIGH] **Portfolio Movers**: Best and worst performers today\n- [MEDIUM] **Recent Transactions**: Paginated transaction history with search\n- [MEDIUM] **Portfolio News**: News relevant to held positions",
+    "diff_summary": "Creates 4 analytics dashboard components",
+    "files_changed": [
+      "src/components/analytics/PortfolioPerformanceChart.tsx",
+      "src/components/analytics/PnLCalendar.tsx",
+      "src/components/analytics/RiskMetricsGrid.tsx",
+      "src/config/dashboard-layout.json"
+    ],
+    "estimated_impact": {
+      "session_duration": "+2min",
+      "feature_adoption": "+40%",
+      "premium_retention": "+15%"
+    },
+    "created_at": "2026-05-13 06:09:03.847211",
+    "expires_at": null
+  },
+  {
+    "id": "99996daf-c968-4c12-a369-bfad16a07423",
+    "output_id": "20bc79c9-c8a0-4dae-a53f-01122dcef02c",
+    "project": "fionera",
+    "preview_html": "",
+    "preview_markdown": "# UX Proposals\n\n## Improved Onboarding Flow [CRITICAL]\n**Problem**: High drop-off rate during KYC and account setup\n**Solution**: 5-step progressive onboarding with progress indicator, skip options, and save-and-continue\n**Impact**: +25% onboarding completion rate\n\n## Dark Mode Support [HIGH]\n**Problem**: No dark mode \u2014 causes eye strain for night traders\n**Solution**: System-aware dark mode with manual toggle, persisted in user preferences\n**Impact**: +15% evening session engagement\n\n## Full RTL Arabic Support [CRITICAL]\n**Problem**: Arabic UI is partially RTL \u2014 charts and tables break in Arabic mode\n**Solution**: Full RTL CSS with dir=rtl, RTL-aware chart labels, Arabic number formatting\n**Impact**: +40% Arabic user retention\n\n## Improved Empty States [MEDIUM]\n**Problem**: Empty watchlist/portfolio shows blank page with no guidance\n**Solution**: Illustrated empty states with clear CTAs and sample data preview\n**Impact**: +20% feature discovery\n\n## Global Search Upgrade [HIGH]\n**Problem**: Search only matches exact ticker symbols \u2014 misses company names\n**Solution**: Fuzzy search with company name, ticker, ISIN lookup + recent searches\n**Impact**: +30% symbol discovery rate",
+    "diff_summary": "Creates 7 UX proposal files and components",
+    "files_changed": [
+      "src/components/EmptyStates.tsx",
+      "src/components/GlobalSearch.tsx",
+      "docs/ux-proposals/onboarding_flow.md",
+      "docs/ux-proposals/dark_mode.md",
+      "docs/ux-proposals/rtl_arabic.md",
+      "docs/ux-proposals/empty_states.md",
+      "docs/ux-proposals/search_upgrade.md"
+    ],
+    "estimated_impact": {
+      "onboarding_completion": "+25%",
+      "arabic_retention": "+40%",
+      "search_success": "+30%"
+    },
+    "created_at": "2026-05-13 06:09:03.851055",
+    "expires_at": null
+  },
+  {
+    "id": "42605f6b-2879-40e6-8ff4-37c95c3381db",
+    "output_id": "ab14f3e0-36b4-4f8c-97aa-afbc6669bf82",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# SEO Page Preview \u2014 Action Games\n\n## Meta Tags\n- **Title**: Best Action Games Online \u2014 Play Free on YallaPlays\n- **Description**: Play the best Action Games online for free on YallaPlays. No download needed \u2014 instant play on mobile and desktop. Discover new Action Games daily.\n- **Canonical**: https://yallaplays.com/games/action-games/\n\n## Page Content\n### Free Action Games \u2014 Play Instantly Online\nYallaPlays offers the largest collection of free Action Games in the Arab world. Whether you prefer fast-paced shooters, fighting games, or platformers, find your next favourite game here. All games are playable directly in your browser \u2014 no download, no registration required.\n\n## Target Keywords\n- action-games\n- free action-games\n- action-games online\n- play action-games\n- best action-games 2025\n\n## Structured Data\n- Type: CollectionPage\n- Publisher: YallaPlays\n\n## Files Changed\n- `src/pages/games/action-games/index.tsx`\n- `src/pages/games/action-games/seo.ts`\n\n---\n*Preview-only \u2014 requires approval before apply*\n",
+    "diff_summary": "Creates/updates 2 files for Action Games SEO page",
+    "files_changed": [
+      "src/pages/games/action-games/index.tsx",
+      "src/pages/games/action-games/seo.ts"
+    ],
+    "estimated_impact": {
+      "seo_score_improvement": "+15-25 points",
+      "pages_indexed": 1,
+      "target_keywords": 5,
+      "estimated_organic_traffic_gain": "200-500 visits/month"
+    },
+    "created_at": "2026-05-13 06:10:49.220023",
+    "expires_at": null
+  },
+  {
+    "id": "9e9f63c2-4d2a-43df-a0ce-c0bad784170b",
+    "output_id": "0dbf0841-1bba-4752-b542-2bdc51e637b3",
+    "project": "fionera",
+    "preview_html": "",
+    "preview_markdown": "# Market Insights Preview\n\n## Weekly Market Outlook\nMarkets this week are influenced by Federal Reserve rate expectations. Key levels to watch on Tadawul (TASI): support at 11,200, resistance at 11,850. Sentiment is cautiously bullish with volume above...\n\n## Sector Rotation Analysis\nCapital is rotating from Technology into Energy. This typically signals a risk-off rotation into defensive names. Monitor ARAMCO, SABIC, STC for entry opportunities....\n\n## Earnings Season Preview\nThis week's key earnings: Saudi Aramco, stc, Al Rajhi Bank. Consensus expects flat to slightly higher EPS vs last quarter. Watch for guidance on forward guidance and dividend policy....\n\n## Technical Setup of the Week\n2222.SR (Aramco) is forming a ascending triangle pattern on the daily chart. Target: SAR 32.50, Stop: SAR 29.80. Confluence with 200-day EMA at SAR 30.20....",
+    "diff_summary": "Generates 4 market insights + InsightCard component",
+    "files_changed": [
+      "src/components/insights/InsightCard.tsx",
+      "src/data/insights/latest.json"
+    ],
+    "estimated_impact": {
+      "user_retention": "+12%",
+      "avg_session_duration": "+45s",
+      "premium_conversions": "+3%"
+    },
+    "created_at": "2026-05-13 06:10:50.451627",
+    "expires_at": null
+  },
+  {
+    "id": "ee015fae-308f-4466-bbfa-f7f74477871b",
+    "output_id": "d8270519-a566-4285-9dc2-fe21c569924e",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# SEO Page Preview \u2014 Action Games\n\n## Meta Tags\n- **Title**: Best Action Games Online \u2014 Play Free on YallaPlays\n- **Description**: Play the best Action Games online for free on YallaPlays. No download needed \u2014 instant play on mobile and desktop. Discover new Action Games daily.\n- **Canonical**: https://yallaplays.com/games/action-games/\n\n## Page Content\n### Free Action Games \u2014 Play Instantly Online\nYallaPlays offers the largest collection of free Action Games in the Arab world. Whether you prefer fast-paced shooters, fighting games, or platformers, find your next favourite game here. All games are playable directly in your browser \u2014 no download, no registration required.\n\n## Target Keywords\n- action-games\n- free action-games\n- action-games online\n- play action-games\n- best action-games 2025\n\n## Structured Data\n- Type: CollectionPage\n- Publisher: YallaPlays\n\n## Files Changed\n- `src/pages/games/action-games/index.tsx`\n- `src/pages/games/action-games/seo.ts`\n\n---\n*Preview-only \u2014 requires approval before apply*\n",
+    "diff_summary": "Creates/updates 2 files for Action Games SEO page",
+    "files_changed": [
+      "src/pages/games/action-games/index.tsx",
+      "src/pages/games/action-games/seo.ts"
+    ],
+    "estimated_impact": {
+      "seo_score_improvement": "+15-25 points",
+      "pages_indexed": 1,
+      "target_keywords": 5,
+      "estimated_organic_traffic_gain": "200-500 visits/month"
+    },
+    "created_at": "2026-05-13 09:01:13.054545",
+    "expires_at": null
+  },
+  {
+    "id": "b696989a-6339-4334-aa13-6aa6aa200c93",
+    "output_id": "e4be2aa3-dd8c-4d22-a397-8b9fe039676c",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# SEO Page Preview \u2014 Sports Games\n\n## Meta Tags\n- **Title**: Best Sports Games Online \u2014 Play Free on YallaPlays\n- **Description**: Play the best Sports Games online for free on YallaPlays. No download needed \u2014 instant play on mobile and desktop. Discover new Sports Games daily.\n- **Canonical**: https://yallaplays.com/games/sports-games/\n\n## Page Content\n### Free Sports Games \u2014 Play Instantly Online\nYallaPlays offers the largest collection of free Sports Games in the Arab world. Whether you prefer fast-paced shooters, fighting games, or platformers, find your next favourite game here. All games are playable directly in your browser \u2014 no download, no registration required.\n\n## Target Keywords\n- sports-games\n- free sports-games\n- sports-games online\n- play sports-games\n- best sports-games 2025\n\n## Structured Data\n- Type: CollectionPage\n- Publisher: YallaPlays\n\n## Files Changed\n- `src/pages/games/sports-games/index.tsx`\n- `src/pages/games/sports-games/seo.ts`\n\n---\n*Preview-only \u2014 requires approval before apply*\n",
+    "diff_summary": "Creates/updates 2 files for Sports Games SEO page",
+    "files_changed": [
+      "src/pages/games/sports-games/index.tsx",
+      "src/pages/games/sports-games/seo.ts"
+    ],
+    "estimated_impact": {
+      "seo_score_improvement": "+15-25 points",
+      "pages_indexed": 1,
+      "target_keywords": 5,
+      "estimated_organic_traffic_gain": "200-500 visits/month"
+    },
+    "created_at": "2026-05-13 09:01:13.702190",
+    "expires_at": null
+  },
+  {
+    "id": "261342e9-e88b-4d70-aecb-640938f121c0",
+    "output_id": "25dc55ed-6fb7-464e-b1ec-4fb4429a127d",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# SEO Page Preview \u2014 Racing Games\n\n## Meta Tags\n- **Title**: Best Racing Games Online \u2014 Play Free on YallaPlays\n- **Description**: Play the best Racing Games online for free on YallaPlays. No download needed \u2014 instant play on mobile and desktop. Discover new Racing Games daily.\n- **Canonical**: https://yallaplays.com/games/racing-games/\n\n## Page Content\n### Free Racing Games \u2014 Play Instantly Online\nYallaPlays offers the largest collection of free Racing Games in the Arab world. Whether you prefer fast-paced shooters, fighting games, or platformers, find your next favourite game here. All games are playable directly in your browser \u2014 no download, no registration required.\n\n## Target Keywords\n- racing-games\n- free racing-games\n- racing-games online\n- play racing-games\n- best racing-games 2025\n\n## Structured Data\n- Type: CollectionPage\n- Publisher: YallaPlays\n\n## Files Changed\n- `src/pages/games/racing-games/index.tsx`\n- `src/pages/games/racing-games/seo.ts`\n\n---\n*Preview-only \u2014 requires approval before apply*\n",
+    "diff_summary": "Creates/updates 2 files for Racing Games SEO page",
+    "files_changed": [
+      "src/pages/games/racing-games/index.tsx",
+      "src/pages/games/racing-games/seo.ts"
+    ],
+    "estimated_impact": {
+      "seo_score_improvement": "+15-25 points",
+      "pages_indexed": 1,
+      "target_keywords": 5,
+      "estimated_organic_traffic_gain": "200-500 visits/month"
+    },
+    "created_at": "2026-05-13 09:01:14.314543",
+    "expires_at": null
+  },
+  {
+    "id": "f81b67e9-480f-47e4-9636-a3623f879fec",
+    "output_id": "92493aac-e01f-408e-88a2-cadc9565e901",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# SEO Page Preview \u2014 Puzzle Games\n\n## Meta Tags\n- **Title**: Best Puzzle Games Online \u2014 Play Free on YallaPlays\n- **Description**: Play the best Puzzle Games online for free on YallaPlays. No download needed \u2014 instant play on mobile and desktop. Discover new Puzzle Games daily.\n- **Canonical**: https://yallaplays.com/games/puzzle-games/\n\n## Page Content\n### Free Puzzle Games \u2014 Play Instantly Online\nYallaPlays offers the largest collection of free Puzzle Games in the Arab world. Whether you prefer fast-paced shooters, fighting games, or platformers, find your next favourite game here. All games are playable directly in your browser \u2014 no download, no registration required.\n\n## Target Keywords\n- puzzle-games\n- free puzzle-games\n- puzzle-games online\n- play puzzle-games\n- best puzzle-games 2025\n\n## Structured Data\n- Type: CollectionPage\n- Publisher: YallaPlays\n\n## Files Changed\n- `src/pages/games/puzzle-games/index.tsx`\n- `src/pages/games/puzzle-games/seo.ts`\n\n---\n*Preview-only \u2014 requires approval before apply*\n",
+    "diff_summary": "Creates/updates 2 files for Puzzle Games SEO page",
+    "files_changed": [
+      "src/pages/games/puzzle-games/index.tsx",
+      "src/pages/games/puzzle-games/seo.ts"
+    ],
+    "estimated_impact": {
+      "seo_score_improvement": "+15-25 points",
+      "pages_indexed": 1,
+      "target_keywords": 5,
+      "estimated_organic_traffic_gain": "200-500 visits/month"
+    },
+    "created_at": "2026-05-13 09:01:15.522093",
+    "expires_at": null
+  },
+  {
+    "id": "f62915c4-4c8d-4b71-92d8-e386d5925e2a",
+    "output_id": "ca4252db-57cb-4e66-a013-693b425a190a",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# SEO Page Preview \u2014 Multiplayer Games\n\n## Meta Tags\n- **Title**: Best Multiplayer Games Online \u2014 Play Free on YallaPlays\n- **Description**: Play the best Multiplayer Games online for free on YallaPlays. No download needed \u2014 instant play on mobile and desktop. Discover new Multiplayer Games daily.\n- **Canonical**: https://yallaplays.com/games/multiplayer-games/\n\n## Page Content\n### Free Multiplayer Games \u2014 Play Instantly Online\nYallaPlays offers the largest collection of free Multiplayer Games in the Arab world. Whether you prefer fast-paced shooters, fighting games, or platformers, find your next favourite game here. All games are playable directly in your browser \u2014 no download, no registration required.\n\n## Target Keywords\n- multiplayer-games\n- free multiplayer-games\n- multiplayer-games online\n- play multiplayer-games\n- best multiplayer-games 2025\n\n## Structured Data\n- Type: CollectionPage\n- Publisher: YallaPlays\n\n## Files Changed\n- `src/pages/games/multiplayer-games/index.tsx`\n- `src/pages/games/multiplayer-games/seo.ts`\n\n---\n*Preview-only \u2014 requires approval before apply*\n",
+    "diff_summary": "Creates/updates 2 files for Multiplayer Games SEO page",
+    "files_changed": [
+      "src/pages/games/multiplayer-games/index.tsx",
+      "src/pages/games/multiplayer-games/seo.ts"
+    ],
+    "estimated_impact": {
+      "seo_score_improvement": "+15-25 points",
+      "pages_indexed": 1,
+      "target_keywords": 5,
+      "estimated_organic_traffic_gain": "200-500 visits/month"
+    },
+    "created_at": "2026-05-13 09:01:15.770518",
+    "expires_at": null
+  },
+  {
+    "id": "3027faa6-e831-44a6-96f8-8b21db22caec",
+    "output_id": "3f78e314-6594-4285-a28b-42c978f75e86",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# SEO Page Preview \u2014 Arabic Games\n\n## Meta Tags\n- **Title**: Best Arabic Games Online \u2014 Play Free on YallaPlays\n- **Description**: Play the best Arabic Games online for free on YallaPlays. No download needed \u2014 instant play on mobile and desktop. Discover new Arabic Games daily.\n- **Canonical**: https://yallaplays.com/games/arabic-games/\n\n## Page Content\n### Free Arabic Games \u2014 Play Instantly Online\nYallaPlays offers the largest collection of free Arabic Games in the Arab world. Whether you prefer fast-paced shooters, fighting games, or platformers, find your next favourite game here. All games are playable directly in your browser \u2014 no download, no registration required.\n\n## Target Keywords\n- arabic-games\n- free arabic-games\n- arabic-games online\n- play arabic-games\n- best arabic-games 2025\n\n## Structured Data\n- Type: CollectionPage\n- Publisher: YallaPlays\n\n## Files Changed\n- `src/pages/games/arabic-games/index.tsx`\n- `src/pages/games/arabic-games/seo.ts`\n\n---\n*Preview-only \u2014 requires approval before apply*\n",
+    "diff_summary": "Creates/updates 2 files for Arabic Games SEO page",
+    "files_changed": [
+      "src/pages/games/arabic-games/index.tsx",
+      "src/pages/games/arabic-games/seo.ts"
+    ],
+    "estimated_impact": {
+      "seo_score_improvement": "+15-25 points",
+      "pages_indexed": 1,
+      "target_keywords": 5,
+      "estimated_organic_traffic_gain": "200-500 visits/month"
+    },
+    "created_at": "2026-05-13 09:01:16.016809",
+    "expires_at": null
+  },
+  {
+    "id": "cf155e0d-d477-42cf-b79d-d2b88fd9110f",
+    "output_id": "56e7774e-ab72-4bd3-abc1-bd521ebd53bf",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# Category Page \u2014 Popular Games\n\n**URL**: https://yallaplays.com/games/popular/\n\n**Sections**: hero_banner, featured_games, game_grid, newsletter_cta\n\n**Files**: 2 files updated",
+    "diff_summary": "Creates Popular Games category landing page with 4 sections",
+    "files_changed": [
+      "src/pages/games/popular/index.tsx",
+      "src/config/categories/popular.json"
+    ],
+    "estimated_impact": {
+      "new_indexable_page": true,
+      "filter_ux": "improved",
+      "bounce_rate_impact": "-5% estimated"
+    },
+    "created_at": "2026-05-13 09:01:16.610264",
+    "expires_at": null
+  },
+  {
+    "id": "996994bd-5906-4de3-a52c-79d4c79de8c7",
+    "output_id": "d5123acb-cf46-46f6-9bf9-e62b9575a096",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# Category Page \u2014 Trending Games\n\n**URL**: https://yallaplays.com/games/trending/\n\n**Sections**: hero_banner, featured_games, game_grid, newsletter_cta\n\n**Files**: 2 files updated",
+    "diff_summary": "Creates Trending Games category landing page with 4 sections",
+    "files_changed": [
+      "src/pages/games/trending/index.tsx",
+      "src/config/categories/trending.json"
+    ],
+    "estimated_impact": {
+      "new_indexable_page": true,
+      "filter_ux": "improved",
+      "bounce_rate_impact": "-5% estimated"
+    },
+    "created_at": "2026-05-13 09:01:16.870045",
+    "expires_at": null
+  },
+  {
+    "id": "4ae63f5d-0e4a-4e16-84f3-57908c6fcc20",
+    "output_id": "07a9edd6-e683-45e0-a8d6-dbb00d6ff4e6",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# Category Page \u2014 New Games\n\n**URL**: https://yallaplays.com/games/new/\n\n**Sections**: hero_banner, featured_games, game_grid, newsletter_cta\n\n**Files**: 2 files updated",
+    "diff_summary": "Creates New Games category landing page with 4 sections",
+    "files_changed": [
+      "src/pages/games/new/index.tsx",
+      "src/config/categories/new.json"
+    ],
+    "estimated_impact": {
+      "new_indexable_page": true,
+      "filter_ux": "improved",
+      "bounce_rate_impact": "-5% estimated"
+    },
+    "created_at": "2026-05-13 09:01:17.485906",
+    "expires_at": null
+  },
+  {
+    "id": "032c007c-2024-4f61-9b67-11df32e3d986",
+    "output_id": "85bb884d-621b-4b64-8ecf-8ee5f9110de9",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# Category Page \u2014 Mobile Games\n\n**URL**: https://yallaplays.com/games/mobile/\n\n**Sections**: hero_banner, featured_games, game_grid, newsletter_cta\n\n**Files**: 2 files updated",
+    "diff_summary": "Creates Mobile Games category landing page with 4 sections",
+    "files_changed": [
+      "src/pages/games/mobile/index.tsx",
+      "src/config/categories/mobile.json"
+    ],
+    "estimated_impact": {
+      "new_indexable_page": true,
+      "filter_ux": "improved",
+      "bounce_rate_impact": "-5% estimated"
+    },
+    "created_at": "2026-05-13 09:01:18.941237",
+    "expires_at": null
+  },
+  {
+    "id": "884cd62a-8060-4816-8d5d-4bef0951f7d1",
+    "output_id": "8771a4c9-4752-43f2-b78e-98d33eb3f9fe",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# Metadata Patches \u2014 6 Games\n\n- **Subway Surfers**: title + description + schema updated\n- **8 Ball Pool**: title + description + schema updated\n- **Candy Crush Saga**: title + description + schema updated\n- **Temple Run**: title + description + schema updated\n- **Ludo Star**: title + description + schema updated\n- **PUBG Mobile**: title + description + schema updated",
+    "diff_summary": "Updates metadata for 6 games across 6 files",
+    "files_changed": [
+      "src/data/games/subway-surfers/metadata.json",
+      "src/data/games/8-ball-pool/metadata.json",
+      "src/data/games/candy-crush/metadata.json",
+      "src/data/games/temple-run/metadata.json",
+      "src/data/games/ludo-star/metadata.json",
+      "src/data/games/pubg-mobile/metadata.json"
+    ],
+    "estimated_impact": {
+      "games_improved": 6,
+      "schema_added": 6,
+      "seo_score_delta": "+5-10 points per game"
+    },
+    "created_at": "2026-05-13 09:01:20.838680",
+    "expires_at": null
+  },
+  {
+    "id": "28686ac9-6bef-478c-b897-c2888c23248c",
+    "output_id": "dd4e536f-186e-49ac-8dfa-107ea08cba7e",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# Mobile Optimizations\n\n## Audit Results (8 checks)\n\n- [HIGH] Viewport Meta Tag: Add <meta name='viewport' content='width=device-width, initial-scale=1'>\n- [HIGH] Touch Target Sizes: Ensure all interactive elements are \u226544x44px\n- [HIGH] Minimum Font Sizes: Base font-size \u226516px to prevent iOS zoom\n- [MEDIUM] Game Canvas Scaling: Add touch event handlers and responsive canvas scaling\n- [MEDIUM] Image Lazy Loading: Add loading='lazy' and proper srcset for thumbnails\n- [MEDIUM] PWA Manifest: Add PWA manifest for home screen installation\n- [MEDIUM] Offline Support: Cache game assets for offline play\n- [MEDIUM] Layout Shift Prevention: Add aspect-ratio to game cards to prevent CLS",
+    "diff_summary": "Applies 3 mobile optimization patches",
+    "files_changed": [
+      "src/styles/mobile-optimizations.css",
+      "public/manifest.json",
+      "src/components/GameEmbed.tsx"
+    ],
+    "estimated_impact": {
+      "mobile_score_improvement": "+20-30 Lighthouse points",
+      "cls_score": "< 0.1 target",
+      "touch_ux": "improved",
+      "pwa_ready": true,
+      "mobile_traffic_impact": "+10-15% engagement"
+    },
+    "created_at": "2026-05-13 09:01:21.109372",
+    "expires_at": null
+  },
+  {
+    "id": "b9837fb5-5ad3-4232-8f13-2607ceca9e77",
+    "output_id": "953a41ee-01b0-4277-ac2b-c7392a7b1804",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# Internal Linking Plan\n\n## 8 Link Opportunities\n\n- `/games/action/` \u2192 `/games/shooting/` (Shooting Games) [high]\n- `/games/sports/` \u2192 `/games/football/` (Football Games) [high]\n- `/games/puzzle/` \u2192 `/games/card/` (Card & Board Games) [medium]\n- `/games/racing/` \u2192 `/games/mobile/` (Best Mobile Games) [high]\n- `/` \u2192 `/games/trending/` (Trending Games) [high]\n- `/` \u2192 `/games/new/` (New Games) [high]\n- `/games/multiplayer/` \u2192 `/games/arabic/` (Arabic Games) [medium]\n- `/games/popular/` \u2192 `/games/multiplayer/` (Play With Friends) [high]",
+    "diff_summary": "Adds 3 files for internal linking infrastructure",
+    "files_changed": [
+      "src/components/RelatedCategories.tsx",
+      "src/components/Breadcrumb.tsx",
+      "src/data/internal-links.json"
+    ],
+    "estimated_impact": {
+      "page_authority_flow": "improved",
+      "crawl_depth": "reduced",
+      "seo_score_delta": "+8-12 points",
+      "user_engagement": "+5% pages/session"
+    },
+    "created_at": "2026-05-13 09:01:21.334079",
+    "expires_at": null
+  },
+  {
+    "id": "50bb64a1-c968-40e5-bd1e-e108ae715523",
+    "output_id": "d40b103c-a43a-4994-a0b7-867be7e6d8bd",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# Trending Game Recommendations\n\n## Top Trending\n\n#1 Subway Surfers \u2014 45,200 plays (score: 98)\n#2 8 Ball Pool \u2014 38,100 plays (score: 95)\n#3 Among Us \u2014 29,800 plays (score: 91)\n#4 Ludo Star \u2014 27,400 plays (score: 89)\n#5 PUBG Mobile \u2014 24,100 plays (score: 87)\n#6 Clash of Clans \u2014 21,300 plays (score: 84)",
+    "diff_summary": "Creates trending widget + recommendation engine config (3 files)",
+    "files_changed": [
+      "src/components/TrendingGamesWidget.tsx",
+      "src/config/recommendation-engine.json",
+      "src/data/trending-games.json"
+    ],
+    "estimated_impact": {
+      "ctr_improvement": "+15-25%",
+      "session_depth": "+0.5 pages/session",
+      "retention": "+8%"
+    },
+    "created_at": "2026-05-13 09:01:21.559242",
+    "expires_at": null
+  },
+  {
+    "id": "4c905dc7-399f-4413-8e45-543a0077a08f",
+    "output_id": "425edb83-664c-463d-921c-eb41b8101719",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# SEO Page Preview \u2014 Action Games\n\n## Meta Tags\n- **Title**: Best Action Games Online \u2014 Play Free on YallaPlays\n- **Description**: Play the best Action Games online for free on YallaPlays. No download needed \u2014 instant play on mobile and desktop. Discover new Action Games daily.\n- **Canonical**: https://yallaplays.com/games/action-games/\n\n## Page Content\n### Free Action Games \u2014 Play Instantly Online\nYallaPlays offers the largest collection of free Action Games in the Arab world. Whether you prefer fast-paced shooters, fighting games, or platformers, find your next favourite game here. All games are playable directly in your browser \u2014 no download, no registration required.\n\n## Target Keywords\n- action-games\n- free action-games\n- action-games online\n- play action-games\n- best action-games 2025\n\n## Structured Data\n- Type: CollectionPage\n- Publisher: YallaPlays\n\n## Files Changed\n- `src/pages/games/action-games/index.tsx`\n- `src/pages/games/action-games/seo.ts`\n\n---\n*Preview-only \u2014 requires approval before apply*\n",
+    "diff_summary": "Creates/updates 2 files for Action Games SEO page",
+    "files_changed": [
+      "src/pages/games/action-games/index.tsx",
+      "src/pages/games/action-games/seo.ts"
+    ],
+    "estimated_impact": {
+      "seo_score_improvement": "+15-25 points",
+      "pages_indexed": 1,
+      "target_keywords": 5,
+      "estimated_organic_traffic_gain": "200-500 visits/month"
+    },
+    "created_at": "2026-05-13 09:13:25.804385",
+    "expires_at": null
+  },
+  {
+    "id": "d3725423-5a72-4079-a189-955df9709053",
+    "output_id": "8f436120-89e2-49c1-ba5e-e14def295aad",
+    "project": "fionera",
+    "preview_html": "",
+    "preview_markdown": "# Finance Widgets \u2014 5 Components\n\n## Live Price Ticker\nReal-time price display with change indicators\n## Portfolio Summary Card\nCompact portfolio overview with P&L\n## Market Movers\nTop gainers and losers for the session\n## Economic Calendar Widget\nUpcoming economic events with impact indicators\n## Market Sentiment Gauge\nFear & Greed index and social sentiment",
+    "diff_summary": "Creates 4 finance widget components",
+    "files_changed": [
+      "src/components/widgets/PriceTicker.tsx",
+      "src/components/widgets/PortfolioSummaryCard.tsx",
+      "src/components/widgets/MarketMovers.tsx",
+      "src/config/widgets.json"
+    ],
+    "estimated_impact": {
+      "user_engagement": "+20%",
+      "data_freshness": "10s refresh",
+      "portfolio_visibility": "improved"
+    },
+    "created_at": "2026-05-13 09:15:33.335019",
+    "expires_at": null
+  },
+  {
+    "id": "8304856e-731c-47f8-95d7-77337fda21ac",
+    "output_id": "9aab017e-b21c-49a5-a01a-4607f0327c64",
+    "project": "fionera",
+    "preview_html": "",
+    "preview_markdown": "# Market Insights Preview\n\n## Weekly Market Outlook\nMarkets this week are influenced by Federal Reserve rate expectations. Key levels to watch on Tadawul (TASI): support at 11,200, resistance at 11,850. Sentiment is cautiously bullish with volume above...\n\n## Sector Rotation Analysis\nCapital is rotating from Technology into Energy. This typically signals a risk-off rotation into defensive names. Monitor ARAMCO, SABIC, STC for entry opportunities....\n\n## Earnings Season Preview\nThis week's key earnings: Saudi Aramco, stc, Al Rajhi Bank. Consensus expects flat to slightly higher EPS vs last quarter. Watch for guidance on forward guidance and dividend policy....\n\n## Technical Setup of the Week\n2222.SR (Aramco) is forming a ascending triangle pattern on the daily chart. Target: SAR 32.50, Stop: SAR 29.80. Confluence with 200-day EMA at SAR 30.20....",
+    "diff_summary": "Generates 4 market insights + InsightCard component",
+    "files_changed": [
+      "src/components/insights/InsightCard.tsx",
+      "src/data/insights/latest.json"
+    ],
+    "estimated_impact": {
+      "user_retention": "+12%",
+      "avg_session_duration": "+45s",
+      "premium_conversions": "+3%"
+    },
+    "created_at": "2026-05-13 09:15:33.614180",
+    "expires_at": null
+  },
+  {
+    "id": "f8c34f62-4c1c-4a4e-9bdb-104a3ce1a873",
+    "output_id": "15cfbfbc-d9a7-4507-9fc7-8b032bcf5fc4",
+    "project": "fionera",
+    "preview_html": "",
+    "preview_markdown": "# Watchlist Improvements\n\n## Features\n\n- [HIGH] **Price Alerts**: Set price targets with push/email notifications\n- [HIGH] **Per-Symbol News Feed**: Curated news for each watchlisted symbol\n- [MEDIUM] **Bulk Add Symbols**: Add multiple symbols at once via paste/CSV\n- [HIGH] **Advanced Sort & Filter**: Sort by change%, volume, market cap, sector\n- [MEDIUM] **Investment Notes**: Per-symbol private notes and thesis tracking\n- [HIGH] **Watchlist Performance**: Track hypothetical performance of watchlist vs index\n- [LOW] **Drag-to-Reorder**: Reorder watchlist items via drag and drop\n- [MEDIUM] **Export to CSV**: Export watchlist data with current prices",
+    "diff_summary": "Creates 3 watchlist improvement components",
+    "files_changed": [
+      "src/components/watchlist/EnhancedWatchlist.tsx",
+      "src/components/watchlist/PriceAlertModal.tsx",
+      "src/config/watchlist-features.json"
+    ],
+    "estimated_impact": {
+      "user_retention": "+18%",
+      "watchlist_engagement": "+35%",
+      "alert_conversions": "new feature",
+      "premium_signups": "+5%"
+    },
+    "created_at": "2026-05-13 09:15:33.901089",
+    "expires_at": null
+  },
+  {
+    "id": "878858b9-c872-4ecc-8fbf-c3fdbf815ab9",
+    "output_id": "6cba6eaa-0899-4d43-8b65-3f51a54263fb",
+    "project": "fionera",
+    "preview_html": "",
+    "preview_markdown": "# Analytics Dashboard\n\n## Widgets\n\n- [CRITICAL] **Portfolio Performance**: Equity curve with benchmark overlay\n- [CRITICAL] **Asset Allocation**: Portfolio breakdown by asset class and sector\n- [HIGH] **Risk Metrics**: Beta, Sharpe ratio, max drawdown, volatility\n- [HIGH] **P&L Calendar**: Daily P&L heatmap (like GitHub contribution graph)\n- [HIGH] **Portfolio Movers**: Best and worst performers today\n- [MEDIUM] **Recent Transactions**: Paginated transaction history with search\n- [MEDIUM] **Portfolio News**: News relevant to held positions",
+    "diff_summary": "Creates 4 analytics dashboard components",
+    "files_changed": [
+      "src/components/analytics/PortfolioPerformanceChart.tsx",
+      "src/components/analytics/PnLCalendar.tsx",
+      "src/components/analytics/RiskMetricsGrid.tsx",
+      "src/config/dashboard-layout.json"
+    ],
+    "estimated_impact": {
+      "session_duration": "+2min",
+      "feature_adoption": "+40%",
+      "premium_retention": "+15%"
+    },
+    "created_at": "2026-05-13 09:15:34.223419",
+    "expires_at": null
+  },
+  {
+    "id": "50eea587-2071-4909-a665-ec1f66718d9a",
+    "output_id": "b90f1ed2-5e90-4a7e-9175-3d93a08ac0d4",
+    "project": "fionera",
+    "preview_html": "",
+    "preview_markdown": "# UX Proposals\n\n## Improved Onboarding Flow [CRITICAL]\n**Problem**: High drop-off rate during KYC and account setup\n**Solution**: 5-step progressive onboarding with progress indicator, skip options, and save-and-continue\n**Impact**: +25% onboarding completion rate\n\n## Dark Mode Support [HIGH]\n**Problem**: No dark mode \u2014 causes eye strain for night traders\n**Solution**: System-aware dark mode with manual toggle, persisted in user preferences\n**Impact**: +15% evening session engagement\n\n## Full RTL Arabic Support [CRITICAL]\n**Problem**: Arabic UI is partially RTL \u2014 charts and tables break in Arabic mode\n**Solution**: Full RTL CSS with dir=rtl, RTL-aware chart labels, Arabic number formatting\n**Impact**: +40% Arabic user retention\n\n## Improved Empty States [MEDIUM]\n**Problem**: Empty watchlist/portfolio shows blank page with no guidance\n**Solution**: Illustrated empty states with clear CTAs and sample data preview\n**Impact**: +20% feature discovery\n\n## Global Search Upgrade [HIGH]\n**Problem**: Search only matches exact ticker symbols \u2014 misses company names\n**Solution**: Fuzzy search with company name, ticker, ISIN lookup + recent searches\n**Impact**: +30% symbol discovery rate",
+    "diff_summary": "Creates 7 UX proposal files and components",
+    "files_changed": [
+      "src/components/EmptyStates.tsx",
+      "src/components/GlobalSearch.tsx",
+      "docs/ux-proposals/onboarding_flow.md",
+      "docs/ux-proposals/dark_mode.md",
+      "docs/ux-proposals/rtl_arabic.md",
+      "docs/ux-proposals/empty_states.md",
+      "docs/ux-proposals/search_upgrade.md"
+    ],
+    "estimated_impact": {
+      "onboarding_completion": "+25%",
+      "arabic_retention": "+40%",
+      "search_success": "+30%"
+    },
+    "created_at": "2026-05-13 09:15:34.469095",
+    "expires_at": null
+  },
+  {
+    "id": "858f6664-25ca-48ce-9763-2debe30a388b",
+    "output_id": "11e01648-13a7-4aec-9e2f-5bc1a67e8099",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# SEO Page Preview \u2014 Action Games\n\n## Meta Tags\n- **Title**: Best Action Games Online \u2014 Play Free on YallaPlays\n- **Description**: Play the best Action Games online for free on YallaPlays. No download needed \u2014 instant play on mobile and desktop. Discover new Action Games daily.\n- **Canonical**: https://yallaplays.com/games/action-games/\n\n## Page Content\n### Free Action Games \u2014 Play Instantly Online\nYallaPlays offers the largest collection of free Action Games in the Arab world. Whether you prefer fast-paced shooters, fighting games, or platformers, find your next favourite game here. All games are playable directly in your browser \u2014 no download, no registration required.\n\n## Target Keywords\n- action-games\n- free action-games\n- action-games online\n- play action-games\n- best action-games 2025\n\n## Structured Data\n- Type: CollectionPage\n- Publisher: YallaPlays\n\n## Files Changed\n- `src/pages/games/action-games/index.tsx`\n- `src/pages/games/action-games/seo.ts`\n\n---\n*Preview-only \u2014 requires approval before apply*\n",
+    "diff_summary": "Creates/updates 2 files for Action Games SEO page",
+    "files_changed": [
+      "src/pages/games/action-games/index.tsx",
+      "src/pages/games/action-games/seo.ts"
+    ],
+    "estimated_impact": {
+      "seo_score_improvement": "+15-25 points",
+      "pages_indexed": 1,
+      "target_keywords": 5,
+      "estimated_organic_traffic_gain": "200-500 visits/month"
+    },
+    "created_at": "2026-05-13 09:16:18.516215",
+    "expires_at": null
+  },
+  {
+    "id": "bca7603b-fdba-4dbd-9bd0-56897079fddc",
+    "output_id": "86c2b020-3bd0-46d8-b29f-2a9beb8bc7b7",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# SEO Page Preview \u2014 Sports Games\n\n## Meta Tags\n- **Title**: Best Sports Games Online \u2014 Play Free on YallaPlays\n- **Description**: Play the best Sports Games online for free on YallaPlays. No download needed \u2014 instant play on mobile and desktop. Discover new Sports Games daily.\n- **Canonical**: https://yallaplays.com/games/sports-games/\n\n## Page Content\n### Free Sports Games \u2014 Play Instantly Online\nYallaPlays offers the largest collection of free Sports Games in the Arab world. Whether you prefer fast-paced shooters, fighting games, or platformers, find your next favourite game here. All games are playable directly in your browser \u2014 no download, no registration required.\n\n## Target Keywords\n- sports-games\n- free sports-games\n- sports-games online\n- play sports-games\n- best sports-games 2025\n\n## Structured Data\n- Type: CollectionPage\n- Publisher: YallaPlays\n\n## Files Changed\n- `src/pages/games/sports-games/index.tsx`\n- `src/pages/games/sports-games/seo.ts`\n\n---\n*Preview-only \u2014 requires approval before apply*\n",
+    "diff_summary": "Creates/updates 2 files for Sports Games SEO page",
+    "files_changed": [
+      "src/pages/games/sports-games/index.tsx",
+      "src/pages/games/sports-games/seo.ts"
+    ],
+    "estimated_impact": {
+      "seo_score_improvement": "+15-25 points",
+      "pages_indexed": 1,
+      "target_keywords": 5,
+      "estimated_organic_traffic_gain": "200-500 visits/month"
+    },
+    "created_at": "2026-05-13 09:16:19.058114",
+    "expires_at": null
+  },
+  {
+    "id": "60fed2e9-df65-4b1e-84ef-59abb5241aa6",
+    "output_id": "45c81324-0b10-4cc3-b676-dd9edbaa0a87",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# SEO Page Preview \u2014 Racing Games\n\n## Meta Tags\n- **Title**: Best Racing Games Online \u2014 Play Free on YallaPlays\n- **Description**: Play the best Racing Games online for free on YallaPlays. No download needed \u2014 instant play on mobile and desktop. Discover new Racing Games daily.\n- **Canonical**: https://yallaplays.com/games/racing-games/\n\n## Page Content\n### Free Racing Games \u2014 Play Instantly Online\nYallaPlays offers the largest collection of free Racing Games in the Arab world. Whether you prefer fast-paced shooters, fighting games, or platformers, find your next favourite game here. All games are playable directly in your browser \u2014 no download, no registration required.\n\n## Target Keywords\n- racing-games\n- free racing-games\n- racing-games online\n- play racing-games\n- best racing-games 2025\n\n## Structured Data\n- Type: CollectionPage\n- Publisher: YallaPlays\n\n## Files Changed\n- `src/pages/games/racing-games/index.tsx`\n- `src/pages/games/racing-games/seo.ts`\n\n---\n*Preview-only \u2014 requires approval before apply*\n",
+    "diff_summary": "Creates/updates 2 files for Racing Games SEO page",
+    "files_changed": [
+      "src/pages/games/racing-games/index.tsx",
+      "src/pages/games/racing-games/seo.ts"
+    ],
+    "estimated_impact": {
+      "seo_score_improvement": "+15-25 points",
+      "pages_indexed": 1,
+      "target_keywords": 5,
+      "estimated_organic_traffic_gain": "200-500 visits/month"
+    },
+    "created_at": "2026-05-13 09:16:19.322824",
+    "expires_at": null
+  },
+  {
+    "id": "f80685a4-8bb5-4f45-a58e-74af48a770f3",
+    "output_id": "fd703541-92e2-4904-b1bf-c9a8f8d23c6e",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# SEO Page Preview \u2014 Puzzle Games\n\n## Meta Tags\n- **Title**: Best Puzzle Games Online \u2014 Play Free on YallaPlays\n- **Description**: Play the best Puzzle Games online for free on YallaPlays. No download needed \u2014 instant play on mobile and desktop. Discover new Puzzle Games daily.\n- **Canonical**: https://yallaplays.com/games/puzzle-games/\n\n## Page Content\n### Free Puzzle Games \u2014 Play Instantly Online\nYallaPlays offers the largest collection of free Puzzle Games in the Arab world. Whether you prefer fast-paced shooters, fighting games, or platformers, find your next favourite game here. All games are playable directly in your browser \u2014 no download, no registration required.\n\n## Target Keywords\n- puzzle-games\n- free puzzle-games\n- puzzle-games online\n- play puzzle-games\n- best puzzle-games 2025\n\n## Structured Data\n- Type: CollectionPage\n- Publisher: YallaPlays\n\n## Files Changed\n- `src/pages/games/puzzle-games/index.tsx`\n- `src/pages/games/puzzle-games/seo.ts`\n\n---\n*Preview-only \u2014 requires approval before apply*\n",
+    "diff_summary": "Creates/updates 2 files for Puzzle Games SEO page",
+    "files_changed": [
+      "src/pages/games/puzzle-games/index.tsx",
+      "src/pages/games/puzzle-games/seo.ts"
+    ],
+    "estimated_impact": {
+      "seo_score_improvement": "+15-25 points",
+      "pages_indexed": 1,
+      "target_keywords": 5,
+      "estimated_organic_traffic_gain": "200-500 visits/month"
+    },
+    "created_at": "2026-05-13 09:16:19.608706",
+    "expires_at": null
+  },
+  {
+    "id": "e04e895d-21bd-4573-9842-603455c7a381",
+    "output_id": "4c4f0a7d-2520-4cc1-854d-c7e68a253361",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# SEO Page Preview \u2014 Multiplayer Games\n\n## Meta Tags\n- **Title**: Best Multiplayer Games Online \u2014 Play Free on YallaPlays\n- **Description**: Play the best Multiplayer Games online for free on YallaPlays. No download needed \u2014 instant play on mobile and desktop. Discover new Multiplayer Games daily.\n- **Canonical**: https://yallaplays.com/games/multiplayer-games/\n\n## Page Content\n### Free Multiplayer Games \u2014 Play Instantly Online\nYallaPlays offers the largest collection of free Multiplayer Games in the Arab world. Whether you prefer fast-paced shooters, fighting games, or platformers, find your next favourite game here. All games are playable directly in your browser \u2014 no download, no registration required.\n\n## Target Keywords\n- multiplayer-games\n- free multiplayer-games\n- multiplayer-games online\n- play multiplayer-games\n- best multiplayer-games 2025\n\n## Structured Data\n- Type: CollectionPage\n- Publisher: YallaPlays\n\n## Files Changed\n- `src/pages/games/multiplayer-games/index.tsx`\n- `src/pages/games/multiplayer-games/seo.ts`\n\n---\n*Preview-only \u2014 requires approval before apply*\n",
+    "diff_summary": "Creates/updates 2 files for Multiplayer Games SEO page",
+    "files_changed": [
+      "src/pages/games/multiplayer-games/index.tsx",
+      "src/pages/games/multiplayer-games/seo.ts"
+    ],
+    "estimated_impact": {
+      "seo_score_improvement": "+15-25 points",
+      "pages_indexed": 1,
+      "target_keywords": 5,
+      "estimated_organic_traffic_gain": "200-500 visits/month"
+    },
+    "created_at": "2026-05-13 09:16:19.861381",
+    "expires_at": null
+  },
+  {
+    "id": "78528b78-61d1-40c6-a36f-b13fb9ea60ce",
+    "output_id": "8accab9b-6f75-4e4d-9610-a2440a330a7e",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# SEO Page Preview \u2014 Arabic Games\n\n## Meta Tags\n- **Title**: Best Arabic Games Online \u2014 Play Free on YallaPlays\n- **Description**: Play the best Arabic Games online for free on YallaPlays. No download needed \u2014 instant play on mobile and desktop. Discover new Arabic Games daily.\n- **Canonical**: https://yallaplays.com/games/arabic-games/\n\n## Page Content\n### Free Arabic Games \u2014 Play Instantly Online\nYallaPlays offers the largest collection of free Arabic Games in the Arab world. Whether you prefer fast-paced shooters, fighting games, or platformers, find your next favourite game here. All games are playable directly in your browser \u2014 no download, no registration required.\n\n## Target Keywords\n- arabic-games\n- free arabic-games\n- arabic-games online\n- play arabic-games\n- best arabic-games 2025\n\n## Structured Data\n- Type: CollectionPage\n- Publisher: YallaPlays\n\n## Files Changed\n- `src/pages/games/arabic-games/index.tsx`\n- `src/pages/games/arabic-games/seo.ts`\n\n---\n*Preview-only \u2014 requires approval before apply*\n",
+    "diff_summary": "Creates/updates 2 files for Arabic Games SEO page",
+    "files_changed": [
+      "src/pages/games/arabic-games/index.tsx",
+      "src/pages/games/arabic-games/seo.ts"
+    ],
+    "estimated_impact": {
+      "seo_score_improvement": "+15-25 points",
+      "pages_indexed": 1,
+      "target_keywords": 5,
+      "estimated_organic_traffic_gain": "200-500 visits/month"
+    },
+    "created_at": "2026-05-13 09:16:20.117827",
+    "expires_at": null
+  },
+  {
+    "id": "e20b1c2d-8a3f-4e76-b4b8-894ee5abcf87",
+    "output_id": "336ae223-a329-4f32-916f-2feb93dfb578",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# Category Page \u2014 Popular Games\n\n**URL**: https://yallaplays.com/games/popular/\n\n**Sections**: hero_banner, featured_games, game_grid, newsletter_cta\n\n**Files**: 2 files updated",
+    "diff_summary": "Creates Popular Games category landing page with 4 sections",
+    "files_changed": [
+      "src/pages/games/popular/index.tsx",
+      "src/config/categories/popular.json"
+    ],
+    "estimated_impact": {
+      "new_indexable_page": true,
+      "filter_ux": "improved",
+      "bounce_rate_impact": "-5% estimated"
+    },
+    "created_at": "2026-05-13 09:16:20.395978",
+    "expires_at": null
+  },
+  {
+    "id": "e82a9802-9fbe-45f3-be27-bc59e9d9f778",
+    "output_id": "9e753859-e885-4d88-9312-123ac8b7f924",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# Category Page \u2014 Trending Games\n\n**URL**: https://yallaplays.com/games/trending/\n\n**Sections**: hero_banner, featured_games, game_grid, newsletter_cta\n\n**Files**: 2 files updated",
+    "diff_summary": "Creates Trending Games category landing page with 4 sections",
+    "files_changed": [
+      "src/pages/games/trending/index.tsx",
+      "src/config/categories/trending.json"
+    ],
+    "estimated_impact": {
+      "new_indexable_page": true,
+      "filter_ux": "improved",
+      "bounce_rate_impact": "-5% estimated"
+    },
+    "created_at": "2026-05-13 09:16:20.723707",
+    "expires_at": null
+  },
+  {
+    "id": "d35fa929-d1c6-4d67-9e90-2976a3d496ae",
+    "output_id": "8c997d6d-b105-4277-b861-36cdce50e97f",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# Category Page \u2014 New Games\n\n**URL**: https://yallaplays.com/games/new/\n\n**Sections**: hero_banner, featured_games, game_grid, newsletter_cta\n\n**Files**: 2 files updated",
+    "diff_summary": "Creates New Games category landing page with 4 sections",
+    "files_changed": [
+      "src/pages/games/new/index.tsx",
+      "src/config/categories/new.json"
+    ],
+    "estimated_impact": {
+      "new_indexable_page": true,
+      "filter_ux": "improved",
+      "bounce_rate_impact": "-5% estimated"
+    },
+    "created_at": "2026-05-13 09:16:21.038398",
+    "expires_at": null
+  },
+  {
+    "id": "e02c3157-85df-4ced-aec4-83dd4cef6cd0",
+    "output_id": "72343174-76e0-4635-a1bb-4f844760e70a",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# Category Page \u2014 Mobile Games\n\n**URL**: https://yallaplays.com/games/mobile/\n\n**Sections**: hero_banner, featured_games, game_grid, newsletter_cta\n\n**Files**: 2 files updated",
+    "diff_summary": "Creates Mobile Games category landing page with 4 sections",
+    "files_changed": [
+      "src/pages/games/mobile/index.tsx",
+      "src/config/categories/mobile.json"
+    ],
+    "estimated_impact": {
+      "new_indexable_page": true,
+      "filter_ux": "improved",
+      "bounce_rate_impact": "-5% estimated"
+    },
+    "created_at": "2026-05-13 09:16:21.294332",
+    "expires_at": null
+  },
+  {
+    "id": "8fab7473-a5b5-41cc-a833-babb6cdf9aee",
+    "output_id": "72d61dec-cf95-427f-84a0-f94069a578a5",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# Metadata Patches \u2014 6 Games\n\n- **Subway Surfers**: title + description + schema updated\n- **8 Ball Pool**: title + description + schema updated\n- **Candy Crush Saga**: title + description + schema updated\n- **Temple Run**: title + description + schema updated\n- **Ludo Star**: title + description + schema updated\n- **PUBG Mobile**: title + description + schema updated",
+    "diff_summary": "Updates metadata for 6 games across 6 files",
+    "files_changed": [
+      "src/data/games/subway-surfers/metadata.json",
+      "src/data/games/8-ball-pool/metadata.json",
+      "src/data/games/candy-crush/metadata.json",
+      "src/data/games/temple-run/metadata.json",
+      "src/data/games/ludo-star/metadata.json",
+      "src/data/games/pubg-mobile/metadata.json"
+    ],
+    "estimated_impact": {
+      "games_improved": 6,
+      "schema_added": 6,
+      "seo_score_delta": "+5-10 points per game"
+    },
+    "created_at": "2026-05-13 09:16:23.237960",
+    "expires_at": null
+  },
+  {
+    "id": "533e61b0-427f-4047-b36e-b36a13ebfcf9",
+    "output_id": "98d9f2df-4625-4ed8-85fa-47d594aeca1a",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# Mobile Optimizations\n\n## Audit Results (8 checks)\n\n- [HIGH] Viewport Meta Tag: Add <meta name='viewport' content='width=device-width, initial-scale=1'>\n- [HIGH] Touch Target Sizes: Ensure all interactive elements are \u226544x44px\n- [HIGH] Minimum Font Sizes: Base font-size \u226516px to prevent iOS zoom\n- [MEDIUM] Game Canvas Scaling: Add touch event handlers and responsive canvas scaling\n- [MEDIUM] Image Lazy Loading: Add loading='lazy' and proper srcset for thumbnails\n- [MEDIUM] PWA Manifest: Add PWA manifest for home screen installation\n- [MEDIUM] Offline Support: Cache game assets for offline play\n- [MEDIUM] Layout Shift Prevention: Add aspect-ratio to game cards to prevent CLS",
+    "diff_summary": "Applies 3 mobile optimization patches",
+    "files_changed": [
+      "src/styles/mobile-optimizations.css",
+      "public/manifest.json",
+      "src/components/GameEmbed.tsx"
+    ],
+    "estimated_impact": {
+      "mobile_score_improvement": "+20-30 Lighthouse points",
+      "cls_score": "< 0.1 target",
+      "touch_ux": "improved",
+      "pwa_ready": true,
+      "mobile_traffic_impact": "+10-15% engagement"
+    },
+    "created_at": "2026-05-13 09:16:23.810926",
+    "expires_at": null
+  },
+  {
+    "id": "175fd236-f21f-4d05-8850-5597cbfb8bfd",
+    "output_id": "a63842ba-f7af-4292-9d01-98c7ea87d317",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# Internal Linking Plan\n\n## 8 Link Opportunities\n\n- `/games/action/` \u2192 `/games/shooting/` (Shooting Games) [high]\n- `/games/sports/` \u2192 `/games/football/` (Football Games) [high]\n- `/games/puzzle/` \u2192 `/games/card/` (Card & Board Games) [medium]\n- `/games/racing/` \u2192 `/games/mobile/` (Best Mobile Games) [high]\n- `/` \u2192 `/games/trending/` (Trending Games) [high]\n- `/` \u2192 `/games/new/` (New Games) [high]\n- `/games/multiplayer/` \u2192 `/games/arabic/` (Arabic Games) [medium]\n- `/games/popular/` \u2192 `/games/multiplayer/` (Play With Friends) [high]",
+    "diff_summary": "Adds 3 files for internal linking infrastructure",
+    "files_changed": [
+      "src/components/RelatedCategories.tsx",
+      "src/components/Breadcrumb.tsx",
+      "src/data/internal-links.json"
+    ],
+    "estimated_impact": {
+      "page_authority_flow": "improved",
+      "crawl_depth": "reduced",
+      "seo_score_delta": "+8-12 points",
+      "user_engagement": "+5% pages/session"
+    },
+    "created_at": "2026-05-13 09:16:24.055486",
+    "expires_at": null
+  },
+  {
+    "id": "dddda71e-2e94-43d5-a35c-f74cb53894f8",
+    "output_id": "63caf463-a0ee-4942-9353-e65096588b9d",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# Trending Game Recommendations\n\n## Top Trending\n\n#1 Subway Surfers \u2014 45,200 plays (score: 98)\n#2 8 Ball Pool \u2014 38,100 plays (score: 95)\n#3 Among Us \u2014 29,800 plays (score: 91)\n#4 Ludo Star \u2014 27,400 plays (score: 89)\n#5 PUBG Mobile \u2014 24,100 plays (score: 87)\n#6 Clash of Clans \u2014 21,300 plays (score: 84)",
+    "diff_summary": "Creates trending widget + recommendation engine config (3 files)",
+    "files_changed": [
+      "src/components/TrendingGamesWidget.tsx",
+      "src/config/recommendation-engine.json",
+      "src/data/trending-games.json"
+    ],
+    "estimated_impact": {
+      "ctr_improvement": "+15-25%",
+      "session_depth": "+0.5 pages/session",
+      "retention": "+8%"
+    },
+    "created_at": "2026-05-13 09:16:24.300271",
+    "expires_at": null
+  },
+  {
+    "id": "86fb3df7-942b-4396-a7ce-5930a6e204a2",
+    "output_id": "95ecfe45-cfb7-4e7a-a677-881a3407fcb5",
+    "project": "fionera",
+    "preview_html": "",
+    "preview_markdown": "# Finance Widgets \u2014 5 Components\n\n## Live Price Ticker\nReal-time price display with change indicators\n## Portfolio Summary Card\nCompact portfolio overview with P&L\n## Market Movers\nTop gainers and losers for the session\n## Economic Calendar Widget\nUpcoming economic events with impact indicators\n## Market Sentiment Gauge\nFear & Greed index and social sentiment",
+    "diff_summary": "Creates 4 finance widget components",
+    "files_changed": [
+      "src/components/widgets/PriceTicker.tsx",
+      "src/components/widgets/PortfolioSummaryCard.tsx",
+      "src/components/widgets/MarketMovers.tsx",
+      "src/config/widgets.json"
+    ],
+    "estimated_impact": {
+      "user_engagement": "+20%",
+      "data_freshness": "10s refresh",
+      "portfolio_visibility": "improved"
+    },
+    "created_at": "2026-05-13 09:20:23.853525",
+    "expires_at": null
+  },
+  {
+    "id": "19e7b592-3d59-41f1-a42f-f5dc9ed7c07d",
+    "output_id": "88976073-8858-4271-808d-5a794d830103",
+    "project": "fionera",
+    "preview_html": "",
+    "preview_markdown": "# Market Insights Preview\n\n## Weekly Market Outlook\nMarkets this week are influenced by Federal Reserve rate expectations. Key levels to watch on Tadawul (TASI): support at 11,200, resistance at 11,850. Sentiment is cautiously bullish with volume above...\n\n## Sector Rotation Analysis\nCapital is rotating from Technology into Energy. This typically signals a risk-off rotation into defensive names. Monitor ARAMCO, SABIC, STC for entry opportunities....\n\n## Earnings Season Preview\nThis week's key earnings: Saudi Aramco, stc, Al Rajhi Bank. Consensus expects flat to slightly higher EPS vs last quarter. Watch for guidance on forward guidance and dividend policy....\n\n## Technical Setup of the Week\n2222.SR (Aramco) is forming a ascending triangle pattern on the daily chart. Target: SAR 32.50, Stop: SAR 29.80. Confluence with 200-day EMA at SAR 30.20....",
+    "diff_summary": "Generates 4 market insights + InsightCard component",
+    "files_changed": [
+      "src/components/insights/InsightCard.tsx",
+      "src/data/insights/latest.json"
+    ],
+    "estimated_impact": {
+      "user_retention": "+12%",
+      "avg_session_duration": "+45s",
+      "premium_conversions": "+3%"
+    },
+    "created_at": "2026-05-13 09:20:24.516625",
+    "expires_at": null
+  },
+  {
+    "id": "fc3966f6-ff20-4efe-81cf-3834569bbd7f",
+    "output_id": "817f361b-e1ab-47d7-a4ef-361f5df623b3",
+    "project": "fionera",
+    "preview_html": "",
+    "preview_markdown": "# Watchlist Improvements\n\n## Features\n\n- [HIGH] **Price Alerts**: Set price targets with push/email notifications\n- [HIGH] **Per-Symbol News Feed**: Curated news for each watchlisted symbol\n- [MEDIUM] **Bulk Add Symbols**: Add multiple symbols at once via paste/CSV\n- [HIGH] **Advanced Sort & Filter**: Sort by change%, volume, market cap, sector\n- [MEDIUM] **Investment Notes**: Per-symbol private notes and thesis tracking\n- [HIGH] **Watchlist Performance**: Track hypothetical performance of watchlist vs index\n- [LOW] **Drag-to-Reorder**: Reorder watchlist items via drag and drop\n- [MEDIUM] **Export to CSV**: Export watchlist data with current prices",
+    "diff_summary": "Creates 3 watchlist improvement components",
+    "files_changed": [
+      "src/components/watchlist/EnhancedWatchlist.tsx",
+      "src/components/watchlist/PriceAlertModal.tsx",
+      "src/config/watchlist-features.json"
+    ],
+    "estimated_impact": {
+      "user_retention": "+18%",
+      "watchlist_engagement": "+35%",
+      "alert_conversions": "new feature",
+      "premium_signups": "+5%"
+    },
+    "created_at": "2026-05-13 09:20:24.811673",
+    "expires_at": null
+  },
+  {
+    "id": "c06cd8ef-977e-48a5-9888-c831401bae08",
+    "output_id": "5eb297c3-53cd-4421-b881-432247825ad5",
+    "project": "fionera",
+    "preview_html": "",
+    "preview_markdown": "# Analytics Dashboard\n\n## Widgets\n\n- [CRITICAL] **Portfolio Performance**: Equity curve with benchmark overlay\n- [CRITICAL] **Asset Allocation**: Portfolio breakdown by asset class and sector\n- [HIGH] **Risk Metrics**: Beta, Sharpe ratio, max drawdown, volatility\n- [HIGH] **P&L Calendar**: Daily P&L heatmap (like GitHub contribution graph)\n- [HIGH] **Portfolio Movers**: Best and worst performers today\n- [MEDIUM] **Recent Transactions**: Paginated transaction history with search\n- [MEDIUM] **Portfolio News**: News relevant to held positions",
+    "diff_summary": "Creates 4 analytics dashboard components",
+    "files_changed": [
+      "src/components/analytics/PortfolioPerformanceChart.tsx",
+      "src/components/analytics/PnLCalendar.tsx",
+      "src/components/analytics/RiskMetricsGrid.tsx",
+      "src/config/dashboard-layout.json"
+    ],
+    "estimated_impact": {
+      "session_duration": "+2min",
+      "feature_adoption": "+40%",
+      "premium_retention": "+15%"
+    },
+    "created_at": "2026-05-13 09:20:25.338734",
+    "expires_at": null
+  },
+  {
+    "id": "fed92474-7206-4e2b-af95-f1f11190ec54",
+    "output_id": "5f27cc75-d909-47b9-8566-e0ed6e9f5e3e",
+    "project": "fionera",
+    "preview_html": "",
+    "preview_markdown": "# UX Proposals\n\n## Improved Onboarding Flow [CRITICAL]\n**Problem**: High drop-off rate during KYC and account setup\n**Solution**: 5-step progressive onboarding with progress indicator, skip options, and save-and-continue\n**Impact**: +25% onboarding completion rate\n\n## Dark Mode Support [HIGH]\n**Problem**: No dark mode \u2014 causes eye strain for night traders\n**Solution**: System-aware dark mode with manual toggle, persisted in user preferences\n**Impact**: +15% evening session engagement\n\n## Full RTL Arabic Support [CRITICAL]\n**Problem**: Arabic UI is partially RTL \u2014 charts and tables break in Arabic mode\n**Solution**: Full RTL CSS with dir=rtl, RTL-aware chart labels, Arabic number formatting\n**Impact**: +40% Arabic user retention\n\n## Improved Empty States [MEDIUM]\n**Problem**: Empty watchlist/portfolio shows blank page with no guidance\n**Solution**: Illustrated empty states with clear CTAs and sample data preview\n**Impact**: +20% feature discovery\n\n## Global Search Upgrade [HIGH]\n**Problem**: Search only matches exact ticker symbols \u2014 misses company names\n**Solution**: Fuzzy search with company name, ticker, ISIN lookup + recent searches\n**Impact**: +30% symbol discovery rate",
+    "diff_summary": "Creates 7 UX proposal files and components",
+    "files_changed": [
+      "src/components/EmptyStates.tsx",
+      "src/components/GlobalSearch.tsx",
+      "docs/ux-proposals/onboarding_flow.md",
+      "docs/ux-proposals/dark_mode.md",
+      "docs/ux-proposals/rtl_arabic.md",
+      "docs/ux-proposals/empty_states.md",
+      "docs/ux-proposals/search_upgrade.md"
+    ],
+    "estimated_impact": {
+      "onboarding_completion": "+25%",
+      "arabic_retention": "+40%",
+      "search_success": "+30%"
+    },
+    "created_at": "2026-05-13 09:20:25.910891",
+    "expires_at": null
+  },
+  {
+    "id": "f5ae6b96-c892-4562-9750-81da90ec82a2",
+    "output_id": "e0f75de5-fc50-4424-84f5-045bfcac6a29",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# SEO Page Preview \u2014 Action Games\n\n## Meta Tags\n- **Title**: Best Action Games Online \u2014 Play Free on YallaPlays\n- **Description**: Play the best Action Games online for free on YallaPlays. No download needed \u2014 instant play on mobile and desktop. Discover new Action Games daily.\n- **Canonical**: https://yallaplays.com/games/action-games/\n\n## Page Content\n### Free Action Games \u2014 Play Instantly Online\nYallaPlays offers the largest collection of free Action Games in the Arab world. Whether you prefer fast-paced shooters, fighting games, or platformers, find your next favourite game here. All games are playable directly in your browser \u2014 no download, no registration required.\n\n## Target Keywords\n- action-games\n- free action-games\n- action-games online\n- play action-games\n- best action-games 2025\n\n## Structured Data\n- Type: CollectionPage\n- Publisher: YallaPlays\n\n## Files Changed\n- `src/pages/games/action-games/index.tsx`\n- `src/pages/games/action-games/seo.ts`\n\n---\n*Preview-only \u2014 requires approval before apply*\n",
+    "diff_summary": "Creates/updates 2 files for Action Games SEO page",
+    "files_changed": [
+      "src/pages/games/action-games/index.tsx",
+      "src/pages/games/action-games/seo.ts"
+    ],
+    "estimated_impact": {
+      "seo_score_improvement": "+15-25 points",
+      "pages_indexed": 1,
+      "target_keywords": 5,
+      "estimated_organic_traffic_gain": "200-500 visits/month"
+    },
+    "created_at": "2026-05-13 09:20:26.166283",
+    "expires_at": null
+  },
+  {
+    "id": "2429f1f9-14b4-40ca-a91f-d5fca8f94eaa",
+    "output_id": "ebdcb07c-1bc8-4005-b8aa-59cd260cdbb1",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# SEO Page Preview \u2014 Sports Games\n\n## Meta Tags\n- **Title**: Best Sports Games Online \u2014 Play Free on YallaPlays\n- **Description**: Play the best Sports Games online for free on YallaPlays. No download needed \u2014 instant play on mobile and desktop. Discover new Sports Games daily.\n- **Canonical**: https://yallaplays.com/games/sports-games/\n\n## Page Content\n### Free Sports Games \u2014 Play Instantly Online\nYallaPlays offers the largest collection of free Sports Games in the Arab world. Whether you prefer fast-paced shooters, fighting games, or platformers, find your next favourite game here. All games are playable directly in your browser \u2014 no download, no registration required.\n\n## Target Keywords\n- sports-games\n- free sports-games\n- sports-games online\n- play sports-games\n- best sports-games 2025\n\n## Structured Data\n- Type: CollectionPage\n- Publisher: YallaPlays\n\n## Files Changed\n- `src/pages/games/sports-games/index.tsx`\n- `src/pages/games/sports-games/seo.ts`\n\n---\n*Preview-only \u2014 requires approval before apply*\n",
+    "diff_summary": "Creates/updates 2 files for Sports Games SEO page",
+    "files_changed": [
+      "src/pages/games/sports-games/index.tsx",
+      "src/pages/games/sports-games/seo.ts"
+    ],
+    "estimated_impact": {
+      "seo_score_improvement": "+15-25 points",
+      "pages_indexed": 1,
+      "target_keywords": 5,
+      "estimated_organic_traffic_gain": "200-500 visits/month"
+    },
+    "created_at": "2026-05-13 09:20:26.419067",
+    "expires_at": null
+  },
+  {
+    "id": "497b5779-cb9f-4ff3-b38e-8c9be21b60e9",
+    "output_id": "72bea62b-1e40-4fba-a074-40852bb56583",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# SEO Page Preview \u2014 Racing Games\n\n## Meta Tags\n- **Title**: Best Racing Games Online \u2014 Play Free on YallaPlays\n- **Description**: Play the best Racing Games online for free on YallaPlays. No download needed \u2014 instant play on mobile and desktop. Discover new Racing Games daily.\n- **Canonical**: https://yallaplays.com/games/racing-games/\n\n## Page Content\n### Free Racing Games \u2014 Play Instantly Online\nYallaPlays offers the largest collection of free Racing Games in the Arab world. Whether you prefer fast-paced shooters, fighting games, or platformers, find your next favourite game here. All games are playable directly in your browser \u2014 no download, no registration required.\n\n## Target Keywords\n- racing-games\n- free racing-games\n- racing-games online\n- play racing-games\n- best racing-games 2025\n\n## Structured Data\n- Type: CollectionPage\n- Publisher: YallaPlays\n\n## Files Changed\n- `src/pages/games/racing-games/index.tsx`\n- `src/pages/games/racing-games/seo.ts`\n\n---\n*Preview-only \u2014 requires approval before apply*\n",
+    "diff_summary": "Creates/updates 2 files for Racing Games SEO page",
+    "files_changed": [
+      "src/pages/games/racing-games/index.tsx",
+      "src/pages/games/racing-games/seo.ts"
+    ],
+    "estimated_impact": {
+      "seo_score_improvement": "+15-25 points",
+      "pages_indexed": 1,
+      "target_keywords": 5,
+      "estimated_organic_traffic_gain": "200-500 visits/month"
+    },
+    "created_at": "2026-05-13 09:20:26.663325",
+    "expires_at": null
+  },
+  {
+    "id": "0d0f96b8-354b-4bdf-a0cd-9598efd54398",
+    "output_id": "5cc1a15d-f924-43ad-a262-4d31650266ba",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# SEO Page Preview \u2014 Puzzle Games\n\n## Meta Tags\n- **Title**: Best Puzzle Games Online \u2014 Play Free on YallaPlays\n- **Description**: Play the best Puzzle Games online for free on YallaPlays. No download needed \u2014 instant play on mobile and desktop. Discover new Puzzle Games daily.\n- **Canonical**: https://yallaplays.com/games/puzzle-games/\n\n## Page Content\n### Free Puzzle Games \u2014 Play Instantly Online\nYallaPlays offers the largest collection of free Puzzle Games in the Arab world. Whether you prefer fast-paced shooters, fighting games, or platformers, find your next favourite game here. All games are playable directly in your browser \u2014 no download, no registration required.\n\n## Target Keywords\n- puzzle-games\n- free puzzle-games\n- puzzle-games online\n- play puzzle-games\n- best puzzle-games 2025\n\n## Structured Data\n- Type: CollectionPage\n- Publisher: YallaPlays\n\n## Files Changed\n- `src/pages/games/puzzle-games/index.tsx`\n- `src/pages/games/puzzle-games/seo.ts`\n\n---\n*Preview-only \u2014 requires approval before apply*\n",
+    "diff_summary": "Creates/updates 2 files for Puzzle Games SEO page",
+    "files_changed": [
+      "src/pages/games/puzzle-games/index.tsx",
+      "src/pages/games/puzzle-games/seo.ts"
+    ],
+    "estimated_impact": {
+      "seo_score_improvement": "+15-25 points",
+      "pages_indexed": 1,
+      "target_keywords": 5,
+      "estimated_organic_traffic_gain": "200-500 visits/month"
+    },
+    "created_at": "2026-05-13 09:20:26.930860",
+    "expires_at": null
+  },
+  {
+    "id": "37720e2f-9d04-4aba-bc50-963faff29eb3",
+    "output_id": "98435df7-f93c-414a-96d6-09e3df3a8256",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# SEO Page Preview \u2014 Multiplayer Games\n\n## Meta Tags\n- **Title**: Best Multiplayer Games Online \u2014 Play Free on YallaPlays\n- **Description**: Play the best Multiplayer Games online for free on YallaPlays. No download needed \u2014 instant play on mobile and desktop. Discover new Multiplayer Games daily.\n- **Canonical**: https://yallaplays.com/games/multiplayer-games/\n\n## Page Content\n### Free Multiplayer Games \u2014 Play Instantly Online\nYallaPlays offers the largest collection of free Multiplayer Games in the Arab world. Whether you prefer fast-paced shooters, fighting games, or platformers, find your next favourite game here. All games are playable directly in your browser \u2014 no download, no registration required.\n\n## Target Keywords\n- multiplayer-games\n- free multiplayer-games\n- multiplayer-games online\n- play multiplayer-games\n- best multiplayer-games 2025\n\n## Structured Data\n- Type: CollectionPage\n- Publisher: YallaPlays\n\n## Files Changed\n- `src/pages/games/multiplayer-games/index.tsx`\n- `src/pages/games/multiplayer-games/seo.ts`\n\n---\n*Preview-only \u2014 requires approval before apply*\n",
+    "diff_summary": "Creates/updates 2 files for Multiplayer Games SEO page",
+    "files_changed": [
+      "src/pages/games/multiplayer-games/index.tsx",
+      "src/pages/games/multiplayer-games/seo.ts"
+    ],
+    "estimated_impact": {
+      "seo_score_improvement": "+15-25 points",
+      "pages_indexed": 1,
+      "target_keywords": 5,
+      "estimated_organic_traffic_gain": "200-500 visits/month"
+    },
+    "created_at": "2026-05-13 09:20:27.238700",
+    "expires_at": null
+  },
+  {
+    "id": "7f6b8789-51ad-433e-8840-5eda7c50cea2",
+    "output_id": "83b1c00a-52b3-4d0d-a4a7-dd39873280ad",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# SEO Page Preview \u2014 Arabic Games\n\n## Meta Tags\n- **Title**: Best Arabic Games Online \u2014 Play Free on YallaPlays\n- **Description**: Play the best Arabic Games online for free on YallaPlays. No download needed \u2014 instant play on mobile and desktop. Discover new Arabic Games daily.\n- **Canonical**: https://yallaplays.com/games/arabic-games/\n\n## Page Content\n### Free Arabic Games \u2014 Play Instantly Online\nYallaPlays offers the largest collection of free Arabic Games in the Arab world. Whether you prefer fast-paced shooters, fighting games, or platformers, find your next favourite game here. All games are playable directly in your browser \u2014 no download, no registration required.\n\n## Target Keywords\n- arabic-games\n- free arabic-games\n- arabic-games online\n- play arabic-games\n- best arabic-games 2025\n\n## Structured Data\n- Type: CollectionPage\n- Publisher: YallaPlays\n\n## Files Changed\n- `src/pages/games/arabic-games/index.tsx`\n- `src/pages/games/arabic-games/seo.ts`\n\n---\n*Preview-only \u2014 requires approval before apply*\n",
+    "diff_summary": "Creates/updates 2 files for Arabic Games SEO page",
+    "files_changed": [
+      "src/pages/games/arabic-games/index.tsx",
+      "src/pages/games/arabic-games/seo.ts"
+    ],
+    "estimated_impact": {
+      "seo_score_improvement": "+15-25 points",
+      "pages_indexed": 1,
+      "target_keywords": 5,
+      "estimated_organic_traffic_gain": "200-500 visits/month"
+    },
+    "created_at": "2026-05-13 09:20:27.579720",
+    "expires_at": null
+  },
+  {
+    "id": "3aa3121b-cb17-4068-8e30-f3aa06155fd9",
+    "output_id": "fccb3e84-7735-4143-b2dd-ccfa1534a51c",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# Category Page \u2014 Popular Games\n\n**URL**: https://yallaplays.com/games/popular/\n\n**Sections**: hero_banner, featured_games, game_grid, newsletter_cta\n\n**Files**: 2 files updated",
+    "diff_summary": "Creates Popular Games category landing page with 4 sections",
+    "files_changed": [
+      "src/pages/games/popular/index.tsx",
+      "src/config/categories/popular.json"
+    ],
+    "estimated_impact": {
+      "new_indexable_page": true,
+      "filter_ux": "improved",
+      "bounce_rate_impact": "-5% estimated"
+    },
+    "created_at": "2026-05-13 09:20:27.839480",
+    "expires_at": null
+  },
+  {
+    "id": "3a51456b-4728-4917-b50f-2bab90e8deec",
+    "output_id": "bff4486d-96b3-44c8-b633-d3dc099a1f88",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# Category Page \u2014 Trending Games\n\n**URL**: https://yallaplays.com/games/trending/\n\n**Sections**: hero_banner, featured_games, game_grid, newsletter_cta\n\n**Files**: 2 files updated",
+    "diff_summary": "Creates Trending Games category landing page with 4 sections",
+    "files_changed": [
+      "src/pages/games/trending/index.tsx",
+      "src/config/categories/trending.json"
+    ],
+    "estimated_impact": {
+      "new_indexable_page": true,
+      "filter_ux": "improved",
+      "bounce_rate_impact": "-5% estimated"
+    },
+    "created_at": "2026-05-13 09:20:28.116615",
+    "expires_at": null
+  },
+  {
+    "id": "bb335965-4fcc-49d9-885e-c42096f6eff1",
+    "output_id": "44801264-789f-423f-8d00-0c179147a926",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# Category Page \u2014 New Games\n\n**URL**: https://yallaplays.com/games/new/\n\n**Sections**: hero_banner, featured_games, game_grid, newsletter_cta\n\n**Files**: 2 files updated",
+    "diff_summary": "Creates New Games category landing page with 4 sections",
+    "files_changed": [
+      "src/pages/games/new/index.tsx",
+      "src/config/categories/new.json"
+    ],
+    "estimated_impact": {
+      "new_indexable_page": true,
+      "filter_ux": "improved",
+      "bounce_rate_impact": "-5% estimated"
+    },
+    "created_at": "2026-05-13 09:20:28.552305",
+    "expires_at": null
+  },
+  {
+    "id": "6742adbd-c68f-4ff5-b6d4-5786f5c83e7b",
+    "output_id": "49862b45-ca67-4c9a-8373-567aa92f3fe8",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# Category Page \u2014 Mobile Games\n\n**URL**: https://yallaplays.com/games/mobile/\n\n**Sections**: hero_banner, featured_games, game_grid, newsletter_cta\n\n**Files**: 2 files updated",
+    "diff_summary": "Creates Mobile Games category landing page with 4 sections",
+    "files_changed": [
+      "src/pages/games/mobile/index.tsx",
+      "src/config/categories/mobile.json"
+    ],
+    "estimated_impact": {
+      "new_indexable_page": true,
+      "filter_ux": "improved",
+      "bounce_rate_impact": "-5% estimated"
+    },
+    "created_at": "2026-05-13 09:20:28.834108",
+    "expires_at": null
+  },
+  {
+    "id": "7380ad39-196c-485a-9a4d-5c6c2c3d1a02",
+    "output_id": "a87dc2ad-60d2-4432-a2bb-738946f849a5",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# Metadata Patches \u2014 6 Games\n\n- **Subway Surfers**: title + description + schema updated\n- **8 Ball Pool**: title + description + schema updated\n- **Candy Crush Saga**: title + description + schema updated\n- **Temple Run**: title + description + schema updated\n- **Ludo Star**: title + description + schema updated\n- **PUBG Mobile**: title + description + schema updated",
+    "diff_summary": "Updates metadata for 6 games across 6 files",
+    "files_changed": [
+      "src/data/games/subway-surfers/metadata.json",
+      "src/data/games/8-ball-pool/metadata.json",
+      "src/data/games/candy-crush/metadata.json",
+      "src/data/games/temple-run/metadata.json",
+      "src/data/games/ludo-star/metadata.json",
+      "src/data/games/pubg-mobile/metadata.json"
+    ],
+    "estimated_impact": {
+      "games_improved": 6,
+      "schema_added": 6,
+      "seo_score_delta": "+5-10 points per game"
+    },
+    "created_at": "2026-05-13 09:20:31.249064",
+    "expires_at": null
+  },
+  {
+    "id": "366268cf-d595-4c35-a58e-fba46e1bc1a9",
+    "output_id": "ff00484f-d713-4e65-8240-653f7cac038c",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# Mobile Optimizations\n\n## Audit Results (8 checks)\n\n- [HIGH] Viewport Meta Tag: Add <meta name='viewport' content='width=device-width, initial-scale=1'>\n- [HIGH] Touch Target Sizes: Ensure all interactive elements are \u226544x44px\n- [HIGH] Minimum Font Sizes: Base font-size \u226516px to prevent iOS zoom\n- [MEDIUM] Game Canvas Scaling: Add touch event handlers and responsive canvas scaling\n- [MEDIUM] Image Lazy Loading: Add loading='lazy' and proper srcset for thumbnails\n- [MEDIUM] PWA Manifest: Add PWA manifest for home screen installation\n- [MEDIUM] Offline Support: Cache game assets for offline play\n- [MEDIUM] Layout Shift Prevention: Add aspect-ratio to game cards to prevent CLS",
+    "diff_summary": "Applies 3 mobile optimization patches",
+    "files_changed": [
+      "src/styles/mobile-optimizations.css",
+      "public/manifest.json",
+      "src/components/GameEmbed.tsx"
+    ],
+    "estimated_impact": {
+      "mobile_score_improvement": "+20-30 Lighthouse points",
+      "cls_score": "< 0.1 target",
+      "touch_ux": "improved",
+      "pwa_ready": true,
+      "mobile_traffic_impact": "+10-15% engagement"
+    },
+    "created_at": "2026-05-13 09:20:31.498159",
+    "expires_at": null
+  },
+  {
+    "id": "fcc31de1-486f-4338-b76e-dc0229e1d1f2",
+    "output_id": "1ced8716-e1ca-4b4e-ad86-6fba9a810bb4",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# Internal Linking Plan\n\n## 8 Link Opportunities\n\n- `/games/action/` \u2192 `/games/shooting/` (Shooting Games) [high]\n- `/games/sports/` \u2192 `/games/football/` (Football Games) [high]\n- `/games/puzzle/` \u2192 `/games/card/` (Card & Board Games) [medium]\n- `/games/racing/` \u2192 `/games/mobile/` (Best Mobile Games) [high]\n- `/` \u2192 `/games/trending/` (Trending Games) [high]\n- `/` \u2192 `/games/new/` (New Games) [high]\n- `/games/multiplayer/` \u2192 `/games/arabic/` (Arabic Games) [medium]\n- `/games/popular/` \u2192 `/games/multiplayer/` (Play With Friends) [high]",
+    "diff_summary": "Adds 3 files for internal linking infrastructure",
+    "files_changed": [
+      "src/components/RelatedCategories.tsx",
+      "src/components/Breadcrumb.tsx",
+      "src/data/internal-links.json"
+    ],
+    "estimated_impact": {
+      "page_authority_flow": "improved",
+      "crawl_depth": "reduced",
+      "seo_score_delta": "+8-12 points",
+      "user_engagement": "+5% pages/session"
+    },
+    "created_at": "2026-05-13 09:20:31.792784",
+    "expires_at": null
+  },
+  {
+    "id": "57656360-9289-4d74-bf01-803f6dab5bf9",
+    "output_id": "20867bb4-55cc-4384-b01b-236e47104e4a",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# Trending Game Recommendations\n\n## Top Trending\n\n#1 Subway Surfers \u2014 45,200 plays (score: 98)\n#2 8 Ball Pool \u2014 38,100 plays (score: 95)\n#3 Among Us \u2014 29,800 plays (score: 91)\n#4 Ludo Star \u2014 27,400 plays (score: 89)\n#5 PUBG Mobile \u2014 24,100 plays (score: 87)\n#6 Clash of Clans \u2014 21,300 plays (score: 84)",
+    "diff_summary": "Creates trending widget + recommendation engine config (3 files)",
+    "files_changed": [
+      "src/components/TrendingGamesWidget.tsx",
+      "src/config/recommendation-engine.json",
+      "src/data/trending-games.json"
+    ],
+    "estimated_impact": {
+      "ctr_improvement": "+15-25%",
+      "session_depth": "+0.5 pages/session",
+      "retention": "+8%"
+    },
+    "created_at": "2026-05-13 09:20:32.083621",
+    "expires_at": null
+  },
+  {
+    "id": "5d378ef6-50b7-4a7a-963c-a707f8bf4ed5",
+    "output_id": "304209c9-5c8e-42c9-8639-c00a1e1a2841",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# Trending Game Recommendations\n\n## Top Trending\n\n#1 Subway Surfers \u2014 45,200 plays (score: 98)\n#2 8 Ball Pool \u2014 38,100 plays (score: 95)\n#3 Among Us \u2014 29,800 plays (score: 91)\n#4 Ludo Star \u2014 27,400 plays (score: 89)\n#5 PUBG Mobile \u2014 24,100 plays (score: 87)\n#6 Clash of Clans \u2014 21,300 plays (score: 84)",
+    "diff_summary": "Creates trending widget + recommendation engine config (3 files)",
+    "files_changed": [
+      "src/components/TrendingGamesWidget.tsx",
+      "src/config/recommendation-engine.json",
+      "src/data/trending-games.json"
+    ],
+    "estimated_impact": {
+      "ctr_improvement": "+15-25%",
+      "session_depth": "+0.5 pages/session",
+      "retention": "+8%"
+    },
+    "created_at": "2026-05-13 10:00:33.097233",
+    "expires_at": null
+  },
+  {
+    "id": "f467a45c-facd-4c41-9d1c-fb1ee2a6eb24",
+    "output_id": "58355bfc-cec9-4dcc-9708-978a04b00fc7",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# SEO Page Preview \u2014 Action Games\n\n## Meta Tags\n- **Title**: Best Action Games Online \u2014 Play Free on YallaPlays\n- **Description**: Play the best Action Games online for free on YallaPlays. No download needed \u2014 instant play on mobile and desktop. Discover new Action Games daily.\n- **Canonical**: https://yallaplays.com/games/action-games/\n\n## Page Content\n### Free Action Games \u2014 Play Instantly Online\nYallaPlays offers the largest collection of free Action Games in the Arab world. Whether you prefer fast-paced shooters, fighting games, or platformers, find your next favourite game here. All games are playable directly in your browser \u2014 no download, no registration required.\n\n## Target Keywords\n- action-games\n- free action-games\n- action-games online\n- play action-games\n- best action-games 2025\n\n## Structured Data\n- Type: CollectionPage\n- Publisher: YallaPlays\n\n## Files Changed\n- `src/pages/games/action-games/index.tsx`\n- `src/pages/games/action-games/seo.ts`\n\n---\n*Preview-only \u2014 requires approval before apply*\n",
+    "diff_summary": "Creates/updates 2 files for Action Games SEO page",
+    "files_changed": [
+      "src/pages/games/action-games/index.tsx",
+      "src/pages/games/action-games/seo.ts"
+    ],
+    "estimated_impact": {
+      "seo_score_improvement": "+15-25 points",
+      "pages_indexed": 1,
+      "target_keywords": 5,
+      "estimated_organic_traffic_gain": "200-500 visits/month"
+    },
+    "created_at": "2026-05-13 10:43:45.935688",
+    "expires_at": null
+  },
+  {
+    "id": "57df9816-d709-435f-a73d-0b99ea4e443b",
+    "output_id": "0ea18dae-35aa-4349-99d9-cf9194d48add",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# SEO Page Preview \u2014 Action Games\n\n## Meta Tags\n- **Title**: Best Action Games Online \u2014 Play Free on YallaPlays\n- **Description**: Play the best Action Games online for free on YallaPlays. No download needed \u2014 instant play on mobile and desktop. Discover new Action Games daily.\n- **Canonical**: https://yallaplays.com/games/action-games/\n\n## Page Content\n### Free Action Games \u2014 Play Instantly Online\nYallaPlays offers the largest collection of free Action Games in the Arab world. Whether you prefer fast-paced shooters, fighting games, or platformers, find your next favourite game here. All games are playable directly in your browser \u2014 no download, no registration required.\n\n## Target Keywords\n- action-games\n- free action-games\n- action-games online\n- play action-games\n- best action-games 2025\n\n## Structured Data\n- Type: CollectionPage\n- Publisher: YallaPlays\n\n## Files Changed\n- `src/pages/games/action-games/index.tsx`\n- `src/pages/games/action-games/seo.ts`\n\n---\n*Preview-only \u2014 requires approval before apply*\n",
+    "diff_summary": "Creates/updates 2 files for Action Games SEO page",
+    "files_changed": [
+      "src/pages/games/action-games/index.tsx",
+      "src/pages/games/action-games/seo.ts"
+    ],
+    "estimated_impact": {
+      "seo_score_improvement": "+15-25 points",
+      "pages_indexed": 1,
+      "target_keywords": 5,
+      "estimated_organic_traffic_gain": "200-500 visits/month"
+    },
+    "created_at": "2026-05-13 10:44:47.854096",
+    "expires_at": null
+  },
+  {
+    "id": "40fd58e4-eded-48c4-9d8c-25bb35f294eb",
+    "output_id": "94bacadb-a00e-471d-a8be-cce9b02efc48",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# SEO Page Preview \u2014 Sports Games\n\n## Meta Tags\n- **Title**: Best Sports Games Online \u2014 Play Free on YallaPlays\n- **Description**: Play the best Sports Games online for free on YallaPlays. No download needed \u2014 instant play on mobile and desktop. Discover new Sports Games daily.\n- **Canonical**: https://yallaplays.com/games/sports-games/\n\n## Page Content\n### Free Sports Games \u2014 Play Instantly Online\nYallaPlays offers the largest collection of free Sports Games in the Arab world. Whether you prefer fast-paced shooters, fighting games, or platformers, find your next favourite game here. All games are playable directly in your browser \u2014 no download, no registration required.\n\n## Target Keywords\n- sports-games\n- free sports-games\n- sports-games online\n- play sports-games\n- best sports-games 2025\n\n## Structured Data\n- Type: CollectionPage\n- Publisher: YallaPlays\n\n## Files Changed\n- `src/pages/games/sports-games/index.tsx`\n- `src/pages/games/sports-games/seo.ts`\n\n---\n*Preview-only \u2014 requires approval before apply*\n",
+    "diff_summary": "Creates/updates 2 files for Sports Games SEO page",
+    "files_changed": [
+      "src/pages/games/sports-games/index.tsx",
+      "src/pages/games/sports-games/seo.ts"
+    ],
+    "estimated_impact": {
+      "seo_score_improvement": "+15-25 points",
+      "pages_indexed": 1,
+      "target_keywords": 5,
+      "estimated_organic_traffic_gain": "200-500 visits/month"
+    },
+    "created_at": "2026-05-13 10:44:49.298994",
+    "expires_at": null
+  },
+  {
+    "id": "c448a960-a29b-4d8d-b67f-c92dd532ebf7",
+    "output_id": "2c802f14-7ec8-494c-8c7d-5b85455881c9",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# SEO Page Preview \u2014 Racing Games\n\n## Meta Tags\n- **Title**: Best Racing Games Online \u2014 Play Free on YallaPlays\n- **Description**: Play the best Racing Games online for free on YallaPlays. No download needed \u2014 instant play on mobile and desktop. Discover new Racing Games daily.\n- **Canonical**: https://yallaplays.com/games/racing-games/\n\n## Page Content\n### Free Racing Games \u2014 Play Instantly Online\nYallaPlays offers the largest collection of free Racing Games in the Arab world. Whether you prefer fast-paced shooters, fighting games, or platformers, find your next favourite game here. All games are playable directly in your browser \u2014 no download, no registration required.\n\n## Target Keywords\n- racing-games\n- free racing-games\n- racing-games online\n- play racing-games\n- best racing-games 2025\n\n## Structured Data\n- Type: CollectionPage\n- Publisher: YallaPlays\n\n## Files Changed\n- `src/pages/games/racing-games/index.tsx`\n- `src/pages/games/racing-games/seo.ts`\n\n---\n*Preview-only \u2014 requires approval before apply*\n",
+    "diff_summary": "Creates/updates 2 files for Racing Games SEO page",
+    "files_changed": [
+      "src/pages/games/racing-games/index.tsx",
+      "src/pages/games/racing-games/seo.ts"
+    ],
+    "estimated_impact": {
+      "seo_score_improvement": "+15-25 points",
+      "pages_indexed": 1,
+      "target_keywords": 5,
+      "estimated_organic_traffic_gain": "200-500 visits/month"
+    },
+    "created_at": "2026-05-13 10:44:50.097028",
+    "expires_at": null
+  },
+  {
+    "id": "b2e5d704-f1dc-4435-a059-ebbc2343a707",
+    "output_id": "58008bff-4e31-461d-b44a-86c593443567",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# SEO Page Preview \u2014 Puzzle Games\n\n## Meta Tags\n- **Title**: Best Puzzle Games Online \u2014 Play Free on YallaPlays\n- **Description**: Play the best Puzzle Games online for free on YallaPlays. No download needed \u2014 instant play on mobile and desktop. Discover new Puzzle Games daily.\n- **Canonical**: https://yallaplays.com/games/puzzle-games/\n\n## Page Content\n### Free Puzzle Games \u2014 Play Instantly Online\nYallaPlays offers the largest collection of free Puzzle Games in the Arab world. Whether you prefer fast-paced shooters, fighting games, or platformers, find your next favourite game here. All games are playable directly in your browser \u2014 no download, no registration required.\n\n## Target Keywords\n- puzzle-games\n- free puzzle-games\n- puzzle-games online\n- play puzzle-games\n- best puzzle-games 2025\n\n## Structured Data\n- Type: CollectionPage\n- Publisher: YallaPlays\n\n## Files Changed\n- `src/pages/games/puzzle-games/index.tsx`\n- `src/pages/games/puzzle-games/seo.ts`\n\n---\n*Preview-only \u2014 requires approval before apply*\n",
+    "diff_summary": "Creates/updates 2 files for Puzzle Games SEO page",
+    "files_changed": [
+      "src/pages/games/puzzle-games/index.tsx",
+      "src/pages/games/puzzle-games/seo.ts"
+    ],
+    "estimated_impact": {
+      "seo_score_improvement": "+15-25 points",
+      "pages_indexed": 1,
+      "target_keywords": 5,
+      "estimated_organic_traffic_gain": "200-500 visits/month"
+    },
+    "created_at": "2026-05-13 10:44:50.722528",
+    "expires_at": null
+  },
+  {
+    "id": "da31c4ff-c200-486f-86b8-e55da68c06a4",
+    "output_id": "b9dafd08-55d1-42e7-bb65-081a94e2e878",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# SEO Page Preview \u2014 Multiplayer Games\n\n## Meta Tags\n- **Title**: Best Multiplayer Games Online \u2014 Play Free on YallaPlays\n- **Description**: Play the best Multiplayer Games online for free on YallaPlays. No download needed \u2014 instant play on mobile and desktop. Discover new Multiplayer Games daily.\n- **Canonical**: https://yallaplays.com/games/multiplayer-games/\n\n## Page Content\n### Free Multiplayer Games \u2014 Play Instantly Online\nYallaPlays offers the largest collection of free Multiplayer Games in the Arab world. Whether you prefer fast-paced shooters, fighting games, or platformers, find your next favourite game here. All games are playable directly in your browser \u2014 no download, no registration required.\n\n## Target Keywords\n- multiplayer-games\n- free multiplayer-games\n- multiplayer-games online\n- play multiplayer-games\n- best multiplayer-games 2025\n\n## Structured Data\n- Type: CollectionPage\n- Publisher: YallaPlays\n\n## Files Changed\n- `src/pages/games/multiplayer-games/index.tsx`\n- `src/pages/games/multiplayer-games/seo.ts`\n\n---\n*Preview-only \u2014 requires approval before apply*\n",
+    "diff_summary": "Creates/updates 2 files for Multiplayer Games SEO page",
+    "files_changed": [
+      "src/pages/games/multiplayer-games/index.tsx",
+      "src/pages/games/multiplayer-games/seo.ts"
+    ],
+    "estimated_impact": {
+      "seo_score_improvement": "+15-25 points",
+      "pages_indexed": 1,
+      "target_keywords": 5,
+      "estimated_organic_traffic_gain": "200-500 visits/month"
+    },
+    "created_at": "2026-05-13 10:44:50.981228",
+    "expires_at": null
+  },
+  {
+    "id": "6578f519-23cf-4930-98b8-49f0b3baefe5",
+    "output_id": "08dd970d-c137-4139-a9f6-de5bbff24765",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# SEO Page Preview \u2014 Arabic Games\n\n## Meta Tags\n- **Title**: Best Arabic Games Online \u2014 Play Free on YallaPlays\n- **Description**: Play the best Arabic Games online for free on YallaPlays. No download needed \u2014 instant play on mobile and desktop. Discover new Arabic Games daily.\n- **Canonical**: https://yallaplays.com/games/arabic-games/\n\n## Page Content\n### Free Arabic Games \u2014 Play Instantly Online\nYallaPlays offers the largest collection of free Arabic Games in the Arab world. Whether you prefer fast-paced shooters, fighting games, or platformers, find your next favourite game here. All games are playable directly in your browser \u2014 no download, no registration required.\n\n## Target Keywords\n- arabic-games\n- free arabic-games\n- arabic-games online\n- play arabic-games\n- best arabic-games 2025\n\n## Structured Data\n- Type: CollectionPage\n- Publisher: YallaPlays\n\n## Files Changed\n- `src/pages/games/arabic-games/index.tsx`\n- `src/pages/games/arabic-games/seo.ts`\n\n---\n*Preview-only \u2014 requires approval before apply*\n",
+    "diff_summary": "Creates/updates 2 files for Arabic Games SEO page",
+    "files_changed": [
+      "src/pages/games/arabic-games/index.tsx",
+      "src/pages/games/arabic-games/seo.ts"
+    ],
+    "estimated_impact": {
+      "seo_score_improvement": "+15-25 points",
+      "pages_indexed": 1,
+      "target_keywords": 5,
+      "estimated_organic_traffic_gain": "200-500 visits/month"
+    },
+    "created_at": "2026-05-13 10:44:51.560222",
+    "expires_at": null
+  },
+  {
+    "id": "a52ebc76-76cd-4256-b61b-363b46dafdb2",
+    "output_id": "4e043e25-31ca-4e05-874a-8761c4e10bd8",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# Category Page \u2014 Popular Games\n\n**URL**: https://yallaplays.com/games/popular/\n\n**Sections**: hero_banner, featured_games, game_grid, newsletter_cta\n\n**Files**: 2 files updated",
+    "diff_summary": "Creates Popular Games category landing page with 4 sections",
+    "files_changed": [
+      "src/pages/games/popular/index.tsx",
+      "src/config/categories/popular.json"
+    ],
+    "estimated_impact": {
+      "new_indexable_page": true,
+      "filter_ux": "improved",
+      "bounce_rate_impact": "-5% estimated"
+    },
+    "created_at": "2026-05-13 10:44:51.816584",
+    "expires_at": null
+  },
+  {
+    "id": "75dc199f-706e-4cb0-90ca-b1215c869701",
+    "output_id": "aa75470c-b453-4c2c-ab7a-0e24eb536041",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# Category Page \u2014 Trending Games\n\n**URL**: https://yallaplays.com/games/trending/\n\n**Sections**: hero_banner, featured_games, game_grid, newsletter_cta\n\n**Files**: 2 files updated",
+    "diff_summary": "Creates Trending Games category landing page with 4 sections",
+    "files_changed": [
+      "src/pages/games/trending/index.tsx",
+      "src/config/categories/trending.json"
+    ],
+    "estimated_impact": {
+      "new_indexable_page": true,
+      "filter_ux": "improved",
+      "bounce_rate_impact": "-5% estimated"
+    },
+    "created_at": "2026-05-13 10:44:52.411466",
+    "expires_at": null
+  },
+  {
+    "id": "c02ce17f-a9cb-484b-b990-7ad55c97e335",
+    "output_id": "45823fce-e2bb-49dc-813d-97ad707478eb",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# Category Page \u2014 New Games\n\n**URL**: https://yallaplays.com/games/new/\n\n**Sections**: hero_banner, featured_games, game_grid, newsletter_cta\n\n**Files**: 2 files updated",
+    "diff_summary": "Creates New Games category landing page with 4 sections",
+    "files_changed": [
+      "src/pages/games/new/index.tsx",
+      "src/config/categories/new.json"
+    ],
+    "estimated_impact": {
+      "new_indexable_page": true,
+      "filter_ux": "improved",
+      "bounce_rate_impact": "-5% estimated"
+    },
+    "created_at": "2026-05-13 10:44:52.718937",
+    "expires_at": null
+  },
+  {
+    "id": "6fb534ca-f5a2-4ed0-81a6-f0bc7da72aab",
+    "output_id": "91037ff2-f893-43e6-a3af-e36562f93c53",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# Category Page \u2014 Mobile Games\n\n**URL**: https://yallaplays.com/games/mobile/\n\n**Sections**: hero_banner, featured_games, game_grid, newsletter_cta\n\n**Files**: 2 files updated",
+    "diff_summary": "Creates Mobile Games category landing page with 4 sections",
+    "files_changed": [
+      "src/pages/games/mobile/index.tsx",
+      "src/config/categories/mobile.json"
+    ],
+    "estimated_impact": {
+      "new_indexable_page": true,
+      "filter_ux": "improved",
+      "bounce_rate_impact": "-5% estimated"
+    },
+    "created_at": "2026-05-13 10:44:53.313979",
+    "expires_at": null
+  },
+  {
+    "id": "c5b29c9b-60be-4422-b9b3-b602526df000",
+    "output_id": "330f84ff-76db-4445-9294-838309878b51",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# Metadata Patches \u2014 6 Games\n\n- **Subway Surfers**: title + description + schema updated\n- **8 Ball Pool**: title + description + schema updated\n- **Candy Crush Saga**: title + description + schema updated\n- **Temple Run**: title + description + schema updated\n- **Ludo Star**: title + description + schema updated\n- **PUBG Mobile**: title + description + schema updated",
+    "diff_summary": "Updates metadata for 6 games across 6 files",
+    "files_changed": [
+      "src/data/games/subway-surfers/metadata.json",
+      "src/data/games/8-ball-pool/metadata.json",
+      "src/data/games/candy-crush/metadata.json",
+      "src/data/games/temple-run/metadata.json",
+      "src/data/games/ludo-star/metadata.json",
+      "src/data/games/pubg-mobile/metadata.json"
+    ],
+    "estimated_impact": {
+      "games_improved": 6,
+      "schema_added": 6,
+      "seo_score_delta": "+5-10 points per game"
+    },
+    "created_at": "2026-05-13 10:44:55.996364",
+    "expires_at": null
+  },
+  {
+    "id": "06bb6369-35f0-4f6a-8e2f-c00d8b539555",
+    "output_id": "935b7d33-bf49-4f14-9b70-81b924fbb6c7",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# Mobile Optimizations\n\n## Audit Results (8 checks)\n\n- [HIGH] Viewport Meta Tag: Add <meta name='viewport' content='width=device-width, initial-scale=1'>\n- [HIGH] Touch Target Sizes: Ensure all interactive elements are \u226544x44px\n- [HIGH] Minimum Font Sizes: Base font-size \u226516px to prevent iOS zoom\n- [MEDIUM] Game Canvas Scaling: Add touch event handlers and responsive canvas scaling\n- [MEDIUM] Image Lazy Loading: Add loading='lazy' and proper srcset for thumbnails\n- [MEDIUM] PWA Manifest: Add PWA manifest for home screen installation\n- [MEDIUM] Offline Support: Cache game assets for offline play\n- [MEDIUM] Layout Shift Prevention: Add aspect-ratio to game cards to prevent CLS",
+    "diff_summary": "Applies 3 mobile optimization patches",
+    "files_changed": [
+      "src/styles/mobile-optimizations.css",
+      "public/manifest.json",
+      "src/components/GameEmbed.tsx"
+    ],
+    "estimated_impact": {
+      "mobile_score_improvement": "+20-30 Lighthouse points",
+      "cls_score": "< 0.1 target",
+      "touch_ux": "improved",
+      "pwa_ready": true,
+      "mobile_traffic_impact": "+10-15% engagement"
+    },
+    "created_at": "2026-05-13 10:44:56.316710",
+    "expires_at": null
+  },
+  {
+    "id": "1df01791-1044-4d4a-b517-df0c38be0966",
+    "output_id": "0a117041-1306-4e7b-9732-ceb0b5cb6378",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# Internal Linking Plan\n\n## 8 Link Opportunities\n\n- `/games/action/` \u2192 `/games/shooting/` (Shooting Games) [high]\n- `/games/sports/` \u2192 `/games/football/` (Football Games) [high]\n- `/games/puzzle/` \u2192 `/games/card/` (Card & Board Games) [medium]\n- `/games/racing/` \u2192 `/games/mobile/` (Best Mobile Games) [high]\n- `/` \u2192 `/games/trending/` (Trending Games) [high]\n- `/` \u2192 `/games/new/` (New Games) [high]\n- `/games/multiplayer/` \u2192 `/games/arabic/` (Arabic Games) [medium]\n- `/games/popular/` \u2192 `/games/multiplayer/` (Play With Friends) [high]",
+    "diff_summary": "Adds 3 files for internal linking infrastructure",
+    "files_changed": [
+      "src/components/RelatedCategories.tsx",
+      "src/components/Breadcrumb.tsx",
+      "src/data/internal-links.json"
+    ],
+    "estimated_impact": {
+      "page_authority_flow": "improved",
+      "crawl_depth": "reduced",
+      "seo_score_delta": "+8-12 points",
+      "user_engagement": "+5% pages/session"
+    },
+    "created_at": "2026-05-13 10:44:56.934474",
+    "expires_at": null
+  },
+  {
+    "id": "3e88e7f2-f64c-4121-86e9-88edb1d572c5",
+    "output_id": "17ac39a9-a001-4140-9030-c959e642dd9a",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# Trending Game Recommendations\n\n## Top Trending\n\n#1 Subway Surfers \u2014 45,200 plays (score: 98)\n#2 8 Ball Pool \u2014 38,100 plays (score: 95)\n#3 Among Us \u2014 29,800 plays (score: 91)\n#4 Ludo Star \u2014 27,400 plays (score: 89)\n#5 PUBG Mobile \u2014 24,100 plays (score: 87)\n#6 Clash of Clans \u2014 21,300 plays (score: 84)",
+    "diff_summary": "Creates trending widget + recommendation engine config (3 files)",
+    "files_changed": [
+      "src/components/TrendingGamesWidget.tsx",
+      "src/config/recommendation-engine.json",
+      "src/data/trending-games.json"
+    ],
+    "estimated_impact": {
+      "ctr_improvement": "+15-25%",
+      "session_depth": "+0.5 pages/session",
+      "retention": "+8%"
+    },
+    "created_at": "2026-05-13 10:44:57.207351",
+    "expires_at": null
+  },
+  {
+    "id": "91db1544-756d-4a7d-84b9-c7346ea7437d",
+    "output_id": "cbb59c1c-3254-406b-849b-7919d99c9ff9",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# SEO Page Preview \u2014 Action Games\n\n## Meta Tags\n- **Title**: Best Action Games Online \u2014 Play Free on YallaPlays\n- **Description**: Play the best Action Games online for free on YallaPlays. No download needed \u2014 instant play on mobile and desktop. Discover new Action Games daily.\n- **Canonical**: https://yallaplays.com/games/action-games/\n\n## Page Content\n### Free Action Games \u2014 Play Instantly Online\nYallaPlays offers the largest collection of free Action Games in the Arab world. Whether you prefer fast-paced shooters, fighting games, or platformers, find your next favourite game here. All games are playable directly in your browser \u2014 no download, no registration required.\n\n## Target Keywords\n- action-games\n- free action-games\n- action-games online\n- play action-games\n- best action-games 2025\n\n## Structured Data\n- Type: CollectionPage\n- Publisher: YallaPlays\n\n## Files Changed\n- `src/pages/games/action-games/index.tsx`\n- `src/pages/games/action-games/seo.ts`\n\n---\n*Preview-only \u2014 requires approval before apply*\n",
+    "diff_summary": "Creates/updates 2 files for Action Games SEO page",
+    "files_changed": [
+      "src/pages/games/action-games/index.tsx",
+      "src/pages/games/action-games/seo.ts"
+    ],
+    "estimated_impact": {
+      "seo_score_improvement": "+15-25 points",
+      "pages_indexed": 1,
+      "target_keywords": 5,
+      "estimated_organic_traffic_gain": "200-500 visits/month"
+    },
+    "created_at": "2026-05-13 10:45:19.683523",
+    "expires_at": null
+  },
+  {
+    "id": "3249dd8d-d69d-49bf-a21c-84c3e0a482e5",
+    "output_id": "f6f8d006-11d1-4d05-9d28-80e49fe2153d",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# SEO Page Preview \u2014 Action Games\n\n## Meta Tags\n- **Title**: Best Action Games Online \u2014 Play Free on YallaPlays\n- **Description**: Play the best Action Games online for free on YallaPlays. No download needed \u2014 instant play on mobile and desktop. Discover new Action Games daily.\n- **Canonical**: https://yallaplays.com/games/action-games/\n\n## Page Content\n### Free Action Games \u2014 Play Instantly Online\nYallaPlays offers the largest collection of free Action Games in the Arab world. Whether you prefer fast-paced shooters, fighting games, or platformers, find your next favourite game here. All games are playable directly in your browser \u2014 no download, no registration required.\n\n## Target Keywords\n- action-games\n- free action-games\n- action-games online\n- play action-games\n- best action-games 2025\n\n## Structured Data\n- Type: CollectionPage\n- Publisher: YallaPlays\n\n## Files Changed\n- `src/pages/games/action-games/index.tsx`\n- `src/pages/games/action-games/seo.ts`\n\n---\n*Preview-only \u2014 requires approval before apply*\n",
+    "diff_summary": "Creates/updates 2 files for Action Games SEO page",
+    "files_changed": [
+      "src/pages/games/action-games/index.tsx",
+      "src/pages/games/action-games/seo.ts"
+    ],
+    "estimated_impact": {
+      "seo_score_improvement": "+15-25 points",
+      "pages_indexed": 1,
+      "target_keywords": 5,
+      "estimated_organic_traffic_gain": "200-500 visits/month"
+    },
+    "created_at": "2026-05-13 10:45:29.947851",
+    "expires_at": null
+  },
+  {
+    "id": "5f324093-c06b-46e5-99ea-573f6fdc9de6",
+    "output_id": "a8ffceb1-cc82-4951-832c-7ce80817c607",
+    "project": "yallaplays",
+    "preview_html": "",
+    "preview_markdown": "# SEO Page Preview \u2014 Action Games\n\n## Meta Tags\n- **Title**: Best Action Games Online \u2014 Play Free on YallaPlays\n- **Description**: Play the best Action Games online for free on YallaPlays. No download needed \u2014 instant play on mobile and desktop. Discover new Action Games daily.\n- **Canonical**: https://yallaplays.com/games/action-games/\n\n## Page Content\n### Free Action Games \u2014 Play Instantly Online\nYallaPlays offers the largest collection of free Action Games in the Arab world. Whether you prefer fast-paced shooters, fighting games, or platformers, find your next favourite game here. All games are playable directly in your browser \u2014 no download, no registration required.\n\n## Target Keywords\n- action-games\n- free action-games\n- action-games online\n- play action-games\n- best action-games 2025\n\n## Structured Data\n- Type: CollectionPage\n- Publisher: YallaPlays\n\n## Files Changed\n- `src/pages/games/action-games/index.tsx`\n- `src/pages/games/action-games/seo.ts`\n\n---\n*Preview-only \u2014 requires approval before apply*\n",
+    "diff_summary": "Creates/updates 2 files for Action Games SEO page",
+    "files_changed": [
+      "src/pages/games/action-games/index.tsx",
+      "src/pages/games/action-games/seo.ts"
+    ],
+    "estimated_impact": {
+      "seo_score_improvement": "+15-25 points",
+      "pages_indexed": 1,
+      "target_keywords": 5,
+      "estimated_organic_traffic_gain": "200-500 visits/month"
+    },
+    "created_at": "2026-05-13 10:47:27.369716",
+    "expires_at": null
+  }
+]

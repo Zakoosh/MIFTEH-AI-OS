@@ -1,0 +1,14 @@
+{
+  "review_id": "rev_12dde707df82",
+  "thread_id": "thr_87c8a7736445",
+  "session_id": "sess_20a3dade4c64",
+  "reviewer_agent": "product-manager",
+  "reviewed_agent": "marketing-growth-hacker",
+  "contribution_id": "ctr_bf729c14ba89",
+  "score": 91.0,
+  "approved": true,
+  "feedback": "Peer review of marketing-growth-hacker's implementation for 'category-optimization': Implementation is solid and production-ready. Code quality acceptable.",
+  "concerns": [],
+  "role": "reviewer",
+  "timestamp": "2026-05-12T20:03:17.553557"
+}

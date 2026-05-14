@@ -1,0 +1,29 @@
+{
+  "audit_id": "43883e0a-32fb-448d-9bbd-950f957dbbd8",
+  "operation_id": "op_a699f8ebef72",
+  "proposal_id": "widget_fi_001",
+  "project_id": "fionera",
+  "action": "validate",
+  "status": "success",
+  "actor": "mifteh-apply-engine",
+  "timestamp": "2026-05-12T19:32:01.820661",
+  "details": {
+    "proposal_id": "widget_fi_001",
+    "valid": true,
+    "risk_level": "low",
+    "checks_passed": [
+      "project_id recognized",
+      "operation_type allowed",
+      "target_file path is safe",
+      "changes dict is non-empty",
+      "no forbidden content in changes",
+      "all field lengths within limits",
+      "all change keys within allowed_fields policy",
+      "risk level 'low' is acceptable",
+      "proposal_id format valid"
+    ],
+    "checks_failed": [],
+    "warnings": [],
+    "message": "Proposal is valid and eligible for apply."
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "audit_id": "49819335-a441-4dd8-9532-ae3917b7f40c",
+  "operation_id": "op_a699f8ebef72",
+  "proposal_id": "widget_fi_001",
+  "project_id": "fionera",
+  "action": "apply",
+  "status": "success",
+  "actor": "mifteh-apply-engine",
+  "timestamp": "2026-05-12T19:32:01.821829",
+  "details": {
+    "message": "dry_run: patch not written to disk",
+    "dry_run": true,
+    "simulated": true
+  }
+}

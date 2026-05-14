@@ -1,0 +1,56 @@
+{
+  "thread_id": "thr_87c8a7736445",
+  "session_id": "sess_20a3dade4c64",
+  "mission": "category-optimization",
+  "proposal_id": "",
+  "project_id": "yallaplays",
+  "agents": [
+    "marketing-seo-specialist",
+    "marketing-growth-hacker",
+    "product-manager",
+    "testing-reality-checker",
+    "testing-performance-benchmarker"
+  ],
+  "agent_roles": {
+    "marketing-seo-specialist": "implementer",
+    "marketing-growth-hacker": "implementer",
+    "product-manager": "reviewer",
+    "testing-reality-checker": "validator",
+    "testing-performance-benchmarker": "validator"
+  },
+  "implementers": [
+    "marketing-seo-specialist",
+    "marketing-growth-hacker"
+  ],
+  "reviewers": [
+    "product-manager"
+  ],
+  "validators": [
+    "testing-reality-checker",
+    "testing-performance-benchmarker"
+  ],
+  "status": "approved",
+  "contribution_ids": [
+    "ctr_1d17364d59bd",
+    "ctr_bf729c14ba89",
+    "ctr_52cd91ad2c54",
+    "ctr_50df4598b61b",
+    "ctr_853415e05c4e"
+  ],
+  "review_ids": [
+    "rev_94cd63a24dff",
+    "rev_12dde707df82",
+    "rev_a43ca2cf0b33",
+    "rev_1d5f35e59271",
+    "rev_c25f3f483f85",
+    "rev_70ee0c438fac"
+  ],
+  "chain_id": "chain_ce97d2988691",
+  "consensus_score": 92.1,
+  "quality_score": 96.0,
+  "approved": true,
+  "conflicts": 0,
+  "started_at": "2026-05-12T20:03:17.551622",
+  "completed_at": "2026-05-12T20:03:17.556526",
+  "error": ""
+}

@@ -1,0 +1,38 @@
+[
+  {
+    "id": "0dda596f-6e14-48ce-a632-fc1f673723b8",
+    "condition": "task_type=analysis",
+    "target_provider": "openai",
+    "fallback_provider": "gemini",
+    "priority": 1,
+    "enabled": true,
+    "description": "Analysis tasks go to OpenAI"
+  },
+  {
+    "id": "e1df05bd-1284-45a3-abc1-c8a7370df95f",
+    "condition": "task_type=content",
+    "target_provider": "gemini",
+    "fallback_provider": "openai",
+    "priority": 1,
+    "enabled": true,
+    "description": "Content tasks go to Gemini"
+  },
+  {
+    "id": "32fa4200-5f0d-4e3c-8573-ed9098e9f853",
+    "condition": "task_type=code",
+    "target_provider": "openai",
+    "fallback_provider": "gemini",
+    "priority": 2,
+    "enabled": true,
+    "description": "Code tasks go to OpenAI"
+  },
+  {
+    "id": "dc7d03f5-34d6-4c24-b7f3-f3d7ae60bbc4",
+    "condition": "task_type=general",
+    "target_provider": "openai",
+    "fallback_provider": "gemini",
+    "priority": 3,
+    "enabled": true,
+    "description": "General tasks go to OpenAI"
+  }
+]

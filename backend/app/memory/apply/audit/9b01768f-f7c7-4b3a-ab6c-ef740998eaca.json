@@ -1,0 +1,15 @@
+{
+  "audit_id": "9b01768f-f7c7-4b3a-ab6c-ef740998eaca",
+  "operation_id": "op_a05b87274ee3",
+  "proposal_id": "seo_lp_001",
+  "project_id": "yallaplays",
+  "action": "patch",
+  "status": "success",
+  "actor": "mifteh-apply-engine",
+  "timestamp": "2026-05-12T19:49:08.617766",
+  "details": {
+    "diff_lines": 12,
+    "target_file": "public/index.html",
+    "simulated": true
+  }
+}

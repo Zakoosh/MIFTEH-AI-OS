@@ -1,0 +1,29 @@
+{
+  "operation_id": "op_d018dcc5aafc",
+  "proposal_id": "widget_fi_001",
+  "target_file": "src/config/widgets.json",
+  "original_content": "",
+  "patched_content": "{\n  \"widget_added\": \"portfolio_heatmap\",\n  \"dashboard_updated\": true,\n  \"project\": \"fionera\",\n  \"widget_id\": \"portfolio_heatmap\",\n  \"widget_name\": \"Portfolio Heatmap\",\n  \"data_source\": \"portfolio_api\",\n  \"display_type\": \"heatmap\",\n  \"metrics\": [\n    \"daily_return\",\n    \"allocation\",\n    \"volatility\"\n  ],\n  \"time_range\": \"30d\",\n  \"enabled\": true\n}\n",
+  "diff_lines": [
+    "--- a/src/config/widgets.json",
+    "+++ b/src/config/widgets.json",
+    "@@ -0,0 +1,16 @@",
+    "+{\n",
+    "+  \"widget_added\": \"portfolio_heatmap\",\n",
+    "+  \"dashboard_updated\": true,\n",
+    "+  \"project\": \"fionera\",\n",
+    "+  \"widget_id\": \"portfolio_heatmap\",\n",
+    "+  \"widget_name\": \"Portfolio Heatmap\",\n",
+    "+  \"data_source\": \"portfolio_api\",\n",
+    "+  \"display_type\": \"heatmap\",\n",
+    "+  \"metrics\": [\n",
+    "+    \"daily_return\",\n",
+    "+    \"allocation\",\n",
+    "+    \"volatility\"\n",
+    "+  ],\n",
+    "+  \"time_range\": \"30d\",\n",
+    "+  \"enabled\": true\n",
+    "+}\n"
+  ],
+  "generated_at": "2026-05-12T19:32:01.839121"
+}

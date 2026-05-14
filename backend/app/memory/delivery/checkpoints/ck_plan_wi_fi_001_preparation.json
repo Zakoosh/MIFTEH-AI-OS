@@ -1,0 +1,28 @@
+{
+  "checkpoint_id": "ck_plan_wi_fi_001_preparation",
+  "plan_id": "plan_wi_fi_001",
+  "run_id": "run_plan_wi_fi_001",
+  "phase": "preparation",
+  "phase_number": 1,
+  "checks_run": 2,
+  "checks_passed": 2,
+  "checks_failed": 0,
+  "blocking_failures": 0,
+  "result": "passed",
+  "details": [
+    {
+      "check": "Spec approved by PM",
+      "blocking": true,
+      "passed": true,
+      "message": "Pass"
+    },
+    {
+      "check": "API contract reviewed",
+      "blocking": true,
+      "passed": true,
+      "message": "Pass"
+    }
+  ],
+  "timestamp": "2026-05-12T21:03:49.245001",
+  "duration_seconds": 0.4
+}

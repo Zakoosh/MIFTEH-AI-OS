@@ -1,0 +1,22 @@
+{
+  "consensus_id": "con_8065287ca65b",
+  "session_id": "sess_20a3dade4c64",
+  "thread_id": "thr_87c8a7736445",
+  "individual_scores": {
+    "product-manager": 91.0,
+    "testing-reality-checker": 93.0,
+    "testing-performance-benchmarker": 92.0
+  },
+  "role_weights": {
+    "product-manager": 1.0,
+    "testing-reality-checker": 1.4,
+    "testing-performance-benchmarker": 1.4
+  },
+  "weighted_score": 92.11,
+  "consensus_score": 92.1,
+  "approved": true,
+  "threshold": 75.0,
+  "abstentions": [],
+  "score_spread": 2.0,
+  "timestamp": "2026-05-12T20:03:17.556015"
+}

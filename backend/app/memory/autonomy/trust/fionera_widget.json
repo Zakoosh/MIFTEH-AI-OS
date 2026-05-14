@@ -1,0 +1,15 @@
+{
+  "key": "fionera:widget",
+  "project_id": "fionera",
+  "proposal_type": "widget",
+  "score": 50.0,
+  "apply_count": 3,
+  "success_count": 0,
+  "failure_count": 3,
+  "rollback_count": 3,
+  "rollback_rate": 100.0,
+  "autonomous_apply_allowed": false,
+  "suspended": true,
+  "suspension_reason": "Rollback rate 100.0% exceeds threshold 20.0%",
+  "last_updated": "2026-05-12T19:50:44.172777"
+}

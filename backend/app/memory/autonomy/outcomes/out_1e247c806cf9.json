@@ -1,0 +1,56 @@
+{
+  "outcome_id": "out_1e247c806cf9",
+  "operation_id": "op_dfa628a628e3",
+  "proposal_id": "seo_manifest_001",
+  "project_id": "yallaplays",
+  "proposal_type": "manifest",
+  "outcome": "dry_run",
+  "simulated": true,
+  "dry_run": true,
+  "timestamp": "2026-05-12T19:49:08.622944",
+  "details": {
+    "proposal_id": "seo_manifest_001",
+    "operation_id": "op_dfa628a628e3",
+    "project": "yallaplays",
+    "validated": true,
+    "preview_generated": true,
+    "patch_generated": true,
+    "applied": true,
+    "rollback_available": true,
+    "simulated": true,
+    "message": "Applied (simulated — target path not accessible)",
+    "details": {
+      "validation": {
+        "proposal_id": "seo_manifest_001",
+        "valid": true,
+        "risk_level": "low",
+        "checks_passed": [
+          "project_id recognized",
+          "operation_type allowed",
+          "target_file path is safe",
+          "changes dict is non-empty",
+          "no forbidden content in changes",
+          "all field lengths within limits",
+          "all change keys within allowed_fields policy",
+          "risk level 'low' is acceptable",
+          "proposal_id format valid"
+        ],
+        "checks_failed": [],
+        "warnings": [],
+        "message": "Proposal is valid and eligible for apply."
+      },
+      "preview": {
+        "proposal_id": "seo_manifest_001",
+        "operation_type": "manifest",
+        "target_file": "public/manifest.json",
+        "before_summary": "[MANIFEST] Current state of public/manifest.json",
+        "after_summary": "Proposed changes:\n  • name: YallaPlays — Online Games\n  • short_name: YallaPlays\n  • description: Play free online games — no download required\n  • theme_color: #1a1a2e\n  • background_color: #0f3460\n  • display: standalone",
+        "changes_count": 6,
+        "simulated": true,
+        "generated_at": "2026-05-12T19:49:08.621596"
+      },
+      "patch_diff_lines": 12
+    },
+    "timestamp": "2026-05-12T19:49:08.622674"
+  }
+}

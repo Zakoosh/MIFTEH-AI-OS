@@ -1,0 +1,11 @@
+{
+  "audit_id": "aud_plan_wi_yp_003_start",
+  "plan_id": "plan_wi_yp_003",
+  "run_id": "run_plan_wi_yp_003",
+  "action": "run_started",
+  "actor": "autonomous",
+  "status": "running",
+  "phase": "",
+  "details": "Delivery run initiated (dry_run=True)",
+  "timestamp": "2026-05-12T21:04:55.355858"
+}

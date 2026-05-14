@@ -1,0 +1,47 @@
+# ==========================================
+# Supabase Configuration
+# ==========================================
+VITE_SUPABASE_URL=https://wfxmzhhgefgapzeuokre.supabase.co
+VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndmeG16aGhnZWZnYXB6ZXVva3JlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI5NzU3NzQsImV4cCI6MjA3ODU1MTc3NH0.8elS1GWYIrHx-wzPpswDw75x1lXN7ScRzBvCzhRAW8k
+
+# ==========================================
+# AI Configuration
+# ==========================================
+# Gemini AI API Key (من Google AI Studio)
+# https://ai.google.dev/
+VITE_GEMINI_API_KEY=your_gemini_api_key_here
+
+# ==========================================
+# Market Data Configuration
+# ==========================================
+# Alpha Vantage API Key (للحصول على بيانات الأسهم)
+# https://www.alphavantage.co/support/#api-key
+VITE_ALPHA_VANTAGE_API_KEY=QE4K2MJNTSE22TCU
+
+# Twelve Data API Configuration
+VITE_TWELVE_DATA_API_KEY=fc704d2dac37491c990f5e85c1cabf85
+VITE_TWELVE_DATA_BASE_URL=https://api.twelvedata.com
+
+# ==========================================
+# Alpaca Paper Trading Configuration
+# ==========================================
+# Alpaca API Keys (من alpaca.markets - Paper Trading)
+# https://alpaca.markets
+VITE_ALPACA_API_KEY=PKPAFRX325KT6WTCVBUB37T355
+VITE_ALPACA_SECRET_KEY=CQcf84ZRbKTJUUMvuoajavbzJ3nyF7UsUonSGi9VQyAG
+VITE_ALPACA_BASE_URL=https://paper-api.alpaca.markets
+
+# ==========================================
+# Telegram Bots Configuration
+# ==========================================
+# Bot 1: التقارير (Reports Bot)
+VITE_TELEGRAM_REPORTS_BOT_TOKEN=8382222457:AAGN8IEwtE_l_FPfhAJ4S7yq2NH2lkvV_qw
+VITE_TELEGRAM_REPORTS_CHAT_ID=6980352639
+
+# Bot 2: حالة النظام (Status Bot)
+VITE_TELEGRAM_STATUS_BOT_TOKEN=8435452935:AAHbJw0j0hh23bSedQkVB9eEGqgzEPXhooM
+VITE_TELEGRAM_STATUS_CHAT_ID=6980352639
+
+# Bot 3: التداول (Trades Bot)
+VITE_TELEGRAM_TRADES_BOT_TOKEN=8519827284:AAG9o0DvzFRJ7mQFxLGBf5DhWLTIQOH3lIk
+VITE_TELEGRAM_TRADES_CHAT_ID=6980352639

@@ -1,0 +1,11 @@
+[
+  {
+    "id": "da4c844d-da4d-413d-905d-c6e9d5c0a004",
+    "original_provider": "gemini",
+    "fallback_provider": "mock",
+    "reason": "GEMINI_API_KEY not configured",
+    "timestamp": "2026-05-13 05:52:34.356537",
+    "success": true,
+    "latency_ms": 0.0
+  }
+]

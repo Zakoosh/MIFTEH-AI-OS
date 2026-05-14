@@ -1,0 +1,45 @@
+{
+  "proposal_id": "seo_lp_001",
+  "operation_id": "op_a05b87274ee3",
+  "project": "yallaplays",
+  "validated": true,
+  "preview_generated": true,
+  "patch_generated": true,
+  "applied": true,
+  "rollback_available": true,
+  "simulated": true,
+  "message": "Applied (simulated — target path not accessible)",
+  "details": {
+    "validation": {
+      "proposal_id": "seo_lp_001",
+      "valid": true,
+      "risk_level": "low",
+      "checks_passed": [
+        "project_id recognized",
+        "operation_type allowed",
+        "target_file path is safe",
+        "changes dict is non-empty",
+        "no forbidden content in changes",
+        "all field lengths within limits",
+        "all change keys within allowed_fields policy",
+        "risk level 'low' is acceptable",
+        "proposal_id format valid"
+      ],
+      "checks_failed": [],
+      "warnings": [],
+      "message": "Proposal is valid and eligible for apply."
+    },
+    "preview": {
+      "proposal_id": "seo_lp_001",
+      "operation_type": "seo",
+      "target_file": "public/index.html",
+      "before_summary": "[SEO] Current state of public/index.html",
+      "after_summary": "Proposed changes:\n  • title: YallaPlays — Play Free Online Games in Arabic & English\n  • description: Discover hundreds of free online games on YallaPlays. Play instantly, no download needed.\n  • keywords: free online games, Arabic games, play games online, YallaPlays\n  • og_title: YallaPlays — Free Online Games\n  • og_description: Play the best free online games. New games added weekly.\n  • og_image: /assets/og-home.jpg\n  • twitter_card: summary_large_image\n  • canonical_url: https://yallaplays.com/",
+      "changes_count": 8,
+      "simulated": true,
+      "generated_at": "2026-05-12T19:49:08.616995"
+    },
+    "patch_diff_lines": 12
+  },
+  "timestamp": "2026-05-12T19:49:08.618275"
+}
