@@ -1,0 +1,31 @@
+[
+  {
+    "project": "YallaPlays",
+    "repo": "Zakoosh/Yallaplays",
+    "branch": "ai/seo-improvements-yallaplays-2026-05-15",
+    "pr_number": 5,
+    "pr_url": "https://github.com/Zakoosh/Yallaplays/pull/5",
+    "pr_title": "SEO: YallaPlays — meta, structured data, robots, sitemap",
+    "created_at": "2026-05-15T15:43:39Z",
+    "ai_generated": true,
+    "operation_type": "repository_analysis",
+    "files_committed": [
+      "index.html",
+      "robots.txt",
+      "sitemap.xml"
+    ],
+    "issues_found": [
+      "robots.txt does not exist",
+      "sitemap.xml does not exist",
+      "missing Organization JSON-LD structured data",
+      "missing BreadcrumbList JSON-LD structured data",
+      "missing ItemList JSON-LD for featured games",
+      "SiteLinksSearchBox structured data not present",
+      "meta keywords can be improved for better SEO"
+    ],
+    "seo_score_before": 65,
+    "seo_score_after": 90,
+    "tokens_used": 4977,
+    "cost_usd": 0.00169425
+  }
+]

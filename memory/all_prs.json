@@ -1,0 +1,91 @@
+[
+  {
+    "project": "YallaPlays",
+    "repo": "Zakoosh/Yallaplays",
+    "branch": "ai/seo-improvements-yallaplays-2026-05-15",
+    "pr_number": 5,
+    "pr_url": "https://github.com/Zakoosh/Yallaplays/pull/5",
+    "pr_title": "SEO: YallaPlays — meta, structured data, robots, sitemap",
+    "created_at": "2026-05-15T15:43:39Z",
+    "ai_generated": true,
+    "operation_type": "repository_analysis",
+    "files_committed": [
+      "index.html",
+      "robots.txt",
+      "sitemap.xml"
+    ],
+    "issues_found": [
+      "robots.txt does not exist",
+      "sitemap.xml does not exist",
+      "missing Organization JSON-LD structured data",
+      "missing BreadcrumbList JSON-LD structured data",
+      "missing ItemList JSON-LD for featured games",
+      "SiteLinksSearchBox structured data not present",
+      "meta keywords can be improved for better SEO"
+    ],
+    "seo_score_before": 65,
+    "seo_score_after": 90,
+    "tokens_used": 4977,
+    "cost_usd": 0.00169425
+  },
+  {
+    "project": "Fionera",
+    "repo": "Zakoosh/fionera",
+    "branch": "ai/seo-improvements-fionera-2026-05-15",
+    "pr_number": 3,
+    "pr_url": "https://github.com/Zakoosh/fionera/pull/3",
+    "pr_title": "SEO: Fionera — meta, structured data, robots, sitemap",
+    "created_at": "2026-05-15T15:44:14Z",
+    "ai_generated": true,
+    "operation_type": "repository_analysis",
+    "files_committed": [
+      "index.html",
+      "robots.txt",
+      "sitemap.xml"
+    ],
+    "issues_found": [
+      "Missing Open Graph tags",
+      "Missing Twitter Card meta tags",
+      "Missing canonical URL",
+      "Missing structured data (WebApplication schema)",
+      "Wrong title (should be 'Fionera')",
+      "No robots.txt file",
+      "No sitemap.xml file"
+    ],
+    "seo_score_before": 65,
+    "seo_score_after": 90,
+    "tokens_used": 3227,
+    "cost_usd": 0.0012598499999999999
+  },
+  {
+    "project": "Mifteh",
+    "repo": "Zakoosh/mifteh-main-site",
+    "branch": "ai/seo-improvements-mifteh-2026-05-15",
+    "pr_number": 1,
+    "pr_url": "https://github.com/Zakoosh/mifteh-main-site/pull/1",
+    "pr_title": "SEO: Mifteh — meta, structured data, robots, sitemap",
+    "created_at": "2026-05-15T15:44:50Z",
+    "ai_generated": true,
+    "operation_type": "repository_analysis",
+    "files_committed": [
+      "index.html",
+      "public/robots.txt",
+      "public/sitemap.xml",
+      "public/manifest.json"
+    ],
+    "issues_found": [
+      "Title is incorrect - should be 'MIFTEH AI OS'",
+      "Missing meta description tag",
+      "No Open Graph tags present",
+      "No Twitter Card tags present",
+      "No structured data in JSON-LD format",
+      "robots.txt does not exist",
+      "sitemap.xml does not exist",
+      "manifest.json does not exist"
+    ],
+    "seo_score_before": 65,
+    "seo_score_after": 90,
+    "tokens_used": 1999,
+    "cost_usd": 0.00083895
+  }
+]

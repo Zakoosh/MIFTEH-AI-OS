@@ -1,0 +1,33 @@
+[
+  {
+    "project": "Mifteh",
+    "repo": "Zakoosh/mifteh-main-site",
+    "branch": "ai/seo-improvements-mifteh-2026-05-15",
+    "pr_number": 1,
+    "pr_url": "https://github.com/Zakoosh/mifteh-main-site/pull/1",
+    "pr_title": "SEO: Mifteh — meta, structured data, robots, sitemap",
+    "created_at": "2026-05-15T15:44:50Z",
+    "ai_generated": true,
+    "operation_type": "repository_analysis",
+    "files_committed": [
+      "index.html",
+      "public/robots.txt",
+      "public/sitemap.xml",
+      "public/manifest.json"
+    ],
+    "issues_found": [
+      "Title is incorrect - should be 'MIFTEH AI OS'",
+      "Missing meta description tag",
+      "No Open Graph tags present",
+      "No Twitter Card tags present",
+      "No structured data in JSON-LD format",
+      "robots.txt does not exist",
+      "sitemap.xml does not exist",
+      "manifest.json does not exist"
+    ],
+    "seo_score_before": 65,
+    "seo_score_after": 90,
+    "tokens_used": 1999,
+    "cost_usd": 0.00083895
+  }
+]
