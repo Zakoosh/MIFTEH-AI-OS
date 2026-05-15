@@ -3,6 +3,8 @@ name: Deploy MIFTEH OS Dashboard to GitHub Pages
 on:
   push:
     branches: [main]
+    paths:
+      - 'frontend/dashboard/**'
   workflow_dispatch:
 
 permissions:

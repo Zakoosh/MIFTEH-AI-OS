@@ -1,0 +1,75 @@
+{
+  "generated_at": "2025-05-15T00:00:00Z",
+  "architecture": "github-native",
+  "scheduler": {
+    "scheduler_running": true,
+    "active_loops": 0,
+    "total_loops": 14,
+    "total_runs": 0,
+    "total_success": 0,
+    "loops": [
+      {"id": "yp-seo-loop",      "label": "SEO Page Generator",       "project": "yallaplays", "interval_minutes": 360,  "last_run": null, "last_status": "pending", "run_count": 0, "success_count": 0, "next_run_scheduled": null},
+      {"id": "yp-category-loop", "label": "Category Optimizer",        "project": "yallaplays", "interval_minutes": 720,  "last_run": null, "last_status": "pending", "run_count": 0, "success_count": 0, "next_run_scheduled": null},
+      {"id": "yp-homepage-loop", "label": "Homepage Recommendations",  "project": "yallaplays", "interval_minutes": 360,  "last_run": null, "last_status": "pending", "run_count": 0, "success_count": 0, "next_run_scheduled": null},
+      {"id": "yp-linking-loop",  "label": "Internal Linking",          "project": "yallaplays", "interval_minutes": 1440, "last_run": null, "last_status": "pending", "run_count": 0, "success_count": 0, "next_run_scheduled": null},
+      {"id": "yp-mobile-loop",   "label": "Mobile Optimization",       "project": "yallaplays", "interval_minutes": 1440, "last_run": null, "last_status": "pending", "run_count": 0, "success_count": 0, "next_run_scheduled": null},
+      {"id": "yp-games-loop",    "label": "Game Suggestion Generator", "project": "yallaplays", "interval_minutes": 240,  "last_run": null, "last_status": "pending", "run_count": 0, "success_count": 0, "next_run_scheduled": null},
+      {"id": "fi-market-loop",   "label": "Market Insights",           "project": "fionera",    "interval_minutes": 240,  "last_run": null, "last_status": "pending", "run_count": 0, "success_count": 0, "next_run_scheduled": null},
+      {"id": "fi-watchlist-loop","label": "Watchlist Optimizer",       "project": "fionera",    "interval_minutes": 360,  "last_run": null, "last_status": "pending", "run_count": 0, "success_count": 0, "next_run_scheduled": null},
+      {"id": "fi-analytics-loop","label": "Analytics Report",          "project": "fionera",    "interval_minutes": 1440, "last_run": null, "last_status": "pending", "run_count": 0, "success_count": 0, "next_run_scheduled": null},
+      {"id": "fi-ux-loop",       "label": "UX Improvements",           "project": "fionera",    "interval_minutes": 1440, "last_run": null, "last_status": "pending", "run_count": 0, "success_count": 0, "next_run_scheduled": null},
+      {"id": "fi-widgets-loop",  "label": "Finance Widgets",           "project": "fionera",    "interval_minutes": 720,  "last_run": null, "last_status": "pending", "run_count": 0, "success_count": 0, "next_run_scheduled": null},
+      {"id": "mi-seo-loop",      "label": "SEO Improvements",          "project": "mifteh",     "interval_minutes": 720,  "last_run": null, "last_status": "pending", "run_count": 0, "success_count": 0, "next_run_scheduled": null},
+      {"id": "mi-content-loop",  "label": "Content Optimizer",         "project": "mifteh",     "interval_minutes": 1440, "last_run": null, "last_status": "pending", "run_count": 0, "success_count": 0, "next_run_scheduled": null},
+      {"id": "mi-landing-loop",  "label": "Landing Page Optimizer",    "project": "mifteh",     "interval_minutes": 1440, "last_run": null, "last_status": "pending", "run_count": 0, "success_count": 0, "next_run_scheduled": null}
+    ],
+    "provider_cooldowns": {
+      "openai": {"consecutive_429s": 0, "total_429s": 0, "last_success": "2025-05-15T00:00:00Z"},
+      "gemini": {"consecutive_429s": 0, "total_429s": 0, "last_success": "2025-05-15T00:00:00Z"}
+    }
+  },
+  "providers": {
+    "openai": {"configured": true, "available": true},
+    "gemini": {"configured": true, "available": true},
+    "github_active": true,
+    "ai_mode": "ai",
+    "market_data": {"twelve_data": false, "alpha_vantage": false}
+  },
+  "ai_analytics": {
+    "total_calls": 0,
+    "successful_calls": 0,
+    "rate_limited_calls": 0,
+    "success_rate_pct": 0,
+    "ai_generated_pct": 0,
+    "total_tokens": 0,
+    "total_cost_usd": 0.0,
+    "by_provider": {},
+    "by_project": {},
+    "by_operation_type": {},
+    "by_day": {}
+  },
+  "outputs": {
+    "total": 0,
+    "yallaplays": 0,
+    "fionera": 0,
+    "mifteh": 0,
+    "ai_generated": 0,
+    "template_generated": 0,
+    "pending_review": 0
+  },
+  "repository": {
+    "previews": [],
+    "pr_outputs": [],
+    "pr_ready": 0
+  },
+  "github_prs": [],
+  "activity": [],
+  "safety": {
+    "auto_merge": false,
+    "auto_deploy": false,
+    "preview_first": true,
+    "rollback_enabled": true,
+    "validation_required": true,
+    "audit_tracking": true
+  }
+}

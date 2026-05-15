@@ -1,0 +1,38 @@
+name: MIFTEH AI PR Generator
+
+on:
+  schedule:
+    - cron: '0 8 * * *'   # daily at 08:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  create-prs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Create draft PRs in target repos
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+          GITHUB_REPO_YALLAPLAYS: Zakoosh/Yallaplays
+          GITHUB_REPO_FIONERA: Zakoosh/fionera
+          GITHUB_REPO_MIFTEH: Zakoosh/mifteh-main-site
+        run: python scripts/create_draft_prs.py
+
+      - name: Commit PR records
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "mifteh-ai@users.noreply.github.com"
+          git pull --rebase origin main
+          git add memory/
+          git diff --cached --quiet || git commit -m "AI: PR creation log [$(date -u +%Y-%m-%dT%H:%M:%SZ)] [skip ci]"
+          git push

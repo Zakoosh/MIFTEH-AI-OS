@@ -1,27 +1,16 @@
-/* MIFTEH AI OS Dashboard — yallaplays.com/admin/os */
+/* MIFTEH AI OS Dashboard — miftehos.com
+ * GitHub-native architecture: reads from /data/dashboard.json (no backend required).
+ * Data is updated by GitHub Actions AI workflows on a cron schedule.
+ */
 'use strict';
 
-// API base URL — set via config.js for cross-origin deployments (default: same origin)
-const _API = (typeof window.MIFTEH_API_BASE !== 'undefined') ? window.MIFTEH_API_BASE : '';
+const _DATA_URL = (typeof window.MIFTEH_DATA_URL !== 'undefined')
+  ? window.MIFTEH_DATA_URL
+  : '/data/dashboard.json';
 
-// Token stored in localStorage for cross-origin (header) auth
-function _storedToken() { return localStorage.getItem('mifteh_os_token') || ''; }
-function _authHeaders() {
-  const t = _storedToken();
-  return t ? { 'X-OS-Token': t } : {};
-}
-
-// On page load: capture ?token= param from cross-origin login redirect, store it, clean URL
-(function() {
-  const params = new URLSearchParams(window.location.search);
-  const tok = params.get('token');
-  if (tok) {
-    localStorage.setItem('mifteh_os_token', tok);
-    params.delete('token');
-    const clean = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
-    history.replaceState({}, '', clean);
-  }
-})();
+const _ACTIONS = (typeof window.MIFTEH_ACTIONS !== 'undefined')
+  ? window.MIFTEH_ACTIONS
+  : {};
 
 let _data = null;
 
@@ -34,11 +23,11 @@ function showTab(name, btn) {
   if (tab) tab.classList.add('active');
   if (btn) btn.classList.add('active');
   const titles = {
-    overview:'AI Operations Center', loops:'Continuous Operation Loops',
-    providers:'AI Provider Runtime', 'ai-analytics':'AI Generation Analytics',
-    outputs:'Generated Outputs', previews:'HTML Previews',
-    repository:'PR-Ready Changes', github:'GitHub Draft PRs',
-    activity:'Operational Activity Feed', safety:'Safety & Bounded Autonomy',
+    overview: 'AI Operations Center', loops: 'Continuous Operation Loops',
+    providers: 'AI Provider Runtime', 'ai-analytics': 'AI Generation Analytics',
+    outputs: 'Generated Outputs', previews: 'HTML Previews',
+    repository: 'PR-Ready Changes', github: 'GitHub Draft PRs',
+    activity: 'Operational Activity Feed', safety: 'Safety & Bounded Autonomy',
   };
   const el = document.getElementById('page-title');
   if (el) el.textContent = titles[name] || 'Dashboard';
@@ -48,7 +37,7 @@ function showTab(name, btn) {
 
 function esc(s) {
   if (s == null) return '';
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
 function relTime(iso) {
@@ -56,9 +45,9 @@ function relTime(iso) {
   const diff = Math.floor((Date.now() - new Date(iso)) / 1000);
   if (diff < 5) return 'just now';
   if (diff < 60) return diff + 's ago';
-  if (diff < 3600) return Math.floor(diff/60) + 'm ago';
-  if (diff < 86400) return Math.floor(diff/3600) + 'h ago';
-  return Math.floor(diff/86400) + 'd ago';
+  if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+  if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+  return Math.floor(diff / 86400) + 'd ago';
 }
 
 function formatNext(iso) {
@@ -66,19 +55,19 @@ function formatNext(iso) {
   const diff = Math.floor((new Date(iso) - Date.now()) / 1000);
   if (diff < 0) return 'now';
   if (diff < 60) return 'in ' + diff + 's';
-  if (diff < 3600) return 'in ' + Math.floor(diff/60) + 'm';
-  return 'in ' + Math.floor(diff/3600) + 'h ' + Math.floor((diff % 3600)/60) + 'm';
+  if (diff < 3600) return 'in ' + Math.floor(diff / 60) + 'm';
+  return 'in ' + Math.floor(diff / 3600) + 'h ' + Math.floor((diff % 3600) / 60) + 'm';
 }
 
 function fmtInterval(mins) {
   if (!mins) return '–';
   if (mins < 60) return mins + 'm';
-  if (mins < 1440) return (mins/60) + 'h';
-  return (mins/1440) + 'd';
+  if (mins < 1440) return (mins / 60) + 'h';
+  return (mins / 1440) + 'd';
 }
 
 function card(label, value, cls, sub) {
-  return `<div class="card ${cls||''}">
+  return `<div class="card ${cls || ''}">
     <div class="card-label">${esc(label)}</div>
     <div class="card-value">${esc(String(value))}</div>
     ${sub ? `<div class="card-sub">${esc(sub)}</div>` : ''}
@@ -86,8 +75,8 @@ function card(label, value, cls, sub) {
 }
 
 function statusDot(status) {
-  const map = {completed:'dot-green',running:'dot-blue',pending:'dot-yellow',error:'dot-red',failed:'dot-red',queued:'dot-yellow'};
-  return `<span class="status-dot ${map[status]||'dot-dim'}"></span>`;
+  const map = { completed: 'dot-green', running: 'dot-blue', pending: 'dot-yellow', error: 'dot-red', failed: 'dot-red', queued: 'dot-yellow' };
+  return `<span class="status-dot ${map[status] || 'dot-dim'}"></span>`;
 }
 
 function aiBadge(ai) {
@@ -122,57 +111,56 @@ function statRow(label, value, color) {
 function renderOverview(d) {
   const sched = d.scheduler || {};
   const outs = d.outputs || {};
-  const repo = d.repository || {};
   const prov = d.providers || {};
   const ai = d.ai_analytics || {};
   const ghs = (d.github_prs || []).length;
 
   set('overview-cards',
     card('Total Outputs', outs.total || 0, 'green', 'all projects') +
-    card('AI Generated', outs.ai_generated || 0, 'blue', `${ai.ai_generated_pct||0}% AI rate`) +
+    card('AI Generated', outs.ai_generated || 0, 'blue', `${ai.ai_generated_pct || 0}% AI rate`) +
     card('Pending Review', outs.pending_review || 0, 'yellow', 'awaiting apply') +
     card('GitHub PRs', ghs, 'purple', 'draft PRs created') +
-    card('Active Loops', sched.active_loops || 0, 'cyan', `of ${sched.total_loops||11}`) +
-    card('AI Cost (7d)', `$${(ai.total_cost_usd||0).toFixed(4)}`, 'orange', `${ai.total_tokens||0} tokens`)
+    card('Active Loops', sched.active_loops || 0, 'cyan', `of ${sched.total_loops || 14}`) +
+    card('AI Cost (7d)', `$${(ai.total_cost_usd || 0).toFixed(4)}`, 'orange', `${ai.total_tokens || 0} tokens`)
   );
 
-  const running = sched.scheduler_running;
-  set('scheduler-badge', running ? '<span class="panel-badge badge-green">running</span>' : '<span class="panel-badge badge-red">stopped</span>');
+  set('scheduler-badge', '<span class="panel-badge badge-green">GitHub Actions</span>');
   set('scheduler-summary',
-    statRow('Scheduler', running ? '● Running' : '● Stopped', running ? 'var(--green)' : 'var(--red)') +
-    statRow('Active Loops', `${sched.active_loops||0} / ${sched.total_loops||0}`) +
+    statRow('Runtime', 'GitHub Actions', 'var(--cyan)') +
+    statRow('Architecture', 'GitHub-native', 'var(--green)') +
+    statRow('Active Loops', `${sched.active_loops || 0} / ${sched.total_loops || 14}`) +
     statRow('Total Runs', sched.total_runs || 0) +
     statRow('Successful', sched.total_success || 0, 'var(--green)') +
-    statRow('Generation Mode', prov.ai_mode || 'template', 'var(--cyan)')
+    statRow('Generation Mode', prov.ai_mode || 'ai', 'var(--cyan)')
   );
 
   const oai = prov.openai || {};
   const gem = prov.gemini || {};
-  const aiMode = prov.ai_mode || 'template';
+  const aiMode = prov.ai_mode || 'ai';
   set('provider-badge', aiMode === 'ai' ? '<span class="panel-badge badge-green">AI active</span>' : '<span class="panel-badge badge-yellow">template mode</span>');
   set('provider-summary',
     `<div class="provider-stat"><span>OpenAI</span>${provBadge(oai.configured, oai.available)}</div>` +
     `<div class="provider-stat"><span>Gemini</span>${provBadge(gem.configured, gem.available)}</div>` +
     statRow('GitHub', prov.github_active ? 'active' : '–', prov.github_active ? 'var(--green)' : 'var(--dim)') +
-    statRow('AI Cost (7d)', `$${(ai.total_cost_usd||0).toFixed(4)}`) +
-    statRow('AI Success Rate', `${ai.success_rate_pct||0}%`, ai.success_rate_pct > 50 ? 'var(--green)' : 'var(--yellow)')
+    statRow('AI Cost (7d)', `$${(ai.total_cost_usd || 0).toFixed(4)}`) +
+    statRow('AI Success Rate', `${ai.success_rate_pct || 0}%`, ai.success_rate_pct > 50 ? 'var(--green)' : 'var(--yellow)')
   );
 
   const activity = d.activity || [];
-  set('recent-outputs-mini', activity.slice(0,6).map(o => `
+  set('recent-outputs-mini', activity.slice(0, 6).map(o => `
     <div class="output-row">${projectTag(o.project)}<span class="output-type-tag">${esc(o.type)}</span>
     <span class="output-title">${esc(o.title)}</span>${aiBadge(o.ai_generated)}</div>
-  `).join('') || '<div class="empty">No outputs yet</div>');
+  `).join('') || '<div class="empty">Waiting for first AI loop run…</div>');
 
   const prs = d.github_prs || [];
-  set('github-mini', prs.length ? prs.slice(0,5).map(p => `
+  set('github-mini', prs.length ? prs.slice(0, 5).map(p => `
     <div class="pr-row">
       <div class="pr-body">
         <div class="pr-branch">${esc(p.branch)}</div>
         <div class="pr-meta"><a href="${esc(p.pr_url)}" target="_blank" style="color:var(--blue);">PR #${p.pr_number}</a> · ${esc(p.repo)} · ${relTime(p.created_at)}</div>
       </div>${projectTag(p.repo && p.repo.toLowerCase().includes('yalla') ? 'yallaplays' : 'fionera')}
     </div>
-  `).join('') : '<div class="empty">No GitHub PRs created yet. Use the GitHub tab to create draft PRs.</div>');
+  `).join('') : '<div class="empty">No GitHub PRs yet. AI PR Generator runs daily at 08:00 UTC.</div>');
 
   renderActivityList('activity-mini', activity.slice(0, 8));
   set('activity-badge-overview', `<span class="panel-badge badge-dim">${activity.length} events</span>`);
@@ -182,17 +170,22 @@ function renderOverview(d) {
 
 function renderLoops(d) {
   const loops = (d.scheduler || {}).loops || [];
+  const workflowUrl = (loop) => {
+    if (loop.project === 'yallaplays' || loop.project === 'mifteh') return _ACTIONS.seo || '#';
+    if (loop.project === 'fionera') return _ACTIONS.finance || '#';
+    return _ACTIONS.dashboard || '#';
+  };
   function row(l) {
     const next = l.next_run_scheduled || l.next_run;
     return `<tr>
-      <td>${statusDot(l.last_status || 'pending')}<span style="color:var(--muted);font-size:11px;">${esc(l.last_status||'pending')}</span></td>
+      <td>${statusDot(l.last_status || 'pending')}<span style="color:var(--muted);font-size:11px;">${esc(l.last_status || 'pending')}</span></td>
       <td style="font-weight:600;">${esc(l.label)}</td>
       <td><span class="countdown">${fmtInterval(l.interval_minutes)}</span></td>
       <td style="color:var(--dim);">${relTime(l.last_run)}</td>
       <td><span class="countdown">${formatNext(next)}</span></td>
-      <td style="color:var(--muted);">${l.run_count||0}</td>
-      <td style="color:var(--green);">${l.success_count||0}</td>
-      <td><button class="trigger-btn" onclick="triggerLoop('${esc(l.id)}',this)">▶ Run now</button></td>
+      <td style="color:var(--muted);">${l.run_count || 0}</td>
+      <td style="color:var(--green);">${l.success_count || 0}</td>
+      <td><a href="${esc(workflowUrl(l))}" target="_blank" class="trigger-btn" style="text-decoration:none;">▶ Run</a></td>
     </tr>`;
   }
   const yp = loops.filter(l => l.project === 'yallaplays');
@@ -215,15 +208,16 @@ function renderProviders(d) {
     const avail = cfg.available !== undefined ? cfg.available : p.available;
     return `<div class="provider-card">
       <div class="provider-name">${avail ? '🟢' : '🟡'} ${n.toUpperCase()}</div>
-      ${statRow('Configured', (prov[n]||{}).configured ? 'yes' : 'no')}
+      ${statRow('Configured', (prov[n] || {}).configured ? 'yes' : 'no')}
       ${statRow('Available', avail ? 'yes' : 'no', avail ? 'var(--green)' : 'var(--yellow)')}
       ${statRow('429s (consecutive)', p.consecutive_429s || 0)}
       ${statRow('429s (total)', p.total_429s || 0)}
     </div>`;
   }).join('') + `<div class="provider-card">
-    <div class="provider-name">📊 Market Data</div>
-    ${statRow('Twelve Data', (prov.market_data||{}).twelve_data ? 'active' : '–', (prov.market_data||{}).twelve_data ? 'var(--green)' : 'var(--dim)')}
-    ${statRow('Alpha Vantage', (prov.market_data||{}).alpha_vantage ? 'active' : '–', (prov.market_data||{}).alpha_vantage ? 'var(--green)' : 'var(--dim)')}
+    <div class="provider-name">⚙️ Runtime</div>
+    ${statRow('Architecture', 'GitHub-native', 'var(--cyan)')}
+    ${statRow('Scheduler', 'GitHub Actions', 'var(--green)')}
+    ${statRow('Storage', 'Repository JSON', 'var(--muted)')}
     ${statRow('GitHub', prov.github_active ? 'active' : '–', prov.github_active ? 'var(--green)' : 'var(--dim)')}
   </div>`);
 
@@ -234,7 +228,6 @@ function renderProviders(d) {
       ${statRow('Last Success', relTime(p.last_success))}
       ${statRow('Last Rate Limit', p.last_429 ? relTime(p.last_429) : '–')}
       ${statRow('Cooldown Until', p.cooldown_until ? new Date(p.cooldown_until).toLocaleTimeString() : '–')}
-      ${statRow('Template Fallback Until', p.template_fallback_until ? new Date(p.template_fallback_until).toLocaleTimeString() : 'not in fallback')}
     </div>`;
   }).join('<hr style="border-color:var(--border);margin:8px 0;">'));
 }
@@ -245,49 +238,44 @@ function renderAIAnalytics(d) {
   const ai = d.ai_analytics || {};
   set('ai-analytics-cards',
     card('Total AI Calls', ai.total_calls || 0, 'blue') +
-    card('Successful', ai.successful_calls || 0, 'green', `${ai.success_rate_pct||0}% success`) +
+    card('Successful', ai.successful_calls || 0, 'green', `${ai.success_rate_pct || 0}% success`) +
     card('Rate Limited', ai.rate_limited_calls || 0, 'yellow') +
-    card('AI Gen %', `${ai.ai_generated_pct||0}%`, 'purple') +
-    card('Total Tokens', (ai.total_tokens||0).toLocaleString(), 'cyan') +
-    card('Total Cost', `$${(ai.total_cost_usd||0).toFixed(6)}`, 'orange')
+    card('AI Gen %', `${ai.ai_generated_pct || 0}%`, 'purple') +
+    card('Total Tokens', (ai.total_tokens || 0).toLocaleString(), 'cyan') +
+    card('Total Cost', `$${(ai.total_cost_usd || 0).toFixed(6)}`, 'orange')
   );
 
-  // By provider
   const byProv = ai.by_provider || {};
   set('ai-by-provider', Object.keys(byProv).length ? Object.entries(byProv).map(([name, stats]) => `
     <div style="margin-bottom:12px;">
       <div style="font-weight:700;font-size:12px;margin-bottom:6px;">${esc(name)}</div>
       ${statRow('Requests', stats.requests || 0)}
-      ${statRow('Success Rate', `${stats.success_rate || 0}%`, stats.success_rate > 50 ? 'var(--green)' : 'var(--yellow)')}
-      ${statRow('Total Tokens', (stats.tokens||0).toLocaleString())}
-      ${statRow('Total Cost', `$${(stats.cost_usd||0).toFixed(6)}`)}
-      ${statRow('Avg Latency', `${stats.avg_latency_ms||0}ms`)}
+      ${statRow('Success Rate', `${stats.success_rate || 100}%`, 'var(--green)')}
+      ${statRow('Total Tokens', (stats.tokens || 0).toLocaleString())}
+      ${statRow('Total Cost', `$${(stats.cost_usd || 0).toFixed(6)}`)}
     </div>
     <hr style="border-color:var(--border);margin:8px 0;">
-  `).join('') : '<div class="empty">No AI calls recorded yet</div>');
+  `).join('') : '<div class="empty">No AI calls yet — workflows start generating on next cron run</div>');
 
-  // By project
   const byProj = ai.by_project || {};
   set('ai-by-project', Object.keys(byProj).length ? Object.entries(byProj).map(([proj, count]) => `
     <div class="output-row">${projectTag(proj)}<span class="output-title">${esc(proj)}</span><span style="color:var(--cyan);">${count} calls</span></div>
   `).join('') : '<div class="empty">No data</div>');
 
-  // By operation type
   const byOp = ai.by_operation_type || {};
-  set('ai-by-optype', Object.keys(byOp).length ? Object.entries(byOp).sort((a,b) => b[1]-a[1]).map(([op, count]) => `
+  set('ai-by-optype', Object.keys(byOp).length ? Object.entries(byOp).sort((a, b) => b[1] - a[1]).map(([op, count]) => `
     <div class="output-row"><span class="output-type-tag">${esc(op)}</span><span class="output-title"></span><span style="color:var(--muted);">${count} calls</span></div>
   `).join('') : '<div class="empty">No data</div>');
 
-  // Daily trend
   const byDay = ai.by_day || {};
-  const days = Object.entries(byDay).sort((a,b) => a[0].localeCompare(b[0]));
+  const days = Object.entries(byDay).sort((a, b) => a[0].localeCompare(b[0]));
   set('ai-daily-trend', days.length ? days.map(([day, stats]) => `
     <div class="output-row">
       <span style="font-size:11px;color:var(--dim);font-family:monospace;width:90px;flex-shrink:0;">${esc(day)}</span>
       <span class="output-title"></span>
-      <span style="color:var(--green);">${stats.success||0}✓</span>
-      <span style="color:var(--muted);margin-left:8px;">${stats.requests||0} calls</span>
-      <span style="color:var(--orange);margin-left:8px;">$${(stats.cost_usd||0).toFixed(4)}</span>
+      <span style="color:var(--green);">${stats.success || 0}✓</span>
+      <span style="color:var(--muted);margin-left:8px;">${stats.requests || 0} calls</span>
+      <span style="color:var(--orange);margin-left:8px;">$${(stats.cost_usd || 0).toFixed(4)}</span>
     </div>
   `).join('') : '<div class="empty">No daily data yet</div>');
 }
@@ -300,8 +288,8 @@ function renderOutputs(d) {
     card('Total', outs.total || 0, 'green') +
     card('YallaPlays', outs.yallaplays || 0, 'cyan') +
     card('Fionera', outs.fionera || 0, 'blue') +
-    card('AI Generated', outs.ai_generated || 0, 'purple') +
-    card('Template', outs.template_generated || 0, '') +
+    card('Mifteh', outs.mifteh || 0, 'purple') +
+    card('AI Generated', outs.ai_generated || 0, 'green') +
     card('Pending Review', outs.pending_review || 0, 'yellow')
   );
   const activity = d.activity || [];
@@ -309,7 +297,7 @@ function renderOutputs(d) {
     <div class="output-row"><span class="output-type-tag">${esc(o.type)}</span>
     <span class="output-title">${esc(o.title)}</span>${aiBadge(o.ai_generated)}
     <span style="font-size:10px;color:var(--dim);">${relTime(o.time)}</span></div>
-  `).join('') : '<div class="empty">No outputs</div>';
+  `).join('') : '<div class="empty">No outputs yet</div>';
   set('yp-outputs-list', outputRows(activity.filter(o => o.project === 'yallaplays')));
   set('fi-outputs-list', outputRows(activity.filter(o => o.project === 'fionera')));
 }
@@ -322,7 +310,6 @@ function renderPreviews(d) {
   set('previews-list', previews.length ? previews.map(p => `
     <div class="output-row"><span class="output-type-tag">HTML</span>
     <span class="output-title">${esc(p.filename)}</span>
-    <span style="font-size:11px;color:var(--dim);">${Math.round((p.size_bytes||0)/1024)}KB</span>
     <a href="${esc(p.url)}" target="_blank" style="font-size:11px;color:var(--blue);">Preview →</a></div>
   `).join('') : '<div class="empty">No HTML previews generated yet</div>');
 }
@@ -336,11 +323,11 @@ function renderRepository(d) {
     <div class="pr-row">${projectTag(p.project)}
       <div class="pr-body">
         <div class="pr-branch">${esc(p.suggested_branch)}</div>
-        <div class="pr-meta">${esc(p.output_type)} · ${p.total_files||0} file(s) · ${relTime(p.generated_at)}</div>
+        <div class="pr-meta">${esc(p.output_type)} · ${p.total_files || 0} file(s) · ${relTime(p.generated_at)}</div>
       </div>
-      <button class="trigger-btn" onclick="createPRFromOutput('${esc(p.output_id||'')}',this)" style="flex-shrink:0;">⑂ PR</button>
+      <a href="${esc(_ACTIONS.prs || '#')}" target="_blank" class="trigger-btn" style="text-decoration:none;flex-shrink:0;">⑂ PR</a>
     </div>
-  `).join('') : '<div class="empty">No PR-ready outputs yet</div>');
+  `).join('') : '<div class="empty">No PR-ready outputs yet — runs after first AI loop</div>');
 }
 
 // ─── GitHub ──────────────────────────────────────────────────────────────────
@@ -354,21 +341,21 @@ function renderGitHub(d) {
       <div class="pr-body">
         <div><a href="${esc(p.pr_url)}" target="_blank" style="color:var(--blue);font-weight:600;font-size:13px;">PR #${p.pr_number} — ${esc(p.pr_title)}</a></div>
         <div class="pr-branch" style="margin-top:4px;">${esc(p.branch)}</div>
-        <div class="pr-meta">${esc(p.repo)} · ${(p.files_committed||[]).length} files · ${relTime(p.created_at)} · <span style="color:var(--yellow);">draft</span></div>
+        <div class="pr-meta">${esc(p.repo)} · ${(p.files_committed || []).length} files · ${relTime(p.created_at)} · <span style="color:var(--yellow);">draft</span></div>
       </div>
     </div>
-  `).join('') : '<div class="empty">No GitHub PRs created yet.<br>Use the buttons above to create draft PRs from the latest outputs.</div>');
+  `).join('') : '<div class="empty">No GitHub PRs yet. AI PR Generator runs daily at 08:00 UTC.<br>Manually trigger via GitHub Actions → MIFTEH AI PR Generator.</div>');
 }
 
 // ─── Activity ────────────────────────────────────────────────────────────────
 
 function renderActivityList(id, items) {
-  if (!items || !items.length) { set(id, '<div class="empty">No activity yet</div>'); return; }
-  const icons = {seo_page:'🔍',category_page:'📂',metadata_patch:'🏷',mobile_optimization:'📱',internal_linking:'🔗',game_recommendation:'🎮',market_insight:'📈',finance_widget:'💹',watchlist_improvement:'👁',analytics_dashboard:'📊',ux_proposal:'✨'};
-  const colors = {yallaplays:'#16a34a',fionera:'#2563eb'};
+  if (!items || !items.length) { set(id, '<div class="empty">No activity yet — waiting for first workflow run</div>'); return; }
+  const icons = { seo_page: '🔍', category_page: '📂', metadata_patch: '🏷', mobile_optimization: '📱', internal_linking: '🔗', game_recommendation: '🎮', market_insight: '📈', finance_widget: '💹', watchlist_improvement: '👁', analytics_report: '📊', content_optimization: '✍️', analytics_dashboard: '📊', ux_proposal: '✨' };
+  const colors = { yallaplays: '#16a34a', fionera: '#2563eb', mifteh: '#7c3aed' };
   set(id, items.map(o => `
     <div class="activity-item">
-      <div class="activity-icon" style="background:${colors[o.project]||'#374151'}20;color:${colors[o.project]||'#9ca3af'};">${icons[o.type]||'◻'}</div>
+      <div class="activity-icon" style="background:${colors[o.project] || '#374151'}20;color:${colors[o.project] || '#9ca3af'};">${icons[o.type] || '◻'}</div>
       <div class="activity-body">
         <div class="activity-title">${esc(o.title)}</div>
         <div class="activity-meta">${esc(o.project)} · ${esc(o.type)} · ${relTime(o.time)}</div>
@@ -392,103 +379,68 @@ function renderSafety(d) {
     ['✅ Validation required', safety.validation_required],
     ['✅ Audit tracking', safety.audit_tracking],
   ];
-  set('safety-constraints', `<div class="safety-grid">${constraints.map(([l,ok]) =>
-    `<div class="safety-item"><span class="safety-icon">${ok?'🟢':'🔴'}</span><span style="color:${ok?'var(--green)':'var(--red)'};">${esc(l)}</span></div>`
+  set('safety-constraints', `<div class="safety-grid">${constraints.map(([l, ok]) =>
+    `<div class="safety-item"><span class="safety-icon">${ok ? '🟢' : '🔴'}</span><span style="color:${ok ? 'var(--green)' : 'var(--red)'};">${esc(l)}</span></div>`
   ).join('')}</div>`);
   set('safety-limits',
-    statRow('Daily Budget', '$10.00 USD') +
-    statRow('Max Ops/Hour', '50') +
-    statRow('Min Trust Score', '0.30') +
+    statRow('Runtime', 'GitHub Actions') +
+    statRow('Storage', 'Repository JSON') +
+    statRow('AI Provider', 'OpenAI gpt-4o-mini') +
     statRow('Bounded Autonomy', 'active', 'var(--green)') +
-    statRow('Session TTL', '8 hours') +
-    statRow('Auth Required', 'yes', 'var(--green)')
+    statRow('Auth Required', 'no (read-only dashboard)', 'var(--dim)') +
+    statRow('PR Type', 'always draft', 'var(--green)')
   );
   set('safety-audit',
     statRow('Total Outputs Generated', outs.total || 0) +
     statRow('AI-Generated', outs.ai_generated || 0) +
     statRow('Template Outputs', outs.template_generated || 0) +
     statRow('Pending Human Review', outs.pending_review || 0, 'var(--yellow)') +
-    statRow('PR-Ready Changes', (d.repository||{}).pr_ready || 0, 'var(--purple)') +
-    statRow('GitHub PRs Created', (d.github_prs||[]).length, 'var(--blue)') +
+    statRow('PR-Ready Changes', (d.repository || {}).pr_ready || 0, 'var(--purple)') +
+    statRow('GitHub PRs Created', (d.github_prs || []).length, 'var(--blue)') +
     `<div style="margin-top:12px;padding:10px;background:var(--surface2);border-radius:var(--radius-sm);font-size:11px;color:var(--muted);">
-      ⛨ No auto-merge, no auto-deploy, no bypass of review. All outputs require human approval.
-      GitHub PRs are always created as drafts. Session-based authentication protects all admin routes.
+      ⛨ GitHub-native autonomous AI OS. No auto-merge, no auto-deploy, no bypass of review.
+      All outputs require human approval. PRs always created as drafts.
+      Architecture: GitHub Actions → outputs/ → dashboard.json → miftehos.com
     </div>`
   );
 }
 
-// ─── Actions ─────────────────────────────────────────────────────────────────
+// ─── Actions (GitHub-native) ─────────────────────────────────────────────────
 
-async function triggerLoop(loopId, btn) {
-  if (btn) { btn.disabled = true; btn.textContent = '⏳ Running...'; }
-  try {
-    const r = await fetch(_API + '/api/os/loops/' + loopId + '/trigger', { method: 'POST', headers: _authHeaders() });
-    const result = await r.json();
-    if (btn) btn.textContent = result.success ? '✓ Done' : '✗ Failed';
-    setTimeout(() => { if (btn) { btn.disabled = false; btn.textContent = '▶ Run now'; } }, 3000);
-    if (result.success) setTimeout(loadDashboard, 1500);
-  } catch(e) { if (btn) { btn.disabled = false; btn.textContent = '▶ Run now'; } }
+function triggerLoop(loopId) {
+  // In GitHub-native mode, redirect to GitHub Actions for manual dispatch
+  const url = _ACTIONS.dashboard || 'https://github.com/Zakoosh/MIFTEH-AI-OS/actions';
+  window.open(url, '_blank');
 }
 
-async function createPR(project) {
+function createPR(project) {
+  window.open(_ACTIONS.prs || 'https://github.com/Zakoosh/MIFTEH-AI-OS/actions/workflows/ai-pr-generator.yml', '_blank');
   const resultEl = document.getElementById('pr-create-result');
-  if (resultEl) resultEl.innerHTML = '<span class="spinner"></span> Creating draft PR...';
-  try {
-    const r = await fetch(_API + '/api/os/github/create-pr-latest/' + project, { method: 'POST', headers: _authHeaders() });
-    const result = await r.json();
-    if (result.success) {
-      if (resultEl) resultEl.innerHTML = `<div style="padding:10px;background:#052e16;border:1px solid #166534;border-radius:6px;font-size:12px;">
-        ✅ <strong>Draft PR created!</strong><br>
-        <a href="${esc(result.pr_url)}" target="_blank" style="color:var(--blue);">${esc(result.pr_url)}</a><br>
-        <span style="color:var(--dim);">${result.files_committed.length} files committed to ${esc(result.branch)}</span>
-      </div>`;
-      setTimeout(loadDashboard, 2000);
-    } else {
-      if (resultEl) resultEl.innerHTML = `<div style="padding:10px;background:#450a0a;border:1px solid #991b1b;border-radius:6px;font-size:12px;color:var(--red);">✗ ${esc(result.detail || result.error || 'PR creation failed')}</div>`;
-    }
-  } catch(e) {
-    if (resultEl) resultEl.innerHTML = `<div style="color:var(--red);font-size:12px;">Error: ${esc(e.message)}</div>`;
-  }
+  if (resultEl) resultEl.innerHTML = `<div style="padding:10px;background:#052e16;border:1px solid #166534;border-radius:6px;font-size:12px;">
+    ✅ <strong>Opened GitHub Actions</strong><br>
+    <span style="color:var(--dim);">Click "Run workflow" to create a draft PR for ${esc(project)}</span>
+  </div>`;
 }
 
-async function createPRFromOutput(outputId, btn) {
-  if (!outputId) return;
-  if (btn) { btn.disabled = true; btn.textContent = '⏳...'; }
-  try {
-    const r = await fetch(_API + '/api/os/github/create-pr/' + outputId, { method: 'POST', headers: _authHeaders() });
-    const result = await r.json();
-    if (btn) btn.textContent = result.success ? '✓ PR created' : '✗ Failed';
-    if (result.success) {
-      setTimeout(loadDashboard, 1500);
-      window.open(result.pr_url, '_blank');
-    }
-    setTimeout(() => { if (btn) { btn.disabled = false; btn.textContent = '⑂ PR'; } }, 4000);
-  } catch(e) { if (btn) { btn.disabled = false; btn.textContent = '⑂ PR'; } }
+function createPRFromOutput() {
+  window.open(_ACTIONS.prs || 'https://github.com/Zakoosh/MIFTEH-AI-OS/actions/workflows/ai-pr-generator.yml', '_blank');
 }
 
 // ─── Load ────────────────────────────────────────────────────────────────────
 
 async function loadDashboard() {
   try {
-    const resp = await fetch(_API + '/api/os/dashboard', { cache: 'no-store', headers: _authHeaders() });
-    if (resp.status === 401) {
-      localStorage.removeItem('mifteh_os_token');
-      window.location.href = _API + '/admin/os/login?next=' + encodeURIComponent(window.location.href);
-      return;
-    }
-    if (!resp.ok) throw new Error('API error ' + resp.status);
+    // Cache-bust with timestamp so we always get the latest generated JSON
+    const url = _DATA_URL + '?t=' + Math.floor(Date.now() / 30000);
+    const resp = await fetch(url, { cache: 'no-store' });
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
     _data = await resp.json();
 
     const sched = (_data.scheduler || {});
     const dot = document.getElementById('system-dot');
     const txt = document.getElementById('system-status-text');
-    if (sched.scheduler_running) {
-      if (dot) { dot.style.background = '#22c55e'; dot.style.boxShadow = '0 0 6px #22c55e'; }
-      if (txt) txt.textContent = 'SYSTEM ONLINE';
-    } else {
-      if (dot) { dot.style.background = '#eab308'; dot.style.boxShadow = ''; }
-      if (txt) txt.textContent = 'SCHEDULER PAUSED';
-    }
+    if (dot) { dot.style.background = '#22c55e'; dot.style.boxShadow = '0 0 6px #22c55e'; }
+    if (txt) txt.textContent = 'SYSTEM ONLINE';
 
     const lu = document.getElementById('last-updated');
     if (lu) lu.textContent = 'Updated ' + new Date().toLocaleTimeString();
@@ -496,7 +448,7 @@ async function loadDashboard() {
     const meta = document.getElementById('page-meta');
     if (meta) {
       const ai = _data.ai_analytics || {};
-      meta.textContent = `${(_data.outputs||{}).total||0} outputs · ${(sched.active_loops)||0} loops · $${(ai.total_cost_usd||0).toFixed(4)} AI cost · miftehos.com`;
+      meta.textContent = `${(_data.outputs || {}).total || 0} outputs · ${sched.active_loops || 0}/${sched.total_loops || 14} loops · $${(ai.total_cost_usd || 0).toFixed(4)} AI cost · GitHub-native`;
     }
 
     renderOverview(_data);
@@ -510,15 +462,18 @@ async function loadDashboard() {
     renderActivity(_data);
     renderSafety(_data);
 
-  } catch(err) {
+  } catch (err) {
     console.error('Dashboard load error:', err);
     const dot = document.getElementById('system-dot');
     const txt = document.getElementById('system-status-text');
-    if (dot) { dot.style.background = '#ef4444'; dot.style.boxShadow = ''; }
-    if (txt) txt.textContent = 'API UNAVAILABLE';
-    set('activity-mini', `<div class="activity-item"><div class="activity-body"><div class="activity-title" style="color:var(--red);">Backend connection error</div><div class="activity-meta">${esc(err.message)}</div></div></div>`);
+    if (dot) { dot.style.background = '#eab308'; dot.style.boxShadow = ''; }
+    if (txt) txt.textContent = 'DATA LOADING';
+    set('activity-mini', `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title" style="color:var(--yellow);">Waiting for first AI workflow run</div>
+      <div class="activity-meta">${esc(err.message)} — workflows run on cron schedule</div>
+    </div></div>`);
   }
 }
 
 loadDashboard();
-setInterval(loadDashboard, 15000);
+setInterval(loadDashboard, 60000);  // refresh every 60s (data updates hourly via GitHub Actions)

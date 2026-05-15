@@ -1,0 +1,43 @@
+name: MIFTEH AI SEO Loop
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'   # every 6 hours
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install openai
+
+      - name: Generate YallaPlays SEO
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python scripts/generate_seo_yallaplays.py
+
+      - name: Generate Mifteh SEO
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python scripts/generate_seo_mifteh.py
+
+      - name: Commit outputs
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "mifteh-ai@users.noreply.github.com"
+          git pull --rebase origin main
+          git add outputs/
+          git diff --cached --quiet || git commit -m "AI: SEO generation [$(date -u +%Y-%m-%dT%H:%M:%SZ)] [skip ci]"
+          git push

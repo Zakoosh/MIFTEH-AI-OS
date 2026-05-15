@@ -39,7 +39,7 @@
         <div class="system-dot" id="system-dot"></div>
         <span id="system-status-text">LOADING...</span>
       </div>
-      <a href="#" onclick="(function(){localStorage.removeItem('mifteh_os_token');window.location.href=(typeof window.MIFTEH_API_BASE!=='undefined'?window.MIFTEH_API_BASE:'')+'/logout';})()" style="display:block;margin-top:10px;font-size:11px;color:#64748b;text-align:center;">Sign out</a>
+      <a href="https://github.com/Zakoosh/MIFTEH-AI-OS/actions" target="_blank" style="display:block;margin-top:10px;font-size:11px;color:#64748b;text-align:center;">GitHub Actions ↗</a>
     </div>
   </aside>
 
@@ -217,8 +217,9 @@
               <div class="panel-title">Create PR from Latest Output</div>
             </div>
             <div style="display:flex;gap:10px;flex-wrap:wrap;padding:4px 0;">
-              <button class="trigger-btn" style="padding:8px 16px;" onclick="createPR('yallaplays')">⑂ Create YallaPlays PR</button>
-              <button class="trigger-btn" style="padding:8px 16px;" onclick="createPR('fionera')">⑂ Create Fionera PR</button>
+              <a href="https://github.com/Zakoosh/MIFTEH-AI-OS/actions/workflows/ai-pr-generator.yml" target="_blank" class="trigger-btn" style="padding:8px 16px;text-decoration:none;">⑂ Run PR Generator</a>
+              <a href="https://github.com/Zakoosh/MIFTEH-AI-OS/actions/workflows/ai-seo-loop.yml" target="_blank" class="trigger-btn" style="padding:8px 16px;text-decoration:none;">▶ Run SEO Loop</a>
+              <a href="https://github.com/Zakoosh/MIFTEH-AI-OS/actions/workflows/ai-finance-loop.yml" target="_blank" class="trigger-btn" style="padding:8px 16px;text-decoration:none;">▶ Run Finance Loop</a>
             </div>
             <div id="pr-create-result" style="margin-top:12px;"></div>
           </div>

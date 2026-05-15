@@ -1,0 +1,38 @@
+name: MIFTEH AI Analytics Loop
+
+on:
+  schedule:
+    - cron: '0 0 * * *'   # daily at midnight UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  analytics:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install openai
+
+      - name: Generate analytics report
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python scripts/generate_analytics.py
+
+      - name: Commit outputs
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "mifteh-ai@users.noreply.github.com"
+          git pull --rebase origin main
+          git add outputs/ memory/
+          git diff --cached --quiet || git commit -m "AI: Analytics report [$(date -u +%Y-%m-%dT%H:%M:%SZ)] [skip ci]"
+          git push
