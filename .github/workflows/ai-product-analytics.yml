@@ -1,0 +1,97 @@
+name: MIFTEH AI Product Analytics
+
+# Generates product analytics reports: features built, SEO impact estimates,
+# widget usage, and autonomous execution metrics.
+# Runs weekly (Thursday) after feature/widget/SEO generation.
+
+on:
+  schedule:
+    - cron: '0 9 * * 4'   # Thursday 09:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  product-analytics:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install openai
+
+      - name: Generate product analytics report
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GH_PAT: ${{ secrets.GH_PAT }}
+        run: |
+          python - <<'EOF'
+          import json, sys
+          from pathlib import Path
+          from datetime import datetime, timezone
+
+          sys.path.insert(0, 'scripts')
+          from ai_client import generate_json, now_iso
+
+          # Collect product outputs
+          product_outputs = []
+          for proj_dir in Path('outputs').iterdir():
+              if not proj_dir.is_dir(): continue
+              product_dir = proj_dir / 'product'
+              if not product_dir.exists(): continue
+              for f in product_dir.glob('*.json'):
+                  try:
+                      product_outputs.append(json.loads(f.read_text()))
+                  except: pass
+
+          pages = sum(1 for o in product_outputs if o.get('feature_type') in ('page','category_page','seo_hub'))
+          widgets = sum(1 for o in product_outputs if o.get('estimated_widgets',0) > 0)
+          total_visits = sum(o.get('estimated_monthly_visits',0) for o in product_outputs)
+          total_tokens = sum(o.get('tokens_used',0) for o in product_outputs)
+          total_cost = sum(o.get('cost_usd',0.0) for o in product_outputs)
+          by_project = {}
+          for o in product_outputs:
+              p = o.get('project','unknown')
+              by_project[p] = by_project.get(p,0) + 1
+
+          report = {
+              'generated_at': now_iso(),
+              'total_features': len(product_outputs),
+              'pages_generated': pages,
+              'widgets_generated': widgets,
+              'est_monthly_seo_visits': total_visits,
+              'total_tokens': total_tokens,
+              'total_cost_usd': total_cost,
+              'by_project': by_project,
+              'recent_features': [
+                  {'label': o.get('label'), 'project': o.get('project'),
+                   'type': o.get('feature_type'), 'generated_at': o.get('generated_at')}
+                  for o in sorted(product_outputs, key=lambda x: x.get('generated_at',''), reverse=True)[:10]
+              ]
+          }
+
+          out = Path('memory/product_analytics.json')
+          out.parent.mkdir(exist_ok=True)
+          out.write_text(json.dumps(report, indent=2, ensure_ascii=False))
+          print(f"[analytics] {len(product_outputs)} features, {pages} pages, {widgets} widgets, est {total_visits:,} visits/month")
+          print(f"[analytics] Total cost: ${total_cost:.5f}")
+          EOF
+
+      - name: Aggregate dashboard
+        run: python scripts/aggregate_dashboard.py
+
+      - name: Commit analytics and dashboard
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "mifteh-ai@users.noreply.github.com"
+          git pull --rebase origin main
+          git add memory/ outputs/ frontend/dashboard/data/
+          git diff --cached --quiet || git commit -m "AI: Product analytics report [$(date -u +%Y-%m-%dT%H:%M:%SZ)] [skip ci]"
+          git push

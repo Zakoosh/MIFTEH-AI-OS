@@ -72,6 +72,68 @@ def read_validation_log():
     return json.loads(f.read_text()) if f.exists() else []
 
 
+def read_product_outputs():
+    """Read all product execution output records from outputs/{project}/product/."""
+    records = []
+    for proj_dir in Path("outputs").iterdir():
+        if not proj_dir.is_dir() or proj_dir.name.startswith("."):
+            continue
+        product_dir = proj_dir / "product"
+        if not product_dir.exists():
+            continue
+        for f in product_dir.glob("*.json"):
+            try:
+                records.append(json.loads(f.read_text()))
+            except Exception:
+                pass
+    records.sort(key=lambda x: x.get("generated_at", ""), reverse=True)
+    return records
+
+
+def build_product_metrics(product_outputs):
+    if not product_outputs:
+        return {
+            "total_features": 0, "pages_generated": 0, "widgets_generated": 0,
+            "est_monthly_seo_visits": 0, "total_tokens": 0, "total_cost_usd": 0.0,
+            "by_project": {}, "by_type": {}, "recent_features": [],
+        }
+    pages = sum(1 for o in product_outputs if o.get("feature_type") in ("page", "category_page", "seo_hub"))
+    widgets = sum(1 for o in product_outputs if o.get("estimated_widgets", 0) > 0)
+    est_visits = sum(o.get("estimated_monthly_visits", 0) for o in product_outputs)
+    by_project, by_type = {}, {}
+    for o in product_outputs:
+        p = o.get("project", "unknown")
+        t = o.get("feature_type", "unknown")
+        by_project[p] = by_project.get(p, 0) + 1
+        by_type[t] = by_type.get(t, 0) + 1
+    return {
+        "total_features": len(product_outputs),
+        "pages_generated": pages,
+        "widgets_generated": widgets,
+        "est_monthly_seo_visits": est_visits,
+        "total_tokens": sum(o.get("tokens_used", 0) for o in product_outputs),
+        "total_cost_usd": round(sum(o.get("cost_usd", 0.0) for o in product_outputs), 6),
+        "by_project": by_project,
+        "by_type": by_type,
+        "recent_features": [
+            {
+                "label": o.get("label"),
+                "project": o.get("project"),
+                "feature_type": o.get("feature_type"),
+                "target_path": o.get("target_path"),
+                "seo_target": o.get("seo_target"),
+                "est_monthly_visits": o.get("estimated_monthly_visits", 0),
+                "est_widgets": o.get("estimated_widgets", 0),
+                "bytes_generated": o.get("bytes_generated", 0),
+                "tokens_used": o.get("tokens_used", 0),
+                "pr_url": o.get("pr_url"),
+                "generated_at": o.get("generated_at"),
+            }
+            for o in product_outputs[:30]
+        ],
+    }
+
+
 def build_loops(outputs):
     by_project = {}
     for o in outputs:
@@ -167,7 +229,9 @@ def main():
     trust = read_trust()
     automerge_log = read_automerge_log()
     validation_log = read_validation_log()
-    print(f"[dashboard] {len(outputs)} outputs, {len(prs)} PRs, {len(automerge_log)} merge events")
+    product_outputs = read_product_outputs()
+    product_metrics = build_product_metrics(product_outputs)
+    print(f"[dashboard] {len(outputs)} outputs, {len(prs)} PRs, {len(automerge_log)} merge events, {len(product_outputs)} product features")
 
     loops, active_loops = build_loops(outputs)
     ai_analytics = build_ai_analytics(outputs)
@@ -276,6 +340,7 @@ def main():
             }
             for e in automerge_log[-50:]
         ],
+        "product": product_metrics,
         "validation_history": [
             {
                 "repo": e.get("repo"),

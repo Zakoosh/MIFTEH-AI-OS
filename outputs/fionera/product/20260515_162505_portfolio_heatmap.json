@@ -1,0 +1,19 @@
+{
+  "project": "fionera",
+  "operation_type": "product_execution",
+  "feature_type": "widget",
+  "feature_id": "portfolio_heatmap",
+  "label": "Portfolio Performance Heatmap Widget",
+  "title": "Portfolio Performance Heatmap Widget",
+  "target_path": "widgets/portfolio-heatmap.html",
+  "seo_target": null,
+  "estimated_monthly_visits": 0,
+  "estimated_widgets": 1,
+  "bytes_generated": 5443,
+  "ai_generated": true,
+  "ai_provider": "openai",
+  "tokens_used": 2782,
+  "cost_usd": 0.00117645,
+  "pr_url": null,
+  "generated_at": "2026-05-15T16:25:05Z"
+}

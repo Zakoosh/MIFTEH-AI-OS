@@ -1,0 +1,19 @@
+{
+  "project": "yallaplays",
+  "operation_type": "product_execution",
+  "feature_type": "seo_hub",
+  "feature_id": "arabic_seo_hub",
+  "label": "Arabic SEO Games Hub",
+  "title": "Arabic SEO Games Hub",
+  "target_path": "ar/index.html",
+  "seo_target": "\u0627\u0644\u0639\u0627\u0628 \u0645\u062c\u0627\u0646\u064a\u0629 \u0627\u0648\u0646\u0644\u0627\u064a\u0646",
+  "estimated_monthly_visits": 3500,
+  "estimated_widgets": 0,
+  "bytes_generated": 6675,
+  "ai_generated": true,
+  "ai_provider": "openai",
+  "tokens_used": 2849,
+  "cost_usd": 0.0013678499999999999,
+  "pr_url": null,
+  "generated_at": "2026-05-15T16:22:18Z"
+}

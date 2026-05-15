@@ -1,0 +1,19 @@
+{
+  "project": "fionera",
+  "operation_type": "product_execution",
+  "feature_type": "widget",
+  "feature_id": "bist_widget",
+  "label": "BIST Turkish Market Overview Widget",
+  "title": "BIST Turkish Market Overview Widget",
+  "target_path": "widgets/bist-overview.html",
+  "seo_target": null,
+  "estimated_monthly_visits": 0,
+  "estimated_widgets": 1,
+  "bytes_generated": 5245,
+  "ai_generated": true,
+  "ai_provider": "openai",
+  "tokens_used": 2716,
+  "cost_usd": 0.00115935,
+  "pr_url": null,
+  "generated_at": "2026-05-15T16:24:23Z"
+}

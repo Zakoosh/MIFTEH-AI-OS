@@ -87,5 +87,58 @@
     "seo_score_after": 90,
     "tokens_used": 1999,
     "cost_usd": 0.00083895
+  },
+  {
+    "project": "Yallaplays",
+    "repo": "Zakoosh/Yallaplays",
+    "branch": "ai/product-yallaplays-2026-05-15",
+    "pr_number": 6,
+    "pr_url": "https://github.com/Zakoosh/Yallaplays/pull/6",
+    "pr_title": "AI Product: Yallaplays — Action Games Category Page, Related Games Carousel Component",
+    "created_at": "2026-05-15T16:22:20Z",
+    "ai_generated": true,
+    "operation_type": "product_execution",
+    "files_committed": [
+      "category/action.html",
+      "components/related-games.html",
+      "ar/index.html"
+    ],
+    "tokens_used": 9420,
+    "cost_usd": 0.00448785
+  },
+  {
+    "project": "Fionera",
+    "repo": "Zakoosh/fionera",
+    "branch": "ai/product-fionera-2026-05-15",
+    "pr_number": 4,
+    "pr_url": "https://github.com/Zakoosh/fionera/pull/4",
+    "pr_title": "AI Product: Fionera — BIST Turkish Market Overview Widget, AI Market Insight Card Widget",
+    "created_at": "2026-05-15T16:25:06Z",
+    "ai_generated": true,
+    "operation_type": "product_execution",
+    "files_committed": [
+      "widgets/bist-overview.html",
+      "widgets/ai-insight.html",
+      "widgets/portfolio-heatmap.html"
+    ],
+    "tokens_used": 7946,
+    "cost_usd": 0.0033581999999999996
+  },
+  {
+    "project": "Mifteh",
+    "repo": "Zakoosh/mifteh-main-site",
+    "branch": "ai/product-mifteh-2026-05-15",
+    "pr_number": 2,
+    "pr_url": "https://github.com/Zakoosh/mifteh-main-site/pull/2",
+    "pr_title": "AI Product: Mifteh — AI Services Landing Page, Lead Generation Funnel Section",
+    "created_at": "2026-05-15T16:28:49Z",
+    "ai_generated": true,
+    "operation_type": "product_execution",
+    "files_committed": [
+      "services.html",
+      "components/lead-funnel.html"
+    ],
+    "tokens_used": 5433,
+    "cost_usd": 0.0024164999999999994
   }
 ]

@@ -1,0 +1,19 @@
+{
+  "project": "yallaplays",
+  "operation_type": "product_execution",
+  "feature_type": "category_page",
+  "feature_id": "category_action",
+  "label": "Action Games Category Page",
+  "title": "Action Games Category Page",
+  "target_path": "category/action.html",
+  "seo_target": "\u0627\u0644\u0639\u0627\u0628 \u0627\u0643\u0634\u0646",
+  "estimated_monthly_visits": 2000,
+  "estimated_widgets": 0,
+  "bytes_generated": 11261,
+  "ai_generated": true,
+  "ai_provider": "openai",
+  "tokens_used": 4529,
+  "cost_usd": 0.00217335,
+  "pr_url": null,
+  "generated_at": "2026-05-15T16:21:28Z"
+}

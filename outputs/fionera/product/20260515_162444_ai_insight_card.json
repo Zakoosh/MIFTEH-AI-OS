@@ -1,0 +1,19 @@
+{
+  "project": "fionera",
+  "operation_type": "product_execution",
+  "feature_type": "widget",
+  "feature_id": "ai_insight_card",
+  "label": "AI Market Insight Card Widget",
+  "title": "AI Market Insight Card Widget",
+  "target_path": "widgets/ai-insight.html",
+  "seo_target": null,
+  "estimated_monthly_visits": 0,
+  "estimated_widgets": 1,
+  "bytes_generated": 4749,
+  "ai_generated": true,
+  "ai_provider": "openai",
+  "tokens_used": 2448,
+  "cost_usd": 0.0010224,
+  "pr_url": null,
+  "generated_at": "2026-05-15T16:24:44Z"
+}

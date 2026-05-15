@@ -78,6 +78,7 @@ function showTab(name, btn) {
     providers: 'AI Provider Runtime', 'ai-analytics': 'AI Generation Analytics',
     outputs: 'Generated Outputs', previews: 'HTML Previews',
     repository: 'PR-Ready Changes', github: 'GitHub Draft PRs',
+    product: 'Autonomous Product Execution',
     trust: 'Trust Scores & Autonomous Apply',
     activity: 'Operational Activity Feed', safety: 'Safety & Bounded Autonomy',
   };
@@ -457,6 +458,97 @@ function renderSafety(d) {
   );
 }
 
+// ─── Product Execution ───────────────────────────────────────────────────────
+
+function featureTypeIcon(type) {
+  const m = { category_page: '📄', seo_hub: '🔍', page: '🌐', widget: '⚙', component: '🧩' };
+  return m[type] || '◻';
+}
+
+function featureTypeColor(type) {
+  const m = { category_page: 'var(--green)', seo_hub: 'var(--cyan)', page: 'var(--blue)', widget: 'var(--purple)', component: 'var(--orange)' };
+  return m[type] || 'var(--dim)';
+}
+
+function renderProduct(d) {
+  const pm = d.product || {};
+  const recent = pm.recent_features || [];
+
+  const totalPages = pm.pages_generated || 0;
+  const totalWidgets = pm.widgets_generated || 0;
+  const estVisits = pm.est_monthly_seo_visits || 0;
+  const totalFeatures = pm.total_features || 0;
+
+  set('product-overview-cards',
+    card('Total Features', totalFeatures, 'green', 'AI-generated') +
+    card('Pages Created', totalPages, 'blue', 'SEO-optimized') +
+    card('Widgets Built', totalWidgets, 'purple', 'interactive') +
+    card('Est. Monthly SEO', estVisits.toLocaleString(), 'cyan', 'organic visits') +
+    card('AI Cost', `$${(pm.total_cost_usd || 0).toFixed(5)}`, 'orange', `${(pm.total_tokens||0).toLocaleString()} tokens`) +
+    card('Tokens Used', (pm.total_tokens||0).toLocaleString(), 'dim', 'product generation')
+  );
+
+  const byProject = pm.by_project || {};
+  const byType = pm.by_type || {};
+
+  function featureList(projectKey) {
+    const items = recent.filter(f => f.project === projectKey);
+    if (!items.length) return '<div class="empty">No features generated yet — run Feature Builder workflow</div>';
+    return items.map(f => `
+      <div class="activity-item" style="align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border);">
+        <div class="activity-icon" style="background:var(--surface2);color:${featureTypeColor(f.feature_type)};font-size:16px;">
+          ${featureTypeIcon(f.feature_type)}
+        </div>
+        <div class="activity-body" style="min-width:0;">
+          <div class="activity-title" style="font-size:13px;">${esc(f.label)}</div>
+          <div class="activity-meta">
+            <code style="font-size:10px;color:var(--dim);">${esc(f.target_path)}</code>
+            ${f.seo_target ? `<span style="color:var(--cyan);margin-left:8px;">🔍 ${esc(f.seo_target)}</span>` : ''}
+          </div>
+          <div class="activity-meta" style="margin-top:2px;">
+            ${f.est_monthly_visits ? `<span style="color:var(--green);">+${f.est_monthly_visits.toLocaleString()} visits/mo</span> · ` : ''}
+            ${f.bytes_generated ? `${Math.round(f.bytes_generated/1024)}KB · ` : ''}
+            ${relTime(f.generated_at)}
+            ${f.pr_url ? `· <a href="${esc(f.pr_url)}" target="_blank" style="color:var(--blue);">PR ↗</a>` : ''}
+          </div>
+        </div>
+        <span class="activity-badge" style="background:var(--surface2);color:${featureTypeColor(f.feature_type)};flex-shrink:0;">${esc(f.feature_type?.replace(/_/g,' '))}</span>
+      </div>
+    `).join('');
+  }
+
+  const ypCount = byProject.yallaplays || 0;
+  const fiCount = byProject.fionera || 0;
+  const miCount = byProject.mifteh || 0;
+
+  set('product-yp-badge', `<span class="panel-badge badge-green">${ypCount} features</span>`);
+  set('product-fi-badge', `<span class="panel-badge badge-blue">${fiCount} features</span>`);
+  set('product-mi-badge', `<span class="panel-badge badge-dim">${miCount} features</span>`);
+
+  set('product-yp-list', featureList('yallaplays'));
+  set('product-fi-list', featureList('fionera'));
+  set('product-mi-list', featureList('mifteh'));
+
+  // Timeline
+  set('product-timeline-badge', `<span class="panel-badge badge-dim">${recent.length} events</span>`);
+  set('product-timeline', recent.length ? recent.map(f => `
+    <div class="activity-item">
+      <div class="activity-icon" style="background:var(--surface2);color:${featureTypeColor(f.feature_type)};">
+        ${featureTypeIcon(f.feature_type)}
+      </div>
+      <div class="activity-body">
+        <div class="activity-title">${projectTag(f.project)} ${esc(f.label)}</div>
+        <div class="activity-meta">
+          ${esc(f.feature_type?.replace(/_/g,' '))} · <code style="font-size:10px;">${esc(f.target_path)}</code>
+          ${f.est_monthly_visits ? ` · <span style="color:var(--green);">+${f.est_monthly_visits.toLocaleString()} visits/mo</span>` : ''}
+          · ${relTime(f.generated_at)}
+        </div>
+      </div>
+      <span class="activity-badge badge-green">AI</span>
+    </div>
+  `).join('') : '<div class="empty">No product features generated yet. Run "Feature Builder" workflow to start.</div>');
+}
+
 // ─── Trust & Apply History ───────────────────────────────────────────────────
 
 function trustBar(score) {
@@ -614,6 +706,7 @@ async function loadDashboard() {
     renderPreviews(_data);
     renderRepository(_data);
     renderGitHub(_data);
+    renderProduct(_data);
     renderTrust(_data);
     renderActivity(_data);
     renderSafety(_data);

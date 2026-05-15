@@ -1,0 +1,19 @@
+{
+  "project": "mifteh",
+  "operation_type": "product_execution",
+  "feature_type": "page",
+  "feature_id": "ai_services",
+  "label": "AI Services Landing Page",
+  "title": "AI Services Landing Page",
+  "target_path": "services.html",
+  "seo_target": "AI automation services",
+  "estimated_monthly_visits": 800,
+  "estimated_widgets": 0,
+  "bytes_generated": 7606,
+  "ai_generated": true,
+  "ai_provider": "openai",
+  "tokens_used": 3206,
+  "cost_usd": 0.0014186999999999997,
+  "pr_url": null,
+  "generated_at": "2026-05-15T16:28:28Z"
+}

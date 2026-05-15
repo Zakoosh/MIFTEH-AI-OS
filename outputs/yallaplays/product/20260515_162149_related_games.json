@@ -1,0 +1,19 @@
+{
+  "project": "yallaplays",
+  "operation_type": "product_execution",
+  "feature_type": "component",
+  "feature_id": "related_games",
+  "label": "Related Games Carousel Component",
+  "title": "Related Games Carousel Component",
+  "target_path": "components/related-games.html",
+  "seo_target": null,
+  "estimated_monthly_visits": 0,
+  "estimated_widgets": 1,
+  "bytes_generated": 5737,
+  "ai_generated": true,
+  "ai_provider": "openai",
+  "tokens_used": 2042,
+  "cost_usd": 0.0009466499999999999,
+  "pr_url": null,
+  "generated_at": "2026-05-15T16:21:49Z"
+}

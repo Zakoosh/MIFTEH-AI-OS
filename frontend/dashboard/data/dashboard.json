@@ -1,178 +1,178 @@
 {
-  "generated_at": "2026-05-15T16:02:02Z",
+  "generated_at": "2026-05-15T16:33:41Z",
   "architecture": "github-native",
   "scheduler": {
     "scheduler_running": true,
     "active_loops": 14,
     "total_loops": 14,
-    "total_runs": 34,
-    "total_success": 34,
+    "total_runs": 73,
+    "total_success": 73,
     "loops": [
       {
         "id": "yp-seo-loop",
         "label": "SEO Page Generator",
         "project": "yallaplays",
         "interval_minutes": 360,
-        "last_run": "2026-05-15T09:18:50Z",
+        "last_run": "2026-05-15T16:22:18Z",
         "last_status": "completed",
-        "run_count": 2,
-        "success_count": 2,
-        "next_run_scheduled": "2026-05-15T15:18:50Z"
+        "run_count": 5,
+        "success_count": 5,
+        "next_run_scheduled": "2026-05-15T22:22:18Z"
       },
       {
         "id": "yp-category-loop",
         "label": "Category Optimizer",
         "project": "yallaplays",
         "interval_minutes": 720,
-        "last_run": "2026-05-15T09:18:50Z",
+        "last_run": "2026-05-15T16:22:18Z",
         "last_status": "completed",
-        "run_count": 2,
-        "success_count": 2,
-        "next_run_scheduled": "2026-05-15T21:18:50Z"
+        "run_count": 5,
+        "success_count": 5,
+        "next_run_scheduled": "2026-05-16T04:22:18Z"
       },
       {
         "id": "yp-homepage-loop",
         "label": "Homepage Recommendations",
         "project": "yallaplays",
         "interval_minutes": 360,
-        "last_run": "2026-05-15T09:18:50Z",
+        "last_run": "2026-05-15T16:22:18Z",
         "last_status": "completed",
-        "run_count": 2,
-        "success_count": 2,
-        "next_run_scheduled": "2026-05-15T15:18:50Z"
+        "run_count": 5,
+        "success_count": 5,
+        "next_run_scheduled": "2026-05-15T22:22:18Z"
       },
       {
         "id": "yp-linking-loop",
         "label": "Internal Linking",
         "project": "yallaplays",
         "interval_minutes": 1440,
-        "last_run": "2026-05-15T09:18:50Z",
+        "last_run": "2026-05-15T16:22:18Z",
         "last_status": "completed",
-        "run_count": 2,
-        "success_count": 2,
-        "next_run_scheduled": "2026-05-16T09:18:50Z"
+        "run_count": 5,
+        "success_count": 5,
+        "next_run_scheduled": "2026-05-16T16:22:18Z"
       },
       {
         "id": "yp-mobile-loop",
         "label": "Mobile Optimization",
         "project": "yallaplays",
         "interval_minutes": 1440,
-        "last_run": "2026-05-15T09:18:50Z",
+        "last_run": "2026-05-15T16:22:18Z",
         "last_status": "completed",
-        "run_count": 2,
-        "success_count": 2,
-        "next_run_scheduled": "2026-05-16T09:18:50Z"
+        "run_count": 5,
+        "success_count": 5,
+        "next_run_scheduled": "2026-05-16T16:22:18Z"
       },
       {
         "id": "yp-games-loop",
         "label": "Game Suggestion Generator",
         "project": "yallaplays",
         "interval_minutes": 240,
-        "last_run": "2026-05-15T09:18:50Z",
+        "last_run": "2026-05-15T16:22:18Z",
         "last_status": "completed",
-        "run_count": 2,
-        "success_count": 2,
-        "next_run_scheduled": "2026-05-15T13:18:50Z"
+        "run_count": 5,
+        "success_count": 5,
+        "next_run_scheduled": "2026-05-15T20:22:18Z"
       },
       {
         "id": "fi-market-loop",
         "label": "Market Insights",
         "project": "fionera",
         "interval_minutes": 240,
-        "last_run": "2026-05-15T09:18:50Z",
+        "last_run": "2026-05-15T16:25:05Z",
         "last_status": "completed",
-        "run_count": 2,
-        "success_count": 2,
-        "next_run_scheduled": "2026-05-15T13:18:50Z"
+        "run_count": 5,
+        "success_count": 5,
+        "next_run_scheduled": "2026-05-15T20:25:05Z"
       },
       {
         "id": "fi-watchlist-loop",
         "label": "Watchlist Optimizer",
         "project": "fionera",
         "interval_minutes": 360,
-        "last_run": "2026-05-15T09:18:50Z",
+        "last_run": "2026-05-15T16:25:05Z",
         "last_status": "completed",
-        "run_count": 2,
-        "success_count": 2,
-        "next_run_scheduled": "2026-05-15T15:18:50Z"
+        "run_count": 5,
+        "success_count": 5,
+        "next_run_scheduled": "2026-05-15T22:25:05Z"
       },
       {
         "id": "fi-analytics-loop",
         "label": "Analytics Report",
         "project": "fionera",
         "interval_minutes": 1440,
-        "last_run": "2026-05-15T09:18:50Z",
+        "last_run": "2026-05-15T16:25:05Z",
         "last_status": "completed",
-        "run_count": 2,
-        "success_count": 2,
-        "next_run_scheduled": "2026-05-16T09:18:50Z"
+        "run_count": 5,
+        "success_count": 5,
+        "next_run_scheduled": "2026-05-16T16:25:05Z"
       },
       {
         "id": "fi-ux-loop",
         "label": "UX Improvements",
         "project": "fionera",
         "interval_minutes": 1440,
-        "last_run": "2026-05-15T09:18:50Z",
+        "last_run": "2026-05-15T16:25:05Z",
         "last_status": "completed",
-        "run_count": 2,
-        "success_count": 2,
-        "next_run_scheduled": "2026-05-16T09:18:50Z"
+        "run_count": 5,
+        "success_count": 5,
+        "next_run_scheduled": "2026-05-16T16:25:05Z"
       },
       {
         "id": "fi-widgets-loop",
         "label": "Finance Widgets",
         "project": "fionera",
         "interval_minutes": 720,
-        "last_run": "2026-05-15T09:18:50Z",
+        "last_run": "2026-05-15T16:25:05Z",
         "last_status": "completed",
-        "run_count": 2,
-        "success_count": 2,
-        "next_run_scheduled": "2026-05-15T21:18:50Z"
+        "run_count": 5,
+        "success_count": 5,
+        "next_run_scheduled": "2026-05-16T04:25:05Z"
       },
       {
         "id": "mi-seo-loop",
         "label": "SEO Improvements",
         "project": "mifteh",
         "interval_minutes": 720,
-        "last_run": "2026-05-15T15:44:50Z",
+        "last_run": "2026-05-15T16:28:48Z",
         "last_status": "completed",
-        "run_count": 4,
-        "success_count": 4,
-        "next_run_scheduled": "2026-05-16T03:44:50Z"
+        "run_count": 6,
+        "success_count": 6,
+        "next_run_scheduled": "2026-05-16T04:28:48Z"
       },
       {
         "id": "mi-content-loop",
         "label": "Content Optimizer",
         "project": "mifteh",
         "interval_minutes": 1440,
-        "last_run": "2026-05-15T15:44:50Z",
+        "last_run": "2026-05-15T16:28:48Z",
         "last_status": "completed",
-        "run_count": 4,
-        "success_count": 4,
-        "next_run_scheduled": "2026-05-16T15:44:50Z"
+        "run_count": 6,
+        "success_count": 6,
+        "next_run_scheduled": "2026-05-16T16:28:48Z"
       },
       {
         "id": "mi-landing-loop",
         "label": "Landing Page Optimizer",
         "project": "mifteh",
         "interval_minutes": 1440,
-        "last_run": "2026-05-15T15:44:50Z",
+        "last_run": "2026-05-15T16:28:48Z",
         "last_status": "completed",
-        "run_count": 4,
-        "success_count": 4,
-        "next_run_scheduled": "2026-05-16T15:44:50Z"
+        "run_count": 6,
+        "success_count": 6,
+        "next_run_scheduled": "2026-05-16T16:28:48Z"
       }
     ],
     "provider_cooldowns": {
       "openai": {
         "consecutive_429s": 0,
         "total_429s": 0,
-        "last_success": "2026-05-15T16:02:02Z"
+        "last_success": "2026-05-15T16:33:41Z"
       },
       "gemini": {
         "consecutive_429s": 0,
         "total_429s": 0,
-        "last_success": "2026-05-15T16:02:02Z"
+        "last_success": "2026-05-15T16:33:41Z"
       }
     }
   },
@@ -193,28 +193,29 @@
     }
   },
   "ai_analytics": {
-    "total_calls": 8,
-    "successful_calls": 8,
+    "total_calls": 16,
+    "successful_calls": 16,
     "rate_limited_calls": 0,
     "success_rate_pct": 100,
     "ai_generated_pct": 100,
-    "total_tokens": 17801,
-    "total_cost_usd": 0.007457,
+    "total_tokens": 40600,
+    "total_cost_usd": 0.01772,
     "by_provider": {
       "openai": {
-        "requests": 8,
-        "tokens": 17801,
-        "cost_usd": 0.0074572499999999995,
+        "requests": 16,
+        "tokens": 40600,
+        "cost_usd": 0.017719799999999997,
         "success_rate": 100,
         "avg_latency_ms": 0
       }
     },
     "by_project": {
-      "mifteh": 4,
-      "fionera": 2,
-      "yallaplays": 2
+      "mifteh": 6,
+      "fionera": 5,
+      "yallaplays": 5
     },
     "by_operation_type": {
+      "product_execution": 8,
       "repository_analysis": 1,
       "analytics_report": 1,
       "content_optimization": 3,
@@ -223,73 +224,24 @@
     },
     "by_day": {
       "2026-05-15": {
-        "requests": 8,
-        "success": 8,
-        "cost_usd": 0.0074572499999999995
+        "requests": 16,
+        "success": 16,
+        "cost_usd": 0.017719799999999997
       }
     }
   },
   "outputs": {
-    "total": 8,
-    "yallaplays": 2,
-    "fionera": 2,
-    "mifteh": 4,
-    "ai_generated": 8,
+    "total": 16,
+    "yallaplays": 5,
+    "fionera": 5,
+    "mifteh": 6,
+    "ai_generated": 16,
     "template_generated": 0,
     "pending_review": 6
   },
   "repository": {
     "previews": [],
-    "pr_outputs": [
-      {
-        "output_id": "ai/fi-content-2026-05-15",
-        "project": "fionera",
-        "output_type": "content_optimization",
-        "suggested_branch": "ai/fi-content-2026-05-15",
-        "generated_at": "2026-05-15T09:18:50Z",
-        "total_files": 2
-      },
-      {
-        "output_id": "ai/ya-content-2026-05-15",
-        "project": "yallaplays",
-        "output_type": "content_optimization",
-        "suggested_branch": "ai/ya-content-2026-05-15",
-        "generated_at": "2026-05-15T09:18:50Z",
-        "total_files": 2
-      },
-      {
-        "output_id": "ai/mi-content-2026-05-15",
-        "project": "mifteh",
-        "output_type": "content_optimization",
-        "suggested_branch": "ai/mi-content-2026-05-15",
-        "generated_at": "2026-05-15T09:18:50Z",
-        "total_files": 2
-      },
-      {
-        "output_id": "ai/fi-insights-2026-05-15",
-        "project": "fionera",
-        "output_type": "market_insight",
-        "suggested_branch": "ai/fi-insights-2026-05-15",
-        "generated_at": "2026-05-15T09:17:31Z",
-        "total_files": 2
-      },
-      {
-        "output_id": "ai/mi-seo-2026-05-15",
-        "project": "mifteh",
-        "output_type": "seo_page",
-        "suggested_branch": "ai/mi-seo-2026-05-15",
-        "generated_at": "2026-05-15T09:17:04Z",
-        "total_files": 2
-      },
-      {
-        "output_id": "ai/yp-seo-2026-05-15",
-        "project": "yallaplays",
-        "output_type": "seo_page",
-        "suggested_branch": "ai/yp-seo-2026-05-15",
-        "generated_at": "2026-05-15T09:16:01Z",
-        "total_files": 2
-      }
-    ],
+    "pr_outputs": [],
     "pr_ready": 6
   },
   "github_prs": [
@@ -332,9 +284,103 @@
         "public/sitemap.xml",
         "public/manifest.json"
       ]
+    },
+    {
+      "repo": "Zakoosh/Yallaplays",
+      "branch": "ai/product-yallaplays-2026-05-15",
+      "pr_number": 6,
+      "pr_url": "https://github.com/Zakoosh/Yallaplays/pull/6",
+      "pr_title": "AI Product: Yallaplays — Action Games Category Page, Related Games Carousel Component",
+      "created_at": "2026-05-15T16:22:20Z",
+      "files_committed": [
+        "category/action.html",
+        "components/related-games.html",
+        "ar/index.html"
+      ]
+    },
+    {
+      "repo": "Zakoosh/fionera",
+      "branch": "ai/product-fionera-2026-05-15",
+      "pr_number": 4,
+      "pr_url": "https://github.com/Zakoosh/fionera/pull/4",
+      "pr_title": "AI Product: Fionera — BIST Turkish Market Overview Widget, AI Market Insight Card Widget",
+      "created_at": "2026-05-15T16:25:06Z",
+      "files_committed": [
+        "widgets/bist-overview.html",
+        "widgets/ai-insight.html",
+        "widgets/portfolio-heatmap.html"
+      ]
+    },
+    {
+      "repo": "Zakoosh/mifteh-main-site",
+      "branch": "ai/product-mifteh-2026-05-15",
+      "pr_number": 2,
+      "pr_url": "https://github.com/Zakoosh/mifteh-main-site/pull/2",
+      "pr_title": "AI Product: Mifteh — AI Services Landing Page, Lead Generation Funnel Section",
+      "created_at": "2026-05-15T16:28:49Z",
+      "files_committed": [
+        "services.html",
+        "components/lead-funnel.html"
+      ]
     }
   ],
   "activity": [
+    {
+      "type": "product_execution",
+      "project": "mifteh",
+      "title": "Lead Generation Funnel Section",
+      "ai_generated": true,
+      "time": "2026-05-15T16:28:48Z"
+    },
+    {
+      "type": "product_execution",
+      "project": "mifteh",
+      "title": "AI Services Landing Page",
+      "ai_generated": true,
+      "time": "2026-05-15T16:28:28Z"
+    },
+    {
+      "type": "product_execution",
+      "project": "fionera",
+      "title": "Portfolio Performance Heatmap Widget",
+      "ai_generated": true,
+      "time": "2026-05-15T16:25:05Z"
+    },
+    {
+      "type": "product_execution",
+      "project": "fionera",
+      "title": "AI Market Insight Card Widget",
+      "ai_generated": true,
+      "time": "2026-05-15T16:24:44Z"
+    },
+    {
+      "type": "product_execution",
+      "project": "fionera",
+      "title": "BIST Turkish Market Overview Widget",
+      "ai_generated": true,
+      "time": "2026-05-15T16:24:23Z"
+    },
+    {
+      "type": "product_execution",
+      "project": "yallaplays",
+      "title": "Arabic SEO Games Hub",
+      "ai_generated": true,
+      "time": "2026-05-15T16:22:18Z"
+    },
+    {
+      "type": "product_execution",
+      "project": "yallaplays",
+      "title": "Related Games Carousel Component",
+      "ai_generated": true,
+      "time": "2026-05-15T16:21:49Z"
+    },
+    {
+      "type": "product_execution",
+      "project": "yallaplays",
+      "title": "Action Games Category Page",
+      "ai_generated": true,
+      "time": "2026-05-15T16:21:28Z"
+    },
     {
       "type": "repository_analysis",
       "project": "mifteh",
@@ -537,6 +583,132 @@
       "merge_sha": "fd3ba7d034965cb0c10713d91b69a6d22381f506"
     }
   ],
+  "product": {
+    "total_features": 8,
+    "pages_generated": 3,
+    "widgets_generated": 5,
+    "est_monthly_seo_visits": 6300,
+    "total_tokens": 22799,
+    "total_cost_usd": 0.010263,
+    "by_project": {
+      "mifteh": 2,
+      "fionera": 3,
+      "yallaplays": 3
+    },
+    "by_type": {
+      "component": 2,
+      "page": 1,
+      "widget": 3,
+      "seo_hub": 1,
+      "category_page": 1
+    },
+    "recent_features": [
+      {
+        "label": "Lead Generation Funnel Section",
+        "project": "mifteh",
+        "feature_type": "component",
+        "target_path": "components/lead-funnel.html",
+        "seo_target": null,
+        "est_monthly_visits": 0,
+        "est_widgets": 1,
+        "bytes_generated": 5586,
+        "tokens_used": 2227,
+        "pr_url": null,
+        "generated_at": "2026-05-15T16:28:48Z"
+      },
+      {
+        "label": "AI Services Landing Page",
+        "project": "mifteh",
+        "feature_type": "page",
+        "target_path": "services.html",
+        "seo_target": "AI automation services",
+        "est_monthly_visits": 800,
+        "est_widgets": 0,
+        "bytes_generated": 7606,
+        "tokens_used": 3206,
+        "pr_url": null,
+        "generated_at": "2026-05-15T16:28:28Z"
+      },
+      {
+        "label": "Portfolio Performance Heatmap Widget",
+        "project": "fionera",
+        "feature_type": "widget",
+        "target_path": "widgets/portfolio-heatmap.html",
+        "seo_target": null,
+        "est_monthly_visits": 0,
+        "est_widgets": 1,
+        "bytes_generated": 5443,
+        "tokens_used": 2782,
+        "pr_url": null,
+        "generated_at": "2026-05-15T16:25:05Z"
+      },
+      {
+        "label": "AI Market Insight Card Widget",
+        "project": "fionera",
+        "feature_type": "widget",
+        "target_path": "widgets/ai-insight.html",
+        "seo_target": null,
+        "est_monthly_visits": 0,
+        "est_widgets": 1,
+        "bytes_generated": 4749,
+        "tokens_used": 2448,
+        "pr_url": null,
+        "generated_at": "2026-05-15T16:24:44Z"
+      },
+      {
+        "label": "BIST Turkish Market Overview Widget",
+        "project": "fionera",
+        "feature_type": "widget",
+        "target_path": "widgets/bist-overview.html",
+        "seo_target": null,
+        "est_monthly_visits": 0,
+        "est_widgets": 1,
+        "bytes_generated": 5245,
+        "tokens_used": 2716,
+        "pr_url": null,
+        "generated_at": "2026-05-15T16:24:23Z"
+      },
+      {
+        "label": "Arabic SEO Games Hub",
+        "project": "yallaplays",
+        "feature_type": "seo_hub",
+        "target_path": "ar/index.html",
+        "seo_target": "العاب مجانية اونلاين",
+        "est_monthly_visits": 3500,
+        "est_widgets": 0,
+        "bytes_generated": 6675,
+        "tokens_used": 2849,
+        "pr_url": null,
+        "generated_at": "2026-05-15T16:22:18Z"
+      },
+      {
+        "label": "Related Games Carousel Component",
+        "project": "yallaplays",
+        "feature_type": "component",
+        "target_path": "components/related-games.html",
+        "seo_target": null,
+        "est_monthly_visits": 0,
+        "est_widgets": 1,
+        "bytes_generated": 5737,
+        "tokens_used": 2042,
+        "pr_url": null,
+        "generated_at": "2026-05-15T16:21:49Z"
+      },
+      {
+        "label": "Action Games Category Page",
+        "project": "yallaplays",
+        "feature_type": "category_page",
+        "target_path": "category/action.html",
+        "seo_target": "العاب اكشن",
+        "est_monthly_visits": 2000,
+        "est_widgets": 0,
+        "bytes_generated": 11261,
+        "tokens_used": 4529,
+        "pr_url": null,
+        "generated_at": "2026-05-15T16:21:28Z"
+      }
+    ]
+  },
   "validation_history": [
     {
       "repo": "Zakoosh/Yallaplays",

@@ -30,6 +30,9 @@
       <button class="nav-btn" onclick="showTab('repository',this)"><span class="icon">⎇</span> PR-Ready Changes</button>
       <button class="nav-btn" onclick="showTab('github',this)"><span class="icon">⑂</span> GitHub PRs</button>
 
+      <div class="nav-section">Product</div>
+      <button class="nav-btn" onclick="showTab('product',this)"><span class="icon">🏗</span> Product Execution</button>
+
       <div class="nav-section">Autonomy</div>
       <button class="nav-btn" onclick="showTab('trust',this)"><span class="icon">⚖</span> Trust &amp; Apply</button>
 
@@ -244,6 +247,53 @@
             <span class="panel-badge badge-dim" id="github-badge">–</span>
           </div>
           <div id="github-prs-list"></div>
+        </div>
+      </section>
+
+      <!-- PRODUCT EXECUTION TAB -->
+      <section id="tab-product" class="tab">
+        <div class="section-title">Autonomous Product Execution</div>
+        <div class="cards-grid" id="product-overview-cards"></div>
+        <div class="panels-row">
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">YallaPlays — Gaming Platform</div>
+              <span class="panel-badge badge-green" id="product-yp-badge">–</span>
+            </div>
+            <div id="product-yp-list"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Fionera — Finance Dashboard</div>
+              <span class="panel-badge badge-blue" id="product-fi-badge">–</span>
+            </div>
+            <div id="product-fi-list"></div>
+          </div>
+        </div>
+        <div class="panel full">
+          <div class="panel-header">
+            <div class="panel-title">Mifteh — AI Company</div>
+            <span class="panel-badge badge-dim" id="product-mi-badge">–</span>
+          </div>
+          <div id="product-mi-list"></div>
+        </div>
+        <div class="panel full">
+          <div class="panel-header">
+            <div class="panel-title">Autonomous Feature Timeline</div>
+            <span class="panel-badge badge-dim" id="product-timeline-badge">–</span>
+          </div>
+          <div id="product-timeline"></div>
+        </div>
+        <div class="panel full">
+          <div class="panel-header">
+            <div class="panel-title">Trigger Product Generation</div>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;padding:4px 0;">
+            <a href="https://github.com/Zakoosh/MIFTEH-AI-OS/actions/workflows/ai-feature-builder.yml" target="_blank" class="trigger-btn" style="padding:8px 16px;text-decoration:none;">🏗 Feature Builder</a>
+            <a href="https://github.com/Zakoosh/MIFTEH-AI-OS/actions/workflows/ai-widget-generator.yml" target="_blank" class="trigger-btn" style="padding:8px 16px;text-decoration:none;">⚙ Widget Generator</a>
+            <a href="https://github.com/Zakoosh/MIFTEH-AI-OS/actions/workflows/ai-seo-cluster-builder.yml" target="_blank" class="trigger-btn" style="padding:8px 16px;text-decoration:none;">🔍 SEO Cluster Builder</a>
+            <a href="https://github.com/Zakoosh/MIFTEH-AI-OS/actions/workflows/ai-product-analytics.yml" target="_blank" class="trigger-btn" style="padding:8px 16px;text-decoration:none;">📊 Product Analytics</a>
+          </div>
         </div>
       </section>
 

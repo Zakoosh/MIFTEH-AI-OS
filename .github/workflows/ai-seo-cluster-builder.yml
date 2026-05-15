@@ -1,0 +1,51 @@
+name: MIFTEH AI SEO Cluster Builder
+
+# Generates SEO cluster pages, category hubs, and Arabic/Turkish content.
+# Runs weekly (Wednesday) focused on SEO page types.
+
+on:
+  schedule:
+    - cron: '0 9 * * 3'   # Wednesday 09:00 UTC
+  workflow_dispatch:
+    inputs:
+      target_project:
+        description: 'Target project (yallaplays|fionera|mifteh|all)'
+        required: false
+        default: 'all'
+        type: choice
+        options: [all, yallaplays, fionera, mifteh]
+
+permissions:
+  contents: write
+
+jobs:
+  build-seo-clusters:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install openai
+
+      - name: Generate SEO cluster pages
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GH_PAT: ${{ secrets.GH_PAT }}
+          TARGET_PROJECT: ${{ inputs.target_project || 'all' }}
+          FEATURE_TYPES: category_page,seo_hub,page
+        run: python scripts/generate_product.py
+
+      - name: Commit outputs and PR records
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "mifteh-ai@users.noreply.github.com"
+          git pull --rebase origin main
+          git add outputs/ memory/
+          git diff --cached --quiet || git commit -m "AI: SEO cluster generation [$(date -u +%Y-%m-%dT%H:%M:%SZ)] [skip ci]"
+          git push
