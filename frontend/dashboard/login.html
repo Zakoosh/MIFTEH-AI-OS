@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MIFTEH OS — Sign In</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --surface2: #1a1a24;
+      --border: #2a2a38;
+      --text: #f1f1f8;
+      --dim: #888;
+      --muted: #475569;
+      --green: #22c55e;
+      --blue: #3b82f6;
+      --red: #ef4444;
+      --yellow: #eab308;
+      --purple: #a855f7;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .login-wrap {
+      width: 100%;
+      max-width: 400px;
+      padding: 24px;
+    }
+    .login-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 40px 36px 36px;
+    }
+    .logo-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    .logo-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 6px var(--green);
+      flex-shrink: 0;
+    }
+    .brand { font-size: 17px; font-weight: 800; letter-spacing: 0.04em; }
+    .brand-sub { font-size: 11px; color: var(--muted); margin-top: 1px; }
+    h1 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .subtitle {
+      font-size: 13px;
+      color: var(--dim);
+      margin-bottom: 28px;
+    }
+    .field { margin-bottom: 16px; }
+    label {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--dim);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 7px;
+    }
+    input[type=email], input[type=password] {
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 14px;
+      padding: 11px 14px;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    input:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(59,130,246,.12);
+    }
+    .btn-submit {
+      width: 100%;
+      background: var(--blue);
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 12px;
+      margin-top: 6px;
+      transition: opacity 0.15s, transform 0.1s;
+    }
+    .btn-submit:hover:not(:disabled) { opacity: 0.9; transform: translateY(-1px); }
+    .btn-submit:active:not(:disabled) { transform: translateY(0); }
+    .btn-submit:disabled { opacity: 0.45; cursor: not-allowed; }
+    .alert {
+      border-radius: 8px;
+      font-size: 13px;
+      padding: 11px 14px;
+      margin-top: 14px;
+      display: none;
+    }
+    .alert.error { background: rgba(239,68,68,.08); border: 1px solid rgba(239,68,68,.3); color: var(--red); }
+    .alert.info  { background: rgba(59,130,246,.08); border: 1px solid rgba(59,130,246,.3); color: #93c5fd; }
+    .alert.show { display: block; }
+    .footer {
+      margin-top: 18px;
+      text-align: center;
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+    .footer a { color: var(--muted); text-decoration: none; }
+    .footer a:hover { color: var(--dim); }
+    .spinner {
+      display: inline-block;
+      width: 13px; height: 13px;
+      border: 2px solid rgba(255,255,255,.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.55s linear infinite;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+<div class="login-wrap">
+  <div class="login-card">
+    <div class="logo-row">
+      <div class="logo-dot"></div>
+      <div>
+        <div class="brand">MIFTEH OS</div>
+        <div class="brand-sub">miftehos.com</div>
+      </div>
+    </div>
+
+    <h1>Sign in</h1>
+    <p class="subtitle">Admin access · GitHub-native AI OS</p>
+
+    <form id="login-form" autocomplete="on" novalidate>
+      <div class="field">
+        <label for="email">Email address</label>
+        <input type="email" id="email" name="email" autocomplete="email"
+               placeholder="admin@example.com" required autofocus/>
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" autocomplete="current-password"
+               placeholder="••••••••" required/>
+      </div>
+      <button class="btn-submit" type="submit" id="submit-btn">Sign In</button>
+    </form>
+
+    <div class="alert error" id="alert-error"></div>
+    <div class="alert info"  id="alert-info"></div>
+
+    <div class="footer">
+      MIFTEH AI OS · Autonomous AI Operations
+      <br><a href="https://github.com/Zakoosh/MIFTEH-AI-OS/actions" target="_blank">GitHub Actions ↗</a>
+    </div>
+  </div>
+</div>
+
+<script>
+'use strict';
+
+const AUTH_URL = '/data/auth_config.json';
+
+async function sha256hex(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+function getSession() {
+  try { return JSON.parse(localStorage.getItem('mifteh_session') || 'null'); }
+  catch (_) { return null; }
+}
+
+function showError(msg) {
+  const el = document.getElementById('alert-error');
+  el.textContent = msg;
+  el.classList.add('show');
+  document.getElementById('alert-info').classList.remove('show');
+}
+
+function showInfo(msg) {
+  const el = document.getElementById('alert-info');
+  el.textContent = msg;
+  el.classList.add('show');
+  document.getElementById('alert-error').classList.remove('show');
+}
+
+function hideAlerts() {
+  document.getElementById('alert-error').classList.remove('show');
+  document.getElementById('alert-info').classList.remove('show');
+}
+
+function setLoading(loading) {
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = loading;
+  btn.innerHTML = loading ? '<span class="spinner"></span>Signing in…' : 'Sign In';
+}
+
+// Auto-redirect if already authenticated
+(async () => {
+  const session = getSession();
+  if (!session || !session.token || new Date(session.expires_at) < new Date()) return;
+  try {
+    const cfg = await (await fetch(AUTH_URL + '?t=' + Date.now(), { cache: 'no-store' })).json();
+    if (session.token === cfg.token || session.token === cfg.prev_token) {
+      showInfo('Already signed in — redirecting…');
+      setTimeout(() => {
+        const next = new URLSearchParams(window.location.search).get('next') || '/';
+        window.location.replace(next);
+      }, 500);
+    }
+  } catch (_) {}
+})();
+
+// Login form submit
+document.getElementById('login-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  hideAlerts();
+
+  const email = document.getElementById('email').value.trim().toLowerCase();
+  const pass  = document.getElementById('password').value;
+
+  if (!email || !pass) { showError('Email and password are required.'); return; }
+
+  setLoading(true);
+
+  try {
+    const resp = await fetch(AUTH_URL + '?t=' + Date.now(), { cache: 'no-store' });
+
+    if (!resp.ok) {
+      showError('Auth service unavailable (HTTP ' + resp.status + '). Ensure GitHub secrets ADMIN_EMAIL, ADMIN_PASSWORD, ADMIN_SECRET are configured and the Auth Token Generator workflow has run.');
+      setLoading(false);
+      return;
+    }
+
+    const cfg = await resp.json();
+
+    const emailHash = await sha256hex(email);
+    const passHash  = await sha256hex(pass);
+
+    if (emailHash !== cfg.email_hash || passHash !== cfg.pass_hash) {
+      showError('Invalid email or password.');
+      // Brief delay to prevent rapid brute-force
+      await new Promise(r => setTimeout(r, 800));
+      setLoading(false);
+      return;
+    }
+
+    // Store session — 24h TTL from login time (independent of token rotation cycle)
+    const expiresAt = new Date(Date.now() + 24 * 3600 * 1000).toISOString();
+    localStorage.setItem('mifteh_session', JSON.stringify({
+      token: cfg.token,
+      expires_at: expiresAt,
+      email: email,
+      signed_in_at: new Date().toISOString(),
+    }));
+
+    showInfo('Signed in — loading dashboard…');
+    setTimeout(() => {
+      const next = new URLSearchParams(window.location.search).get('next') || '/';
+      window.location.replace(next);
+    }, 300);
+
+  } catch (err) {
+    showError('Login error: ' + err.message);
+    setLoading(false);
+  }
+});
+</script>
+</body>
+</html>

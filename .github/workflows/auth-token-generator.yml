@@ -1,0 +1,42 @@
+name: MIFTEH Auth Token Generator
+
+on:
+  schedule:
+    - cron: '0 0 * * *'   # daily at midnight UTC — rotates session token
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate-auth:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Generate auth config
+        env:
+          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+          ADMIN_SECRET: ${{ secrets.ADMIN_SECRET }}
+        run: python scripts/generate_auth_config.py
+
+      - name: Commit auth config and trigger Pages deploy
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "mifteh-ai@users.noreply.github.com"
+          git pull --rebase origin main
+          git add frontend/dashboard/data/auth_config.json
+          git diff --cached --quiet || git commit -m "Auth: rotate daily session token [$(date -u +%Y-%m-%dT%H:%M:%SZ)]"
+          git push
+
+      - name: Trigger Pages deployment
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run deploy-dashboard.yml --ref main

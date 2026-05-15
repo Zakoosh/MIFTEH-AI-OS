@@ -1,0 +1,98 @@
+{
+  "generated_at": "2026-05-15T09:18:50Z",
+  "project": "yallaplays",
+  "operation_type": "content_optimization",
+  "ai_generated": true,
+  "ai_provider": "openai",
+  "ai_model": "gpt-4o-mini",
+  "tokens_used": 492,
+  "cost_usd": 0.0002343,
+  "title": "Yallaplays Content Strategy — 2026-05-15",
+  "content": {
+    "blog_post_ideas": [
+      {
+        "title": "The Rise of Mobile Gaming in MENA: Trends and Predictions",
+        "keyword": "mobile gaming MENA",
+        "word_count": 800,
+        "outline": [
+          "Introduction",
+          "Current Trends",
+          "Future Predictions",
+          "Conclusion"
+        ]
+      },
+      {
+        "title": "Top 10 Games in MENA for 2026: What Players are Loving",
+        "keyword": "top games MENA 2026",
+        "word_count": 800,
+        "outline": [
+          "Introduction",
+          "Game Reviews",
+          "Player Feedback",
+          "Conclusion"
+        ]
+      },
+      {
+        "title": "How Gaming Communities are Shaping the MENA Landscape",
+        "keyword": "gaming communities MENA",
+        "word_count": 800,
+        "outline": [
+          "Introduction",
+          "Community Impact",
+          "Popular Platforms",
+          "Conclusion"
+        ]
+      }
+    ],
+    "game_descriptions": [
+      {
+        "genre": "Action",
+        "template_description": "Dive into a thrilling action-packed experience with [Game Name], where every move counts and strategy is key. Engage in epic battles and conquer your opponents in a visually stunning world.",
+        "keywords": [
+          "action game",
+          "epic battles",
+          "strategy"
+        ]
+      },
+      {
+        "genre": "Puzzle",
+        "template_description": "Challenge your mind with [Game Name], a captivating puzzle game that offers hundreds of levels to test your skills. Perfect for casual gamers and puzzle enthusiasts alike.",
+        "keywords": [
+          "puzzle game",
+          "mind challenge",
+          "levels"
+        ]
+      },
+      {
+        "genre": "Adventure",
+        "template_description": "Embark on an unforgettable journey in [Game Name], where you explore vast landscapes and uncover hidden secrets. Your adventure awaits!",
+        "keywords": [
+          "adventure game",
+          "exploration",
+          "journey"
+        ]
+      }
+    ],
+    "social_content": [
+      {
+        "platform": "instagram",
+        "content": "🎮 Join the ultimate gaming showdown this weekend! Are you ready to prove your skills? #YallaPlays #GamingCommunity #MENA",
+        "hashtags": [
+          "#YallaPlays",
+          "#GamingCommunity",
+          "#MENA"
+        ]
+      },
+      {
+        "platform": "instagram",
+        "content": "🔥 Check out the latest updates and new games available on YallaPlays! Don't miss out on the fun! #PlayNow #GameOn",
+        "hashtags": [
+          "#PlayNow",
+          "#GameOn"
+        ]
+      }
+    ]
+  },
+  "pr_ready": true,
+  "suggested_branch": "ai/ya-content-2026-05-15"
+}

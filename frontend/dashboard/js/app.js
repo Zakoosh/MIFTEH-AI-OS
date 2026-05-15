@@ -1,6 +1,6 @@
 /* MIFTEH AI OS Dashboard — miftehos.com
  * GitHub-native architecture: reads from /data/dashboard.json (no backend required).
- * Data is updated by GitHub Actions AI workflows on a cron schedule.
+ * Auth: token-based session via localStorage, validated against /data/auth_config.json.
  */
 'use strict';
 
@@ -12,7 +12,58 @@ const _ACTIONS = (typeof window.MIFTEH_ACTIONS !== 'undefined')
   ? window.MIFTEH_ACTIONS
   : {};
 
+const _AUTH_URL = '/data/auth_config.json';
+
 let _data = null;
+
+// ─── Auth ─────────────────────────────────────────────────────────────────────
+
+function _getSession() {
+  try { return JSON.parse(localStorage.getItem('mifteh_session') || 'null'); }
+  catch (_) { return null; }
+}
+
+function signOut() {
+  localStorage.removeItem('mifteh_session');
+  window.location.replace('/login.html');
+}
+
+async function initAuth() {
+  const session = _getSession();
+
+  if (!session || !session.token || !session.expires_at) {
+    window.location.replace('/login.html');
+    return false;
+  }
+
+  if (new Date(session.expires_at) < new Date()) {
+    localStorage.removeItem('mifteh_session');
+    window.location.replace('/login.html?reason=expired');
+    return false;
+  }
+
+  try {
+    const r = await fetch(_AUTH_URL + '?t=' + Date.now(), { cache: 'no-store' });
+    if (r.ok) {
+      const cfg = await r.json();
+      const valid = session.token === cfg.token || session.token === cfg.prev_token;
+      if (!valid) {
+        localStorage.removeItem('mifteh_session');
+        window.location.replace('/login.html?reason=expired');
+        return false;
+      }
+    }
+    // If auth_config fetch fails (network error), fail open — session already verified above
+  } catch (_) {}
+
+  // Show dashboard and update sidebar email
+  const layout = document.getElementById('app-layout');
+  if (layout) layout.style.display = '';
+  const emailEl = document.getElementById('session-email');
+  if (emailEl && session.email) emailEl.textContent = session.email;
+
+  return true;
+}
 
 // ─── Navigation ──────────────────────────────────────────────────────────────
 
@@ -475,5 +526,10 @@ async function loadDashboard() {
   }
 }
 
-loadDashboard();
-setInterval(loadDashboard, 60000);  // refresh every 60s (data updates hourly via GitHub Actions)
+(async () => {
+  const ok = await initAuth();
+  if (ok) {
+    loadDashboard();
+    setInterval(loadDashboard, 60000);
+  }
+})();

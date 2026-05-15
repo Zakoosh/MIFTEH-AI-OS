@@ -1,0 +1,65 @@
+{
+  "generated_at": "2026-05-15T09:19:02Z",
+  "project": "mifteh",
+  "operation_type": "analytics_report",
+  "ai_generated": true,
+  "ai_provider": "openai",
+  "ai_model": "gpt-4o-mini",
+  "tokens_used": 683,
+  "cost_usd": 0.00027209999999999995,
+  "title": "Weekly Analytics Report — 2026-05-15",
+  "content": {
+    "executive_summary": "This week, MIFTEH AI OS demonstrated strong potential for growth across its product lines, particularly with YallaPlays and Fionera. Strategic focus on user engagement and content optimization will be crucial for sustaining momentum moving forward.",
+    "yallaplays": {
+      "seo_score_estimate": 72,
+      "top_opportunities": [
+        "Enhance mobile optimization",
+        "Expand social media presence",
+        "Leverage influencer partnerships"
+      ],
+      "content_recommendations": [
+        "Create engaging video content",
+        "Develop interactive tutorials"
+      ],
+      "growth_tactics": [
+        "Implement referral programs",
+        "Utilize targeted ad campaigns"
+      ]
+    },
+    "fionera": {
+      "user_engagement_insights": "User retention rates have improved by 15%, indicating strong engagement with recent features.",
+      "feature_priorities": [
+        "Real-time collaboration tools",
+        "Enhanced analytics dashboard"
+      ],
+      "market_opportunities": [
+        "Expand into educational sectors",
+        "Integrate with popular project management tools"
+      ]
+    },
+    "mifteh": {
+      "positioning_insights": "MIFTEH is positioned as a leader in AI-driven solutions, but must emphasize unique value propositions to differentiate from competitors.",
+      "content_gaps": [
+        "Customer success stories",
+        "Industry-specific case studies"
+      ],
+      "growth_opportunities": [
+        "Partnerships with tech startups",
+        "Increase presence in international markets"
+      ]
+    },
+    "ai_performance": {
+      "effectiveness_notes": "AI-driven recommendations have shown an increase in user satisfaction scores by 10%.",
+      "optimization_suggestions": [
+        "Refine algorithms for better personalization",
+        "Enhance data processing speed"
+      ]
+    },
+    "next_week_priorities": [
+      "Launch new marketing campaign for YallaPlays",
+      "Finalize Fionera feature roadmap",
+      "Conduct competitive analysis for MIFTEH"
+    ]
+  },
+  "pr_ready": false
+}

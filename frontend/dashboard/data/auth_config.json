@@ -1,0 +1,9 @@
+{
+  "email_hash": "ac09d5d3a7bf5f8f2e58252bad1da346ba3cc9e72a77faa550e0472b3fd5ee9d",
+  "pass_hash": "ef1de1bbd33eb22b17618a634183e0b5d7b8d6a7ee87d6f941da4c00a45a497e",
+  "token": "d69c5aa369dd93e4fb6c90b2a48c4fc36f46faa47ef24f7d0ec45571ba8ad191",
+  "prev_token": "7d47b6cdca3733a2cab81d8dabbdf20a7d0bcad4b213abf25cbaf8a7dd4e9bce",
+  "expires_at": "2026-05-17T00:00:00Z",
+  "generated_at": "2026-05-15T09:15:05Z",
+  "ttl": 172800
+}

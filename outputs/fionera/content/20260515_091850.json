@@ -1,0 +1,47 @@
+{
+  "generated_at": "2026-05-15T09:18:50Z",
+  "project": "fionera",
+  "operation_type": "content_optimization",
+  "ai_generated": true,
+  "ai_provider": "openai",
+  "ai_model": "gpt-4o-mini",
+  "tokens_used": 492,
+  "cost_usd": 0.0002343,
+  "title": "Fionera Content Strategy — 2026-05-15",
+  "content": {
+    "educational_content": [
+      {
+        "topic": "Understanding Investment Basics",
+        "format": "article",
+        "key_points": [
+          "What is an investment?",
+          "Types of investments",
+          "Risk vs. reward"
+        ]
+      },
+      {
+        "topic": "Budgeting for Beginners: A Step-by-Step Guide",
+        "format": "infographic",
+        "key_points": [
+          "Importance of budgeting",
+          "Creating your budget",
+          "Tracking expenses"
+        ]
+      }
+    ],
+    "feature_announcements": [
+      {
+        "feature": "Automated Savings",
+        "user_benefit": "Save money effortlessly with our new automated savings feature.",
+        "announcement_copy": "Introducing Automated Savings! Set it and forget it—watch your savings grow without lifting a finger!"
+      },
+      {
+        "feature": "Enhanced Financial Insights",
+        "user_benefit": "Gain deeper understanding of your spending habits with new insights.",
+        "announcement_copy": "Unlock your financial potential with Enhanced Financial Insights! Make informed decisions like never before."
+      }
+    ]
+  },
+  "pr_ready": true,
+  "suggested_branch": "ai/fi-content-2026-05-15"
+}

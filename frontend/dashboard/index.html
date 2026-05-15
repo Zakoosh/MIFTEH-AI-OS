@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="/css/style.css"/>
 </head>
 <body>
-<div class="layout">
+<div class="layout" id="app-layout" style="display:none">
 
   <!-- SIDEBAR -->
   <aside class="sidebar">
@@ -39,7 +39,9 @@
         <div class="system-dot" id="system-dot"></div>
         <span id="system-status-text">LOADING...</span>
       </div>
-      <a href="https://github.com/Zakoosh/MIFTEH-AI-OS/actions" target="_blank" style="display:block;margin-top:10px;font-size:11px;color:#64748b;text-align:center;">GitHub Actions ↗</a>
+      <div id="session-email" style="margin-top:8px;font-size:11px;color:#475569;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></div>
+      <a href="#" onclick="signOut();return false;" style="display:block;margin-top:6px;font-size:11px;color:#64748b;text-align:center;">Sign out</a>
+      <a href="https://github.com/Zakoosh/MIFTEH-AI-OS/actions" target="_blank" style="display:block;margin-top:4px;font-size:11px;color:#475569;text-align:center;">GitHub Actions ↗</a>
     </div>
   </aside>
 
