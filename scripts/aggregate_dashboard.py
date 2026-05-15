@@ -72,6 +72,11 @@ def read_validation_log():
     return json.loads(f.read_text()) if f.exists() else []
 
 
+def read_analytics_intelligence():
+    f = Path("memory/analytics_intelligence.json")
+    return json.loads(f.read_text()) if f.exists() else {}
+
+
 def read_product_outputs():
     """Read all product execution output records from outputs/{project}/product/."""
     records = []
@@ -231,6 +236,7 @@ def main():
     validation_log = read_validation_log()
     product_outputs = read_product_outputs()
     product_metrics = build_product_metrics(product_outputs)
+    analytics_intel = read_analytics_intelligence()
     print(f"[dashboard] {len(outputs)} outputs, {len(prs)} PRs, {len(automerge_log)} merge events, {len(product_outputs)} product features")
 
     loops, active_loops = build_loops(outputs)
@@ -341,6 +347,30 @@ def main():
             for e in automerge_log[-50:]
         ],
         "product": product_metrics,
+        "analytics_intelligence": {
+            "generated_at": analytics_intel.get("generated_at", ""),
+            "data_source": analytics_intel.get("data_source", ""),
+            "cross_project": analytics_intel.get("cross_project", {}),
+            "projects": {
+                pk: {
+                    "overview": pdata.get("overview", {}),
+                    "scores": pdata.get("scores", {}),
+                    "top_pages": pdata.get("top_pages", [])[:5],
+                    "low_pages": pdata.get("low_pages", [])[:3],
+                    "top_content": pdata.get("top_content", [])[:5],
+                    "search_queries": pdata.get("search_queries", [])[:5],
+                    "engagement": pdata.get("engagement", {}),
+                    "conversions": pdata.get("conversions", {}),
+                    "top_opportunity": pdata.get("top_opportunity", ""),
+                }
+                for pk, pdata in analytics_intel.get("projects", {}).items()
+            },
+            "recommendations": analytics_intel.get("recommendations", []),
+            "alert_thresholds": analytics_intel.get("alert_thresholds", []),
+            "autonomous_decisions": analytics_intel.get("autonomous_decisions", []),
+            "execution_summary": analytics_intel.get("execution_summary", ""),
+            "estimated_impact": analytics_intel.get("estimated_impact", {}),
+        },
         "validation_history": [
             {
                 "repo": e.get("repo"),

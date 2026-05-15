@@ -1,0 +1,198 @@
+{
+  "project": "fionera",
+  "operation_type": "analytics_intelligence",
+  "focus": "analytics",
+  "data_source": "ai_intelligence",
+  "period": "last_30_days",
+  "generated_at": "2026-05-15T18:30:10Z",
+  "ai_generated": true,
+  "ai_provider": "openai",
+  "tokens_used": 2233,
+  "cost_usd": 0.0009140999999999999,
+  "title": "Analytics Intelligence — fionera",
+  "overview": {
+    "monthly_visits": 48230,
+    "daily_avg": 1607,
+    "weekly_change_pct": 12.5,
+    "bounce_rate_pct": 36.7,
+    "avg_session_seconds": 320,
+    "pages_per_session": 4.2,
+    "mobile_pct": 45.8,
+    "new_users_pct": 52.3,
+    "organic_search_pct": 60.1,
+    "direct_pct": 22.4,
+    "referral_pct": 10.5
+  },
+  "top_pages": [
+    {
+      "path": "index.html",
+      "monthly_visits": 18500,
+      "bounce_pct": 30.5,
+      "avg_time_seconds": 300,
+      "trend": "up",
+      "ctr_pct": 8.5
+    },
+    {
+      "path": "widgets/bist-overview.html",
+      "monthly_visits": 12000,
+      "bounce_pct": 32.1,
+      "avg_time_seconds": 250,
+      "trend": "stable",
+      "ctr_pct": 7.2
+    },
+    {
+      "path": "widgets/ai-insight.html",
+      "monthly_visits": 8000,
+      "bounce_pct": 38.7,
+      "avg_time_seconds": 280,
+      "trend": "down",
+      "ctr_pct": 5.5
+    },
+    {
+      "path": "widgets/portfolio-heatmap.html",
+      "monthly_visits": 7800,
+      "bounce_pct": 34.9,
+      "avg_time_seconds": 350,
+      "trend": "up",
+      "ctr_pct": 6.0
+    },
+    {
+      "path": "widgets/crypto-overview.html",
+      "monthly_visits": 6000,
+      "bounce_pct": 29.4,
+      "avg_time_seconds": 330,
+      "trend": "up",
+      "ctr_pct": 9.0
+    }
+  ],
+  "low_pages": [
+    {
+      "path": "widgets/portfolio-analytics.html",
+      "monthly_visits": 1500,
+      "bounce_pct": 55.2,
+      "avg_time_seconds": 120,
+      "issue": "High bounce rate indicates lack of relevant content.",
+      "fix_priority": "high"
+    },
+    {
+      "path": "widgets/crypto-tips.html",
+      "monthly_visits": 2000,
+      "bounce_pct": 50.1,
+      "avg_time_seconds": 90,
+      "issue": "Low engagement and time spent on page.",
+      "fix_priority": "medium"
+    },
+    {
+      "path": "widgets/user-guide.html",
+      "monthly_visits": 1000,
+      "bounce_pct": 60.5,
+      "avg_time_seconds": 70,
+      "issue": "Content outdated and not user-friendly.",
+      "fix_priority": "high"
+    }
+  ],
+  "top_content": [
+    {
+      "label": "Market Insights",
+      "visits": 15000,
+      "growth_pct": 10.5,
+      "engagement_score": 78
+    },
+    {
+      "label": "Investment Strategies",
+      "visits": 12000,
+      "growth_pct": 15.0,
+      "engagement_score": 70
+    },
+    {
+      "label": "Stock Analysis",
+      "visits": 10000,
+      "growth_pct": 8.0,
+      "engagement_score": 75
+    },
+    {
+      "label": "Crypto Market Updates",
+      "visits": 8000,
+      "growth_pct": 12.0,
+      "engagement_score": 80
+    },
+    {
+      "label": "User Testimonials",
+      "visits": 6000,
+      "growth_pct": 5.0,
+      "engagement_score": 60
+    }
+  ],
+  "search_queries": [
+    {
+      "query": "BIST hisse senedi analizi",
+      "clicks": 1500,
+      "impressions": 12000,
+      "ctr_pct": 12.5,
+      "avg_position": 3.5,
+      "opportunity": "high"
+    },
+    {
+      "query": "kriptolar için en iyi stratejiler",
+      "clicks": 800,
+      "impressions": 5000,
+      "ctr_pct": 16.0,
+      "avg_position": 2.1,
+      "opportunity": "high"
+    },
+    {
+      "query": "finans portföy takibi",
+      "clicks": 1200,
+      "impressions": 10000,
+      "ctr_pct": 12.0,
+      "avg_position": 4.0,
+      "opportunity": "medium"
+    },
+    {
+      "query": "AI finans araçları",
+      "clicks": 600,
+      "impressions": 3000,
+      "ctr_pct": 20.0,
+      "avg_position": 1.8,
+      "opportunity": "high"
+    },
+    {
+      "query": "borsa haberleri",
+      "clicks": 2000,
+      "impressions": 15000,
+      "ctr_pct": 13.3,
+      "avg_position": 5.0,
+      "opportunity": "medium"
+    },
+    {
+      "query": "yatırımcılar için ipuçları",
+      "clicks": 400,
+      "impressions": 2500,
+      "ctr_pct": 16.0,
+      "avg_position": 6.5,
+      "opportunity": "medium"
+    }
+  ],
+  "engagement": {
+    "avg_scroll_depth_pct": 65.0,
+    "primary_cta_ctr_pct": 5.5,
+    "internal_link_ctr_pct": 10.0,
+    "return_visitor_pct": 42.3,
+    "engagement_events_per_session": 4.5
+  },
+  "conversions": {
+    "primary_goal_rate_pct": 3.2,
+    "micro_conversion_rate_pct": 7.5,
+    "funnel_drop_off_pct": 45.0,
+    "best_converting_page": "index.html",
+    "worst_converting_page": "widgets/user-guide.html"
+  },
+  "scores": {
+    "performance_score": 72,
+    "engagement_score": 76,
+    "seo_opportunity_score": 88,
+    "conversion_score": 65,
+    "overall_health": 70
+  },
+  "top_opportunity": "Enhance the content quality and user experience on low-performing pages to reduce bounce rates and improve engagement."
+}

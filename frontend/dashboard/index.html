@@ -30,6 +30,9 @@
       <button class="nav-btn" onclick="showTab('repository',this)"><span class="icon">⎇</span> PR-Ready Changes</button>
       <button class="nav-btn" onclick="showTab('github',this)"><span class="icon">⑂</span> GitHub PRs</button>
 
+      <div class="nav-section">Intelligence</div>
+      <button class="nav-btn" onclick="showTab('analytics',this)"><span class="icon">📈</span> Analytics Intel</button>
+
       <div class="nav-section">Product</div>
       <button class="nav-btn" onclick="showTab('product',this)"><span class="icon">🏗</span> Product Execution</button>
 
@@ -247,6 +250,75 @@
             <span class="panel-badge badge-dim" id="github-badge">–</span>
           </div>
           <div id="github-prs-list"></div>
+        </div>
+      </section>
+
+      <!-- ANALYTICS INTELLIGENCE TAB -->
+      <section id="tab-analytics" class="tab">
+        <div class="section-title">Analytics Intelligence — AI-Estimated Behavioral Data</div>
+        <div class="cards-grid" id="analytics-overview-cards"></div>
+
+        <div class="panels-row">
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Portfolio Health</div>
+              <span class="panel-badge badge-dim" id="analytics-health-badge">–</span>
+            </div>
+            <div id="analytics-portfolio-summary"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">⚠ Performance Alerts</div>
+              <span class="panel-badge badge-yellow" id="analytics-alerts-badge">–</span>
+            </div>
+            <div id="analytics-alerts-list"></div>
+          </div>
+        </div>
+
+        <div class="panels-row">
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">YallaPlays Analytics</div>
+              <span class="panel-badge badge-green" id="analytics-yp-badge">–</span>
+            </div>
+            <div id="analytics-yp-detail"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Fionera Analytics</div>
+              <span class="panel-badge badge-blue" id="analytics-fi-badge">–</span>
+            </div>
+            <div id="analytics-fi-detail"></div>
+          </div>
+        </div>
+
+        <div class="panel full">
+          <div class="panel-header">
+            <div class="panel-title">Mifteh Analytics</div>
+            <span class="panel-badge badge-dim" id="analytics-mi-badge">–</span>
+          </div>
+          <div id="analytics-mi-detail"></div>
+        </div>
+
+        <div class="panel full">
+          <div class="panel-header">
+            <div class="panel-title">🤖 AI Recommendations</div>
+            <span class="panel-badge badge-green" id="analytics-recs-badge">–</span>
+          </div>
+          <div id="analytics-recommendations"></div>
+        </div>
+
+        <div class="panel full">
+          <div class="panel-header">
+            <div class="panel-title">⚙ Autonomous Decision Queue</div>
+            <span class="panel-badge badge-cyan" id="analytics-queue-badge">–</span>
+          </div>
+          <div id="analytics-queue"></div>
+          <div style="margin-top:12px;padding:4px 0;display:flex;gap:10px;flex-wrap:wrap;">
+            <a href="https://github.com/Zakoosh/MIFTEH-AI-OS/actions/workflows/ai-analytics-intelligence.yml" target="_blank" class="trigger-btn" style="padding:8px 16px;text-decoration:none;">📈 Run Analytics</a>
+            <a href="https://github.com/Zakoosh/MIFTEH-AI-OS/actions/workflows/ai-traffic-optimizer.yml" target="_blank" class="trigger-btn" style="padding:8px 16px;text-decoration:none;">🔍 Traffic Optimizer</a>
+            <a href="https://github.com/Zakoosh/MIFTEH-AI-OS/actions/workflows/ai-conversion-optimizer.yml" target="_blank" class="trigger-btn" style="padding:8px 16px;text-decoration:none;">💹 Conversion Optimizer</a>
+          </div>
         </div>
       </section>
 

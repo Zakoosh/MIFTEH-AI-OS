@@ -1,0 +1,62 @@
+name: MIFTEH AI Conversion Optimizer
+
+# Conversion and funnel optimization: reads analytics, identifies high-traffic
+# low-conversion pages, and generates improved CTAs, landing variants, and lead funnels.
+# Runs weekly Tuesday 10:00 UTC.
+
+on:
+  schedule:
+    - cron: '0 10 * * 2'
+  workflow_dispatch:
+    inputs:
+      target_project:
+        description: 'Target project (yallaplays|fionera|mifteh|all)'
+        required: false
+        default: 'all'
+        type: choice
+        options: [all, yallaplays, fionera, mifteh]
+
+permissions:
+  contents: write
+
+jobs:
+  conversion-optimize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install openai
+
+      - name: Run conversion-focused analytics
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GH_PAT: ${{ secrets.GH_PAT }}
+          FOCUS: conversion
+        run: python scripts/generate_analytics_intelligence.py
+
+      - name: Generate conversion-focused components
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GH_PAT: ${{ secrets.GH_PAT }}
+          TARGET_PROJECT: ${{ inputs.target_project || 'all' }}
+          FEATURE_TYPES: component,widget
+        run: python scripts/generate_product.py
+
+      - name: Aggregate dashboard
+        run: python scripts/aggregate_dashboard.py
+
+      - name: Commit conversion optimization outputs
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "mifteh-ai@users.noreply.github.com"
+          git pull --rebase origin main
+          git add memory/ outputs/ frontend/dashboard/data/
+          git diff --cached --quiet || git commit -m "AI: Conversion optimization cycle [$(date -u +%Y-%m-%dT%H:%M:%SZ)] [skip ci]"
+          git push

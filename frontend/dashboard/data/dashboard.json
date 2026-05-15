@@ -1,178 +1,178 @@
 {
-  "generated_at": "2026-05-15T16:33:41Z",
+  "generated_at": "2026-05-15T18:31:16Z",
   "architecture": "github-native",
   "scheduler": {
     "scheduler_running": true,
     "active_loops": 14,
     "total_loops": 14,
-    "total_runs": 73,
-    "total_success": 73,
+    "total_runs": 87,
+    "total_success": 87,
     "loops": [
       {
         "id": "yp-seo-loop",
         "label": "SEO Page Generator",
         "project": "yallaplays",
         "interval_minutes": 360,
-        "last_run": "2026-05-15T16:22:18Z",
+        "last_run": "2026-05-15T18:29:43Z",
         "last_status": "completed",
-        "run_count": 5,
-        "success_count": 5,
-        "next_run_scheduled": "2026-05-15T22:22:18Z"
+        "run_count": 6,
+        "success_count": 6,
+        "next_run_scheduled": "2026-05-16T00:29:43Z"
       },
       {
         "id": "yp-category-loop",
         "label": "Category Optimizer",
         "project": "yallaplays",
         "interval_minutes": 720,
-        "last_run": "2026-05-15T16:22:18Z",
+        "last_run": "2026-05-15T18:29:43Z",
         "last_status": "completed",
-        "run_count": 5,
-        "success_count": 5,
-        "next_run_scheduled": "2026-05-16T04:22:18Z"
+        "run_count": 6,
+        "success_count": 6,
+        "next_run_scheduled": "2026-05-16T06:29:43Z"
       },
       {
         "id": "yp-homepage-loop",
         "label": "Homepage Recommendations",
         "project": "yallaplays",
         "interval_minutes": 360,
-        "last_run": "2026-05-15T16:22:18Z",
+        "last_run": "2026-05-15T18:29:43Z",
         "last_status": "completed",
-        "run_count": 5,
-        "success_count": 5,
-        "next_run_scheduled": "2026-05-15T22:22:18Z"
+        "run_count": 6,
+        "success_count": 6,
+        "next_run_scheduled": "2026-05-16T00:29:43Z"
       },
       {
         "id": "yp-linking-loop",
         "label": "Internal Linking",
         "project": "yallaplays",
         "interval_minutes": 1440,
-        "last_run": "2026-05-15T16:22:18Z",
+        "last_run": "2026-05-15T18:29:43Z",
         "last_status": "completed",
-        "run_count": 5,
-        "success_count": 5,
-        "next_run_scheduled": "2026-05-16T16:22:18Z"
+        "run_count": 6,
+        "success_count": 6,
+        "next_run_scheduled": "2026-05-16T18:29:43Z"
       },
       {
         "id": "yp-mobile-loop",
         "label": "Mobile Optimization",
         "project": "yallaplays",
         "interval_minutes": 1440,
-        "last_run": "2026-05-15T16:22:18Z",
+        "last_run": "2026-05-15T18:29:43Z",
         "last_status": "completed",
-        "run_count": 5,
-        "success_count": 5,
-        "next_run_scheduled": "2026-05-16T16:22:18Z"
+        "run_count": 6,
+        "success_count": 6,
+        "next_run_scheduled": "2026-05-16T18:29:43Z"
       },
       {
         "id": "yp-games-loop",
         "label": "Game Suggestion Generator",
         "project": "yallaplays",
         "interval_minutes": 240,
-        "last_run": "2026-05-15T16:22:18Z",
+        "last_run": "2026-05-15T18:29:43Z",
         "last_status": "completed",
-        "run_count": 5,
-        "success_count": 5,
-        "next_run_scheduled": "2026-05-15T20:22:18Z"
+        "run_count": 6,
+        "success_count": 6,
+        "next_run_scheduled": "2026-05-15T22:29:43Z"
       },
       {
         "id": "fi-market-loop",
         "label": "Market Insights",
         "project": "fionera",
         "interval_minutes": 240,
-        "last_run": "2026-05-15T16:25:05Z",
+        "last_run": "2026-05-15T18:30:10Z",
         "last_status": "completed",
-        "run_count": 5,
-        "success_count": 5,
-        "next_run_scheduled": "2026-05-15T20:25:05Z"
+        "run_count": 6,
+        "success_count": 6,
+        "next_run_scheduled": "2026-05-15T22:30:10Z"
       },
       {
         "id": "fi-watchlist-loop",
         "label": "Watchlist Optimizer",
         "project": "fionera",
         "interval_minutes": 360,
-        "last_run": "2026-05-15T16:25:05Z",
+        "last_run": "2026-05-15T18:30:10Z",
         "last_status": "completed",
-        "run_count": 5,
-        "success_count": 5,
-        "next_run_scheduled": "2026-05-15T22:25:05Z"
+        "run_count": 6,
+        "success_count": 6,
+        "next_run_scheduled": "2026-05-16T00:30:10Z"
       },
       {
         "id": "fi-analytics-loop",
         "label": "Analytics Report",
         "project": "fionera",
         "interval_minutes": 1440,
-        "last_run": "2026-05-15T16:25:05Z",
+        "last_run": "2026-05-15T18:30:10Z",
         "last_status": "completed",
-        "run_count": 5,
-        "success_count": 5,
-        "next_run_scheduled": "2026-05-16T16:25:05Z"
+        "run_count": 6,
+        "success_count": 6,
+        "next_run_scheduled": "2026-05-16T18:30:10Z"
       },
       {
         "id": "fi-ux-loop",
         "label": "UX Improvements",
         "project": "fionera",
         "interval_minutes": 1440,
-        "last_run": "2026-05-15T16:25:05Z",
+        "last_run": "2026-05-15T18:30:10Z",
         "last_status": "completed",
-        "run_count": 5,
-        "success_count": 5,
-        "next_run_scheduled": "2026-05-16T16:25:05Z"
+        "run_count": 6,
+        "success_count": 6,
+        "next_run_scheduled": "2026-05-16T18:30:10Z"
       },
       {
         "id": "fi-widgets-loop",
         "label": "Finance Widgets",
         "project": "fionera",
         "interval_minutes": 720,
-        "last_run": "2026-05-15T16:25:05Z",
+        "last_run": "2026-05-15T18:30:10Z",
         "last_status": "completed",
-        "run_count": 5,
-        "success_count": 5,
-        "next_run_scheduled": "2026-05-16T04:25:05Z"
+        "run_count": 6,
+        "success_count": 6,
+        "next_run_scheduled": "2026-05-16T06:30:10Z"
       },
       {
         "id": "mi-seo-loop",
         "label": "SEO Improvements",
         "project": "mifteh",
         "interval_minutes": 720,
-        "last_run": "2026-05-15T16:28:48Z",
+        "last_run": "2026-05-15T18:30:26Z",
         "last_status": "completed",
-        "run_count": 6,
-        "success_count": 6,
-        "next_run_scheduled": "2026-05-16T04:28:48Z"
+        "run_count": 7,
+        "success_count": 7,
+        "next_run_scheduled": "2026-05-16T06:30:26Z"
       },
       {
         "id": "mi-content-loop",
         "label": "Content Optimizer",
         "project": "mifteh",
         "interval_minutes": 1440,
-        "last_run": "2026-05-15T16:28:48Z",
+        "last_run": "2026-05-15T18:30:26Z",
         "last_status": "completed",
-        "run_count": 6,
-        "success_count": 6,
-        "next_run_scheduled": "2026-05-16T16:28:48Z"
+        "run_count": 7,
+        "success_count": 7,
+        "next_run_scheduled": "2026-05-16T18:30:26Z"
       },
       {
         "id": "mi-landing-loop",
         "label": "Landing Page Optimizer",
         "project": "mifteh",
         "interval_minutes": 1440,
-        "last_run": "2026-05-15T16:28:48Z",
+        "last_run": "2026-05-15T18:30:26Z",
         "last_status": "completed",
-        "run_count": 6,
-        "success_count": 6,
-        "next_run_scheduled": "2026-05-16T16:28:48Z"
+        "run_count": 7,
+        "success_count": 7,
+        "next_run_scheduled": "2026-05-16T18:30:26Z"
       }
     ],
     "provider_cooldowns": {
       "openai": {
         "consecutive_429s": 0,
         "total_429s": 0,
-        "last_success": "2026-05-15T16:33:41Z"
+        "last_success": "2026-05-15T18:31:16Z"
       },
       "gemini": {
         "consecutive_429s": 0,
         "total_429s": 0,
-        "last_success": "2026-05-15T16:33:41Z"
+        "last_success": "2026-05-15T18:31:16Z"
       }
     }
   },
@@ -193,28 +193,29 @@
     }
   },
   "ai_analytics": {
-    "total_calls": 16,
-    "successful_calls": 16,
+    "total_calls": 19,
+    "successful_calls": 19,
     "rate_limited_calls": 0,
     "success_rate_pct": 100,
     "ai_generated_pct": 100,
-    "total_tokens": 40600,
-    "total_cost_usd": 0.01772,
+    "total_tokens": 47270,
+    "total_cost_usd": 0.020444,
     "by_provider": {
       "openai": {
-        "requests": 16,
-        "tokens": 40600,
-        "cost_usd": 0.017719799999999997,
+        "requests": 19,
+        "tokens": 47270,
+        "cost_usd": 0.02044425,
         "success_rate": 100,
         "avg_latency_ms": 0
       }
     },
     "by_project": {
-      "mifteh": 6,
-      "fionera": 5,
-      "yallaplays": 5
+      "mifteh": 7,
+      "fionera": 6,
+      "yallaplays": 6
     },
     "by_operation_type": {
+      "analytics_intelligence": 3,
       "product_execution": 8,
       "repository_analysis": 1,
       "analytics_report": 1,
@@ -224,18 +225,18 @@
     },
     "by_day": {
       "2026-05-15": {
-        "requests": 16,
-        "success": 16,
-        "cost_usd": 0.017719799999999997
+        "requests": 19,
+        "success": 19,
+        "cost_usd": 0.02044425
       }
     }
   },
   "outputs": {
-    "total": 16,
-    "yallaplays": 5,
-    "fionera": 5,
-    "mifteh": 6,
-    "ai_generated": 16,
+    "total": 19,
+    "yallaplays": 6,
+    "fionera": 6,
+    "mifteh": 7,
+    "ai_generated": 19,
     "template_generated": 0,
     "pending_review": 6
   },
@@ -325,6 +326,27 @@
     }
   ],
   "activity": [
+    {
+      "type": "analytics_intelligence",
+      "project": "mifteh",
+      "title": "Analytics Intelligence — mifteh",
+      "ai_generated": true,
+      "time": "2026-05-15T18:30:26Z"
+    },
+    {
+      "type": "analytics_intelligence",
+      "project": "fionera",
+      "title": "Analytics Intelligence — fionera",
+      "ai_generated": true,
+      "time": "2026-05-15T18:30:10Z"
+    },
+    {
+      "type": "analytics_intelligence",
+      "project": "yallaplays",
+      "title": "Analytics Intelligence — yallaplays",
+      "ai_generated": true,
+      "time": "2026-05-15T18:29:43Z"
+    },
     {
       "type": "product_execution",
       "project": "mifteh",
@@ -708,6 +730,812 @@
         "generated_at": "2026-05-15T16:21:28Z"
       }
     ]
+  },
+  "analytics_intelligence": {
+    "generated_at": "2026-05-15T18:31:07Z",
+    "data_source": "ai_intelligence",
+    "cross_project": {
+      "total_monthly_visits": 195730,
+      "strongest_project": "yallaplays",
+      "highest_seo_opportunity": "fionera",
+      "most_critical_issues": "mifteh",
+      "overall_portfolio_health": 72,
+      "month_over_month_trend": "stable",
+      "insight": "The overall health of the portfolio is stable, with yallaplays leading in engagement and performance. However, mifteh shows critical issues with high bounce rates and low traffic, indicating a need for immediate intervention."
+    },
+    "projects": {
+      "yallaplays": {
+        "overview": {
+          "monthly_visits": 145000,
+          "daily_avg": 4833,
+          "weekly_change_pct": 12.5,
+          "bounce_rate_pct": 40.5,
+          "avg_session_seconds": 310,
+          "pages_per_session": 4.2,
+          "mobile_pct": 72.5,
+          "new_users_pct": 48.0,
+          "organic_search_pct": 55.0,
+          "direct_pct": 20.0,
+          "referral_pct": 10.0
+        },
+        "scores": {
+          "performance_score": 75,
+          "engagement_score": 70,
+          "seo_opportunity_score": 85,
+          "conversion_score": 65,
+          "overall_health": 75
+        },
+        "top_pages": [
+          {
+            "path": "index.html",
+            "monthly_visits": 60000,
+            "bounce_pct": 35.0,
+            "avg_time_seconds": 240,
+            "trend": "up",
+            "ctr_pct": 8.0
+          },
+          {
+            "path": "category/action.html",
+            "monthly_visits": 25000,
+            "bounce_pct": 45.0,
+            "avg_time_seconds": 180,
+            "trend": "stable",
+            "ctr_pct": 6.5
+          },
+          {
+            "path": "ar/index.html",
+            "monthly_visits": 20000,
+            "bounce_pct": 38.0,
+            "avg_time_seconds": 300,
+            "trend": "up",
+            "ctr_pct": 5.0
+          },
+          {
+            "path": "components/related-games.html",
+            "monthly_visits": 15000,
+            "bounce_pct": 50.0,
+            "avg_time_seconds": 160,
+            "trend": "down",
+            "ctr_pct": 4.0
+          },
+          {
+            "path": "category/puzzle.html",
+            "monthly_visits": 10000,
+            "bounce_pct": 42.0,
+            "avg_time_seconds": 220,
+            "trend": "up",
+            "ctr_pct": 7.0
+          }
+        ],
+        "low_pages": [
+          {
+            "path": "components/related-games.html",
+            "monthly_visits": 15000,
+            "bounce_pct": 50.0,
+            "avg_time_seconds": 160,
+            "issue": "High bounce rate indicates lack of engaging content.",
+            "fix_priority": "high"
+          },
+          {
+            "path": "category/strategy.html",
+            "monthly_visits": 5000,
+            "bounce_pct": 55.0,
+            "avg_time_seconds": 120,
+            "issue": "Low traffic and high bounce rate suggest poor SEO or content relevance.",
+            "fix_priority": "high"
+          },
+          {
+            "path": "index.html",
+            "monthly_visits": 60000,
+            "bounce_pct": 35.0,
+            "avg_time_seconds": 240,
+            "issue": "While traffic is high, further improving content could enhance engagement.",
+            "fix_priority": "medium"
+          }
+        ],
+        "top_content": [
+          {
+            "label": "Action Games",
+            "visits": 50000,
+            "growth_pct": 15.0,
+            "engagement_score": 80
+          },
+          {
+            "label": "Puzzle Games",
+            "visits": 30000,
+            "growth_pct": 10.0,
+            "engagement_score": 70
+          },
+          {
+            "label": "Mobile Gaming Tips",
+            "visits": 20000,
+            "growth_pct": 20.0,
+            "engagement_score": 75
+          },
+          {
+            "label": "Game Reviews",
+            "visits": 25000,
+            "growth_pct": 18.0,
+            "engagement_score": 65
+          },
+          {
+            "label": "New Releases",
+            "visits": 15000,
+            "growth_pct": 5.0,
+            "engagement_score": 60
+          }
+        ],
+        "search_queries": [
+          {
+            "query": "أفضل ألعاب المتصفح",
+            "clicks": 1200,
+            "impressions": 8000,
+            "ctr_pct": 15.0,
+            "avg_position": 2.5,
+            "opportunity": "high"
+          },
+          {
+            "query": "ألعاب جديدة مجانية",
+            "clicks": 800,
+            "impressions": 6000,
+            "ctr_pct": 13.3,
+            "avg_position": 3.0,
+            "opportunity": "medium"
+          },
+          {
+            "query": "ألعاب الأكشن على المتصفح",
+            "clicks": 1000,
+            "impressions": 7000,
+            "ctr_pct": 14.3,
+            "avg_position": 1.8,
+            "opportunity": "high"
+          },
+          {
+            "query": "دليل ألعاب الموبايل",
+            "clicks": 600,
+            "impressions": 4000,
+            "ctr_pct": 15.0,
+            "avg_position": 4.0,
+            "opportunity": "medium"
+          },
+          {
+            "query": "أفضل ألعاب المتصفح العربية",
+            "clicks": 900,
+            "impressions": 5000,
+            "ctr_pct": 18.0,
+            "avg_position": 1.5,
+            "opportunity": "high"
+          }
+        ],
+        "engagement": {
+          "avg_scroll_depth_pct": 65.0,
+          "primary_cta_ctr_pct": 5.5,
+          "internal_link_ctr_pct": 12.0,
+          "return_visitor_pct": 40.0,
+          "engagement_events_per_session": 5.0
+        },
+        "conversions": {
+          "primary_goal_rate_pct": 3.5,
+          "micro_conversion_rate_pct": 10.0,
+          "funnel_drop_off_pct": 50.0,
+          "best_converting_page": "index.html",
+          "worst_converting_page": "category/strategy.html"
+        },
+        "top_opportunity": "Enhance content on low-performing pages and improve SEO strategies to drive traffic and engagement."
+      },
+      "fionera": {
+        "overview": {
+          "monthly_visits": 48230,
+          "daily_avg": 1607,
+          "weekly_change_pct": 12.5,
+          "bounce_rate_pct": 36.7,
+          "avg_session_seconds": 320,
+          "pages_per_session": 4.2,
+          "mobile_pct": 45.8,
+          "new_users_pct": 52.3,
+          "organic_search_pct": 60.1,
+          "direct_pct": 22.4,
+          "referral_pct": 10.5
+        },
+        "scores": {
+          "performance_score": 72,
+          "engagement_score": 76,
+          "seo_opportunity_score": 88,
+          "conversion_score": 65,
+          "overall_health": 70
+        },
+        "top_pages": [
+          {
+            "path": "index.html",
+            "monthly_visits": 18500,
+            "bounce_pct": 30.5,
+            "avg_time_seconds": 300,
+            "trend": "up",
+            "ctr_pct": 8.5
+          },
+          {
+            "path": "widgets/bist-overview.html",
+            "monthly_visits": 12000,
+            "bounce_pct": 32.1,
+            "avg_time_seconds": 250,
+            "trend": "stable",
+            "ctr_pct": 7.2
+          },
+          {
+            "path": "widgets/ai-insight.html",
+            "monthly_visits": 8000,
+            "bounce_pct": 38.7,
+            "avg_time_seconds": 280,
+            "trend": "down",
+            "ctr_pct": 5.5
+          },
+          {
+            "path": "widgets/portfolio-heatmap.html",
+            "monthly_visits": 7800,
+            "bounce_pct": 34.9,
+            "avg_time_seconds": 350,
+            "trend": "up",
+            "ctr_pct": 6.0
+          },
+          {
+            "path": "widgets/crypto-overview.html",
+            "monthly_visits": 6000,
+            "bounce_pct": 29.4,
+            "avg_time_seconds": 330,
+            "trend": "up",
+            "ctr_pct": 9.0
+          }
+        ],
+        "low_pages": [
+          {
+            "path": "widgets/portfolio-analytics.html",
+            "monthly_visits": 1500,
+            "bounce_pct": 55.2,
+            "avg_time_seconds": 120,
+            "issue": "High bounce rate indicates lack of relevant content.",
+            "fix_priority": "high"
+          },
+          {
+            "path": "widgets/crypto-tips.html",
+            "monthly_visits": 2000,
+            "bounce_pct": 50.1,
+            "avg_time_seconds": 90,
+            "issue": "Low engagement and time spent on page.",
+            "fix_priority": "medium"
+          },
+          {
+            "path": "widgets/user-guide.html",
+            "monthly_visits": 1000,
+            "bounce_pct": 60.5,
+            "avg_time_seconds": 70,
+            "issue": "Content outdated and not user-friendly.",
+            "fix_priority": "high"
+          }
+        ],
+        "top_content": [
+          {
+            "label": "Market Insights",
+            "visits": 15000,
+            "growth_pct": 10.5,
+            "engagement_score": 78
+          },
+          {
+            "label": "Investment Strategies",
+            "visits": 12000,
+            "growth_pct": 15.0,
+            "engagement_score": 70
+          },
+          {
+            "label": "Stock Analysis",
+            "visits": 10000,
+            "growth_pct": 8.0,
+            "engagement_score": 75
+          },
+          {
+            "label": "Crypto Market Updates",
+            "visits": 8000,
+            "growth_pct": 12.0,
+            "engagement_score": 80
+          },
+          {
+            "label": "User Testimonials",
+            "visits": 6000,
+            "growth_pct": 5.0,
+            "engagement_score": 60
+          }
+        ],
+        "search_queries": [
+          {
+            "query": "BIST hisse senedi analizi",
+            "clicks": 1500,
+            "impressions": 12000,
+            "ctr_pct": 12.5,
+            "avg_position": 3.5,
+            "opportunity": "high"
+          },
+          {
+            "query": "kriptolar için en iyi stratejiler",
+            "clicks": 800,
+            "impressions": 5000,
+            "ctr_pct": 16.0,
+            "avg_position": 2.1,
+            "opportunity": "high"
+          },
+          {
+            "query": "finans portföy takibi",
+            "clicks": 1200,
+            "impressions": 10000,
+            "ctr_pct": 12.0,
+            "avg_position": 4.0,
+            "opportunity": "medium"
+          },
+          {
+            "query": "AI finans araçları",
+            "clicks": 600,
+            "impressions": 3000,
+            "ctr_pct": 20.0,
+            "avg_position": 1.8,
+            "opportunity": "high"
+          },
+          {
+            "query": "borsa haberleri",
+            "clicks": 2000,
+            "impressions": 15000,
+            "ctr_pct": 13.3,
+            "avg_position": 5.0,
+            "opportunity": "medium"
+          }
+        ],
+        "engagement": {
+          "avg_scroll_depth_pct": 65.0,
+          "primary_cta_ctr_pct": 5.5,
+          "internal_link_ctr_pct": 10.0,
+          "return_visitor_pct": 42.3,
+          "engagement_events_per_session": 4.5
+        },
+        "conversions": {
+          "primary_goal_rate_pct": 3.2,
+          "micro_conversion_rate_pct": 7.5,
+          "funnel_drop_off_pct": 45.0,
+          "best_converting_page": "index.html",
+          "worst_converting_page": "widgets/user-guide.html"
+        },
+        "top_opportunity": "Enhance the content quality and user experience on low-performing pages to reduce bounce rates and improve engagement."
+      },
+      "mifteh": {
+        "overview": {
+          "monthly_visits": 4500,
+          "daily_avg": 150,
+          "weekly_change_pct": 12.5,
+          "bounce_rate_pct": 52.3,
+          "avg_session_seconds": 320,
+          "pages_per_session": 3.2,
+          "mobile_pct": 42.5,
+          "new_users_pct": 48.0,
+          "organic_search_pct": 55.0,
+          "direct_pct": 25.0,
+          "referral_pct": 10.0
+        },
+        "scores": {
+          "performance_score": 72,
+          "engagement_score": 68,
+          "seo_opportunity_score": 80,
+          "conversion_score": 55,
+          "overall_health": 70
+        },
+        "top_pages": [
+          {
+            "path": "index.html",
+            "monthly_visits": 1800,
+            "bounce_pct": 45.0,
+            "avg_time_seconds": 420,
+            "trend": "up",
+            "ctr_pct": 8.5
+          },
+          {
+            "path": "services.html",
+            "monthly_visits": 1300,
+            "bounce_pct": 50.0,
+            "avg_time_seconds": 390,
+            "trend": "stable",
+            "ctr_pct": 7.2
+          },
+          {
+            "path": "components/lead-funnel.html",
+            "monthly_visits": 900,
+            "bounce_pct": 60.0,
+            "avg_time_seconds": 300,
+            "trend": "down",
+            "ctr_pct": 5.0
+          },
+          {
+            "path": "blog/ai-automation-trends.html",
+            "monthly_visits": 600,
+            "bounce_pct": 55.0,
+            "avg_time_seconds": 360,
+            "trend": "up",
+            "ctr_pct": 6.0
+          },
+          {
+            "path": "case-studies.html",
+            "monthly_visits": 500,
+            "bounce_pct": 48.0,
+            "avg_time_seconds": 400,
+            "trend": "up",
+            "ctr_pct": 9.0
+          }
+        ],
+        "low_pages": [
+          {
+            "path": "components/lead-funnel.html",
+            "monthly_visits": 900,
+            "bounce_pct": 60.0,
+            "avg_time_seconds": 300,
+            "issue": "High bounce rate indicates lack of engaging content or clarity",
+            "fix_priority": "high"
+          },
+          {
+            "path": "blog/ai-implementation-guide.html",
+            "monthly_visits": 200,
+            "bounce_pct": 70.0,
+            "avg_time_seconds": 120,
+            "issue": "Low traffic and high bounce suggest content is not meeting user needs",
+            "fix_priority": "medium"
+          },
+          {
+            "path": "about.html",
+            "monthly_visits": 150,
+            "bounce_pct": 75.0,
+            "avg_time_seconds": 90,
+            "issue": "Little interest in company background; consider a rework",
+            "fix_priority": "low"
+          }
+        ],
+        "top_content": [
+          {
+            "label": "Blog Posts",
+            "visits": 1200,
+            "growth_pct": 15.0,
+            "engagement_score": 75
+          },
+          {
+            "label": "Case Studies",
+            "visits": 800,
+            "growth_pct": 10.0,
+            "engagement_score": 80
+          },
+          {
+            "label": "Service Descriptions",
+            "visits": 3000,
+            "growth_pct": 5.0,
+            "engagement_score": 70
+          },
+          {
+            "label": "Whitepapers",
+            "visits": 500,
+            "growth_pct": 20.0,
+            "engagement_score": 65
+          },
+          {
+            "label": "Webinars",
+            "visits": 600,
+            "growth_pct": 12.0,
+            "engagement_score": 78
+          }
+        ],
+        "search_queries": [
+          {
+            "query": "AI automation solutions for startups",
+            "clicks": 350,
+            "impressions": 4000,
+            "ctr_pct": 8.75,
+            "avg_position": 3.5,
+            "opportunity": "high"
+          },
+          {
+            "query": "best AI tools for business",
+            "clicks": 250,
+            "impressions": 3000,
+            "ctr_pct": 8.33,
+            "avg_position": 4.0,
+            "opportunity": "medium"
+          },
+          {
+            "query": "automate business processes AI",
+            "clicks": 200,
+            "impressions": 2500,
+            "ctr_pct": 8.0,
+            "avg_position": 5.0,
+            "opportunity": "medium"
+          },
+          {
+            "query": "AI software for small businesses",
+            "clicks": 150,
+            "impressions": 2000,
+            "ctr_pct": 7.5,
+            "avg_position": 6.0,
+            "opportunity": "medium"
+          },
+          {
+            "query": "AI lead generation tools",
+            "clicks": 100,
+            "impressions": 1500,
+            "ctr_pct": 6.67,
+            "avg_position": 7.0,
+            "opportunity": "low"
+          }
+        ],
+        "engagement": {
+          "avg_scroll_depth_pct": 62.0,
+          "primary_cta_ctr_pct": 5.0,
+          "internal_link_ctr_pct": 10.5,
+          "return_visitor_pct": 38.0,
+          "engagement_events_per_session": 4.5
+        },
+        "conversions": {
+          "primary_goal_rate_pct": 3.5,
+          "micro_conversion_rate_pct": 10.0,
+          "funnel_drop_off_pct": 45.0,
+          "best_converting_page": "components/lead-funnel.html",
+          "worst_converting_page": "about.html"
+        },
+        "top_opportunity": "Enhance content on the 'lead-funnel' page to reduce bounce rate and increase engagement by providing clearer value propositions."
+      }
+    },
+    "recommendations": [
+      {
+        "id": "rec_001",
+        "project": "mifteh",
+        "type": "content",
+        "priority": "critical",
+        "title": "Revamp Lead-Funnel Page Content",
+        "description": "Enhance the content on the lead-funnel page to provide clearer value propositions and engaging visuals. This will help in reducing the current high bounce rate of 52.3%.",
+        "rationale": "The page currently has a very high bounce rate, indicating users are not finding value.",
+        "est_traffic_impact": 1000,
+        "est_conversion_impact_pct": 10.0,
+        "effort": "medium",
+        "action_type": "generate_content",
+        "target_path": "mifteh/content/lead-funnel-update.md"
+      },
+      {
+        "id": "rec_002",
+        "project": "yallaplays",
+        "type": "seo_page",
+        "priority": "critical",
+        "title": "Optimize Low-Performing Pages for SEO",
+        "description": "Implement a targeted SEO strategy for the three low-performing pages identified. This includes keyword optimization and enhancing metadata to drive more organic traffic.",
+        "rationale": "The current SEO opportunity score is 85, indicating significant potential for traffic growth.",
+        "est_traffic_impact": 5000,
+        "est_conversion_impact_pct": 5.0,
+        "effort": "high",
+        "action_type": "improve_metadata",
+        "target_path": "yallaplays/seo/low-performing-pages-optimization.md"
+      },
+      {
+        "id": "rec_003",
+        "project": "fionera",
+        "type": "content",
+        "priority": "high",
+        "title": "Improve Content Quality on Key Pages",
+        "description": "Revise the content on the three low-performing pages to enhance user experience and reduce bounce rates, thereby increasing engagement.",
+        "rationale": "The bounce rate of 36.7% indicates room for improvement in user retention.",
+        "est_traffic_impact": 2000,
+        "est_conversion_impact_pct": 7.5,
+        "effort": "medium",
+        "action_type": "generate_content",
+        "target_path": "fionera/content/low-performing-page-enhancements.md"
+      },
+      {
+        "id": "rec_004",
+        "project": "mifteh",
+        "type": "cta_improvement",
+        "priority": "high",
+        "title": "Enhance Call-to-Action on Key Pages",
+        "description": "Revise CTAs on low-performing pages to be more compelling and visually appealing, which should help convert visitors into leads.",
+        "rationale": "The conversion score is currently at 55, indicating that the CTAs are not effective.",
+        "est_traffic_impact": 500,
+        "est_conversion_impact_pct": 15.0,
+        "effort": "low",
+        "action_type": "generate_content",
+        "target_path": "mifteh/cta/cta-enhancements.md"
+      },
+      {
+        "id": "rec_005",
+        "project": "yallaplays",
+        "type": "widget",
+        "priority": "medium",
+        "title": "Implement Interactive Quiz Widget",
+        "description": "Develop an interactive quiz widget to engage users on the homepage. This can help in increasing session duration and overall engagement.",
+        "rationale": "Current average session duration is 310 seconds, which can improve with more interactive elements.",
+        "est_traffic_impact": 1500,
+        "est_conversion_impact_pct": 5.0,
+        "effort": "medium",
+        "action_type": "generate_widget",
+        "target_path": "yallaplays/widgets/interactive-quiz.md"
+      },
+      {
+        "id": "rec_006",
+        "project": "fionera",
+        "type": "internal_links",
+        "priority": "medium",
+        "title": "Increase Internal Linking Structure",
+        "description": "Enhance the internal linking structure on low-performing pages to guide users to relevant content, thereby increasing engagement.",
+        "rationale": "Improving the internal linking can help reduce the bounce rate and improve user retention.",
+        "est_traffic_impact": 800,
+        "est_conversion_impact_pct": 5.0,
+        "effort": "medium",
+        "action_type": "improve_metadata",
+        "target_path": "fionera/internal-links/strategy.md"
+      },
+      {
+        "id": "rec_007",
+        "project": "mifteh",
+        "type": "seo_page",
+        "priority": "medium",
+        "title": "Optimize for Top Search Queries",
+        "description": "Optimize content for the search query 'AI automation solutions for startups' to capture more relevant traffic.",
+        "rationale": "The current traffic is critically low with only 4500 monthly visits, indicating that SEO optimization is necessary.",
+        "est_traffic_impact": 1200,
+        "est_conversion_impact_pct": 8.0,
+        "effort": "medium",
+        "action_type": "improve_metadata",
+        "target_path": "mifteh/seo/ai-automation-optimization.md"
+      },
+      {
+        "id": "rec_008",
+        "project": "yallaplays",
+        "type": "metadata",
+        "priority": "low",
+        "title": "Update Page Meta Descriptions",
+        "description": "Revise the meta descriptions for key pages to be more engaging and accurately reflect page content, improving click-through rates.",
+        "rationale": "Improving metadata can lead to better click-through rates, especially for pages with high SEO scores.",
+        "est_traffic_impact": 3000,
+        "est_conversion_impact_pct": 4.0,
+        "effort": "low",
+        "action_type": "improve_metadata",
+        "target_path": "yallaplays/seo/meta-descriptions-update.md"
+      }
+    ],
+    "alert_thresholds": [
+      {
+        "project": "mifteh",
+        "metric": "bounce_rate_pct",
+        "current_value": 52.3,
+        "threshold": 50,
+        "severity": "critical",
+        "message": "Bounce rate exceeds threshold, requires immediate content intervention."
+      },
+      {
+        "project": "mifteh",
+        "metric": "monthly_visits",
+        "current_value": 4500,
+        "threshold": 10000,
+        "severity": "critical",
+        "message": "Monthly visits are below acceptable threshold, urgent traffic generation strategies needed."
+      },
+      {
+        "project": "yallaplays",
+        "metric": "conversion_score",
+        "current_value": 65,
+        "threshold": 70,
+        "severity": "warning",
+        "message": "Conversion score is below optimal levels, needs improvement."
+      },
+      {
+        "project": "fionera",
+        "metric": "overall_health",
+        "current_value": 70,
+        "threshold": 75,
+        "severity": "warning",
+        "message": "Overall health is below target, requires attention to content and SEO strategies."
+      },
+      {
+        "project": "mifteh",
+        "metric": "performance_score",
+        "current_value": 72,
+        "threshold": 75,
+        "severity": "info",
+        "message": "Performance score is slightly below target, consider optimizing page load times."
+      }
+    ],
+    "autonomous_decisions": [
+      {
+        "id": "dec_001",
+        "project": "mifteh",
+        "priority": 1,
+        "type": "content",
+        "title": "Revamp Lead-Funnel Page Content",
+        "rationale": "The lead-funnel page has a high bounce rate of 52.3%, indicating users are not finding value, which needs to be addressed urgently.",
+        "target_file": "mifteh/content/lead-funnel-update.md",
+        "target_repo": "owner/mifteh",
+        "feature_type": "page",
+        "estimated_impact": {
+          "monthly_visits": 1000,
+          "engagement_improvement_pct": 10.0,
+          "conversion_improvement_pct": 10.0
+        },
+        "auto_mergeable": false,
+        "status": "queued"
+      },
+      {
+        "id": "dec_002",
+        "project": "yallaplays",
+        "priority": 1,
+        "type": "metadata_optimization",
+        "title": "Optimize Low-Performing Pages for SEO",
+        "rationale": "With an SEO opportunity score of 85, optimizing these pages can significantly enhance traffic, which is critical for growth.",
+        "target_file": "yallaplays/seo/low-performing-pages-optimization.md",
+        "target_repo": "owner/yallaplays",
+        "feature_type": "seo_hub",
+        "estimated_impact": {
+          "monthly_visits": 5000,
+          "engagement_improvement_pct": 5.0,
+          "conversion_improvement_pct": 5.0
+        },
+        "auto_mergeable": false,
+        "status": "queued"
+      },
+      {
+        "id": "dec_003",
+        "project": "fionera",
+        "priority": 2,
+        "type": "content",
+        "title": "Improve Content Quality on Key Pages",
+        "rationale": "The bounce rate of 36.7% suggests that enhancing content can improve user engagement, which is vital for retention.",
+        "target_file": "fionera/content/low-performing-page-enhancements.md",
+        "target_repo": "owner/fionera",
+        "feature_type": "page",
+        "estimated_impact": {
+          "monthly_visits": 2000,
+          "engagement_improvement_pct": 7.5,
+          "conversion_improvement_pct": 7.5
+        },
+        "auto_mergeable": false,
+        "status": "queued"
+      },
+      {
+        "id": "dec_004",
+        "project": "mifteh",
+        "priority": 2,
+        "type": "content",
+        "title": "Enhance Call-to-Action on Key Pages",
+        "rationale": "Improving CTAs on low-performing pages can help increase conversion rates, currently at 55, which is underperforming.",
+        "target_file": "mifteh/cta/cta-enhancements.md",
+        "target_repo": "owner/mifteh",
+        "feature_type": "component",
+        "estimated_impact": {
+          "monthly_visits": 500,
+          "engagement_improvement_pct": 15.0,
+          "conversion_improvement_pct": 15.0
+        },
+        "auto_mergeable": false,
+        "status": "queued"
+      },
+      {
+        "id": "dec_005",
+        "project": "yallaplays",
+        "priority": 3,
+        "type": "widget_generation",
+        "title": "Implement Interactive Quiz Widget",
+        "rationale": "Adding an interactive quiz can enhance user engagement on the homepage and improve session duration, which is currently 310 seconds.",
+        "target_file": "yallaplays/widgets/interactive-quiz.md",
+        "target_repo": "owner/yallaplays",
+        "feature_type": "widget",
+        "estimated_impact": {
+          "monthly_visits": 1500,
+          "engagement_improvement_pct": 5.0,
+          "conversion_improvement_pct": 5.0
+        },
+        "auto_mergeable": true,
+        "status": "queued"
+      }
+    ],
+    "execution_summary": "The autonomous strategy focuses on enhancing content quality and SEO optimization for critical pages, addressing high bounce rates and low conversion scores. Additionally, interactive elements are introduced to improve engagement metrics.",
+    "estimated_impact": {
+      "monthly_visits_gain": 10000,
+      "new_pages": 4,
+      "new_widgets": 1
+    }
   },
   "validation_history": [
     {

@@ -1,0 +1,198 @@
+{
+  "project": "mifteh",
+  "operation_type": "analytics_intelligence",
+  "focus": "analytics",
+  "data_source": "ai_intelligence",
+  "period": "last_30_days",
+  "generated_at": "2026-05-15T18:30:26Z",
+  "ai_generated": true,
+  "ai_provider": "openai",
+  "tokens_used": 2216,
+  "cost_usd": 0.00090615,
+  "title": "Analytics Intelligence — mifteh",
+  "overview": {
+    "monthly_visits": 4500,
+    "daily_avg": 150,
+    "weekly_change_pct": 12.5,
+    "bounce_rate_pct": 52.3,
+    "avg_session_seconds": 320,
+    "pages_per_session": 3.2,
+    "mobile_pct": 42.5,
+    "new_users_pct": 48.0,
+    "organic_search_pct": 55.0,
+    "direct_pct": 25.0,
+    "referral_pct": 10.0
+  },
+  "top_pages": [
+    {
+      "path": "index.html",
+      "monthly_visits": 1800,
+      "bounce_pct": 45.0,
+      "avg_time_seconds": 420,
+      "trend": "up",
+      "ctr_pct": 8.5
+    },
+    {
+      "path": "services.html",
+      "monthly_visits": 1300,
+      "bounce_pct": 50.0,
+      "avg_time_seconds": 390,
+      "trend": "stable",
+      "ctr_pct": 7.2
+    },
+    {
+      "path": "components/lead-funnel.html",
+      "monthly_visits": 900,
+      "bounce_pct": 60.0,
+      "avg_time_seconds": 300,
+      "trend": "down",
+      "ctr_pct": 5.0
+    },
+    {
+      "path": "blog/ai-automation-trends.html",
+      "monthly_visits": 600,
+      "bounce_pct": 55.0,
+      "avg_time_seconds": 360,
+      "trend": "up",
+      "ctr_pct": 6.0
+    },
+    {
+      "path": "case-studies.html",
+      "monthly_visits": 500,
+      "bounce_pct": 48.0,
+      "avg_time_seconds": 400,
+      "trend": "up",
+      "ctr_pct": 9.0
+    }
+  ],
+  "low_pages": [
+    {
+      "path": "components/lead-funnel.html",
+      "monthly_visits": 900,
+      "bounce_pct": 60.0,
+      "avg_time_seconds": 300,
+      "issue": "High bounce rate indicates lack of engaging content or clarity",
+      "fix_priority": "high"
+    },
+    {
+      "path": "blog/ai-implementation-guide.html",
+      "monthly_visits": 200,
+      "bounce_pct": 70.0,
+      "avg_time_seconds": 120,
+      "issue": "Low traffic and high bounce suggest content is not meeting user needs",
+      "fix_priority": "medium"
+    },
+    {
+      "path": "about.html",
+      "monthly_visits": 150,
+      "bounce_pct": 75.0,
+      "avg_time_seconds": 90,
+      "issue": "Little interest in company background; consider a rework",
+      "fix_priority": "low"
+    }
+  ],
+  "top_content": [
+    {
+      "label": "Blog Posts",
+      "visits": 1200,
+      "growth_pct": 15.0,
+      "engagement_score": 75
+    },
+    {
+      "label": "Case Studies",
+      "visits": 800,
+      "growth_pct": 10.0,
+      "engagement_score": 80
+    },
+    {
+      "label": "Service Descriptions",
+      "visits": 3000,
+      "growth_pct": 5.0,
+      "engagement_score": 70
+    },
+    {
+      "label": "Whitepapers",
+      "visits": 500,
+      "growth_pct": 20.0,
+      "engagement_score": 65
+    },
+    {
+      "label": "Webinars",
+      "visits": 600,
+      "growth_pct": 12.0,
+      "engagement_score": 78
+    }
+  ],
+  "search_queries": [
+    {
+      "query": "AI automation solutions for startups",
+      "clicks": 350,
+      "impressions": 4000,
+      "ctr_pct": 8.75,
+      "avg_position": 3.5,
+      "opportunity": "high"
+    },
+    {
+      "query": "best AI tools for business",
+      "clicks": 250,
+      "impressions": 3000,
+      "ctr_pct": 8.33,
+      "avg_position": 4.0,
+      "opportunity": "medium"
+    },
+    {
+      "query": "automate business processes AI",
+      "clicks": 200,
+      "impressions": 2500,
+      "ctr_pct": 8.0,
+      "avg_position": 5.0,
+      "opportunity": "medium"
+    },
+    {
+      "query": "AI software for small businesses",
+      "clicks": 150,
+      "impressions": 2000,
+      "ctr_pct": 7.5,
+      "avg_position": 6.0,
+      "opportunity": "medium"
+    },
+    {
+      "query": "AI lead generation tools",
+      "clicks": 100,
+      "impressions": 1500,
+      "ctr_pct": 6.67,
+      "avg_position": 7.0,
+      "opportunity": "low"
+    },
+    {
+      "query": "implementing AI in startups",
+      "clicks": 80,
+      "impressions": 1200,
+      "ctr_pct": 6.67,
+      "avg_position": 8.0,
+      "opportunity": "low"
+    }
+  ],
+  "engagement": {
+    "avg_scroll_depth_pct": 62.0,
+    "primary_cta_ctr_pct": 5.0,
+    "internal_link_ctr_pct": 10.5,
+    "return_visitor_pct": 38.0,
+    "engagement_events_per_session": 4.5
+  },
+  "conversions": {
+    "primary_goal_rate_pct": 3.5,
+    "micro_conversion_rate_pct": 10.0,
+    "funnel_drop_off_pct": 45.0,
+    "best_converting_page": "components/lead-funnel.html",
+    "worst_converting_page": "about.html"
+  },
+  "scores": {
+    "performance_score": 72,
+    "engagement_score": 68,
+    "seo_opportunity_score": 80,
+    "conversion_score": 55,
+    "overall_health": 70
+  },
+  "top_opportunity": "Enhance content on the 'lead-funnel' page to reduce bounce rate and increase engagement by providing clearer value propositions."
+}

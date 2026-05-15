@@ -78,6 +78,7 @@ function showTab(name, btn) {
     providers: 'AI Provider Runtime', 'ai-analytics': 'AI Generation Analytics',
     outputs: 'Generated Outputs', previews: 'HTML Previews',
     repository: 'PR-Ready Changes', github: 'GitHub Draft PRs',
+    analytics: 'Analytics Intelligence',
     product: 'Autonomous Product Execution',
     trust: 'Trust Scores & Autonomous Apply',
     activity: 'Operational Activity Feed', safety: 'Safety & Bounded Autonomy',
@@ -458,6 +459,226 @@ function renderSafety(d) {
   );
 }
 
+// ─── Analytics Intelligence ──────────────────────────────────────────────────
+
+function scoreBar(score, label) {
+  const pct = Math.max(0, Math.min(100, score || 0));
+  const color = pct >= 75 ? 'var(--green)' : pct >= 55 ? 'var(--yellow)' : 'var(--red)';
+  return `<div style="margin-bottom:8px;">
+    <div style="display:flex;justify-content:space-between;margin-bottom:3px;">
+      <span style="font-size:11px;color:var(--muted);">${esc(label)}</span>
+      <span style="font-size:11px;font-weight:700;color:${color};">${pct}</span>
+    </div>
+    <div style="height:4px;background:var(--surface2);border-radius:2px;">
+      <div style="width:${pct}%;height:100%;background:${color};border-radius:2px;transition:width .4s;"></div>
+    </div>
+  </div>`;
+}
+
+function trendBadge(trend) {
+  if (!trend) return '';
+  const map = { up: ['↑', 'var(--green)'], down: ['↓', 'var(--red)'], stable: ['→', 'var(--dim)'] };
+  const [icon, color] = map[trend] || ['–', 'var(--dim)'];
+  return `<span style="color:${color};font-weight:700;">${icon}</span>`;
+}
+
+function priorityBadge(priority) {
+  const map = {
+    critical: ['CRITICAL', 'var(--red)'],
+    high: ['HIGH', 'var(--orange)'],
+    medium: ['MED', 'var(--yellow)'],
+    low: ['LOW', 'var(--dim)'],
+  };
+  const [label, color] = map[(priority||'').toLowerCase()] || [priority||'', 'var(--dim)'];
+  return `<span style="font-size:10px;font-weight:700;color:${color};border:1px solid ${color};padding:1px 5px;border-radius:3px;">${label}</span>`;
+}
+
+function fmtNum(n) {
+  if (!n) return '0';
+  if (n >= 1000000) return (n/1000000).toFixed(1) + 'M';
+  if (n >= 1000) return (n/1000).toFixed(1) + 'K';
+  return String(n);
+}
+
+function projectAnalyticsBlock(projData) {
+  if (!projData) return '<div class="empty">No analytics data yet</div>';
+  const ov = projData.overview || {};
+  const sc = projData.scores || {};
+  const eng = projData.engagement || {};
+  const conv = projData.conversions || {};
+  const topPages = projData.top_pages || [];
+  const lowPages = projData.low_pages || [];
+  const queries = projData.search_queries || [];
+
+  return `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:14px;">
+      <div>
+        ${statRow('Monthly Visits', fmtNum(ov.monthly_visits), 'var(--cyan)')}
+        ${statRow('Bounce Rate', `${(ov.bounce_rate_pct||0).toFixed(1)}%`, ov.bounce_rate_pct > 55 ? 'var(--red)' : 'var(--green)')}
+        ${statRow('Avg Session', `${Math.round((ov.avg_session_seconds||0)/60)}m ${(ov.avg_session_seconds||0)%60}s`)}
+        ${statRow('Mobile', `${(ov.mobile_pct||0).toFixed(0)}%`, 'var(--muted)')}
+        ${statRow('Organic Search', `${(ov.organic_search_pct||0).toFixed(0)}%`, 'var(--green)')}
+        ${statRow('Weekly Change', `${ov.weekly_change_pct>=0?'+':''}${(ov.weekly_change_pct||0).toFixed(1)}%`, ov.weekly_change_pct>=0?'var(--green)':'var(--red)')}
+      </div>
+      <div>
+        ${scoreBar(sc.performance_score, 'Performance')}
+        ${scoreBar(sc.engagement_score, 'Engagement')}
+        ${scoreBar(sc.seo_opportunity_score, 'SEO Opportunity')}
+        ${scoreBar(sc.conversion_score, 'Conversion')}
+      </div>
+    </div>
+    ${topPages.length ? `
+    <div style="font-size:11px;font-weight:700;color:var(--muted);margin-bottom:6px;">TOP PAGES</div>
+    ${topPages.slice(0,4).map(p => `
+      <div class="output-row" style="font-size:11px;padding:4px 0;">
+        ${trendBadge(p.trend)}
+        <code style="color:var(--dim);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${esc(p.path)}</code>
+        <span style="color:var(--cyan);flex-shrink:0;">${fmtNum(p.monthly_visits)}</span>
+        <span style="color:var(--muted);flex-shrink:0;margin-left:8px;">${(p.bounce_pct||0).toFixed(0)}% bounce</span>
+      </div>
+    `).join('')}` : ''}
+    ${queries.length ? `
+    <div style="font-size:11px;font-weight:700;color:var(--muted);margin:10px 0 6px;">TOP QUERIES</div>
+    ${queries.slice(0,4).map(q => `
+      <div class="output-row" style="font-size:11px;padding:3px 0;">
+        <span class="output-type-tag" style="font-size:10px;">${esc(q.opportunity||'?')}</span>
+        <span style="flex:1;">${esc(q.query)}</span>
+        <span style="color:var(--green);flex-shrink:0;">${fmtNum(q.clicks)} clicks</span>
+        <span style="color:var(--dim);flex-shrink:0;margin-left:8px;">pos ${(q.avg_position||0).toFixed(1)}</span>
+      </div>
+    `).join('')}` : ''}
+    ${projData.top_opportunity ? `
+    <div style="margin-top:10px;padding:8px;background:var(--surface2);border-radius:var(--radius-sm);border-left:2px solid var(--cyan);">
+      <div style="font-size:10px;font-weight:700;color:var(--cyan);margin-bottom:3px;">TOP OPPORTUNITY</div>
+      <div style="font-size:12px;color:var(--text);">${esc(projData.top_opportunity)}</div>
+    </div>` : ''}
+  `;
+}
+
+function renderAnalytics(d) {
+  const ai = d.analytics_intelligence || {};
+  const cp = ai.cross_project || {};
+  const projects = ai.projects || {};
+  const recs = ai.recommendations || [];
+  const alerts = ai.alert_thresholds || [];
+  const queue = ai.autonomous_decisions || [];
+
+  const totalVisits = cp.total_monthly_visits || 0;
+  const health = cp.overall_portfolio_health || 0;
+
+  set('analytics-overview-cards',
+    card('Portfolio Visits', fmtNum(totalVisits), 'cyan', 'monthly across all projects') +
+    card('Health Score', health || '–', health >= 70 ? 'green' : 'yellow', 'portfolio avg') +
+    card('AI Recommendations', recs.length, 'blue', 'prioritized actions') +
+    card('Decision Queue', queue.length, 'purple', 'autonomous tasks') +
+    card('Active Alerts', alerts.length, alerts.length > 3 ? 'red' : 'yellow', 'needs attention') +
+    card('Est. Traffic Gain', `+${fmtNum((ai.estimated_impact||{}).monthly_visits_gain||0)}`, 'green', 'if queue executed')
+  );
+
+  // Portfolio summary
+  const trendIcon = { up: '↑', down: '↓', stable: '→' }[cp.month_over_month_trend] || '→';
+  const trendColor = cp.month_over_month_trend === 'up' ? 'var(--green)' : cp.month_over_month_trend === 'down' ? 'var(--red)' : 'var(--dim)';
+  set('analytics-health-badge', `<span class="panel-badge ${health>=70?'badge-green':'badge-yellow'}">${health}/100</span>`);
+  set('analytics-portfolio-summary',
+    statRow('Total Monthly Visits', fmtNum(totalVisits), 'var(--cyan)') +
+    statRow('Trend', `${trendIcon} ${esc(cp.month_over_month_trend||'stable')}`, trendColor) +
+    statRow('Strongest Project', esc(cp.strongest_project||'–'), 'var(--green)') +
+    statRow('Highest SEO Opportunity', esc(cp.highest_seo_opportunity||'–'), 'var(--cyan)') +
+    statRow('Most Critical Issues', esc(cp.most_critical_issues||'–'), 'var(--yellow)') +
+    (cp.insight ? `<div style="margin-top:10px;padding:8px;background:var(--surface2);border-radius:var(--radius-sm);font-size:12px;color:var(--muted);">💡 ${esc(cp.insight)}</div>` : '')
+  );
+
+  // Alerts
+  set('analytics-alerts-badge', `<span class="panel-badge ${alerts.length?'badge-yellow':'badge-dim'}">${alerts.length}</span>`);
+  set('analytics-alerts-list', alerts.length ? alerts.map(a => {
+    const sevColor = { critical: 'var(--red)', warning: 'var(--yellow)', info: 'var(--cyan)' }[a.severity] || 'var(--dim)';
+    return `<div style="padding:8px;border-left:2px solid ${sevColor};background:var(--surface2);margin-bottom:6px;border-radius:0 4px 4px 0;">
+      <div style="display:flex;justify-content:space-between;margin-bottom:3px;">
+        <span style="font-size:11px;font-weight:700;color:${sevColor};">${esc((a.severity||'').toUpperCase())}</span>
+        <span style="font-size:10px;color:var(--dim);">${projectTag(a.project||'')}</span>
+      </div>
+      <div style="font-size:12px;">${esc(a.message)}</div>
+      <div style="font-size:10px;color:var(--dim);margin-top:2px;">${esc(a.metric)}: ${esc(String(a.current_value||''))} (threshold: ${esc(String(a.threshold||''))})</div>
+    </div>`;
+  }).join('') : '<div class="empty">No performance alerts — all metrics within thresholds</div>');
+
+  // Per-project analytics
+  const ypData = projects.yallaplays;
+  const fiData = projects.fionera;
+  const miData = projects.mifteh;
+
+  const ypVisits = (ypData?.overview?.monthly_visits || 0);
+  const fiVisits = (fiData?.overview?.monthly_visits || 0);
+  const miVisits = (miData?.overview?.monthly_visits || 0);
+
+  set('analytics-yp-badge', `<span class="panel-badge badge-green">${fmtNum(ypVisits)}/mo</span>`);
+  set('analytics-fi-badge', `<span class="panel-badge badge-blue">${fmtNum(fiVisits)}/mo</span>`);
+  set('analytics-mi-badge', `<span class="panel-badge badge-dim">${fmtNum(miVisits)}/mo</span>`);
+
+  set('analytics-yp-detail', projectAnalyticsBlock(ypData));
+  set('analytics-fi-detail', projectAnalyticsBlock(fiData));
+  set('analytics-mi-detail', projectAnalyticsBlock(miData));
+
+  // Recommendations
+  set('analytics-recs-badge', `<span class="panel-badge badge-green">${recs.length}</span>`);
+  const typeIcon = { seo_page:'🔍', widget:'⚙', content:'✍️', cta_improvement:'🎯', metadata:'🏷', internal_links:'🔗', new_feature:'✨' };
+  set('analytics-recommendations', recs.length ? recs.map((r, i) => `
+    <div class="activity-item" style="align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border);">
+      <div style="font-size:20px;flex-shrink:0;width:32px;text-align:center;">${typeIcon[r.type]||'◻'}</div>
+      <div class="activity-body" style="min-width:0;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+          <span style="font-weight:700;font-size:13px;">${esc(r.title)}</span>
+          ${priorityBadge(r.priority)}
+          ${projectTag(r.project)}
+        </div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:4px;">${esc(r.description)}</div>
+        <div style="font-size:11px;color:var(--dim);">
+          📊 ${esc(r.rationale)}
+        </div>
+        <div style="display:flex;gap:16px;margin-top:6px;font-size:11px;">
+          ${r.est_traffic_impact ? `<span style="color:var(--green);">+${fmtNum(r.est_traffic_impact)} visits/mo</span>` : ''}
+          ${r.est_conversion_impact_pct ? `<span style="color:var(--cyan);">+${r.est_conversion_impact_pct?.toFixed(1)}% CVR</span>` : ''}
+          <span style="color:var(--dim);">effort: ${esc(r.effort||'?')}</span>
+          ${r.target_path ? `<code style="font-size:10px;color:var(--dim);">${esc(r.target_path)}</code>` : ''}
+        </div>
+      </div>
+    </div>
+  `).join('') : '<div class="empty">No recommendations yet — run Analytics Intelligence workflow</div>');
+
+  // Decision queue
+  set('analytics-queue-badge', `<span class="panel-badge badge-cyan">${queue.length}</span>`);
+  set('analytics-queue', queue.length ? queue.map(dec => `
+    <div class="pr-row" style="align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border);">
+      <div style="font-size:14px;font-weight:800;color:var(--purple);flex-shrink:0;width:24px;text-align:center;">#${dec.priority||'?'}</div>
+      <div class="pr-body" style="min-width:0;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px;">
+          ${projectTag(dec.project)}
+          <span style="font-weight:700;font-size:12px;">${esc(dec.title)}</span>
+          <span class="activity-badge badge-dim">${esc(dec.type?.replace(/_/g,' '))}</span>
+          ${dec.auto_mergeable ? '<span class="activity-badge badge-green">auto-merge</span>' : ''}
+        </div>
+        <div style="font-size:11px;color:var(--muted);margin-bottom:3px;">${esc(dec.rationale)}</div>
+        <div style="display:flex;gap:12px;font-size:10px;color:var(--dim);">
+          ${dec.target_file ? `<code>${esc(dec.target_file)}</code>` : ''}
+          ${dec.estimated_impact?.monthly_visits ? `<span style="color:var(--green);">+${fmtNum(dec.estimated_impact.monthly_visits)} visits</span>` : ''}
+          <span style="color:${dec.status==='queued'?'var(--yellow)':'var(--green)'};">${esc(dec.status||'queued')}</span>
+        </div>
+      </div>
+    </div>
+  `).join('') : '<div class="empty">Decision queue empty — run Analytics Intelligence to populate</div>');
+
+  // Update execution summary
+  const summary = ai.execution_summary;
+  if (summary) {
+    const el = document.getElementById('analytics-queue');
+    if (el) el.insertAdjacentHTML('beforeend', `
+      <div style="margin-top:12px;padding:10px;background:var(--surface2);border-radius:var(--radius-sm);font-size:12px;color:var(--muted);border-left:2px solid var(--purple);">
+        <strong style="color:var(--purple);">AI Strategy:</strong> ${esc(summary)}
+      </div>
+    `);
+  }
+}
+
 // ─── Product Execution ───────────────────────────────────────────────────────
 
 function featureTypeIcon(type) {
@@ -706,6 +927,7 @@ async function loadDashboard() {
     renderPreviews(_data);
     renderRepository(_data);
     renderGitHub(_data);
+    renderAnalytics(_data);
     renderProduct(_data);
     renderTrust(_data);
     renderActivity(_data);

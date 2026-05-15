@@ -1,0 +1,198 @@
+{
+  "project": "yallaplays",
+  "operation_type": "analytics_intelligence",
+  "focus": "analytics",
+  "data_source": "ai_intelligence",
+  "period": "last_30_days",
+  "generated_at": "2026-05-15T18:29:43Z",
+  "ai_generated": true,
+  "ai_provider": "openai",
+  "tokens_used": 2221,
+  "cost_usd": 0.0009042,
+  "title": "Analytics Intelligence — yallaplays",
+  "overview": {
+    "monthly_visits": 145000,
+    "daily_avg": 4833,
+    "weekly_change_pct": 12.5,
+    "bounce_rate_pct": 40.5,
+    "avg_session_seconds": 310,
+    "pages_per_session": 4.2,
+    "mobile_pct": 72.5,
+    "new_users_pct": 48.0,
+    "organic_search_pct": 55.0,
+    "direct_pct": 20.0,
+    "referral_pct": 10.0
+  },
+  "top_pages": [
+    {
+      "path": "index.html",
+      "monthly_visits": 60000,
+      "bounce_pct": 35.0,
+      "avg_time_seconds": 240,
+      "trend": "up",
+      "ctr_pct": 8.0
+    },
+    {
+      "path": "category/action.html",
+      "monthly_visits": 25000,
+      "bounce_pct": 45.0,
+      "avg_time_seconds": 180,
+      "trend": "stable",
+      "ctr_pct": 6.5
+    },
+    {
+      "path": "ar/index.html",
+      "monthly_visits": 20000,
+      "bounce_pct": 38.0,
+      "avg_time_seconds": 300,
+      "trend": "up",
+      "ctr_pct": 5.0
+    },
+    {
+      "path": "components/related-games.html",
+      "monthly_visits": 15000,
+      "bounce_pct": 50.0,
+      "avg_time_seconds": 160,
+      "trend": "down",
+      "ctr_pct": 4.0
+    },
+    {
+      "path": "category/puzzle.html",
+      "monthly_visits": 10000,
+      "bounce_pct": 42.0,
+      "avg_time_seconds": 220,
+      "trend": "up",
+      "ctr_pct": 7.0
+    }
+  ],
+  "low_pages": [
+    {
+      "path": "components/related-games.html",
+      "monthly_visits": 15000,
+      "bounce_pct": 50.0,
+      "avg_time_seconds": 160,
+      "issue": "High bounce rate indicates lack of engaging content.",
+      "fix_priority": "high"
+    },
+    {
+      "path": "category/strategy.html",
+      "monthly_visits": 5000,
+      "bounce_pct": 55.0,
+      "avg_time_seconds": 120,
+      "issue": "Low traffic and high bounce rate suggest poor SEO or content relevance.",
+      "fix_priority": "high"
+    },
+    {
+      "path": "index.html",
+      "monthly_visits": 60000,
+      "bounce_pct": 35.0,
+      "avg_time_seconds": 240,
+      "issue": "While traffic is high, further improving content could enhance engagement.",
+      "fix_priority": "medium"
+    }
+  ],
+  "top_content": [
+    {
+      "label": "Action Games",
+      "visits": 50000,
+      "growth_pct": 15.0,
+      "engagement_score": 80
+    },
+    {
+      "label": "Puzzle Games",
+      "visits": 30000,
+      "growth_pct": 10.0,
+      "engagement_score": 70
+    },
+    {
+      "label": "Mobile Gaming Tips",
+      "visits": 20000,
+      "growth_pct": 20.0,
+      "engagement_score": 75
+    },
+    {
+      "label": "Game Reviews",
+      "visits": 25000,
+      "growth_pct": 18.0,
+      "engagement_score": 65
+    },
+    {
+      "label": "New Releases",
+      "visits": 15000,
+      "growth_pct": 5.0,
+      "engagement_score": 60
+    }
+  ],
+  "search_queries": [
+    {
+      "query": "أفضل ألعاب المتصفح",
+      "clicks": 1200,
+      "impressions": 8000,
+      "ctr_pct": 15.0,
+      "avg_position": 2.5,
+      "opportunity": "high"
+    },
+    {
+      "query": "ألعاب جديدة مجانية",
+      "clicks": 800,
+      "impressions": 6000,
+      "ctr_pct": 13.3,
+      "avg_position": 3.0,
+      "opportunity": "medium"
+    },
+    {
+      "query": "ألعاب الأكشن على المتصفح",
+      "clicks": 1000,
+      "impressions": 7000,
+      "ctr_pct": 14.3,
+      "avg_position": 1.8,
+      "opportunity": "high"
+    },
+    {
+      "query": "دليل ألعاب الموبايل",
+      "clicks": 600,
+      "impressions": 4000,
+      "ctr_pct": 15.0,
+      "avg_position": 4.0,
+      "opportunity": "medium"
+    },
+    {
+      "query": "أفضل ألعاب المتصفح العربية",
+      "clicks": 900,
+      "impressions": 5000,
+      "ctr_pct": 18.0,
+      "avg_position": 1.5,
+      "opportunity": "high"
+    },
+    {
+      "query": "استراتيجيات الألعاب",
+      "clicks": 300,
+      "impressions": 2500,
+      "ctr_pct": 12.0,
+      "avg_position": 5.0,
+      "opportunity": "low"
+    }
+  ],
+  "engagement": {
+    "avg_scroll_depth_pct": 65.0,
+    "primary_cta_ctr_pct": 5.5,
+    "internal_link_ctr_pct": 12.0,
+    "return_visitor_pct": 40.0,
+    "engagement_events_per_session": 5.0
+  },
+  "conversions": {
+    "primary_goal_rate_pct": 3.5,
+    "micro_conversion_rate_pct": 10.0,
+    "funnel_drop_off_pct": 50.0,
+    "best_converting_page": "index.html",
+    "worst_converting_page": "category/strategy.html"
+  },
+  "scores": {
+    "performance_score": 75,
+    "engagement_score": 70,
+    "seo_opportunity_score": 85,
+    "conversion_score": 65,
+    "overall_health": 75
+  },
+  "top_opportunity": "Enhance content on low-performing pages and improve SEO strategies to drive traffic and engagement."
+}
