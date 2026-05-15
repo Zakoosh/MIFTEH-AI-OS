@@ -1,7 +1,22 @@
 from __future__ import annotations
+import logging
+import os
+import sys
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+    stream=sys.stdout,
+)
+_log = logging.getLogger("mifteh.startup")
+
+_log.info("MIFTEH AI OS starting — Python %s", sys.version.split()[0])
+_log.info("Working directory: %s", os.getcwd())
+
 # Load env vars before any module-level API client initialization
 from app.core.config import load_env as _load_env
 _load_env()
+_log.info("Environment loaded")
 
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
@@ -30,10 +45,18 @@ from app.api.dashboard import router as dashboard_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    _log.info("Lifespan startup — initializing scheduler")
     from app.scheduler.loop_scheduler import get_scheduler
     scheduler = get_scheduler()
-    await scheduler.start()
+    try:
+        await scheduler.start()
+        from app.scheduler.loop_definitions import ALL_LOOPS
+        _log.info("Scheduler started — %d loops registered", len(ALL_LOOPS))
+    except Exception as exc:
+        _log.error("Scheduler startup failed: %s", exc)
+    _log.info("MIFTEH AI OS ready")
     yield
+    _log.info("Lifespan shutdown — stopping scheduler")
     await scheduler.stop()
 
 
@@ -79,8 +102,13 @@ app.include_router(operations_router)
 
 @app.get("/health")
 def health():
+    from app.scheduler.loop_scheduler import get_scheduler
+    from app.scheduler.loop_definitions import ALL_LOOPS
+    sched = get_scheduler()
     return {
         "status": "running",
         "system": "MIFTEH AI OS",
         "dashboard": "https://miftehos.com",
+        "scheduler_running": sched._running,
+        "loops_total": len(ALL_LOOPS),
     }
