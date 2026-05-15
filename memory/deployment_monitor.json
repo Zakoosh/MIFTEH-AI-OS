@@ -1,0 +1,101 @@
+{
+  "generated_at": "2026-05-15T19:26:24Z",
+  "all_up": false,
+  "sites": {
+    "yallaplays": {
+      "uptime": true,
+      "status_code": 200,
+      "score": 82,
+      "grade": "B",
+      "ttfb_ms": 222,
+      "seo_score": 75,
+      "seo_grade": "C",
+      "cwv": {
+        "ttfb_ms": 222,
+        "ttfb_grade": "good",
+        "lcp_ms_estimate": 328,
+        "lcp_grade": "good",
+        "fid_ms_estimate": 160,
+        "fid_grade": "needs_improvement",
+        "cls_score_estimate": 0.0,
+        "cls_grade": "good",
+        "overall": "needs_improvement"
+      },
+      "critical_pages": {
+        "/robots.txt": {
+          "status": 200,
+          "ok": true
+        },
+        "/sitemap.xml": {
+          "status": 200,
+          "ok": true
+        }
+      },
+      "issues": [
+        "SEO checks failed: canonical, json_ld"
+      ],
+      "ok": true,
+      "uptime_30d_pct": 100
+    },
+    "fionera": {
+      "uptime": false,
+      "status_code": 0,
+      "score": 0,
+      "grade": "F",
+      "ttfb_ms": 109,
+      "seo_score": 0,
+      "seo_grade": "?",
+      "cwv": {},
+      "critical_pages": {},
+      "issues": [
+        "Site returned HTTP 0"
+      ],
+      "ok": false,
+      "uptime_30d_pct": 0
+    },
+    "mifteh": {
+      "uptime": true,
+      "status_code": 200,
+      "score": 70,
+      "grade": "C",
+      "ttfb_ms": 157,
+      "seo_score": 35,
+      "seo_grade": "F",
+      "cwv": {
+        "ttfb_ms": 157,
+        "ttfb_grade": "good",
+        "lcp_ms_estimate": 202,
+        "lcp_grade": "good",
+        "fid_ms_estimate": 0,
+        "fid_grade": "good",
+        "cls_score_estimate": 0.0,
+        "cls_grade": "good",
+        "overall": "good"
+      },
+      "critical_pages": {
+        "/robots.txt": {
+          "status": 404,
+          "ok": false
+        },
+        "/sitemap.xml": {
+          "status": 404,
+          "ok": false
+        }
+      },
+      "issues": [
+        "SEO checks failed: meta_description, canonical, og_tags, twitter_card, json_ld, h1",
+        "/robots.txt returned 404",
+        "/sitemap.xml returned 404"
+      ],
+      "ok": true,
+      "uptime_30d_pct": 100
+    }
+  },
+  "uptime_trend": [
+    {
+      "checked_at": "2026-05-15T19:26:24Z",
+      "all_up": false,
+      "avg_score": 51
+    }
+  ]
+}

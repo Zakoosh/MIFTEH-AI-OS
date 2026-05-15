@@ -1039,6 +1039,336 @@ function renderTrust(d) {
   }).join('') : '<div class="empty">No validation events yet</div>');
 }
 
+// ─── Roadmap ──────────────────────────────────────────────────────────────────
+
+function renderRoadmap(d) {
+  const rm = d.roadmap || {};
+  const queue = rm.consolidated_priority_queue || [];
+  const cross = rm.cross_project || {};
+
+  // Overview cards
+  const seoGaps = Object.values(rm.projects || {}).reduce((acc, p) => acc + (p.seo_gaps || []).length, 0);
+  const featGaps = Object.values(rm.projects || {}).reduce((acc, p) => acc + (p.feature_gaps || []).length, 0);
+  set('roadmap-overview-cards', [
+    { label: 'Total Items', value: rm.total_items || queue.length, color: 'var(--cyan)' },
+    { label: 'SEO Gaps', value: seoGaps, color: 'var(--yellow)' },
+    { label: 'Feature Gaps', value: featGaps, color: 'var(--blue)' },
+    { label: 'Quick Wins', value: Object.values(rm.projects || {}).reduce((a, p) => a + (p.quick_wins || []).length, 0), color: 'var(--green)' },
+  ].map(c => `<div class="card"><div class="card-value" style="color:${c.color}">${c.value}</div><div class="card-label">${c.label}</div></div>`).join(''));
+
+  // Priority queue
+  set('roadmap-queue-badge', `<span class="panel-badge badge-dim">${queue.length} items</span>`);
+  const priorityColor = { critical: 'var(--red)', high: 'var(--yellow)', medium: 'var(--cyan)', low: 'var(--dim)' };
+  set('roadmap-priority-queue', queue.length ? queue.slice(0, 15).map((item, i) => `
+    <div style="padding:10px 0;border-bottom:1px solid var(--border);display:flex;gap:12px;align-items:flex-start;">
+      <span style="font-size:18px;font-weight:800;color:var(--dim);min-width:24px;">${i + 1}</span>
+      <div style="flex:1;">
+        <div style="font-weight:600;font-size:13px;">${esc(item.item || item.recommendation || '')}</div>
+        <div style="font-size:11px;color:var(--dim);margin-top:2px;">
+          ${esc(item.project || '')} · ${esc(item.type || item.action_type || '')}
+          ${item.estimated_traffic_impact ? ` · <span style="color:var(--green);">+${(item.estimated_traffic_impact||0).toLocaleString()} visits/mo</span>` : ''}
+          ${item.roi_score ? ` · ROI ${item.roi_score}/100` : ''}
+        </div>
+        <div style="font-size:11px;color:var(--dim);">${esc(item.action || '')}</div>
+      </div>
+      <span style="font-size:11px;padding:2px 8px;border-radius:10px;border:1px solid ${priorityColor[item.priority]||'var(--dim)'};color:${priorityColor[item.priority]||'var(--dim)'};flex-shrink:0;">${esc(item.priority || '')}</span>
+    </div>
+  `).join('') : '<div class="empty">No roadmap generated yet — run Roadmap Generator workflow</div>');
+
+  // SEO gaps (first project)
+  const firstProj = Object.values(rm.projects || {})[0] || {};
+  const seoGapsList = firstProj.seo_gaps || [];
+  set('roadmap-seo-badge', `<span class="panel-badge badge-yellow">${seoGapsList.length}</span>`);
+  set('roadmap-seo-gaps', seoGapsList.slice(0, 6).map(g => `
+    <div class="output-row">
+      <span class="output-type-tag" style="background:${g.priority === 'high' ? '#7c3aed' : '#1d4ed8'}">${esc(g.priority || '?')}</span>
+      <div>
+        <div class="output-title">${esc(g.keyword || '')}</div>
+        <div class="output-meta">${esc(g.recommended_page || '')} · ~${(g.est_monthly_volume||0).toLocaleString()} vol/mo</div>
+      </div>
+    </div>
+  `).join('') || '<div class="empty">Run roadmap generation to detect SEO gaps</div>');
+
+  // Feature gaps
+  const featGapsList = firstProj.feature_gaps || [];
+  set('roadmap-feature-gaps', featGapsList.slice(0, 5).map(g => `
+    <div class="output-row">
+      <span class="output-type-tag" style="background:var(--surface2);color:var(--cyan);">${esc(g.type || '?')}</span>
+      <div>
+        <div class="output-title">${esc(g.feature || '')}</div>
+        <div class="output-meta">${esc(g.problem_solved || '')} · effort: ${esc(g.effort || '?')}</div>
+      </div>
+    </div>
+  `).join('') || '<div class="empty">No feature gaps detected yet</div>');
+
+  // Monetization
+  const monOpp = firstProj.monetization_opportunities || [];
+  set('roadmap-monetization', monOpp.slice(0, 4).map(m => `
+    <div class="output-row">
+      <span class="output-type-tag" style="background:#15803d;">${esc(m.type || '?')}</span>
+      <div>
+        <div class="output-title">${esc(m.opportunity || '')}</div>
+        <div class="output-meta" style="color:var(--green);">~$${(m.est_monthly_revenue_usd||0).toLocaleString()}/mo · effort: ${esc(m.effort || '?')}</div>
+      </div>
+    </div>
+  `).join('') || '<div class="empty">No monetization opportunities detected yet</div>');
+}
+
+
+// ─── Autonomous Executor ──────────────────────────────────────────────────────
+
+function renderExecutor(d) {
+  const exec = d.executor || {};
+  const missions = exec.recent || [];
+
+  const statusColor = { pr_created: 'var(--green)', dry_run_complete: 'var(--blue)', qa_blocked: 'var(--yellow)', generation_failed: 'var(--red)', plan_failed: 'var(--red)', commit_failed: 'var(--red)', error: 'var(--red)' };
+
+  set('executor-overview-cards', [
+    { label: 'Total Missions', value: exec.total || 0, color: 'var(--cyan)' },
+    { label: 'Successful', value: exec.successful || 0, color: 'var(--green)' },
+    { label: 'Failed', value: exec.failed || 0, color: exec.failed ? 'var(--red)' : 'var(--dim)' },
+    { label: 'Success Rate', value: (exec.success_rate_pct || 0) + '%', color: 'var(--yellow)' },
+    { label: 'Total Cost', value: '$' + (exec.total_cost_usd || 0).toFixed(4), color: 'var(--dim)' },
+  ].map(c => `<div class="card"><div class="card-value" style="color:${c.color}">${c.value}</div><div class="card-label">${c.label}</div></div>`).join(''));
+
+  set('executor-missions-badge', `<span class="panel-badge badge-dim">${missions.length} missions</span>`);
+  set('executor-missions-list', missions.length ? [...missions].reverse().map(m => {
+    const sc = statusColor[m.status] || 'var(--dim)';
+    return `<div style="padding:12px 0;border-bottom:1px solid var(--border);">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+        <div style="flex:1;">
+          <div style="font-weight:600;font-size:13px;">${esc(m.feature_label || m.mission_id || '')}</div>
+          <div style="font-size:11px;color:var(--dim);">${esc(m.project || '')} · ${relTime(m.started_at)}</div>
+        </div>
+        <span style="font-size:11px;padding:2px 8px;border-radius:10px;background:${sc}22;color:${sc};border:1px solid ${sc};flex-shrink:0;">${esc(m.status || '')}</span>
+      </div>
+      <div style="display:flex;gap:16px;font-size:11px;color:var(--dim);margin-top:4px;">
+        <span>QA: ${m.qa_score || 0}/100</span>
+        <span>Tokens: ${(m.tokens_used || 0).toLocaleString()}</span>
+        <span>Cost: $${(m.cost_usd || 0).toFixed(5)}</span>
+        ${m.pr_url ? `<a href="${esc(m.pr_url)}" target="_blank" style="color:var(--blue);">PR ↗</a>` : ''}
+      </div>
+    </div>`;
+  }).join('') : '<div class="empty">No missions executed yet — run Autonomous Executor workflow</div>');
+}
+
+
+// ─── AI QA Engine ─────────────────────────────────────────────────────────────
+
+function renderAIQA(d) {
+  const qa = d.ai_qa || {};
+  const reports = qa.reports || [];
+
+  const decColor = { approve: 'var(--green)', review_required: 'var(--yellow)', block: 'var(--red)' };
+  const readyColor = { ready: 'var(--green)', needs_minor_fixes: 'var(--yellow)', needs_major_rework: 'var(--red)' };
+
+  set('aiqa-overview-cards', [
+    { label: 'Reviewed', value: qa.total || 0, color: 'var(--cyan)' },
+    { label: 'Approved', value: qa.approved || 0, color: 'var(--green)' },
+    { label: 'Needs Review', value: qa.review_required || 0, color: 'var(--yellow)' },
+    { label: 'Blocked', value: qa.blocked || 0, color: qa.blocked ? 'var(--red)' : 'var(--dim)' },
+    { label: 'Avg AI Score', value: (qa.avg_ai_score || 0) + '/100', color: 'var(--blue)' },
+    { label: 'Avg Composite', value: (qa.avg_composite_score || 0) + '/100', color: 'var(--yellow)' },
+  ].map(c => `<div class="card"><div class="card-value" style="color:${c.color}">${c.value}</div><div class="card-label">${c.label}</div></div>`).join(''));
+
+  set('aiqa-reviews-badge', `<span class="panel-badge badge-dim">${reports.length} reviews</span>`);
+  set('aiqa-reviews-list', reports.length ? reports.map(r => {
+    const dc = decColor[r.merge_decision] || 'var(--dim)';
+    const rc = readyColor[r.production_readiness] || 'var(--dim)';
+    const dims = r.dimension_scores || {};
+    return `<div style="padding:14px 0;border-bottom:1px solid var(--border);">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:8px;">
+        <div>
+          <div style="font-weight:600;font-size:13px;">${esc(r.label || r.feature_id || '')}</div>
+          <div style="font-size:11px;color:var(--dim);">${esc(r.project || '')} · AI: ${r.ai_score}/100 · Static: ${r.static_score}/100 · Composite: ${r.composite_score}/100</div>
+        </div>
+        <div style="display:flex;gap:6px;flex-shrink:0;">
+          <span style="font-size:11px;padding:2px 8px;border-radius:10px;background:${dc}22;color:${dc};border:1px solid ${dc};">${esc(r.merge_decision || '')}</span>
+          <span style="font-size:11px;padding:2px 8px;border-radius:10px;background:${rc}22;color:${rc};">${esc((r.production_readiness||'').replace(/_/g,' '))}</span>
+        </div>
+      </div>
+      ${r.overall_critique ? `<div style="font-size:12px;color:var(--dim);font-style:italic;margin-bottom:6px;">"${esc(r.overall_critique)}"</div>` : ''}
+      ${Object.keys(dims).length ? `<div style="display:flex;flex-wrap:wrap;gap:8px;font-size:11px;">
+        ${Object.entries(dims).map(([k, v]) => `<span style="color:var(--dim);">${k.replace(/_/g,' ')}: <span style="color:${v >= 70 ? 'var(--green)' : v >= 50 ? 'var(--yellow)' : 'var(--red)'};">${v}</span></span>`).join('')}
+      </div>` : ''}
+      ${r.strengths && r.strengths.length ? `<div style="font-size:11px;color:var(--green);margin-top:4px;">✓ ${r.strengths.slice(0,2).map(s => esc(s)).join(' · ')}</div>` : ''}
+      ${r.top_recommendations && r.top_recommendations.length ? `<div style="font-size:11px;color:var(--yellow);margin-top:4px;">→ ${r.top_recommendations[0]?.fix || ''}</div>` : ''}
+    </div>`;
+  }).join('') : '<div class="empty">No AI QA reviews yet — run AI QA Engine workflow</div>');
+}
+
+
+// ─── Browser Runtime ──────────────────────────────────────────────────────────
+
+function renderBrowser(d) {
+  const bqa = d.browser_qa || {};
+  const reports = bqa.reports || [];
+  const engine = bqa.engine || 'unknown';
+  const pwAvail = bqa.playwright_available;
+
+  set('browser-overview-cards', [
+    { label: 'Engine', value: pwAvail ? 'Playwright' : 'Static', color: pwAvail ? 'var(--green)' : 'var(--yellow)' },
+    { label: 'Validated', value: bqa.total || 0, color: 'var(--cyan)' },
+    { label: 'Passing', value: bqa.passing || 0, color: 'var(--green)' },
+    { label: 'Avg Score', value: (bqa.avg_score || 0) + '/100', color: 'var(--yellow)' },
+  ].map(c => `<div class="card"><div class="card-value" style="color:${c.color}">${c.value}</div><div class="card-label">${c.label}</div></div>`).join(''));
+
+  set('browser-reports-badge', `<span class="panel-badge badge-dim">${reports.length} reports</span>`);
+  set('browser-reports-list', reports.length ? reports.map(r => {
+    const gc = _qaGradeColor(r.grade);
+    const shots = r.screenshots || {};
+    return `<div style="padding:12px 0;border-bottom:1px solid var(--border);">
+      <div style="display:flex;gap:10px;align-items:flex-start;">
+        <span style="font-size:22px;font-weight:800;color:${gc};min-width:28px;">${r.grade}</span>
+        <div style="flex:1;">
+          <div style="font-weight:600;font-size:13px;">${esc(r.label || r.feature_id || '')}</div>
+          <div style="font-size:11px;color:var(--dim);">${esc(r.project)} · ${r.score}/100 · engine: ${esc(r.engine || '')} · ${relTime(r.validated_at)}</div>
+          <div style="display:flex;gap:16px;font-size:11px;color:var(--dim);margin-top:4px;">
+            <span>CLS: ${(r.cls_score || 0).toFixed(2)}</span>
+            <span>Console errors: ${r.console_errors || 0}</span>
+            <span>Broken interactions: ${(r.interactions || {}).broken_interactions || 0}</span>
+          </div>
+          ${r.issues && r.issues.length ? `<div style="font-size:11px;color:var(--yellow);margin-top:4px;">${r.issues.slice(0,2).map(i => `• ${esc(i)}`).join(' ')}</div>` : ''}
+        </div>
+        ${shots.desktop_viewport ? `<img src="${esc(shots.desktop_viewport)}" style="width:80px;height:50px;object-fit:cover;border-radius:4px;border:1px solid var(--border);" onerror="this.style.display='none'" alt="desktop preview">` : ''}
+        ${shots.mobile_viewport ? `<img src="${esc(shots.mobile_viewport)}" style="width:30px;height:50px;object-fit:cover;border-radius:4px;border:1px solid var(--border);" onerror="this.style.display='none'" alt="mobile preview">` : ''}
+      </div>
+    </div>`;
+  }).join('') : `<div class="empty">No browser validation yet${pwAvail ? '' : ' — Playwright not installed in this environment'}. Run Browser Runtime workflow.</div>`);
+}
+
+
+// ─── Deployment Monitor ───────────────────────────────────────────────────────
+
+function renderMonitor(d) {
+  const mon = d.deployment_monitor || {};
+  const sites = mon.sites || {};
+  const allUp = mon.all_up;
+
+  // Overview cards
+  const siteList = Object.values(sites);
+  const upCount = siteList.filter(s => s.uptime).length;
+  const avgScore = siteList.length ? Math.round(siteList.reduce((a, s) => a + s.score, 0) / siteList.length) : 0;
+  const avgSeo = siteList.length ? Math.round(siteList.reduce((a, s) => a + (s.seo_score || 0), 0) / siteList.length) : 0;
+
+  set('monitor-overview-cards', [
+    { label: 'Sites Up', value: `${upCount}/${siteList.length}`, color: upCount === siteList.length ? 'var(--green)' : 'var(--red)' },
+    { label: 'Avg Score', value: avgScore + '/100', color: avgScore >= 70 ? 'var(--green)' : 'var(--yellow)' },
+    { label: 'Avg SEO', value: avgSeo + '/100', color: 'var(--blue)' },
+    { label: 'Status', value: allUp ? 'ALL UP' : 'DEGRADED', color: allUp ? 'var(--green)' : 'var(--red)' },
+  ].map(c => `<div class="card"><div class="card-value" style="color:${c.color}">${c.value}</div><div class="card-label">${c.label}</div></div>`).join(''));
+
+  function siteDetail(projKey, elId, badgeId) {
+    const s = sites[projKey];
+    if (!s) { set(elId, '<div class="empty">No data yet</div>'); return; }
+    const statusColor = s.uptime ? 'var(--green)' : 'var(--red)';
+    const cwv = s.cwv || {};
+    const critPages = s.critical_pages || {};
+    set(badgeId, `<span class="panel-badge ${s.ok ? 'badge-green' : 'badge-yellow'}">${s.ok ? 'healthy' : 'degraded'}</span>`);
+    set(elId, `
+      <div style="display:flex;gap:16px;flex-wrap:wrap;padding:8px 0;font-size:12px;">
+        <span>Status: <span style="color:${statusColor};font-weight:700;">HTTP ${s.status_code}</span></span>
+        <span>TTFB: ${s.ttfb_ms}ms</span>
+        <span>Score: ${s.score}/100 (${s.grade})</span>
+        <span>SEO: ${s.seo_score}/100 (${s.seo_grade})</span>
+        <span>30d uptime: ${s.uptime_30d_pct || 100}%</span>
+      </div>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:11px;color:var(--dim);">
+        <span>LCP: <span style="color:${cwv.lcp_grade === 'good' ? 'var(--green)' : 'var(--yellow)'};">${cwv.lcp_grade || '?'}</span> (~${cwv.lcp_ms_estimate || 0}ms)</span>
+        <span>CLS: <span style="color:${cwv.cls_grade === 'good' ? 'var(--green)' : 'var(--yellow)'};">${cwv.cls_grade || '?'}</span></span>
+        <span>FID: <span style="color:${cwv.fid_grade === 'good' ? 'var(--green)' : 'var(--yellow)'};">${cwv.fid_grade || '?'}</span></span>
+      </div>
+      ${Object.keys(critPages).length ? `<div style="font-size:11px;color:var(--dim);margin-top:6px;">
+        ${Object.entries(critPages).map(([pg, v]) => `<span style="margin-right:12px;">${esc(pg)}: <span style="color:${v.ok ? 'var(--green)' : 'var(--red)'};">${v.status}</span></span>`).join('')}
+      </div>` : ''}
+      ${s.issues && s.issues.length ? `<div style="font-size:11px;color:var(--yellow);margin-top:6px;">${s.issues.map(i => `• ${esc(i)}`).join(' ')}</div>` : ''}
+    `);
+  }
+
+  siteDetail('yallaplays', 'monitor-yp-detail', 'monitor-yp-badge');
+  siteDetail('fionera',    'monitor-fi-detail', 'monitor-fi-badge');
+  siteDetail('mifteh',     'monitor-mi-detail', 'monitor-mi-badge');
+}
+
+
+// ─── Memory ───────────────────────────────────────────────────────────────────
+
+function renderMemory(d) {
+  const mem = d.memory || {};
+
+  set('memory-overview-cards', [
+    { label: 'Total Memories', value: mem.total_memories || 0, color: 'var(--cyan)' },
+    { label: 'Successes', value: mem.total_successes || 0, color: 'var(--green)' },
+    { label: 'Failures', value: mem.total_failures || 0, color: mem.total_failures ? 'var(--yellow)' : 'var(--dim)' },
+    { label: 'Success Rate', value: (mem.success_rate_pct || 0) + '%', color: 'var(--green)' },
+    { label: 'Avg QA Score', value: (mem.avg_qa_score || 0) + '/100', color: 'var(--blue)' },
+    { label: 'Prompts Tracked', value: mem.prompt_count || 0, color: 'var(--yellow)' },
+  ].map(c => `<div class="card"><div class="card-value" style="color:${c.color}">${c.value}</div><div class="card-label">${c.label}</div></div>`).join(''));
+
+  // Success patterns
+  const patterns = mem.success_patterns || [];
+  set('memory-success-badge', `<span class="panel-badge badge-green">${patterns.length}</span>`);
+  set('memory-success-list', patterns.length ? patterns.map(p => `
+    <div class="output-row">
+      <span style="color:var(--green);font-size:16px;">✓</span>
+      <div class="output-title">${esc(p)}</div>
+    </div>
+  `).join('') + (mem.recent ? mem.recent.filter(r => r.type === 'success').slice(0, 5).map(r => `
+    <div class="output-row">
+      <span class="output-type-tag" style="background:var(--surface2);color:var(--green);">${esc(r.project || '')}</span>
+      <div>
+        <div class="output-title">${esc(r.label || r.feature_id || '')}</div>
+        <div class="output-meta">QA: ${r.qa_score || 0}/100 · ${relTime(r.recorded_at)}</div>
+      </div>
+    </div>
+  `).join('') : '') : '<div class="empty">No successes recorded yet — run memory sync after first successful generation</div>');
+
+  // Failure patterns / learnings
+  const improvements = mem.priority_improvements || [];
+  set('memory-failure-badge', `<span class="panel-badge badge-yellow">${improvements.length}</span>`);
+  set('memory-failure-list', improvements.length ? improvements.map(p => `
+    <div class="output-row">
+      <span style="color:var(--yellow);font-size:16px;">→</span>
+      <div class="output-title">${esc(p)}</div>
+    </div>
+  `).join('') + (mem.recent ? mem.recent.filter(r => r.type === 'failure').slice(0, 4).map(r => `
+    <div class="output-row">
+      <span class="output-type-tag" style="background:var(--surface2);color:var(--red);">FAIL</span>
+      <div>
+        <div class="output-title">${esc(r.label || r.feature_id || '')}</div>
+        <div class="output-meta">${esc(r.project || '')} · ${relTime(r.recorded_at)}</div>
+      </div>
+    </div>
+  `).join('') : '') : '<div class="empty">No failure patterns yet</div>');
+
+  // Top prompts
+  const prompts = mem.top_prompts || [];
+  set('memory-prompts-badge', `<span class="panel-badge badge-cyan">${prompts.length}</span>`);
+  set('memory-prompts-list', prompts.length ? prompts.map(p => `
+    <div style="padding:10px 0;border-bottom:1px solid var(--border);display:flex;gap:12px;align-items:center;">
+      <div style="flex:1;">
+        <div style="font-weight:600;font-size:12px;font-family:monospace;">${esc(p.prompt_key || '')}</div>
+        <div style="font-size:11px;color:var(--dim);margin-top:2px;">${p.runs || 0} runs · ${p.success_rate || 0}% success</div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-weight:700;color:${(p.avg_qa_score||0) >= 70 ? 'var(--green)' : 'var(--yellow)'};">${p.avg_qa_score || 0}/100</div>
+        <div style="font-size:11px;color:var(--dim);">avg QA</div>
+      </div>
+    </div>
+  `).join('') : '<div class="empty">No prompt performance data yet</div>');
+
+  // Latest learning
+  const latestLearning = mem.latest_learning || '';
+  set('memory-learnings-detail', latestLearning
+    ? `<div style="padding:16px;background:#0f1929;border-radius:8px;border-left:3px solid var(--cyan);">
+        <div style="font-size:13px;font-weight:600;margin-bottom:8px;">Key Insight</div>
+        <div style="font-size:12px;color:var(--text);">${esc(latestLearning)}</div>
+        ${mem.learning_count ? `<div style="font-size:11px;color:var(--dim);margin-top:8px;">${mem.learning_count} total learning cycles</div>` : ''}
+      </div>`
+    : '<div class="empty">Run Memory Sync with AI synthesis to generate learnings</div>');
+}
+
+
 // ─── Actions (GitHub-native) ─────────────────────────────────────────────────
 
 function triggerLoop(loopId) {
@@ -1097,6 +1427,12 @@ async function loadDashboard() {
     renderProduct(_data);
     renderTrust(_data);
     renderHealth(_data);
+    renderRoadmap(_data);
+    renderExecutor(_data);
+    renderAIQA(_data);
+    renderBrowser(_data);
+    renderMonitor(_data);
+    renderMemory(_data);
     renderActivity(_data);
     renderSafety(_data);
 

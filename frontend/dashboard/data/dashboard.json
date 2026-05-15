@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-15T19:03:12Z",
+  "generated_at": "2026-05-15T19:26:28Z",
   "architecture": "github-native",
   "scheduler": {
     "scheduler_running": true,
@@ -167,12 +167,12 @@
       "openai": {
         "consecutive_429s": 0,
         "total_429s": 0,
-        "last_success": "2026-05-15T19:03:12Z"
+        "last_success": "2026-05-15T19:26:28Z"
       },
       "gemini": {
         "consecutive_429s": 0,
         "total_429s": 0,
-        "last_success": "2026-05-15T19:03:12Z"
+        "last_success": "2026-05-15T19:26:28Z"
       }
     }
   },
@@ -493,20 +493,20 @@
   "trust": {
     "repos": {
       "Zakoosh/Yallaplays": {
-        "score": 79,
-        "deploys": 2,
+        "score": 81,
+        "deploys": 3,
         "rollbacks": 0,
         "failures": 1
       },
       "Zakoosh/fionera": {
-        "score": 67,
+        "score": 57,
         "deploys": 1,
         "rollbacks": 0,
-        "failures": 2
+        "failures": 3
       },
       "Zakoosh/mifteh-main-site": {
-        "score": 67,
-        "deploys": 1,
+        "score": 69,
+        "deploys": 2,
         "rollbacks": 0,
         "failures": 2
       }
@@ -525,14 +525,14 @@
         "failures": 0
       },
       "meta_tags": {
-        "score": 86,
-        "deploys": 4,
+        "score": 90,
+        "deploys": 6,
         "rollbacks": 0,
         "failures": 0
       },
       "json_ld": {
-        "score": 80,
-        "deploys": 4,
+        "score": 84,
+        "deploys": 6,
         "rollbacks": 0,
         "failures": 0
       },
@@ -543,8 +543,8 @@
         "failures": 0
       },
       "open_graph": {
-        "score": 86,
-        "deploys": 4,
+        "score": 90,
+        "deploys": 6,
         "rollbacks": 0,
         "failures": 0
       },
@@ -555,15 +555,15 @@
         "failures": 0
       },
       "canonical": {
-        "score": 88,
-        "deploys": 4,
+        "score": 92,
+        "deploys": 6,
         "rollbacks": 0,
         "failures": 0
       }
     },
     "suspended_repos": [],
     "suspended_categories": [],
-    "last_updated": "2026-05-15T15:59:13Z"
+    "last_updated": "2026-05-15T19:26:24Z"
   },
   "apply_history": [
     {
@@ -1856,6 +1856,267 @@
     "tokens_used": 0,
     "cost_usd": 0.0
   },
+  "memory": {
+    "generated_at": "2026-05-15T19:24:05Z",
+    "total_memories": 0,
+    "total_successes": 0,
+    "total_failures": 0,
+    "success_rate_pct": 0,
+    "avg_qa_score": 0,
+    "prompt_count": 0,
+    "strategy_count": 0,
+    "learning_count": 0,
+    "by_project": {},
+    "by_type": {},
+    "recent": [],
+    "top_prompts": [],
+    "latest_learning": "",
+    "success_patterns": [],
+    "priority_improvements": []
+  },
+  "browser_qa": {
+    "total": 8,
+    "passing": 3,
+    "blocking": 5,
+    "avg_score": 67,
+    "pass_rate_pct": 38,
+    "engine": "static_fallback",
+    "playwright_available": false,
+    "reports": [
+      {
+        "project": "Yallaplays",
+        "feature_id": "action",
+        "label": "action",
+        "score": 79,
+        "grade": "C",
+        "passes": true,
+        "engine": "static_fallback",
+        "screenshots": {},
+        "console_errors": 0,
+        "cls_score": 0.0,
+        "performance": {},
+        "interactions": {},
+        "issues": [],
+        "validated_at": "2026-05-15T19:26:03Z"
+      },
+      {
+        "project": "Fionera",
+        "feature_id": "index",
+        "label": "index",
+        "score": 72,
+        "grade": "C",
+        "passes": true,
+        "engine": "static_fallback",
+        "screenshots": {},
+        "console_errors": 0,
+        "cls_score": 0.0,
+        "performance": {},
+        "interactions": {},
+        "issues": [],
+        "validated_at": "2026-05-15T19:26:03Z"
+      },
+      {
+        "project": "Yallaplays",
+        "feature_id": "index",
+        "label": "index",
+        "score": 71,
+        "grade": "C",
+        "passes": true,
+        "engine": "static_fallback",
+        "screenshots": {},
+        "console_errors": 0,
+        "cls_score": 0.0,
+        "performance": {},
+        "interactions": {},
+        "issues": [],
+        "validated_at": "2026-05-15T19:26:03Z"
+      },
+      {
+        "project": "YallaPlays",
+        "feature_id": "index",
+        "label": "index",
+        "score": 67,
+        "grade": "D",
+        "passes": false,
+        "engine": "static_fallback",
+        "screenshots": {},
+        "console_errors": 0,
+        "cls_score": 0.0,
+        "performance": {},
+        "interactions": {},
+        "issues": [],
+        "validated_at": "2026-05-15T19:26:03Z"
+      },
+      {
+        "project": "Fionera",
+        "feature_id": "portfolio-heatmap",
+        "label": "portfolio-heatmap",
+        "score": 64,
+        "grade": "D",
+        "passes": false,
+        "engine": "static_fallback",
+        "screenshots": {},
+        "console_errors": 0,
+        "cls_score": 0.0,
+        "performance": {},
+        "interactions": {},
+        "issues": [],
+        "validated_at": "2026-05-15T19:26:03Z"
+      },
+      {
+        "project": "Fionera",
+        "feature_id": "bist-overview",
+        "label": "bist-overview",
+        "score": 62,
+        "grade": "D",
+        "passes": false,
+        "engine": "static_fallback",
+        "screenshots": {},
+        "console_errors": 0,
+        "cls_score": 0.0,
+        "performance": {},
+        "interactions": {},
+        "issues": [],
+        "validated_at": "2026-05-15T19:26:03Z"
+      },
+      {
+        "project": "Yallaplays",
+        "feature_id": "related-games",
+        "label": "related-games",
+        "score": 60,
+        "grade": "D",
+        "passes": false,
+        "engine": "static_fallback",
+        "screenshots": {},
+        "console_errors": 0,
+        "cls_score": 0.0,
+        "performance": {},
+        "interactions": {},
+        "issues": [],
+        "validated_at": "2026-05-15T19:26:03Z"
+      },
+      {
+        "project": "Fionera",
+        "feature_id": "ai-insight",
+        "label": "ai-insight",
+        "score": 58,
+        "grade": "F",
+        "passes": false,
+        "engine": "static_fallback",
+        "screenshots": {},
+        "console_errors": 0,
+        "cls_score": 0.0,
+        "performance": {},
+        "interactions": {},
+        "issues": [],
+        "validated_at": "2026-05-15T19:26:03Z"
+      }
+    ]
+  },
+  "ai_qa": {},
+  "deployment_monitor": {
+    "generated_at": "2026-05-15T19:26:24Z",
+    "all_up": false,
+    "sites": {
+      "yallaplays": {
+        "uptime": true,
+        "status_code": 200,
+        "score": 82,
+        "grade": "B",
+        "ttfb_ms": 222,
+        "seo_score": 75,
+        "seo_grade": "C",
+        "cwv": {
+          "ttfb_ms": 222,
+          "ttfb_grade": "good",
+          "lcp_ms_estimate": 328,
+          "lcp_grade": "good",
+          "fid_ms_estimate": 160,
+          "fid_grade": "needs_improvement",
+          "cls_score_estimate": 0.0,
+          "cls_grade": "good",
+          "overall": "needs_improvement"
+        },
+        "critical_pages": {
+          "/robots.txt": {
+            "status": 200,
+            "ok": true
+          },
+          "/sitemap.xml": {
+            "status": 200,
+            "ok": true
+          }
+        },
+        "issues": [
+          "SEO checks failed: canonical, json_ld"
+        ],
+        "ok": true,
+        "uptime_30d_pct": 100
+      },
+      "fionera": {
+        "uptime": false,
+        "status_code": 0,
+        "score": 0,
+        "grade": "F",
+        "ttfb_ms": 109,
+        "seo_score": 0,
+        "seo_grade": "?",
+        "cwv": {},
+        "critical_pages": {},
+        "issues": [
+          "Site returned HTTP 0"
+        ],
+        "ok": false,
+        "uptime_30d_pct": 0
+      },
+      "mifteh": {
+        "uptime": true,
+        "status_code": 200,
+        "score": 70,
+        "grade": "C",
+        "ttfb_ms": 157,
+        "seo_score": 35,
+        "seo_grade": "F",
+        "cwv": {
+          "ttfb_ms": 157,
+          "ttfb_grade": "good",
+          "lcp_ms_estimate": 202,
+          "lcp_grade": "good",
+          "fid_ms_estimate": 0,
+          "fid_grade": "good",
+          "cls_score_estimate": 0.0,
+          "cls_grade": "good",
+          "overall": "good"
+        },
+        "critical_pages": {
+          "/robots.txt": {
+            "status": 404,
+            "ok": false
+          },
+          "/sitemap.xml": {
+            "status": 404,
+            "ok": false
+          }
+        },
+        "issues": [
+          "SEO checks failed: meta_description, canonical, og_tags, twitter_card, json_ld, h1",
+          "/robots.txt returned 404",
+          "/sitemap.xml returned 404"
+        ],
+        "ok": true,
+        "uptime_30d_pct": 100
+      }
+    },
+    "uptime_trend": [
+      {
+        "checked_at": "2026-05-15T19:26:24Z",
+        "all_up": false,
+        "avg_score": 51
+      }
+    ]
+  },
+  "executor": {},
+  "roadmap": {},
   "analytics_intelligence": {
     "generated_at": "2026-05-15T18:31:07Z",
     "data_source": "ai_intelligence",

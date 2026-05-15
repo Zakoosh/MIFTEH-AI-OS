@@ -1,0 +1,53 @@
+name: MIFTEH AI Deployment Monitor
+
+# Monitors all 3 production sites for uptime, SEO health,
+# Core Web Vitals estimates, critical page availability, and content integrity.
+# Updates trust scores based on deployment health.
+# Runs every 6 hours.
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'  # every 6 hours
+  workflow_dispatch:
+    inputs:
+      target_project:
+        description: 'Target site to monitor (yallaplays|fionera|mifteh|all)'
+        required: false
+        default: 'all'
+        type: choice
+        options: [all, yallaplays, fionera, mifteh]
+
+permissions:
+  contents: write
+
+jobs:
+  deployment-monitor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install openai
+
+      - name: Monitor production deployments
+        env:
+          TARGET_PROJECT: ${{ inputs.target_project || 'all' }}
+        run: python scripts/deployment_monitor.py
+
+      - name: Aggregate dashboard
+        run: python scripts/aggregate_dashboard.py
+
+      - name: Commit monitoring results
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "mifteh-ai@users.noreply.github.com"
+          git pull --rebase origin main
+          git add memory/deployment_monitor.json memory/uptime_history.json memory/seo_health_history.json memory/deployment_history.json memory/trust_scores.json frontend/dashboard/data/
+          git diff --cached --quiet || git commit -m "AI: Deployment monitor check [$(date -u +%Y-%m-%dT%H:%M:%SZ)] [skip ci]"
+          git push

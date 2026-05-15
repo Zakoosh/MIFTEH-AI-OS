@@ -1,0 +1,33 @@
+[
+  {
+    "recorded_at": "2026-05-15T19:26:24Z",
+    "sites": {
+      "yallaplays": {
+        "seo_score": 75,
+        "seo_grade": "C",
+        "cwv_overall": "needs_improvement",
+        "issues": [
+          "SEO checks failed: canonical, json_ld"
+        ]
+      },
+      "fionera": {
+        "seo_score": 0,
+        "seo_grade": "?",
+        "cwv_overall": "unknown",
+        "issues": [
+          "Site returned HTTP 0"
+        ]
+      },
+      "mifteh": {
+        "seo_score": 35,
+        "seo_grade": "F",
+        "cwv_overall": "good",
+        "issues": [
+          "SEO checks failed: meta_description, canonical, og_tags, twitter_card, json_ld, h1",
+          "/robots.txt returned 404",
+          "/sitemap.xml returned 404"
+        ]
+      }
+    }
+  }
+]

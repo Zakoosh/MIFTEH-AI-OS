@@ -1,0 +1,68 @@
+{
+  "label": "portfolio-heatmap",
+  "project": "Fionera",
+  "validated_at": "2026-05-15T19:26:03Z",
+  "score": 64,
+  "grade": "D",
+  "passes_auto_merge_threshold": false,
+  "categories": {
+    "seo": {
+      "score": 14,
+      "max": 30,
+      "issues": [
+        "Meta description length 30 (ideal 50-160 chars)",
+        "Missing canonical link",
+        "Only 0/5 Open Graph tags present",
+        "No JSON-LD structured data"
+      ]
+    },
+    "mobile": {
+      "score": 18,
+      "max": 25,
+      "issues": [
+        "No CSS media queries detected — layout may break on mobile"
+      ]
+    },
+    "accessibility": {
+      "score": 13,
+      "max": 20,
+      "issues": [
+        "No ARIA attributes found — important for screen reader accessibility",
+        "No :focus styles — keyboard navigation may be invisible"
+      ]
+    },
+    "performance": {
+      "score": 12,
+      "max": 15,
+      "issues": [
+        "No preload/prefetch/preconnect hints — consider adding for critical resources"
+      ]
+    },
+    "ux": {
+      "score": 7,
+      "max": 10,
+      "issues": [
+        "No <nav> element — consider adding navigation for usability"
+      ]
+    }
+  },
+  "all_issues": [
+    "Meta description length 30 (ideal 50-160 chars)",
+    "Missing canonical link",
+    "Only 0/5 Open Graph tags present",
+    "No JSON-LD structured data",
+    "No CSS media queries detected — layout may break on mobile",
+    "No ARIA attributes found — important for screen reader accessibility",
+    "No :focus styles — keyboard navigation may be invisible",
+    "No preload/prefetch/preconnect hints — consider adding for critical resources",
+    "No <nav> element — consider adding navigation for usability"
+  ],
+  "summary": "Grade D — blocked from auto-merge; fix: SEO weak",
+  "engine": "static_fallback",
+  "feature_id": "portfolio-heatmap",
+  "screenshots": {},
+  "console_errors": [],
+  "interactions": {},
+  "performance": {},
+  "cls_score": 0.0
+}

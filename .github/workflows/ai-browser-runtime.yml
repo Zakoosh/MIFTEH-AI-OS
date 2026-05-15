@@ -1,0 +1,62 @@
+name: MIFTEH AI Browser Runtime
+
+# Real headless browser validation using Playwright + Chromium.
+# Runs after feature generation to capture screenshots and validate
+# JS rendering, CLS, mobile responsiveness, and interaction health.
+# Falls back to static validation if Playwright is unavailable.
+
+on:
+  schedule:
+    - cron: '0 10 * * 1'   # Monday 10:00 UTC — after feature builder + visual preview
+  workflow_dispatch:
+    inputs:
+      target_project:
+        description: 'Target project (yallaplays|fionera|mifteh|all)'
+        required: false
+        default: 'all'
+        type: choice
+        options: [all, yallaplays, fionera, mifteh]
+      force_revalidate:
+        description: 'Re-validate all features (ignore cache)'
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+
+jobs:
+  browser-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          pip install openai playwright
+          playwright install chromium --with-deps
+
+      - name: Run browser validation + screenshot capture
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+          TARGET_PROJECT: ${{ inputs.target_project || 'all' }}
+          FORCE_REVALIDATE: ${{ inputs.force_revalidate || 'false' }}
+        run: python scripts/browser_runtime.py
+
+      - name: Aggregate dashboard with browser QA data
+        run: python scripts/aggregate_dashboard.py
+
+      - name: Commit screenshots and browser QA reports
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "mifteh-ai@users.noreply.github.com"
+          git pull --rebase origin main
+          git add memory/visual_qa/ memory/browser_qa_summary.json frontend/dashboard/screenshots/ frontend/dashboard/data/ || true
+          git diff --cached --quiet || git commit -m "AI: Browser validation + screenshots [$(date -u +%Y-%m-%dT%H:%M:%SZ)] [skip ci]"
+          git push

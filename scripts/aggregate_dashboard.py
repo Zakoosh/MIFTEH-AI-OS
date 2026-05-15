@@ -105,6 +105,67 @@ def read_self_improvement():
     }
 
 
+def read_json(path: str, default=None):
+    f = Path(path)
+    if not f.exists():
+        return default if default is not None else {}
+    try:
+        return json.loads(f.read_text())
+    except Exception:
+        return default if default is not None else {}
+
+
+def read_memory_summary():
+    return read_json("memory/memory_summary.json")
+
+
+def read_browser_qa_summary():
+    return read_json("memory/browser_qa_summary.json")
+
+
+def read_ai_qa_summary():
+    return read_json("memory/ai_qa_summary.json")
+
+
+def read_deployment_monitor():
+    return read_json("memory/deployment_monitor.json")
+
+
+def read_execution_summary():
+    return read_json("memory/execution_summary.json")
+
+
+def read_roadmap():
+    data = read_json("memory/roadmap.json")
+    if not data:
+        return {}
+    # Return only dashboard-relevant fields (not full HTML content)
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "total_items": data.get("total_items", 0),
+        "total_cost_usd": data.get("total_cost_usd", 0.0),
+        "cross_project": {
+            k: v for k, v in data.get("cross_project", {}).items()
+            if k in ("portfolio_summary", "resource_allocation", "consolidated_priority_queue",
+                     "cross_project_patterns", "shared_opportunities", "next_sprint_plan")
+        },
+        "consolidated_priority_queue": data.get("consolidated_priority_queue", [])[:20],
+        "projects": {
+            proj: {
+                "summary": pdata.get("summary", ""),
+                "quick_wins": pdata.get("quick_wins", [])[:3],
+                "90_day_goal": pdata.get("90_day_goal", ""),
+                "seo_gaps": pdata.get("seo_gaps", [])[:5],
+                "feature_gaps": pdata.get("feature_gaps", [])[:5],
+                "ux_gaps": pdata.get("ux_gaps", [])[:3],
+                "monetization_opportunities": pdata.get("monetization_opportunities", [])[:3],
+                "priority_queue": pdata.get("priority_queue", [])[:8],
+            }
+            for proj, pdata in data.get("projects", {}).items()
+        },
+    }
+
+
 def read_product_outputs():
     """Read all product execution output records from outputs/{project}/product/."""
     records = []
@@ -267,8 +328,15 @@ def main():
     analytics_intel = read_analytics_intelligence()
     visual_qa = read_visual_qa_summary()
     self_improvement = read_self_improvement()
+    memory_summary = read_memory_summary()
+    browser_qa = read_browser_qa_summary()
+    ai_qa = read_ai_qa_summary()
+    deployment_monitor = read_deployment_monitor()
+    execution_summary = read_execution_summary()
+    roadmap = read_roadmap()
     print(f"[dashboard] {len(outputs)} outputs, {len(prs)} PRs, {len(automerge_log)} merge events, "
-          f"{len(product_outputs)} product features, {visual_qa.get('total', 0)} QA reports")
+          f"{len(product_outputs)} product features, {visual_qa.get('total', 0)} QA reports, "
+          f"{ai_qa.get('total', 0)} AI QA reviews, {roadmap.get('total_items', 0)} roadmap items")
 
     loops, active_loops = build_loops(outputs)
     ai_analytics = build_ai_analytics(outputs)
@@ -380,6 +448,12 @@ def main():
         "product": product_metrics,
         "visual_qa": visual_qa,
         "self_improvement": self_improvement,
+        "memory": memory_summary,
+        "browser_qa": browser_qa,
+        "ai_qa": ai_qa,
+        "deployment_monitor": deployment_monitor,
+        "executor": execution_summary,
+        "roadmap": roadmap,
         "analytics_intelligence": {
             "generated_at": analytics_intel.get("generated_at", ""),
             "data_source": analytics_intel.get("data_source", ""),

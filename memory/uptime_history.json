@@ -1,0 +1,27 @@
+[
+  {
+    "checked_at": "2026-05-15T19:26:24Z",
+    "sites": {
+      "yallaplays": {
+        "uptime": true,
+        "status": 200,
+        "score": 82,
+        "ttfb_ms": 222
+      },
+      "fionera": {
+        "uptime": false,
+        "status": 0,
+        "score": 0,
+        "ttfb_ms": 109
+      },
+      "mifteh": {
+        "uptime": true,
+        "status": 200,
+        "score": 70,
+        "ttfb_ms": 157
+      }
+    },
+    "all_up": false,
+    "avg_score": 51
+  }
+]

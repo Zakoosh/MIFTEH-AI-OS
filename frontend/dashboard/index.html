@@ -32,12 +32,22 @@
 
       <div class="nav-section">Intelligence</div>
       <button class="nav-btn" onclick="showTab('analytics',this)"><span class="icon">📈</span> Analytics Intel</button>
+      <button class="nav-btn" onclick="showTab('roadmap',this)"><span class="icon">☛</span> Product Roadmap</button>
 
       <div class="nav-section">Product</div>
       <button class="nav-btn" onclick="showTab('product',this)"><span class="icon">🏗</span> Product Execution</button>
+      <button class="nav-btn" onclick="showTab('executor',this)"><span class="icon">⚙</span> Autonomous Executor</button>
+
+      <div class="nav-section">Quality</div>
+      <button class="nav-btn" onclick="showTab('aiqa',this)"><span class="icon">✦</span> AI QA Engine</button>
+      <button class="nav-btn" onclick="showTab('browser',this)"><span class="icon">◉</span> Browser Runtime</button>
 
       <div class="nav-section">Autonomy</div>
       <button class="nav-btn" onclick="showTab('trust',this)"><span class="icon">⚖</span> Trust &amp; Apply</button>
+      <button class="nav-btn" onclick="showTab('monitor',this)"><span class="icon">♦</span> Deployment Monitor</button>
+
+      <div class="nav-section">Memory</div>
+      <button class="nav-btn" onclick="showTab('memory',this)"><span class="icon">◈</span> AI Memory</button>
 
       <div class="nav-section">System</div>
       <button class="nav-btn" onclick="showTab('health',this)"><span class="icon">♥</span> System Health</button>
@@ -412,6 +422,152 @@
             <div class="panel-title">Validation History</div>
           </div>
           <div id="validation-history-list"></div>
+        </div>
+      </section>
+
+      <!-- ROADMAP TAB -->
+      <section id="tab-roadmap" class="tab">
+        <div class="section-title">Product Roadmap — AI Gap Detection</div>
+        <div class="cards-grid" id="roadmap-overview-cards"></div>
+        <div class="panels-row">
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Consolidated Priority Queue</div>
+              <span class="panel-badge badge-green" id="roadmap-queue-badge">–</span>
+            </div>
+            <div id="roadmap-priority-queue"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">SEO Gaps</div>
+              <span class="panel-badge badge-yellow" id="roadmap-seo-badge">–</span>
+            </div>
+            <div id="roadmap-seo-gaps"></div>
+          </div>
+        </div>
+        <div class="panels-row">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Feature Gaps</div></div>
+            <div id="roadmap-feature-gaps"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Monetization Opportunities</div></div>
+            <div id="roadmap-monetization"></div>
+          </div>
+        </div>
+        <div style="margin-top:12px;padding:4px 0;display:flex;gap:10px;flex-wrap:wrap;">
+          <a href="https://github.com/Zakoosh/MIFTEH-AI-OS/actions/workflows/ai-roadmap-generation.yml" target="_blank" class="trigger-btn" style="padding:8px 16px;text-decoration:none;">☛ Generate Roadmap</a>
+          <a href="https://github.com/Zakoosh/MIFTEH-AI-OS/actions/workflows/ai-autonomous-execution.yml" target="_blank" class="trigger-btn" style="padding:8px 16px;text-decoration:none;">⚙ Execute Queue</a>
+        </div>
+      </section>
+
+      <!-- AUTONOMOUS EXECUTOR TAB -->
+      <section id="tab-executor" class="tab">
+        <div class="section-title">Autonomous Executor — Mission Log</div>
+        <div class="cards-grid" id="executor-overview-cards"></div>
+        <div class="panel full">
+          <div class="panel-header">
+            <div class="panel-title">Mission History</div>
+            <span class="panel-badge badge-dim" id="executor-missions-badge">–</span>
+          </div>
+          <div id="executor-missions-list"></div>
+        </div>
+        <div style="margin-top:12px;padding:4px 0;display:flex;gap:10px;flex-wrap:wrap;">
+          <a href="https://github.com/Zakoosh/MIFTEH-AI-OS/actions/workflows/ai-autonomous-execution.yml" target="_blank" class="trigger-btn" style="padding:8px 16px;text-decoration:none;">⚙ Run Executor</a>
+          <a href="https://github.com/Zakoosh/MIFTEH-AI-OS/actions/workflows/ai-autonomous-execution.yml" target="_blank" class="trigger-btn" style="padding:8px 16px;text-decoration:none;">◎ Dry Run</a>
+        </div>
+      </section>
+
+      <!-- AI QA ENGINE TAB -->
+      <section id="tab-aiqa" class="tab">
+        <div class="section-title">AI QA Engine — Quality Intelligence</div>
+        <div class="cards-grid" id="aiqa-overview-cards"></div>
+        <div class="panel full">
+          <div class="panel-header">
+            <div class="panel-title">Feature Reviews</div>
+            <span class="panel-badge badge-dim" id="aiqa-reviews-badge">–</span>
+          </div>
+          <div id="aiqa-reviews-list"></div>
+        </div>
+        <div style="margin-top:12px;padding:4px 0;display:flex;gap:10px;flex-wrap:wrap;">
+          <a href="https://github.com/Zakoosh/MIFTEH-AI-OS/actions/workflows/ai-ai-qa.yml" target="_blank" class="trigger-btn" style="padding:8px 16px;text-decoration:none;">✦ Run AI QA</a>
+        </div>
+      </section>
+
+      <!-- BROWSER RUNTIME TAB -->
+      <section id="tab-browser" class="tab">
+        <div class="section-title">Browser Runtime — Real Chromium Validation</div>
+        <div class="cards-grid" id="browser-overview-cards"></div>
+        <div class="panel full">
+          <div class="panel-header">
+            <div class="panel-title">Browser QA Reports</div>
+            <span class="panel-badge badge-dim" id="browser-reports-badge">–</span>
+          </div>
+          <div id="browser-reports-list"></div>
+        </div>
+        <div style="margin-top:12px;padding:4px 0;display:flex;gap:10px;flex-wrap:wrap;">
+          <a href="https://github.com/Zakoosh/MIFTEH-AI-OS/actions/workflows/ai-browser-runtime.yml" target="_blank" class="trigger-btn" style="padding:8px 16px;text-decoration:none;">◉ Run Browser Validation</a>
+        </div>
+      </section>
+
+      <!-- DEPLOYMENT MONITOR TAB -->
+      <section id="tab-monitor" class="tab">
+        <div class="section-title">Deployment Monitor — Production Health</div>
+        <div class="cards-grid" id="monitor-overview-cards"></div>
+        <div class="panels-row">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">YallaPlays</div><span class="panel-badge badge-dim" id="monitor-yp-badge">–</span></div>
+            <div id="monitor-yp-detail"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Fionera</div><span class="panel-badge badge-dim" id="monitor-fi-badge">–</span></div>
+            <div id="monitor-fi-detail"></div>
+          </div>
+        </div>
+        <div class="panel full">
+          <div class="panel-header"><div class="panel-title">Mifteh</div><span class="panel-badge badge-dim" id="monitor-mi-badge">–</span></div>
+          <div id="monitor-mi-detail"></div>
+        </div>
+        <div style="margin-top:12px;padding:4px 0;display:flex;gap:10px;flex-wrap:wrap;">
+          <a href="https://github.com/Zakoosh/MIFTEH-AI-OS/actions/workflows/ai-deployment-monitor.yml" target="_blank" class="trigger-btn" style="padding:8px 16px;text-decoration:none;">♦ Run Monitor</a>
+        </div>
+      </section>
+
+      <!-- MEMORY TAB -->
+      <section id="tab-memory" class="tab">
+        <div class="section-title">AI Memory — Persistent Learning System</div>
+        <div class="cards-grid" id="memory-overview-cards"></div>
+        <div class="panels-row">
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Success Patterns</div>
+              <span class="panel-badge badge-green" id="memory-success-badge">–</span>
+            </div>
+            <div id="memory-success-list"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Failure Patterns &amp; Learnings</div>
+              <span class="panel-badge badge-yellow" id="memory-failure-badge">–</span>
+            </div>
+            <div id="memory-failure-list"></div>
+          </div>
+        </div>
+        <div class="panel full">
+          <div class="panel-header">
+            <div class="panel-title">Top Performing Prompts</div>
+            <span class="panel-badge badge-cyan" id="memory-prompts-badge">–</span>
+          </div>
+          <div id="memory-prompts-list"></div>
+        </div>
+        <div class="panel full">
+          <div class="panel-header">
+            <div class="panel-title">Latest AI Learnings</div>
+          </div>
+          <div id="memory-learnings-detail"></div>
+        </div>
+        <div style="margin-top:12px;padding:4px 0;display:flex;gap:10px;flex-wrap:wrap;">
+          <a href="https://github.com/Zakoosh/MIFTEH-AI-OS/actions/workflows/ai-memory-sync.yml" target="_blank" class="trigger-btn" style="padding:8px 16px;text-decoration:none;">◈ Sync Memory</a>
         </div>
       </section>
 

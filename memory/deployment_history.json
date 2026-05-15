@@ -1,0 +1,196 @@
+[
+  {
+    "checked_at": "2026-05-15T19:26:24Z",
+    "reports": [
+      {
+        "project": "yallaplays",
+        "url": "https://yallaplays.com",
+        "checked_at": "2026-05-15T19:26:23Z",
+        "uptime": true,
+        "status_code": 200,
+        "ttfb_ms": 222,
+        "response_time_ms": 223,
+        "seo_health": {
+          "checks": {
+            "title": {
+              "ok": true,
+              "value": "يلا بلاي - أفضل موقع ألعاب عربية HTML5"
+            },
+            "meta_description": {
+              "ok": true,
+              "value": "العب ألعاب متصفح عربية مجانية بخيارات سريعة وتصميم حديث، مع صفحات ألعاب مفصلة ود"
+            },
+            "canonical": {
+              "ok": false,
+              "value": ""
+            },
+            "og_tags": {
+              "ok": true,
+              "value": "title=True desc=True url=True"
+            },
+            "twitter_card": {
+              "ok": true,
+              "value": "True"
+            },
+            "json_ld": {
+              "ok": false,
+              "value": "False"
+            },
+            "h1": {
+              "ok": true,
+              "value": "1"
+            },
+            "viewport": {
+              "ok": true,
+              "value": "True"
+            },
+            "keywords": {
+              "ok": true,
+              "value": "2/3"
+            }
+          },
+          "score": 75,
+          "grade": "C"
+        },
+        "core_web_vitals": {
+          "ttfb_ms": 222,
+          "ttfb_grade": "good",
+          "lcp_ms_estimate": 328,
+          "lcp_grade": "good",
+          "fid_ms_estimate": 160,
+          "fid_grade": "needs_improvement",
+          "cls_score_estimate": 0.0,
+          "cls_grade": "good",
+          "overall": "needs_improvement"
+        },
+        "critical_pages": {
+          "/robots.txt": {
+            "status": 200,
+            "ok": true
+          },
+          "/sitemap.xml": {
+            "status": 200,
+            "ok": true
+          }
+        },
+        "content_checks": {
+          "keyword_coverage": "2/3",
+          "has_navigation": true,
+          "has_footer": true,
+          "html_size_kb": 53.0
+        },
+        "issues": [
+          "SEO checks failed: canonical, json_ld"
+        ],
+        "score": 82,
+        "grade": "B",
+        "ok": true
+      },
+      {
+        "project": "fionera",
+        "url": "https://fionera.app",
+        "checked_at": "2026-05-15T19:26:23Z",
+        "uptime": false,
+        "status_code": 0,
+        "ttfb_ms": 109,
+        "response_time_ms": 109,
+        "seo_health": {},
+        "core_web_vitals": {},
+        "critical_pages": {},
+        "content_checks": {},
+        "issues": [
+          "Site returned HTTP 0"
+        ],
+        "score": 0,
+        "grade": "F",
+        "ok": false
+      },
+      {
+        "project": "mifteh",
+        "url": "https://miftehos.com",
+        "checked_at": "2026-05-15T19:26:23Z",
+        "uptime": true,
+        "status_code": 200,
+        "ttfb_ms": 157,
+        "response_time_ms": 157,
+        "seo_health": {
+          "checks": {
+            "title": {
+              "ok": true,
+              "value": "MIFTEH OS — miftehos.com"
+            },
+            "meta_description": {
+              "ok": false,
+              "value": ""
+            },
+            "canonical": {
+              "ok": false,
+              "value": ""
+            },
+            "og_tags": {
+              "ok": false,
+              "value": "title=False desc=False url=False"
+            },
+            "twitter_card": {
+              "ok": false,
+              "value": "False"
+            },
+            "json_ld": {
+              "ok": false,
+              "value": "False"
+            },
+            "h1": {
+              "ok": false,
+              "value": "0"
+            },
+            "viewport": {
+              "ok": true,
+              "value": "True"
+            },
+            "keywords": {
+              "ok": true,
+              "value": "3/3"
+            }
+          },
+          "score": 35,
+          "grade": "F"
+        },
+        "core_web_vitals": {
+          "ttfb_ms": 157,
+          "ttfb_grade": "good",
+          "lcp_ms_estimate": 202,
+          "lcp_grade": "good",
+          "fid_ms_estimate": 0,
+          "fid_grade": "good",
+          "cls_score_estimate": 0.0,
+          "cls_grade": "good",
+          "overall": "good"
+        },
+        "critical_pages": {
+          "/robots.txt": {
+            "status": 404,
+            "ok": false
+          },
+          "/sitemap.xml": {
+            "status": 404,
+            "ok": false
+          }
+        },
+        "content_checks": {
+          "keyword_coverage": "3/3",
+          "has_navigation": true,
+          "has_footer": false,
+          "html_size_kb": 22.6
+        },
+        "issues": [
+          "SEO checks failed: meta_description, canonical, og_tags, twitter_card, json_ld, h1",
+          "/robots.txt returned 404",
+          "/sitemap.xml returned 404"
+        ],
+        "score": 70,
+        "grade": "C",
+        "ok": true
+      }
+    ]
+  }
+]

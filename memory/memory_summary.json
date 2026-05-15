@@ -1,0 +1,18 @@
+{
+  "generated_at": "2026-05-15T19:24:05Z",
+  "total_memories": 0,
+  "total_successes": 0,
+  "total_failures": 0,
+  "success_rate_pct": 0,
+  "avg_qa_score": 0,
+  "prompt_count": 0,
+  "strategy_count": 0,
+  "learning_count": 0,
+  "by_project": {},
+  "by_type": {},
+  "recent": [],
+  "top_prompts": [],
+  "latest_learning": "",
+  "success_patterns": [],
+  "priority_improvements": []
+}
