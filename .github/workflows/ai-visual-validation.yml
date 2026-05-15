@@ -1,0 +1,72 @@
+name: MIFTEH AI Visual Validation
+
+# Runs visual QA on PR changes before auto-merge consideration.
+# Triggered after ai-feature-builder or on workflow_dispatch.
+# Saves per-file QA scores to memory/visual_qa/ so ai_automerge.py can gate on them.
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_project:
+        description: 'Target project (yallaplays|fionera|mifteh|all)'
+        required: false
+        default: 'all'
+        type: choice
+        options: [all, yallaplays, fionera, mifteh]
+  workflow_run:
+    workflows: ["MIFTEH AI Feature Builder"]
+    types: [completed]
+
+permissions:
+  contents: write
+
+jobs:
+  visual-validation:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install openai
+
+      - name: Validate local preview files
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+          TARGET_PROJECT: ${{ inputs.target_project || 'all' }}
+          FORCE_REVALIDATE: 'true'
+        run: python scripts/generate_previews.py
+
+      - name: Report QA summary
+        run: |
+          python -c "
+          import json
+          from pathlib import Path
+          f = Path('memory/visual_qa_summary.json')
+          if f.exists():
+              s = json.loads(f.read_text())
+              total = s.get('total', 0)
+              passing = s.get('passing', 0)
+              avg = s.get('avg_score', 0)
+              print(f'Visual QA: {passing}/{total} features pass threshold | avg={avg}/100')
+              for r in s.get('reports', []):
+                  status = 'PASS' if r.get('passes') else 'FAIL'
+                  print(f'  [{status}] {r[\"label\"]} ({r[\"project\"]}) — {r[\"score\"]}/100 grade={r[\"grade\"]}')
+          else:
+              print('No QA summary found')
+          "
+
+      - name: Commit QA reports
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "mifteh-ai@users.noreply.github.com"
+          git pull --rebase origin main
+          git add memory/visual_qa/ memory/visual_qa_summary.json || true
+          git diff --cached --quiet || git commit -m "AI: Visual validation QA scores [$(date -u +%Y-%m-%dT%H:%M:%SZ)] [skip ci]"
+          git push

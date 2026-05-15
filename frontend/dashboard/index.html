@@ -40,6 +40,7 @@
       <button class="nav-btn" onclick="showTab('trust',this)"><span class="icon">⚖</span> Trust &amp; Apply</button>
 
       <div class="nav-section">System</div>
+      <button class="nav-btn" onclick="showTab('health',this)"><span class="icon">♥</span> System Health</button>
       <button class="nav-btn" onclick="showTab('activity',this)"><span class="icon">≡</span> Activity Feed</button>
       <button class="nav-btn" onclick="showTab('safety',this)"><span class="icon">⛨</span> Safety &amp; Limits</button>
     </nav>
@@ -197,13 +198,24 @@
 
       <!-- PREVIEWS TAB -->
       <section id="tab-previews" class="tab">
-        <div class="section-title">HTML Previews</div>
+        <div class="section-title">HTML Previews &amp; Visual QA</div>
+        <div class="cards-grid" id="qa-overview-cards"></div>
         <div class="panel full">
           <div class="panel-header">
-            <div class="panel-title">Generated Previews</div>
+            <div class="panel-title">Visual QA Score Cards</div>
             <span class="panel-badge badge-dim" id="previews-badge">–</span>
           </div>
+          <div id="qa-score-cards"></div>
+        </div>
+        <div class="panel full">
+          <div class="panel-header">
+            <div class="panel-title">HTML Preview Gallery</div>
+          </div>
           <div id="previews-list"></div>
+        </div>
+        <div style="margin-top:12px;padding:4px 0;display:flex;gap:10px;flex-wrap:wrap;">
+          <a href="https://github.com/Zakoosh/MIFTEH-AI-OS/actions/workflows/ai-visual-preview.yml" target="_blank" class="trigger-btn" style="padding:8px 16px;text-decoration:none;">◫ Visual Preview</a>
+          <a href="https://github.com/Zakoosh/MIFTEH-AI-OS/actions/workflows/ai-visual-validation.yml" target="_blank" class="trigger-btn" style="padding:8px 16px;text-decoration:none;">✓ Visual Validation</a>
         </div>
       </section>
 
@@ -400,6 +412,39 @@
             <div class="panel-title">Validation History</div>
           </div>
           <div id="validation-history-list"></div>
+        </div>
+      </section>
+
+      <!-- SYSTEM HEALTH TAB -->
+      <section id="tab-health" class="tab">
+        <div class="section-title">System Health &amp; Self-Improvement</div>
+        <div class="cards-grid" id="health-overview-cards"></div>
+        <div class="panels-row">
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Token &amp; Cost Efficiency</div>
+              <span class="panel-badge badge-dim" id="health-token-badge">–</span>
+            </div>
+            <div id="health-token-detail"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Workflow Health</div>
+              <span class="panel-badge badge-dim" id="health-workflow-badge">–</span>
+            </div>
+            <div id="health-workflow-detail"></div>
+          </div>
+        </div>
+        <div class="panel full">
+          <div class="panel-header">
+            <div class="panel-title">🤖 AI Self-Improvement Recommendations</div>
+            <span class="panel-badge badge-cyan" id="health-improve-badge">–</span>
+          </div>
+          <div id="health-improvements-list"></div>
+        </div>
+        <div style="margin-top:12px;padding:4px 0;display:flex;gap:10px;flex-wrap:wrap;">
+          <a href="https://github.com/Zakoosh/MIFTEH-AI-OS/actions/workflows/ai-self-improvement.yml" target="_blank" class="trigger-btn" style="padding:8px 16px;text-decoration:none;">♥ Self-Improvement</a>
+          <a href="https://github.com/Zakoosh/MIFTEH-AI-OS/actions/workflows/ai-real-analytics-sync.yml" target="_blank" class="trigger-btn" style="padding:8px 16px;text-decoration:none;">⟳ Analytics Sync</a>
         </div>
       </section>
 

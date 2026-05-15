@@ -18,6 +18,10 @@ GH_TOKEN = os.environ.get("GH_PAT") or os.environ.get("GITHUB_TOKEN", "")
 MEMORY_DIR = Path("memory")
 ALL_PRS_FILE = MEMORY_DIR / "all_prs.json"
 AUTOMERGE_LOG = MEMORY_DIR / "automerge_log.json"
+QA_DIR = MEMORY_DIR / "visual_qa"
+
+# Minimum visual QA score required for HTML files to auto-merge
+VISUAL_QA_THRESHOLD = 70
 
 
 def _now():
@@ -154,6 +158,51 @@ def merge_pr(owner, repo, pr_number, head_sha, pr_title):
     return False, ""
 
 
+# ─── Visual QA gate ───────────────────────────────────────────────────────────
+
+def check_visual_qa(html_files: list, project: str) -> dict:
+    """
+    Check visual QA reports for all HTML files in a PR.
+    Returns summary: {checked, blocked, blocked_files, min_score, avg_score}.
+    Files without a QA report are skipped (not blocked) — QA is optional.
+    """
+    scores = []
+    blocked_files = []
+
+    for file_info in html_files:
+        filename = file_info["filename"]
+        feature_id = Path(filename).stem
+
+        qa_path = QA_DIR / f"{project}_{feature_id}.json"
+        if not qa_path.exists():
+            # Try without project prefix (fallback)
+            alternatives = list(QA_DIR.glob(f"*_{feature_id}.json")) if QA_DIR.exists() else []
+            if alternatives:
+                qa_path = alternatives[0]
+            else:
+                print(f"  [qa] No QA report for {filename} — not blocking (run generate_previews.py first)")
+                continue
+
+        try:
+            qa = json.loads(qa_path.read_text())
+            score = qa.get("score", 0)
+            scores.append(score)
+            passes = qa.get("passes_auto_merge_threshold", False)
+            print(f"  [qa] {filename}: score={score}/100 grade={qa.get('grade','?')} — {'PASS' if passes else 'FAIL'}")
+            if not passes:
+                blocked_files.append(filename)
+        except Exception as e:
+            print(f"  [qa] Could not read QA report for {filename}: {e}")
+
+    return {
+        "checked": len(scores),
+        "blocked": len(blocked_files) > 0,
+        "blocked_files": blocked_files,
+        "min_score": min(scores) if scores else None,
+        "avg_score": round(sum(scores) / len(scores)) if scores else None,
+    }
+
+
 # ─── Main evaluation loop ─────────────────────────────────────────────────────
 
 def load_prs():
@@ -246,6 +295,23 @@ def evaluate_and_merge_pr(pr_record):
         result["reason"] = f"safety score {score} < 90 — not qualifying"
         result["action"] = "rejected"
         return result
+
+    # 4b. Visual QA gate — check HTML files against QA threshold
+    html_files = [f for f in pr_files if f["filename"].endswith(".html")]
+    if html_files:
+        qa_results = check_visual_qa(html_files, pr_record.get("project", ""))
+        result["visual_qa"] = qa_results
+        if qa_results.get("blocked"):
+            result["reason"] = (
+                f"visual QA score {qa_results['min_score']}/100 below threshold {VISUAL_QA_THRESHOLD} "
+                f"for: {', '.join(qa_results['blocked_files'])}"
+            )
+            result["action"] = "rejected_qa"
+            print(f"  [!] VISUAL QA BLOCK — {result['reason']}")
+            return result
+        if qa_results.get("checked"):
+            print(f"  [qa] Visual QA: {qa_results['checked']} files checked, "
+                  f"avg={qa_results.get('avg_score', '?')}/100 — all pass")
 
     # 5. Check mergeable state (retry once — GitHub computes this async)
     mergeable = state.get("mergeable")

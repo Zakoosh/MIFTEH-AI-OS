@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="tr" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Fionera - AI Piyasa Analizi Kartı">
+  <title>Fionera · AI Piyasa Analizi</title>
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif;
+      background-color: #0B0F1A;
+      color: #FFFFFF;
+      margin: 0;
+      padding: 20px;
+    }
+    .card {
+      background-color: #1E1E2F;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      transition: box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .card:hover {
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.7);
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    .header h2 {
+      font-size: 20px;
+      margin: 0;
+    }
+    .badge {
+      background-color: #3A3A4D;
+      color: #FFFFFF;
+      border-radius: 12px;
+      padding: 5px 10px;
+      font-size: 14px;
+    }
+    .sentiment {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 12px;
+      font-weight: bold;
+      color: #FFFFFF;
+    }
+    .sentiment.yukselis {
+      background-color: #28A745;
+    }
+    .sentiment.dusuk {
+      background-color: #DC3545;
+    }
+    .sentiment.notr {
+      background-color: #6C757D;
+    }
+    .metrics {
+      display: flex;
+      justify-content: space-between;
+      margin: 20px 0;
+    }
+    .metric {
+      background-color: #2A2A3D;
+      border-radius: 8px;
+      padding: 15px;
+      flex: 1;
+      margin: 0 5px;
+      text-align: center;
+    }
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    .table th, .table td {
+      padding: 10px;
+      border: 1px solid #3A3A4D;
+      text-align: center;
+    }
+    .button {
+      background-color: #007BFF;
+      color: #FFFFFF;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 15px;
+      cursor: pointer;
+      margin-top: 15px;
+      transition: background-color 0.3s;
+    }
+    .button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="header">
+      <h2>🤖 AI Piyasa Analizi <span class="badge">GPT-4</span></h2>
+      <span>2023-10-01 14:30</span>
+    </div>
+    <div class="sentiment yukselis">YÜKSELIŞ</div>
+    <p>BIST 100 endeksi bugün güçlü bir yükseliş momentumu sergiliyor. Bankacılık sektörü öncülüğünde piyasalar, FED'in faiz kararı öncesi pozitif ayrışıyor. Yabancı yatırımcı alımları devam ederken, teknik olarak 9.200 direncinin kırılması bekleniyor. Portföylerde savunma sektörü ağırlığını artırmak önerilmektedir.</p>
+    <div class="metrics">
+      <div class="metric">BIST 100: 9,150</div>
+      <div class="metric">USD/TRY: 27.50</div>
+      <div class="metric">Altın (TL/gr): 1,750</div>
+    </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Ticker</th>
+          <th>Yön</th>
+          <th>Güven %</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>GARAN</td>
+          <td>▲</td>
+          <td>85%</td>
+        </tr>
+        <tr>
+          <td>THYAO</td>
+          <td>▼</td>
+          <td>75%</td>
+        </tr>
+        <tr>
+          <td>ASELS</td>
+          <td>▲</td>
+          <td>80%</td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="button" id="detailed-analysis">Detaylı Analiz</button>
+    <button class="button" id="refresh">Yenile</button>
+  </div>
+  <script>
+    const insights = [
+      "BIST 100 endeksi bugün güçlü bir yükseliş momentumu sergiliyor. Bankacılık sektörü öncülüğünde piyasalar, FED'in faiz kararı öncesi pozitif ayrışıyor. Yabancı yatırımcı alımları devam ederken, teknik olarak 9.200 direncinin kırılması bekleniyor. Portföylerde savunma sektörü ağırlığını artırmak önerilmektedir.",
+      "Bugün piyasalarda dalgalanma gözlemleniyor. Özellikle enerji sektörü, artan talep ile birlikte değer kazanıyor. Ancak, döviz kurlarındaki belirsizlik yatırımcıları tedirgin ediyor.",
+      "Teknoloji hisseleri son günlerde dikkat çekiyor. Yeni ürün lansmanları ve güçlü çeyrek sonuçları, yatırımcıların ilgisini artırıyor. Ancak, piyasa genelinde dikkatli olunması gerektiği vurgulanıyor."
+    ];
+    let currentIndex = 0;
+
+    document.getElementById('refresh').addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % insights.length;
+      const analysisText = document.querySelector('.card p');
+      analysisText.style.opacity = 0;
+      setTimeout(() => {
+        analysisText.textContent = insights[currentIndex];
+        analysisText.style.opacity = 1;
+      }, 300);
+    });
+  </script>
+</body>
+</html>

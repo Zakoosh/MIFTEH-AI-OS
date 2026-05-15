@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="tr" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Fionera - Portföy Isı Haritası">
+  <meta name="theme-color" content="#0B0F1A">
+  <title>Fionera · Portföy Isı Haritası</title>
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif;
+      background-color: #0B0F1A;
+      color: #ffffff;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    .heatmap {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      width: 100%;
+      max-width: 800px;
+    }
+    .tile {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      border-radius: 8px;
+      transition: transform 0.3s;
+      position: relative;
+      cursor: pointer;
+    }
+    .tile:hover {
+      transform: scale(1.05);
+    }
+    .tile span {
+      font-weight: bold;
+    }
+    .tile-tooltip {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      padding: 5px;
+      border-radius: 4px;
+      display: none;
+    }
+    .tile:hover .tile-tooltip {
+      display: block;
+    }
+    .red { background-color: #7f1d1d; }
+    .dark-red { background-color: #991b1b; }
+    .light-red { background-color: #b91c1c; }
+    .gray { background-color: #374151; }
+    .dark-green { background-color: #14532d; }
+    .green { background-color: #166534; }
+    .light-green { background-color: #15803d; }
+    .deep-green { background-color: #16a34a; }
+    .large {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+    .footer {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 800px;
+    }
+    button {
+      background-color: #16a34a;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #14532d;
+    }
+  </style>
+</head>
+<body>
+  <h1>Portföy Isı Haritası</h1>
+  <div class="heatmap" id="heatmap">
+    <!-- Tiles will be generated here -->
+  </div>
+  <div class="footer">
+    <button id="refreshBtn">Yenile</button>
+    <span id="lastUpdated">Son güncelleme: <span id="timestamp"></span></span>
+  </div>
+  <script>
+    const stocks = [
+      { ticker: 'THYAO', name: 'Türk Hava Yolları', price: 150, volume: 1000000 },
+      { ticker: 'GARAN', name: 'Garanti Bankası', price: 12, volume: 500000 },
+      { ticker: 'AKBNK', name: 'Akbank', price: 20, volume: 300000 },
+      { ticker: 'EREGL', name: 'Ereğli Demir Çelik', price: 25, volume: 400000 },
+      { ticker: 'KCHOL', name: 'Koç Holding', price: 30, volume: 250000 },
+      { ticker: 'TOASO', name: 'Tofaş', price: 40, volume: 200000 },
+      { ticker: 'SISE', name: 'Şişecam', price: 15, volume: 150000 },
+      { ticker: 'BIMAS', name: 'BİM', price: 60, volume: 180000 },
+      { ticker: 'TTKOM', name: 'Türk Telekom', price: 8, volume: 220000 },
+      { ticker: 'YKBNK', name: 'Yapı Kredi', price: 10, volume: 300000 },
+      { ticker: 'PETKM', name: 'Petkim', price: 12, volume: 130000 },
+      { ticker: 'SAHOL', name: 'Sabancı Holding', price: 25, volume: 170000 },
+      { ticker: 'TCELL', name: 'Türkcell', price: 12, volume: 250000 },
+      { ticker: 'ASELS', name: 'Aselsan', price: 30, volume: 190000 },
+      { ticker: 'KOZAL', name: 'Koza Altın', price: 40, volume: 300000 },
+      { ticker: 'VAKBN', name: 'VakıfBank', price: 8, volume: 400000 },
+      { ticker: 'HALKB', name: 'Halkbank', price: 10, volume: 350000 },
+      { ticker: 'ISCTR', name: 'İş Bankası', price: 20, volume: 450000 },
+      { ticker: 'MGROS', name: 'Migros', price: 18, volume: 200000 },
+      { ticker: 'EKGYO', name: 'Emlak GYO', price: 8, volume: 300000 },
+    ];
+
+    function getRandomChange() {
+      return (Math.random() * 10 - 5).toFixed(2); // Random change between -5% and +5%
+    }
+
+    function getTileColor(change) {
+      if (change <= -4) return 'red';
+      if (change <= -2) return 'dark-red';
+      if (change <= -1) return 'light-red';
+      if (change < 0) return 'gray';
+      if (change <= 1) return 'dark-green';
+      if (change <= 2) return 'green';
+      if (change <= 4) return 'light-green';
+      return 'deep-green';
+    }
+
+    function generateHeatmap() {
+      const heatmap = document.getElementById('heatmap');
+      heatmap.innerHTML = '';
+      stocks.forEach((stock, index) => {
+        const change = getRandomChange();
+        const tile = document.createElement('div');
+        tile.className = `tile ${getTileColor(change)} ${index < 4 ? 'large' : ''}`;
+        tile.innerHTML = `
+          <span>${stock.ticker}</span>
+          <span style="color: ${change < 0 ? 'red' : 'green'};">${change}%</span>
+          <div class="tile-tooltip">${stock.name} - ${stock.price} TL - Hacim: ${stock.volume}</div>
+        `;
+        heatmap.appendChild(tile);
+      });
+      document.getElementById('timestamp').textContent = new Date().toLocaleString();
+    }
+
+    document.getElementById('refreshBtn').addEventListener('click', generateHeatmap);
+
+    // Initial generation
+    generateHeatmap();
+  </script>
+</body>
+</html>

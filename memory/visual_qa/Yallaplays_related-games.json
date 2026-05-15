@@ -1,0 +1,68 @@
+{
+  "label": "components_related-games",
+  "project": "Yallaplays",
+  "validated_at": "2026-05-15T19:02:49Z",
+  "score": 60,
+  "grade": "D",
+  "passes_auto_merge_threshold": false,
+  "categories": {
+    "seo": {
+      "score": 8,
+      "max": 30,
+      "issues": [
+        "Missing meta description",
+        "Missing canonical link",
+        "Only 0/5 Open Graph tags present",
+        "No JSON-LD structured data",
+        "Missing H1 tag"
+      ]
+    },
+    "mobile": {
+      "score": 22,
+      "max": 25,
+      "issues": [
+        "Only 1 media query found — consider more responsive breakpoints"
+      ]
+    },
+    "accessibility": {
+      "score": 13,
+      "max": 20,
+      "issues": [
+        "No ARIA attributes found — important for screen reader accessibility",
+        "No :focus styles — keyboard navigation may be invisible"
+      ]
+    },
+    "performance": {
+      "score": 12,
+      "max": 15,
+      "issues": [
+        "No preload/prefetch/preconnect hints — consider adding for critical resources"
+      ]
+    },
+    "ux": {
+      "score": 5,
+      "max": 10,
+      "issues": [
+        "No <nav> element — consider adding navigation for usability",
+        "Only ~285 words of visible text — consider adding more content"
+      ]
+    }
+  },
+  "all_issues": [
+    "Missing meta description",
+    "Missing canonical link",
+    "Only 0/5 Open Graph tags present",
+    "No JSON-LD structured data",
+    "Missing H1 tag",
+    "Only 1 media query found — consider more responsive breakpoints",
+    "No ARIA attributes found — important for screen reader accessibility",
+    "No :focus styles — keyboard navigation may be invisible",
+    "No preload/prefetch/preconnect hints — consider adding for critical resources",
+    "No <nav> element — consider adding navigation for usability",
+    "Only ~285 words of visible text — consider adding more content"
+  ],
+  "summary": "Grade D — blocked from auto-merge; fix: SEO weak",
+  "pr_url": "https://github.com/Zakoosh/Yallaplays/pull/6",
+  "branch": "ai/product-yallaplays-2026-05-15",
+  "file_path": "components/related-games.html"
+}

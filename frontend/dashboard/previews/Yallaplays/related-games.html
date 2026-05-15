@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ألعاب قد تعجبك - يلا بلاي</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .carousel-container {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            max-width: 800px;
+            margin: auto;
+        }
+        .carousel {
+            display: flex;
+            transition: transform 0.3s ease;
+            will-change: transform;
+        }
+        .game-card {
+            width: 120px;
+            height: 180px;
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            margin: 0 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            cursor: pointer;
+            transition: box-shadow 0.3s ease;
+        }
+        .game-card:hover {
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
+        }
+        .game-emoji {
+            font-size: 50px;
+        }
+        .game-name {
+            margin: 10px 0;
+            font-size: 16px;
+            text-align: center;
+        }
+        .genre-badge {
+            background-color: #ff4081;
+            color: #ffffff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+        .scroll-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #ffffff;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            z-index: 1;
+        }
+        .scroll-left {
+            left: 10px;
+        }
+        .scroll-right {
+            right: 10px;
+        }
+        @media (max-width: 600px) {
+            .game-card {
+                width: 100px;
+                height: 150px;
+            }
+            .game-name {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h2>ألعاب قد تعجبك 🎮</h2>
+    <div class="carousel-container">
+        <button class="scroll-button scroll-left">◀</button>
+        <div class="carousel" id="carousel">
+            <div class="game-card">
+                <div class="game-emoji">🎮</div>
+                <div class="game-name">لعبة 1</div>
+                <div class="genre-badge">أكشن</div>
+            </div>
+            <div class="game-card">
+                <div class="game-emoji">🧩</div>
+                <div class="game-name">لعبة 2</div>
+                <div class="genre-badge">ألغاز</div>
+            </div>
+            <div class="game-card">
+                <div class="game-emoji">🏎️</div>
+                <div class="game-name">لعبة 3</div>
+                <div class="genre-badge">سباق</div>
+            </div>
+            <div class="game-card">
+                <div class="game-emoji">👾</div>
+                <div class="game-name">لعبة 4</div>
+                <div class="genre-badge">مغامرات</div>
+            </div>
+            <div class="game-card">
+                <div class="game-emoji">🎲</div>
+                <div class="game-name">لعبة 5</div>
+                <div class="genre-badge">استراتيجية</div>
+            </div>
+            <div class="game-card">
+                <div class="game-emoji">🧙‍♂️</div>
+                <div class="game-name">لعبة 6</div>
+                <div class="genre-badge">خيال</div>
+            </div>
+            <div class="game-card">
+                <div class="game-emoji">🤖</div>
+                <div class="game-name">لعبة 7</div>
+                <div class="genre-badge">مستقبلية</div>
+            </div>
+            <div class="game-card">
+                <div class="game-emoji">🌌</div>
+                <div class="game-name">لعبة 8</div>
+                <div class="genre-badge">فضاء</div>
+            </div>
+        </div>
+        <button class="scroll-button scroll-right">▶</button>
+    </div>
+    <script>
+        const carousel = document.getElementById('carousel');
+        const scrollAmount = 130; // width of card + margin
+        let scrollPosition = 0;
+
+        document.querySelector('.scroll-right').addEventListener('click', () => {
+            scrollPosition += scrollAmount;
+            carousel.style.transform = `translateX(-${scrollPosition}px)`;
+        });
+
+        document.querySelector('.scroll-left').addEventListener('click', () => {
+            scrollPosition -= scrollAmount;
+            if (scrollPosition < 0) scrollPosition = 0;
+            carousel.style.transform = `translateX(-${scrollPosition}px)`;
+        });
+
+        let startX;
+        carousel.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+        });
+
+        carousel.addEventListener('touchmove', (e) => {
+            const moveX = e.touches[0].clientX;
+            const diffX = startX - moveX;
+            if (diffX > 50) {
+                scrollPosition += scrollAmount;
+                carousel.style.transform = `translateX(-${scrollPosition}px)`;
+                startX = moveX; // reset startX
+            } else if (diffX < -50) {
+                scrollPosition -= scrollAmount;
+                if (scrollPosition < 0) scrollPosition = 0;
+                carousel.style.transform = `translateX(-${scrollPosition}px)`;
+                startX = moveX; // reset startX
+            }
+        });
+    </script>
+</body>
+</html>

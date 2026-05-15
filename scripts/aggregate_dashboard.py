@@ -77,6 +77,34 @@ def read_analytics_intelligence():
     return json.loads(f.read_text()) if f.exists() else {}
 
 
+def read_visual_qa_summary():
+    f = Path("memory/visual_qa_summary.json")
+    return json.loads(f.read_text()) if f.exists() else {}
+
+
+def read_self_improvement():
+    f = Path("memory/self_improvement_report.json")
+    if not f.exists():
+        return {}
+    data = json.loads(f.read_text())
+    # Return only the dashboard-relevant fields (not raw_metrics which is large)
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "overall_health_score": data.get("overall_health_score", 0),
+        "health_summary": data.get("health_summary", ""),
+        "efficiency_score": data.get("efficiency_score", 0),
+        "quality_score": data.get("quality_score", 0),
+        "velocity_score": data.get("velocity_score", 0),
+        "top_improvements": data.get("top_improvements", [])[:8],
+        "cost_projection": data.get("cost_projection", {}),
+        "next_cycle_focus": data.get("next_cycle_focus", ""),
+        "raw_metrics": data.get("raw_metrics", {}),
+        "ai_generated": data.get("ai_generated", False),
+        "tokens_used": data.get("tokens_used", 0),
+        "cost_usd": data.get("cost_usd", 0.0),
+    }
+
+
 def read_product_outputs():
     """Read all product execution output records from outputs/{project}/product/."""
     records = []
@@ -237,7 +265,10 @@ def main():
     product_outputs = read_product_outputs()
     product_metrics = build_product_metrics(product_outputs)
     analytics_intel = read_analytics_intelligence()
-    print(f"[dashboard] {len(outputs)} outputs, {len(prs)} PRs, {len(automerge_log)} merge events, {len(product_outputs)} product features")
+    visual_qa = read_visual_qa_summary()
+    self_improvement = read_self_improvement()
+    print(f"[dashboard] {len(outputs)} outputs, {len(prs)} PRs, {len(automerge_log)} merge events, "
+          f"{len(product_outputs)} product features, {visual_qa.get('total', 0)} QA reports")
 
     loops, active_loops = build_loops(outputs)
     ai_analytics = build_ai_analytics(outputs)
@@ -347,6 +378,8 @@ def main():
             for e in automerge_log[-50:]
         ],
         "product": product_metrics,
+        "visual_qa": visual_qa,
+        "self_improvement": self_improvement,
         "analytics_intelligence": {
             "generated_at": analytics_intel.get("generated_at", ""),
             "data_source": analytics_intel.get("data_source", ""),

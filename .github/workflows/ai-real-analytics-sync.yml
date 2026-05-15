@@ -1,0 +1,73 @@
+name: MIFTEH AI Real Analytics Sync
+
+# Syncs real analytics from Plausible/GA4 if configured.
+# Falls back to AI-estimated data if credentials are not set.
+# Also generates analytics tracking code snippets for each project.
+# Runs daily at 02:00 UTC, before the analytics intelligence pipeline (03:00).
+
+on:
+  schedule:
+    - cron: '0 2 * * *'   # daily 02:00 UTC
+  workflow_dispatch:
+    inputs:
+      target_project:
+        description: 'Target project (yallaplays|fionera|mifteh|all)'
+        required: false
+        default: 'all'
+        type: choice
+        options: [all, yallaplays, fionera, mifteh]
+      create_tracking_prs:
+        description: 'Create PRs to add analytics tracking snippets'
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+
+jobs:
+  analytics-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install openai
+
+      - name: Sync analytics data
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GH_PAT: ${{ secrets.GH_PAT }}
+          TARGET_PROJECT: ${{ inputs.target_project || 'all' }}
+          CREATE_TRACKING_PRS: ${{ inputs.create_tracking_prs || 'false' }}
+          # Real analytics credentials (optional — graceful fallback if not set)
+          PLAUSIBLE_API_KEY: ${{ secrets.PLAUSIBLE_API_KEY }}
+          PLAUSIBLE_SITE_IDS: ${{ secrets.PLAUSIBLE_SITE_IDS }}
+          GA4_PROPERTY_ID: ${{ secrets.GA4_PROPERTY_ID }}
+          GA4_CREDENTIALS_JSON: ${{ secrets.GA4_CREDENTIALS_JSON }}
+          # Per-project measurement IDs for tracking snippet generation
+          GA4_MEASUREMENT_ID_YALLAPLAYS: ${{ secrets.GA4_MEASUREMENT_ID_YALLAPLAYS }}
+          GA4_MEASUREMENT_ID_FIONERA: ${{ secrets.GA4_MEASUREMENT_ID_FIONERA }}
+          GA4_MEASUREMENT_ID_MIFTEH: ${{ secrets.GA4_MEASUREMENT_ID_MIFTEH }}
+          CLARITY_ID_YALLAPLAYS: ${{ secrets.CLARITY_ID_YALLAPLAYS }}
+          CLARITY_ID_FIONERA: ${{ secrets.CLARITY_ID_FIONERA }}
+          CLARITY_ID_MIFTEH: ${{ secrets.CLARITY_ID_MIFTEH }}
+        run: python scripts/sync_real_analytics.py
+
+      - name: Aggregate dashboard
+        run: python scripts/aggregate_dashboard.py
+
+      - name: Commit analytics sync results
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "mifteh-ai@users.noreply.github.com"
+          git pull --rebase origin main
+          git add memory/analytics_sync.json outputs/ frontend/dashboard/data/
+          git diff --cached --quiet || git commit -m "AI: Analytics sync [$(date -u +%Y-%m-%dT%H:%M:%SZ)] [skip ci]"
+          git push

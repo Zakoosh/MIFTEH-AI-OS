@@ -1,0 +1,62 @@
+{
+  "label": "index",
+  "project": "Fionera",
+  "validated_at": "2026-05-15T19:02:48Z",
+  "score": 72,
+  "grade": "C",
+  "passes_auto_merge_threshold": true,
+  "categories": {
+    "seo": {
+      "score": 27,
+      "max": 30,
+      "issues": [
+        "Meta description length 34 (ideal 50-160 chars)"
+      ]
+    },
+    "mobile": {
+      "score": 16,
+      "max": 25,
+      "issues": [
+        "No CSS media queries detected — layout may break on mobile",
+        "No max-width detected — consider constraining layout width"
+      ]
+    },
+    "accessibility": {
+      "score": 10,
+      "max": 20,
+      "issues": [
+        "No ARIA attributes found — important for screen reader accessibility",
+        "1 form input(s) may be missing labels",
+        "No :focus styles — keyboard navigation may be invisible"
+      ]
+    },
+    "performance": {
+      "score": 13,
+      "max": 15,
+      "issues": [
+        "3 Google Fonts link(s) without preconnect — consider adding rel='preconnect'"
+      ]
+    },
+    "ux": {
+      "score": 6,
+      "max": 10,
+      "issues": [
+        "Very little visible text (~61 words) — page may appear thin to users"
+      ]
+    }
+  },
+  "all_issues": [
+    "Meta description length 34 (ideal 50-160 chars)",
+    "No CSS media queries detected — layout may break on mobile",
+    "No max-width detected — consider constraining layout width",
+    "No ARIA attributes found — important for screen reader accessibility",
+    "1 form input(s) may be missing labels",
+    "No :focus styles — keyboard navigation may be invisible",
+    "3 Google Fonts link(s) without preconnect — consider adding rel='preconnect'",
+    "Very little visible text (~61 words) — page may appear thin to users"
+  ],
+  "summary": "Grade C — passes threshold; improve: accessibility gaps",
+  "pr_url": "https://github.com/Zakoosh/fionera/pull/3",
+  "branch": "ai/seo-improvements-fionera-2026-05-15",
+  "file_path": "index.html"
+}

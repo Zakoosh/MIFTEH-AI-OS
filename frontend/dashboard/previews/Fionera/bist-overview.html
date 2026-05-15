@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="tr" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Fionera - Borsa İstanbul Piyasa Görünümü">
+  <title>Fionera · BIST 100 Piyasa Görünümü</title>
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif;
+      background-color: #0d1117;
+      color: #ffffff;
+      margin: 0;
+      padding: 20px;
+    }
+    .widget {
+      background-color: #161b22;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .header h1 {
+      font-size: 24px;
+      margin: 0;
+    }
+    .time {
+      font-size: 16px;
+    }
+    .refresh-button {
+      background-color: #00d4aa;
+      border: none;
+      color: #ffffff;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .refresh-button:hover {
+      background-color: #00b89a;
+    }
+    .index-card {
+      background-color: #0d1117;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .index-value {
+      font-size: 32px;
+      font-weight: bold;
+    }
+    .change {
+      font-size: 18px;
+    }
+    .gainers, .losers {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #444;
+    }
+    .ticker {
+      font-weight: bold;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    .badge {
+      padding: 5px;
+      border-radius: 5px;
+      font-size: 14px;
+      color: #ffffff;
+    }
+    .gainer {
+      background-color: #00d4aa;
+    }
+    .loser {
+      background-color: #ff4f5e;
+    }
+    .sparkline {
+      height: 10px;
+      border-radius: 5px;
+      background-color: #444;
+      margin-left: 10px;
+    }
+    .volume {
+      margin-top: 15px;
+      font-size: 18px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="widget">
+    <div class="header">
+      <h1>📈 BIST 100</h1>
+      <div class="time" id="liveTime"></div>
+      <button class="refresh-button" onclick="refreshData()">Yenile</button>
+    </div>
+    <div class="index-card">
+      <div class="index-value" id="indexValue">9,247.83</div>
+      <div class="change" id="indexChange">+1.24% (+113.45)</div>
+    </div>
+    <div class="gainers">
+      <div><span class="ticker">THYAO</span> - Türk Hava Yolları <span class="badge gainer">+4.2%</span><div class="sparkline" style="width: 42%;"></div></div>
+    </div>
+    <div class="gainers">
+      <div><span class="ticker">GARAN</span> - Garanti Bankası <span class="badge gainer">+3.8%</span><div class="sparkline" style="width: 38%;"></div></div>
+    </div>
+    <div class="gainers">
+      <div><span class="ticker">AKBNK</span> - Akbank <span class="badge gainer">+2.9%</span><div class="sparkline" style="width: 29%;"></div></div>
+    </div>
+    <div class="gainers">
+      <div><span class="ticker">EREGL</span> - Ereğli Demir Çelik <span class="badge gainer">+2.1%</span><div class="sparkline" style="width: 21%;"></div></div>
+    </div>
+    <div class="gainers">
+      <div><span class="ticker">KCHOL</span> - Koç Holding <span class="badge gainer">+1.7%</span><div class="sparkline" style="width: 17%;"></div></div>
+    </div>
+    <div class="losers">
+      <div><span class="ticker">TOASO</span> - TOFAŞ <span class="badge loser">-3.1%</span><div class="sparkline" style="width: 31%;"></div></div>
+    </div>
+    <div class="losers">
+      <div><span class="ticker">SISE</span> - Şişecam <span class="badge loser">-2.4%</span><div class="sparkline" style="width: 24%;"></div></div>
+    </div>
+    <div class="losers">
+      <div><span class="ticker">BIMAS</span> - BİM <span class="badge loser">-1.8%</span><div class="sparkline" style="width: 18%;"></div></div>
+    </div>
+    <div class="losers">
+      <div><span class="ticker">TTKOM</span> - Türk Telekom <span class="badge loser">-1.3%</span><div class="sparkline" style="width: 13%;"></div></div>
+    </div>
+    <div class="losers">
+      <div><span class="ticker">YKBNK</span> - Yapı Kredi <span class="badge loser">-0.9%</span><div class="sparkline" style="width: 9%;"></div></div>
+    </div>
+    <div class="volume" id="volume">Hacim: 42.3 Milyar TL</div>
+  </div>
+  <script>
+    function updateTime() {
+      const now = new Date();
+      document.getElementById('liveTime').innerText = now.toLocaleTimeString('tr-TR');
+    }
+
+    function refreshData() {
+      const indexValue = (9247.83 + (Math.random() * 10 - 5)).toFixed(2);
+      const indexChange = ((Math.random() * 2 - 1).toFixed(2));
+      const changeValue = ((Math.random() * 5).toFixed(2));
+      document.getElementById('indexValue').innerText = indexValue;
+      document.getElementById('indexChange').innerText = (indexChange >= 0 ? '+' : '') + indexChange + '% (' + changeValue + ')';
+      document.getElementById('volume').innerText = 'Hacim: ' + (42.3 + (Math.random() * 5 - 2.5)).toFixed(1) + ' Milyar TL';
+      updateTime();
+    }
+
+    setInterval(updateTime, 1000);
+    refreshData();
+  </script>
+</body>
+</html>

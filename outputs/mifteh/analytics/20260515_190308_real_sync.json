@@ -1,0 +1,16 @@
+{
+  "project": "mifteh",
+  "domain": "miftehos.com",
+  "analytics": {
+    "data_source": "ai_intelligence",
+    "period": "30d",
+    "visitors": 4500,
+    "pageviews": 6300,
+    "bounce_rate": 50,
+    "avg_session_duration_s": 120,
+    "fetched_at": "2026-05-15T19:03:08Z"
+  },
+  "tracking_snippet": "<!-- Plausible Analytics (privacy-first) -->\n<script defer data-domain=\"miftehos.com\" src=\"https://plausible.io/js/script.js\"></script>",
+  "generated_at": "2026-05-15T19:03:08Z",
+  "ai_generated": true
+}

@@ -1,178 +1,178 @@
 {
-  "generated_at": "2026-05-15T18:31:16Z",
+  "generated_at": "2026-05-15T19:03:12Z",
   "architecture": "github-native",
   "scheduler": {
     "scheduler_running": true,
     "active_loops": 14,
     "total_loops": 14,
-    "total_runs": 87,
-    "total_success": 87,
+    "total_runs": 101,
+    "total_success": 101,
     "loops": [
       {
         "id": "yp-seo-loop",
         "label": "SEO Page Generator",
         "project": "yallaplays",
         "interval_minutes": 360,
-        "last_run": "2026-05-15T18:29:43Z",
+        "last_run": "2026-05-15T19:03:08Z",
         "last_status": "completed",
-        "run_count": 6,
-        "success_count": 6,
-        "next_run_scheduled": "2026-05-16T00:29:43Z"
+        "run_count": 7,
+        "success_count": 7,
+        "next_run_scheduled": "2026-05-16T01:03:08Z"
       },
       {
         "id": "yp-category-loop",
         "label": "Category Optimizer",
         "project": "yallaplays",
         "interval_minutes": 720,
-        "last_run": "2026-05-15T18:29:43Z",
+        "last_run": "2026-05-15T19:03:08Z",
         "last_status": "completed",
-        "run_count": 6,
-        "success_count": 6,
-        "next_run_scheduled": "2026-05-16T06:29:43Z"
+        "run_count": 7,
+        "success_count": 7,
+        "next_run_scheduled": "2026-05-16T07:03:08Z"
       },
       {
         "id": "yp-homepage-loop",
         "label": "Homepage Recommendations",
         "project": "yallaplays",
         "interval_minutes": 360,
-        "last_run": "2026-05-15T18:29:43Z",
+        "last_run": "2026-05-15T19:03:08Z",
         "last_status": "completed",
-        "run_count": 6,
-        "success_count": 6,
-        "next_run_scheduled": "2026-05-16T00:29:43Z"
+        "run_count": 7,
+        "success_count": 7,
+        "next_run_scheduled": "2026-05-16T01:03:08Z"
       },
       {
         "id": "yp-linking-loop",
         "label": "Internal Linking",
         "project": "yallaplays",
         "interval_minutes": 1440,
-        "last_run": "2026-05-15T18:29:43Z",
+        "last_run": "2026-05-15T19:03:08Z",
         "last_status": "completed",
-        "run_count": 6,
-        "success_count": 6,
-        "next_run_scheduled": "2026-05-16T18:29:43Z"
+        "run_count": 7,
+        "success_count": 7,
+        "next_run_scheduled": "2026-05-16T19:03:08Z"
       },
       {
         "id": "yp-mobile-loop",
         "label": "Mobile Optimization",
         "project": "yallaplays",
         "interval_minutes": 1440,
-        "last_run": "2026-05-15T18:29:43Z",
+        "last_run": "2026-05-15T19:03:08Z",
         "last_status": "completed",
-        "run_count": 6,
-        "success_count": 6,
-        "next_run_scheduled": "2026-05-16T18:29:43Z"
+        "run_count": 7,
+        "success_count": 7,
+        "next_run_scheduled": "2026-05-16T19:03:08Z"
       },
       {
         "id": "yp-games-loop",
         "label": "Game Suggestion Generator",
         "project": "yallaplays",
         "interval_minutes": 240,
-        "last_run": "2026-05-15T18:29:43Z",
+        "last_run": "2026-05-15T19:03:08Z",
         "last_status": "completed",
-        "run_count": 6,
-        "success_count": 6,
-        "next_run_scheduled": "2026-05-15T22:29:43Z"
+        "run_count": 7,
+        "success_count": 7,
+        "next_run_scheduled": "2026-05-15T23:03:08Z"
       },
       {
         "id": "fi-market-loop",
         "label": "Market Insights",
         "project": "fionera",
         "interval_minutes": 240,
-        "last_run": "2026-05-15T18:30:10Z",
+        "last_run": "2026-05-15T19:03:08Z",
         "last_status": "completed",
-        "run_count": 6,
-        "success_count": 6,
-        "next_run_scheduled": "2026-05-15T22:30:10Z"
+        "run_count": 7,
+        "success_count": 7,
+        "next_run_scheduled": "2026-05-15T23:03:08Z"
       },
       {
         "id": "fi-watchlist-loop",
         "label": "Watchlist Optimizer",
         "project": "fionera",
         "interval_minutes": 360,
-        "last_run": "2026-05-15T18:30:10Z",
+        "last_run": "2026-05-15T19:03:08Z",
         "last_status": "completed",
-        "run_count": 6,
-        "success_count": 6,
-        "next_run_scheduled": "2026-05-16T00:30:10Z"
+        "run_count": 7,
+        "success_count": 7,
+        "next_run_scheduled": "2026-05-16T01:03:08Z"
       },
       {
         "id": "fi-analytics-loop",
         "label": "Analytics Report",
         "project": "fionera",
         "interval_minutes": 1440,
-        "last_run": "2026-05-15T18:30:10Z",
+        "last_run": "2026-05-15T19:03:08Z",
         "last_status": "completed",
-        "run_count": 6,
-        "success_count": 6,
-        "next_run_scheduled": "2026-05-16T18:30:10Z"
+        "run_count": 7,
+        "success_count": 7,
+        "next_run_scheduled": "2026-05-16T19:03:08Z"
       },
       {
         "id": "fi-ux-loop",
         "label": "UX Improvements",
         "project": "fionera",
         "interval_minutes": 1440,
-        "last_run": "2026-05-15T18:30:10Z",
+        "last_run": "2026-05-15T19:03:08Z",
         "last_status": "completed",
-        "run_count": 6,
-        "success_count": 6,
-        "next_run_scheduled": "2026-05-16T18:30:10Z"
+        "run_count": 7,
+        "success_count": 7,
+        "next_run_scheduled": "2026-05-16T19:03:08Z"
       },
       {
         "id": "fi-widgets-loop",
         "label": "Finance Widgets",
         "project": "fionera",
         "interval_minutes": 720,
-        "last_run": "2026-05-15T18:30:10Z",
+        "last_run": "2026-05-15T19:03:08Z",
         "last_status": "completed",
-        "run_count": 6,
-        "success_count": 6,
-        "next_run_scheduled": "2026-05-16T06:30:10Z"
+        "run_count": 7,
+        "success_count": 7,
+        "next_run_scheduled": "2026-05-16T07:03:08Z"
       },
       {
         "id": "mi-seo-loop",
         "label": "SEO Improvements",
         "project": "mifteh",
         "interval_minutes": 720,
-        "last_run": "2026-05-15T18:30:26Z",
+        "last_run": "2026-05-15T19:03:08Z",
         "last_status": "completed",
-        "run_count": 7,
-        "success_count": 7,
-        "next_run_scheduled": "2026-05-16T06:30:26Z"
+        "run_count": 8,
+        "success_count": 8,
+        "next_run_scheduled": "2026-05-16T07:03:08Z"
       },
       {
         "id": "mi-content-loop",
         "label": "Content Optimizer",
         "project": "mifteh",
         "interval_minutes": 1440,
-        "last_run": "2026-05-15T18:30:26Z",
+        "last_run": "2026-05-15T19:03:08Z",
         "last_status": "completed",
-        "run_count": 7,
-        "success_count": 7,
-        "next_run_scheduled": "2026-05-16T18:30:26Z"
+        "run_count": 8,
+        "success_count": 8,
+        "next_run_scheduled": "2026-05-16T19:03:08Z"
       },
       {
         "id": "mi-landing-loop",
         "label": "Landing Page Optimizer",
         "project": "mifteh",
         "interval_minutes": 1440,
-        "last_run": "2026-05-15T18:30:26Z",
+        "last_run": "2026-05-15T19:03:08Z",
         "last_status": "completed",
-        "run_count": 7,
-        "success_count": 7,
-        "next_run_scheduled": "2026-05-16T18:30:26Z"
+        "run_count": 8,
+        "success_count": 8,
+        "next_run_scheduled": "2026-05-16T19:03:08Z"
       }
     ],
     "provider_cooldowns": {
       "openai": {
         "consecutive_429s": 0,
         "total_429s": 0,
-        "last_success": "2026-05-15T18:31:16Z"
+        "last_success": "2026-05-15T19:03:12Z"
       },
       "gemini": {
         "consecutive_429s": 0,
         "total_429s": 0,
-        "last_success": "2026-05-15T18:31:16Z"
+        "last_success": "2026-05-15T19:03:12Z"
       }
     }
   },
@@ -193,8 +193,8 @@
     }
   },
   "ai_analytics": {
-    "total_calls": 19,
-    "successful_calls": 19,
+    "total_calls": 22,
+    "successful_calls": 22,
     "rate_limited_calls": 0,
     "success_rate_pct": 100,
     "ai_generated_pct": 100,
@@ -202,7 +202,7 @@
     "total_cost_usd": 0.020444,
     "by_provider": {
       "openai": {
-        "requests": 19,
+        "requests": 22,
         "tokens": 47270,
         "cost_usd": 0.02044425,
         "success_rate": 100,
@@ -210,11 +210,12 @@
       }
     },
     "by_project": {
-      "mifteh": 7,
-      "fionera": 6,
-      "yallaplays": 6
+      "fionera": 7,
+      "yallaplays": 7,
+      "mifteh": 8
     },
     "by_operation_type": {
+      "unknown": 3,
       "analytics_intelligence": 3,
       "product_execution": 8,
       "repository_analysis": 1,
@@ -225,18 +226,18 @@
     },
     "by_day": {
       "2026-05-15": {
-        "requests": 19,
-        "success": 19,
+        "requests": 22,
+        "success": 22,
         "cost_usd": 0.02044425
       }
     }
   },
   "outputs": {
-    "total": 19,
-    "yallaplays": 6,
-    "fionera": 6,
-    "mifteh": 7,
-    "ai_generated": 19,
+    "total": 22,
+    "yallaplays": 7,
+    "fionera": 7,
+    "mifteh": 8,
+    "ai_generated": 22,
     "template_generated": 0,
     "pending_review": 6
   },
@@ -326,6 +327,27 @@
     }
   ],
   "activity": [
+    {
+      "type": "unknown",
+      "project": "fionera",
+      "title": "Untitled",
+      "ai_generated": true,
+      "time": "2026-05-15T19:03:08Z"
+    },
+    {
+      "type": "unknown",
+      "project": "yallaplays",
+      "title": "Untitled",
+      "ai_generated": true,
+      "time": "2026-05-15T19:03:08Z"
+    },
+    {
+      "type": "unknown",
+      "project": "mifteh",
+      "title": "Untitled",
+      "ai_generated": true,
+      "time": "2026-05-15T19:03:08Z"
+    },
     {
       "type": "analytics_intelligence",
       "project": "mifteh",
@@ -730,6 +752,1109 @@
         "generated_at": "2026-05-15T16:21:28Z"
       }
     ]
+  },
+  "visual_qa": {
+    "total": 8,
+    "passing": 3,
+    "blocking": 5,
+    "avg_score": 67,
+    "pass_rate_pct": 38,
+    "reports": [
+      {
+        "label": "category_action",
+        "project": "Yallaplays",
+        "score": 79,
+        "grade": "C",
+        "passes": true,
+        "pr_url": "https://github.com/Zakoosh/Yallaplays/pull/6",
+        "branch": "ai/product-yallaplays-2026-05-15",
+        "file_path": "category/action.html",
+        "validated_at": "2026-05-15T19:02:49Z",
+        "summary": "Grade C — passes threshold; improve: accessibility gaps",
+        "categories": {
+          "seo": {
+            "score": 28,
+            "max": 30
+          },
+          "mobile": {
+            "score": 18,
+            "max": 25
+          },
+          "accessibility": {
+            "score": 11,
+            "max": 20
+          },
+          "performance": {
+            "score": 12,
+            "max": 15
+          },
+          "ux": {
+            "score": 10,
+            "max": 10
+          }
+        },
+        "top_issues": [
+          "Multiple H1 tags (2) — should have exactly one",
+          "No CSS media queries detected — layout may break on mobile",
+          "1 heading level jump(s) — headings should not skip levels"
+        ]
+      },
+      {
+        "label": "index",
+        "project": "Fionera",
+        "score": 72,
+        "grade": "C",
+        "passes": true,
+        "pr_url": "https://github.com/Zakoosh/fionera/pull/3",
+        "branch": "ai/seo-improvements-fionera-2026-05-15",
+        "file_path": "index.html",
+        "validated_at": "2026-05-15T19:02:48Z",
+        "summary": "Grade C — passes threshold; improve: accessibility gaps",
+        "categories": {
+          "seo": {
+            "score": 27,
+            "max": 30
+          },
+          "mobile": {
+            "score": 16,
+            "max": 25
+          },
+          "accessibility": {
+            "score": 10,
+            "max": 20
+          },
+          "performance": {
+            "score": 13,
+            "max": 15
+          },
+          "ux": {
+            "score": 6,
+            "max": 10
+          }
+        },
+        "top_issues": [
+          "Meta description length 34 (ideal 50-160 chars)",
+          "No CSS media queries detected — layout may break on mobile",
+          "No max-width detected — consider constraining layout width"
+        ]
+      },
+      {
+        "label": "ar_index",
+        "project": "Yallaplays",
+        "score": 71,
+        "grade": "C",
+        "passes": true,
+        "pr_url": "https://github.com/Zakoosh/Yallaplays/pull/6",
+        "branch": "ai/product-yallaplays-2026-05-15",
+        "file_path": "ar/index.html",
+        "validated_at": "2026-05-15T19:02:49Z",
+        "summary": "Grade C — passes auto-merge threshold",
+        "categories": {
+          "seo": {
+            "score": 25,
+            "max": 30
+          },
+          "mobile": {
+            "score": 16,
+            "max": 25
+          },
+          "accessibility": {
+            "score": 13,
+            "max": 20
+          },
+          "performance": {
+            "score": 9,
+            "max": 15
+          },
+          "ux": {
+            "score": 8,
+            "max": 10
+          }
+        },
+        "top_issues": [
+          "No JSON-LD structured data",
+          "No CSS media queries detected — layout may break on mobile",
+          "No max-width detected — consider constraining layout width"
+        ]
+      },
+      {
+        "label": "index",
+        "project": "YallaPlays",
+        "score": 67,
+        "grade": "D",
+        "passes": false,
+        "pr_url": "https://github.com/Zakoosh/Yallaplays/pull/5",
+        "branch": "ai/seo-improvements-yallaplays-2026-05-15",
+        "file_path": "index.html",
+        "validated_at": "2026-05-15T19:02:47Z",
+        "summary": "Grade D — blocked from auto-merge; fix: accessibility gaps",
+        "categories": {
+          "seo": {
+            "score": 26,
+            "max": 30
+          },
+          "mobile": {
+            "score": 16,
+            "max": 25
+          },
+          "accessibility": {
+            "score": 9,
+            "max": 20
+          },
+          "performance": {
+            "score": 13,
+            "max": 15
+          },
+          "ux": {
+            "score": 3,
+            "max": 10
+          }
+        },
+        "top_issues": [
+          "Missing H1 tag",
+          "No CSS media queries detected — layout may break on mobile",
+          "No max-width detected — consider constraining layout width"
+        ]
+      },
+      {
+        "label": "widgets_portfolio-heatmap",
+        "project": "Fionera",
+        "score": 64,
+        "grade": "D",
+        "passes": false,
+        "pr_url": "https://github.com/Zakoosh/fionera/pull/4",
+        "branch": "ai/product-fionera-2026-05-15",
+        "file_path": "widgets/portfolio-heatmap.html",
+        "validated_at": "2026-05-15T19:02:51Z",
+        "summary": "Grade D — blocked from auto-merge; fix: SEO weak",
+        "categories": {
+          "seo": {
+            "score": 14,
+            "max": 30
+          },
+          "mobile": {
+            "score": 18,
+            "max": 25
+          },
+          "accessibility": {
+            "score": 13,
+            "max": 20
+          },
+          "performance": {
+            "score": 12,
+            "max": 15
+          },
+          "ux": {
+            "score": 7,
+            "max": 10
+          }
+        },
+        "top_issues": [
+          "Meta description length 30 (ideal 50-160 chars)",
+          "Missing canonical link",
+          "Only 0/5 Open Graph tags present"
+        ]
+      },
+      {
+        "label": "widgets_bist-overview",
+        "project": "Fionera",
+        "score": 62,
+        "grade": "D",
+        "passes": false,
+        "pr_url": "https://github.com/Zakoosh/fionera/pull/4",
+        "branch": "ai/product-fionera-2026-05-15",
+        "file_path": "widgets/bist-overview.html",
+        "validated_at": "2026-05-15T19:02:51Z",
+        "summary": "Grade D — blocked from auto-merge; fix: SEO weak",
+        "categories": {
+          "seo": {
+            "score": 14,
+            "max": 30
+          },
+          "mobile": {
+            "score": 16,
+            "max": 25
+          },
+          "accessibility": {
+            "score": 13,
+            "max": 20
+          },
+          "performance": {
+            "score": 12,
+            "max": 15
+          },
+          "ux": {
+            "score": 7,
+            "max": 10
+          }
+        },
+        "top_issues": [
+          "Meta description length 40 (ideal 50-160 chars)",
+          "Missing canonical link",
+          "Only 0/5 Open Graph tags present"
+        ]
+      },
+      {
+        "label": "components_related-games",
+        "project": "Yallaplays",
+        "score": 60,
+        "grade": "D",
+        "passes": false,
+        "pr_url": "https://github.com/Zakoosh/Yallaplays/pull/6",
+        "branch": "ai/product-yallaplays-2026-05-15",
+        "file_path": "components/related-games.html",
+        "validated_at": "2026-05-15T19:02:49Z",
+        "summary": "Grade D — blocked from auto-merge; fix: SEO weak",
+        "categories": {
+          "seo": {
+            "score": 8,
+            "max": 30
+          },
+          "mobile": {
+            "score": 22,
+            "max": 25
+          },
+          "accessibility": {
+            "score": 13,
+            "max": 20
+          },
+          "performance": {
+            "score": 12,
+            "max": 15
+          },
+          "ux": {
+            "score": 5,
+            "max": 10
+          }
+        },
+        "top_issues": [
+          "Missing meta description",
+          "Missing canonical link",
+          "Only 0/5 Open Graph tags present"
+        ]
+      },
+      {
+        "label": "widgets_ai-insight",
+        "project": "Fionera",
+        "score": 58,
+        "grade": "F",
+        "passes": false,
+        "pr_url": "https://github.com/Zakoosh/fionera/pull/4",
+        "branch": "ai/product-fionera-2026-05-15",
+        "file_path": "widgets/ai-insight.html",
+        "validated_at": "2026-05-15T19:02:50Z",
+        "summary": "Grade F — blocked from auto-merge; fix: SEO weak",
+        "categories": {
+          "seo": {
+            "score": 10,
+            "max": 30
+          },
+          "mobile": {
+            "score": 16,
+            "max": 25
+          },
+          "accessibility": {
+            "score": 13,
+            "max": 20
+          },
+          "performance": {
+            "score": 12,
+            "max": 15
+          },
+          "ux": {
+            "score": 7,
+            "max": 10
+          }
+        },
+        "top_issues": [
+          "Meta description length 33 (ideal 50-160 chars)",
+          "Missing canonical link",
+          "Only 0/5 Open Graph tags present"
+        ]
+      }
+    ]
+  },
+  "self_improvement": {
+    "generated_at": "2026-05-15T19:03:00Z",
+    "overall_health_score": 0,
+    "health_summary": "AI analysis unavailable",
+    "efficiency_score": 0,
+    "quality_score": 0,
+    "velocity_score": 0,
+    "top_improvements": [],
+    "cost_projection": {},
+    "next_cycle_focus": "",
+    "raw_metrics": {
+      "generated_at": "2026-05-15T19:03:00Z",
+      "outputs": {
+        "total": 19,
+        "ai_generated": 19,
+        "total_tokens": 47270,
+        "total_cost_usd": 0.020444,
+        "avg_tokens_per_feature": 2488,
+        "avg_cost_per_feature_usd": 0.001076,
+        "token_efficiency": 0.402,
+        "features_last_7d": 19,
+        "by_project": {
+          "mifteh": {
+            "count": 7,
+            "tokens": 20430,
+            "cost": 0.0082776,
+            "ai": 7
+          },
+          "fionera": {
+            "count": 6,
+            "tokens": 12340,
+            "cost": 0.00529335,
+            "ai": 6
+          },
+          "yallaplays": {
+            "count": 6,
+            "tokens": 14500,
+            "cost": 0.0068733,
+            "ai": 6
+          }
+        },
+        "by_type": {
+          "analytics_intelligence": {
+            "count": 3,
+            "tokens": 6670
+          },
+          "product_execution": {
+            "count": 8,
+            "tokens": 22799
+          },
+          "repository_analysis": {
+            "count": 1,
+            "tokens": 10203
+          },
+          "analytics_report": {
+            "count": 1,
+            "tokens": 683
+          },
+          "content_optimization": {
+            "count": 3,
+            "tokens": 1476
+          },
+          "market_insight": {
+            "count": 1,
+            "tokens": 1669
+          },
+          "seo_page": {
+            "count": 2,
+            "tokens": 3770
+          }
+        },
+        "latest_records": [
+          {
+            "project": "mifteh",
+            "type": "analytics_intelligence",
+            "tokens": 2216,
+            "cost": 0.00090615,
+            "generated_at": "2026-05-15T18:30:26Z"
+          },
+          {
+            "project": "fionera",
+            "type": "analytics_intelligence",
+            "tokens": 2233,
+            "cost": 0.0009140999999999999,
+            "generated_at": "2026-05-15T18:30:10Z"
+          },
+          {
+            "project": "yallaplays",
+            "type": "analytics_intelligence",
+            "tokens": 2221,
+            "cost": 0.0009042,
+            "generated_at": "2026-05-15T18:29:43Z"
+          },
+          {
+            "project": "mifteh",
+            "type": "product_execution",
+            "tokens": 2227,
+            "cost": 0.0009977999999999999,
+            "generated_at": "2026-05-15T16:28:48Z"
+          },
+          {
+            "project": "mifteh",
+            "type": "product_execution",
+            "tokens": 3206,
+            "cost": 0.0014186999999999997,
+            "generated_at": "2026-05-15T16:28:28Z"
+          },
+          {
+            "project": "fionera",
+            "type": "product_execution",
+            "tokens": 2782,
+            "cost": 0.00117645,
+            "generated_at": "2026-05-15T16:25:05Z"
+          },
+          {
+            "project": "fionera",
+            "type": "product_execution",
+            "tokens": 2448,
+            "cost": 0.0010224,
+            "generated_at": "2026-05-15T16:24:44Z"
+          },
+          {
+            "project": "fionera",
+            "type": "product_execution",
+            "tokens": 2716,
+            "cost": 0.00115935,
+            "generated_at": "2026-05-15T16:24:23Z"
+          },
+          {
+            "project": "yallaplays",
+            "type": "product_execution",
+            "tokens": 2849,
+            "cost": 0.0013678499999999999,
+            "generated_at": "2026-05-15T16:22:18Z"
+          },
+          {
+            "project": "yallaplays",
+            "type": "product_execution",
+            "tokens": 2042,
+            "cost": 0.0009466499999999999,
+            "generated_at": "2026-05-15T16:21:49Z"
+          }
+        ]
+      },
+      "workflows": {
+        "total": 25,
+        "workflows": [
+          {
+            "file": "ai-analytics-intelligence.yml",
+            "schedules": [
+              "0 3 * * *"
+            ],
+            "scripts": [
+              "generate_analytics_intelligence.py",
+              "aggregate_dashboard.py"
+            ],
+            "has_openai": true,
+            "has_gh_pat": true,
+            "size_lines": 54
+          },
+          {
+            "file": "ai-analytics-loop.yml",
+            "schedules": [
+              "0 0 * * *"
+            ],
+            "scripts": [
+              "generate_analytics.py"
+            ],
+            "has_openai": true,
+            "has_gh_pat": false,
+            "size_lines": 38
+          },
+          {
+            "file": "ai-automerge.yml",
+            "schedules": [
+              "0 7 * * *"
+            ],
+            "scripts": [
+              "ai_automerge.py"
+            ],
+            "has_openai": true,
+            "has_gh_pat": true,
+            "size_lines": 45
+          },
+          {
+            "file": "ai-content-loop.yml",
+            "schedules": [
+              "0 2 * * *"
+            ],
+            "scripts": [
+              "generate_content.py"
+            ],
+            "has_openai": true,
+            "has_gh_pat": false,
+            "size_lines": 38
+          },
+          {
+            "file": "ai-conversion-optimizer.yml",
+            "schedules": [
+              "0 10 * * 2"
+            ],
+            "scripts": [
+              "generate_analytics_intelligence.py",
+              "generate_product.py",
+              "aggregate_dashboard.py"
+            ],
+            "has_openai": true,
+            "has_gh_pat": true,
+            "size_lines": 62
+          },
+          {
+            "file": "ai-dashboard-loop.yml",
+            "schedules": [
+              "30 * * * *"
+            ],
+            "scripts": [
+              "aggregate_dashboard.py"
+            ],
+            "has_openai": false,
+            "has_gh_pat": false,
+            "size_lines": 48
+          },
+          {
+            "file": "ai-deployment-validation.yml",
+            "schedules": [],
+            "scripts": [
+              "ai_deployment_validator.py"
+            ],
+            "has_openai": false,
+            "has_gh_pat": false,
+            "size_lines": 34
+          },
+          {
+            "file": "ai-engagement-analysis.yml",
+            "schedules": [
+              "0 4 * * *"
+            ],
+            "scripts": [
+              "generate_analytics_intelligence.py",
+              "aggregate_dashboard.py"
+            ],
+            "has_openai": true,
+            "has_gh_pat": true,
+            "size_lines": 47
+          },
+          {
+            "file": "ai-feature-builder.yml",
+            "schedules": [
+              "0 9 * * 1"
+            ],
+            "scripts": [
+              "generate_product.py"
+            ],
+            "has_openai": true,
+            "has_gh_pat": true,
+            "size_lines": 50
+          },
+          {
+            "file": "ai-finance-loop.yml",
+            "schedules": [
+              "0 */4 * * *"
+            ],
+            "scripts": [
+              "generate_finance_fionera.py"
+            ],
+            "has_openai": true,
+            "has_gh_pat": false,
+            "size_lines": 38
+          },
+          {
+            "file": "ai-pr-generator.yml",
+            "schedules": [
+              "0 8 * * *"
+            ],
+            "scripts": [
+              "create_draft_prs.py"
+            ],
+            "has_openai": false,
+            "has_gh_pat": true,
+            "size_lines": 38
+          },
+          {
+            "file": "ai-product-analytics.yml",
+            "schedules": [
+              "0 9 * * 4"
+            ],
+            "scripts": [
+              "aggregate_dashboard.py"
+            ],
+            "has_openai": true,
+            "has_gh_pat": true,
+            "size_lines": 97
+          },
+          {
+            "file": "ai-real-analytics-sync.yml",
+            "schedules": [
+              "0 2 * * *"
+            ],
+            "scripts": [
+              "sync_real_analytics.py",
+              "aggregate_dashboard.py"
+            ],
+            "has_openai": true,
+            "has_gh_pat": true,
+            "size_lines": 73
+          },
+          {
+            "file": "ai-repository-analysis.yml",
+            "schedules": [
+              "0 6 * * *"
+            ],
+            "scripts": [
+              "analyze_repo_and_create_pr.py"
+            ],
+            "has_openai": true,
+            "has_gh_pat": true,
+            "size_lines": 42
+          },
+          {
+            "file": "ai-rollback-monitor.yml",
+            "schedules": [
+              "0 8 * * *"
+            ],
+            "scripts": [],
+            "has_openai": false,
+            "has_gh_pat": false,
+            "size_lines": 77
+          },
+          {
+            "file": "ai-safe-apply.yml",
+            "schedules": [],
+            "scripts": [
+              "analyze_repo_and_create_pr.py"
+            ],
+            "has_openai": true,
+            "has_gh_pat": true,
+            "size_lines": 104
+          },
+          {
+            "file": "ai-self-improvement.yml",
+            "schedules": [
+              "0 6 * * 0"
+            ],
+            "scripts": [
+              "self_improvement_engine.py",
+              "aggregate_dashboard.py"
+            ],
+            "has_openai": true,
+            "has_gh_pat": true,
+            "size_lines": 55
+          },
+          {
+            "file": "ai-seo-cluster-builder.yml",
+            "schedules": [
+              "0 9 * * 3"
+            ],
+            "scripts": [
+              "generate_product.py"
+            ],
+            "has_openai": true,
+            "has_gh_pat": true,
+            "size_lines": 51
+          },
+          {
+            "file": "ai-seo-loop.yml",
+            "schedules": [
+              "0 */6 * * *"
+            ],
+            "scripts": [
+              "generate_seo_yallaplays.py",
+              "generate_seo_mifteh.py"
+            ],
+            "has_openai": true,
+            "has_gh_pat": false,
+            "size_lines": 43
+          },
+          {
+            "file": "ai-traffic-optimizer.yml",
+            "schedules": [
+              "0 10 * * 1"
+            ],
+            "scripts": [
+              "generate_analytics_intelligence.py",
+              "generate_product.py",
+              "aggregate_dashboard.py"
+            ],
+            "has_openai": true,
+            "has_gh_pat": true,
+            "size_lines": 62
+          },
+          {
+            "file": "ai-visual-preview.yml",
+            "schedules": [
+              "30 9 * * 1"
+            ],
+            "scripts": [
+              "generate_previews.py",
+              "aggregate_dashboard.py"
+            ],
+            "has_openai": false,
+            "has_gh_pat": true,
+            "size_lines": 59
+          },
+          {
+            "file": "ai-visual-validation.yml",
+            "schedules": [],
+            "scripts": [
+              "generate_previews.py"
+            ],
+            "has_openai": false,
+            "has_gh_pat": true,
+            "size_lines": 72
+          },
+          {
+            "file": "ai-widget-generator.yml",
+            "schedules": [
+              "0 9 * * 2"
+            ],
+            "scripts": [
+              "generate_product.py"
+            ],
+            "has_openai": true,
+            "has_gh_pat": true,
+            "size_lines": 51
+          },
+          {
+            "file": "auth-token-generator.yml",
+            "schedules": [
+              "0 0 * * *"
+            ],
+            "scripts": [
+              "generate_auth_config.py"
+            ],
+            "has_openai": false,
+            "has_gh_pat": false,
+            "size_lines": 42
+          },
+          {
+            "file": "deploy-dashboard.yml",
+            "schedules": [],
+            "scripts": [],
+            "has_openai": false,
+            "has_gh_pat": false,
+            "size_lines": 49
+          }
+        ]
+      },
+      "visual_qa": {
+        "total": 8,
+        "passing": 3,
+        "blocking": 5,
+        "avg_score": 67,
+        "pass_rate_pct": 38,
+        "reports": [
+          {
+            "label": "category_action",
+            "project": "Yallaplays",
+            "score": 79,
+            "grade": "C",
+            "passes": true,
+            "pr_url": "https://github.com/Zakoosh/Yallaplays/pull/6",
+            "branch": "ai/product-yallaplays-2026-05-15",
+            "file_path": "category/action.html",
+            "validated_at": "2026-05-15T19:02:49Z",
+            "summary": "Grade C — passes threshold; improve: accessibility gaps",
+            "categories": {
+              "seo": {
+                "score": 28,
+                "max": 30
+              },
+              "mobile": {
+                "score": 18,
+                "max": 25
+              },
+              "accessibility": {
+                "score": 11,
+                "max": 20
+              },
+              "performance": {
+                "score": 12,
+                "max": 15
+              },
+              "ux": {
+                "score": 10,
+                "max": 10
+              }
+            },
+            "top_issues": [
+              "Multiple H1 tags (2) — should have exactly one",
+              "No CSS media queries detected — layout may break on mobile",
+              "1 heading level jump(s) — headings should not skip levels"
+            ]
+          },
+          {
+            "label": "index",
+            "project": "Fionera",
+            "score": 72,
+            "grade": "C",
+            "passes": true,
+            "pr_url": "https://github.com/Zakoosh/fionera/pull/3",
+            "branch": "ai/seo-improvements-fionera-2026-05-15",
+            "file_path": "index.html",
+            "validated_at": "2026-05-15T19:02:48Z",
+            "summary": "Grade C — passes threshold; improve: accessibility gaps",
+            "categories": {
+              "seo": {
+                "score": 27,
+                "max": 30
+              },
+              "mobile": {
+                "score": 16,
+                "max": 25
+              },
+              "accessibility": {
+                "score": 10,
+                "max": 20
+              },
+              "performance": {
+                "score": 13,
+                "max": 15
+              },
+              "ux": {
+                "score": 6,
+                "max": 10
+              }
+            },
+            "top_issues": [
+              "Meta description length 34 (ideal 50-160 chars)",
+              "No CSS media queries detected — layout may break on mobile",
+              "No max-width detected — consider constraining layout width"
+            ]
+          },
+          {
+            "label": "ar_index",
+            "project": "Yallaplays",
+            "score": 71,
+            "grade": "C",
+            "passes": true,
+            "pr_url": "https://github.com/Zakoosh/Yallaplays/pull/6",
+            "branch": "ai/product-yallaplays-2026-05-15",
+            "file_path": "ar/index.html",
+            "validated_at": "2026-05-15T19:02:49Z",
+            "summary": "Grade C — passes auto-merge threshold",
+            "categories": {
+              "seo": {
+                "score": 25,
+                "max": 30
+              },
+              "mobile": {
+                "score": 16,
+                "max": 25
+              },
+              "accessibility": {
+                "score": 13,
+                "max": 20
+              },
+              "performance": {
+                "score": 9,
+                "max": 15
+              },
+              "ux": {
+                "score": 8,
+                "max": 10
+              }
+            },
+            "top_issues": [
+              "No JSON-LD structured data",
+              "No CSS media queries detected — layout may break on mobile",
+              "No max-width detected — consider constraining layout width"
+            ]
+          },
+          {
+            "label": "index",
+            "project": "YallaPlays",
+            "score": 67,
+            "grade": "D",
+            "passes": false,
+            "pr_url": "https://github.com/Zakoosh/Yallaplays/pull/5",
+            "branch": "ai/seo-improvements-yallaplays-2026-05-15",
+            "file_path": "index.html",
+            "validated_at": "2026-05-15T19:02:47Z",
+            "summary": "Grade D — blocked from auto-merge; fix: accessibility gaps",
+            "categories": {
+              "seo": {
+                "score": 26,
+                "max": 30
+              },
+              "mobile": {
+                "score": 16,
+                "max": 25
+              },
+              "accessibility": {
+                "score": 9,
+                "max": 20
+              },
+              "performance": {
+                "score": 13,
+                "max": 15
+              },
+              "ux": {
+                "score": 3,
+                "max": 10
+              }
+            },
+            "top_issues": [
+              "Missing H1 tag",
+              "No CSS media queries detected — layout may break on mobile",
+              "No max-width detected — consider constraining layout width"
+            ]
+          },
+          {
+            "label": "widgets_portfolio-heatmap",
+            "project": "Fionera",
+            "score": 64,
+            "grade": "D",
+            "passes": false,
+            "pr_url": "https://github.com/Zakoosh/fionera/pull/4",
+            "branch": "ai/product-fionera-2026-05-15",
+            "file_path": "widgets/portfolio-heatmap.html",
+            "validated_at": "2026-05-15T19:02:51Z",
+            "summary": "Grade D — blocked from auto-merge; fix: SEO weak",
+            "categories": {
+              "seo": {
+                "score": 14,
+                "max": 30
+              },
+              "mobile": {
+                "score": 18,
+                "max": 25
+              },
+              "accessibility": {
+                "score": 13,
+                "max": 20
+              },
+              "performance": {
+                "score": 12,
+                "max": 15
+              },
+              "ux": {
+                "score": 7,
+                "max": 10
+              }
+            },
+            "top_issues": [
+              "Meta description length 30 (ideal 50-160 chars)",
+              "Missing canonical link",
+              "Only 0/5 Open Graph tags present"
+            ]
+          },
+          {
+            "label": "widgets_bist-overview",
+            "project": "Fionera",
+            "score": 62,
+            "grade": "D",
+            "passes": false,
+            "pr_url": "https://github.com/Zakoosh/fionera/pull/4",
+            "branch": "ai/product-fionera-2026-05-15",
+            "file_path": "widgets/bist-overview.html",
+            "validated_at": "2026-05-15T19:02:51Z",
+            "summary": "Grade D — blocked from auto-merge; fix: SEO weak",
+            "categories": {
+              "seo": {
+                "score": 14,
+                "max": 30
+              },
+              "mobile": {
+                "score": 16,
+                "max": 25
+              },
+              "accessibility": {
+                "score": 13,
+                "max": 20
+              },
+              "performance": {
+                "score": 12,
+                "max": 15
+              },
+              "ux": {
+                "score": 7,
+                "max": 10
+              }
+            },
+            "top_issues": [
+              "Meta description length 40 (ideal 50-160 chars)",
+              "Missing canonical link",
+              "Only 0/5 Open Graph tags present"
+            ]
+          },
+          {
+            "label": "components_related-games",
+            "project": "Yallaplays",
+            "score": 60,
+            "grade": "D",
+            "passes": false,
+            "pr_url": "https://github.com/Zakoosh/Yallaplays/pull/6",
+            "branch": "ai/product-yallaplays-2026-05-15",
+            "file_path": "components/related-games.html",
+            "validated_at": "2026-05-15T19:02:49Z",
+            "summary": "Grade D — blocked from auto-merge; fix: SEO weak",
+            "categories": {
+              "seo": {
+                "score": 8,
+                "max": 30
+              },
+              "mobile": {
+                "score": 22,
+                "max": 25
+              },
+              "accessibility": {
+                "score": 13,
+                "max": 20
+              },
+              "performance": {
+                "score": 12,
+                "max": 15
+              },
+              "ux": {
+                "score": 5,
+                "max": 10
+              }
+            },
+            "top_issues": [
+              "Missing meta description",
+              "Missing canonical link",
+              "Only 0/5 Open Graph tags present"
+            ]
+          },
+          {
+            "label": "widgets_ai-insight",
+            "project": "Fionera",
+            "score": 58,
+            "grade": "F",
+            "passes": false,
+            "pr_url": "https://github.com/Zakoosh/fionera/pull/4",
+            "branch": "ai/product-fionera-2026-05-15",
+            "file_path": "widgets/ai-insight.html",
+            "validated_at": "2026-05-15T19:02:50Z",
+            "summary": "Grade F — blocked from auto-merge; fix: SEO weak",
+            "categories": {
+              "seo": {
+                "score": 10,
+                "max": 30
+              },
+              "mobile": {
+                "score": 16,
+                "max": 25
+              },
+              "accessibility": {
+                "score": 13,
+                "max": 20
+              },
+              "performance": {
+                "score": 12,
+                "max": 15
+              },
+              "ux": {
+                "score": 7,
+                "max": 10
+              }
+            },
+            "top_issues": [
+              "Meta description length 33 (ideal 50-160 chars)",
+              "Missing canonical link",
+              "Only 0/5 Open Graph tags present"
+            ]
+          }
+        ]
+      },
+      "trust": {},
+      "automerge": {
+        "total_evaluated": 6,
+        "merged": 3,
+        "skipped": 0,
+        "rollbacks": 0,
+        "avg_merge_score": 100,
+        "merge_rate_pct": 50
+      }
+    },
+    "ai_generated": false,
+    "tokens_used": 0,
+    "cost_usd": 0.0
   },
   "analytics_intelligence": {
     "generated_at": "2026-05-15T18:31:07Z",

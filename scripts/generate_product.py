@@ -25,6 +25,7 @@ from ai_client import generate_text, now_iso, today_str, timestamp_str
 GH_TOKEN = os.environ.get("GH_PAT") or os.environ.get("GITHUB_TOKEN", "")
 OUTPUT_DIR = Path("outputs")
 MEMORY_DIR = Path("memory")
+PREVIEWS_DIR = Path("frontend/dashboard/previews")
 
 # ─── Project + Feature Catalog ────────────────────────────────────────────────
 
@@ -580,6 +581,11 @@ def process_project(project_key, config, feature_filter=None):
             committed_paths.append(feature["path"])
             record = save_output_record(project_key, feature, tokens, cost, bytes_generated=len(html))
             results.append(record)
+            # Save HTML preview locally for dashboard + visual QA
+            preview_dir = PREVIEWS_DIR / project_key
+            preview_dir.mkdir(parents=True, exist_ok=True)
+            (preview_dir / f"{feature['id']}.html").write_text(html, encoding="utf-8")
+            print(f"  [preview] saved frontend/dashboard/previews/{project_key}/{feature['id']}.html")
         else:
             print(f"  [!] Commit failed: {feature['path']}")
 

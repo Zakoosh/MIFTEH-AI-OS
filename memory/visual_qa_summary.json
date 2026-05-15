@@ -1,0 +1,321 @@
+{
+  "total": 8,
+  "passing": 3,
+  "blocking": 5,
+  "avg_score": 67,
+  "pass_rate_pct": 38,
+  "reports": [
+    {
+      "label": "category_action",
+      "project": "Yallaplays",
+      "score": 79,
+      "grade": "C",
+      "passes": true,
+      "pr_url": "https://github.com/Zakoosh/Yallaplays/pull/6",
+      "branch": "ai/product-yallaplays-2026-05-15",
+      "file_path": "category/action.html",
+      "validated_at": "2026-05-15T19:02:49Z",
+      "summary": "Grade C — passes threshold; improve: accessibility gaps",
+      "categories": {
+        "seo": {
+          "score": 28,
+          "max": 30
+        },
+        "mobile": {
+          "score": 18,
+          "max": 25
+        },
+        "accessibility": {
+          "score": 11,
+          "max": 20
+        },
+        "performance": {
+          "score": 12,
+          "max": 15
+        },
+        "ux": {
+          "score": 10,
+          "max": 10
+        }
+      },
+      "top_issues": [
+        "Multiple H1 tags (2) — should have exactly one",
+        "No CSS media queries detected — layout may break on mobile",
+        "1 heading level jump(s) — headings should not skip levels"
+      ]
+    },
+    {
+      "label": "index",
+      "project": "Fionera",
+      "score": 72,
+      "grade": "C",
+      "passes": true,
+      "pr_url": "https://github.com/Zakoosh/fionera/pull/3",
+      "branch": "ai/seo-improvements-fionera-2026-05-15",
+      "file_path": "index.html",
+      "validated_at": "2026-05-15T19:02:48Z",
+      "summary": "Grade C — passes threshold; improve: accessibility gaps",
+      "categories": {
+        "seo": {
+          "score": 27,
+          "max": 30
+        },
+        "mobile": {
+          "score": 16,
+          "max": 25
+        },
+        "accessibility": {
+          "score": 10,
+          "max": 20
+        },
+        "performance": {
+          "score": 13,
+          "max": 15
+        },
+        "ux": {
+          "score": 6,
+          "max": 10
+        }
+      },
+      "top_issues": [
+        "Meta description length 34 (ideal 50-160 chars)",
+        "No CSS media queries detected — layout may break on mobile",
+        "No max-width detected — consider constraining layout width"
+      ]
+    },
+    {
+      "label": "ar_index",
+      "project": "Yallaplays",
+      "score": 71,
+      "grade": "C",
+      "passes": true,
+      "pr_url": "https://github.com/Zakoosh/Yallaplays/pull/6",
+      "branch": "ai/product-yallaplays-2026-05-15",
+      "file_path": "ar/index.html",
+      "validated_at": "2026-05-15T19:02:49Z",
+      "summary": "Grade C — passes auto-merge threshold",
+      "categories": {
+        "seo": {
+          "score": 25,
+          "max": 30
+        },
+        "mobile": {
+          "score": 16,
+          "max": 25
+        },
+        "accessibility": {
+          "score": 13,
+          "max": 20
+        },
+        "performance": {
+          "score": 9,
+          "max": 15
+        },
+        "ux": {
+          "score": 8,
+          "max": 10
+        }
+      },
+      "top_issues": [
+        "No JSON-LD structured data",
+        "No CSS media queries detected — layout may break on mobile",
+        "No max-width detected — consider constraining layout width"
+      ]
+    },
+    {
+      "label": "index",
+      "project": "YallaPlays",
+      "score": 67,
+      "grade": "D",
+      "passes": false,
+      "pr_url": "https://github.com/Zakoosh/Yallaplays/pull/5",
+      "branch": "ai/seo-improvements-yallaplays-2026-05-15",
+      "file_path": "index.html",
+      "validated_at": "2026-05-15T19:02:47Z",
+      "summary": "Grade D — blocked from auto-merge; fix: accessibility gaps",
+      "categories": {
+        "seo": {
+          "score": 26,
+          "max": 30
+        },
+        "mobile": {
+          "score": 16,
+          "max": 25
+        },
+        "accessibility": {
+          "score": 9,
+          "max": 20
+        },
+        "performance": {
+          "score": 13,
+          "max": 15
+        },
+        "ux": {
+          "score": 3,
+          "max": 10
+        }
+      },
+      "top_issues": [
+        "Missing H1 tag",
+        "No CSS media queries detected — layout may break on mobile",
+        "No max-width detected — consider constraining layout width"
+      ]
+    },
+    {
+      "label": "widgets_portfolio-heatmap",
+      "project": "Fionera",
+      "score": 64,
+      "grade": "D",
+      "passes": false,
+      "pr_url": "https://github.com/Zakoosh/fionera/pull/4",
+      "branch": "ai/product-fionera-2026-05-15",
+      "file_path": "widgets/portfolio-heatmap.html",
+      "validated_at": "2026-05-15T19:02:51Z",
+      "summary": "Grade D — blocked from auto-merge; fix: SEO weak",
+      "categories": {
+        "seo": {
+          "score": 14,
+          "max": 30
+        },
+        "mobile": {
+          "score": 18,
+          "max": 25
+        },
+        "accessibility": {
+          "score": 13,
+          "max": 20
+        },
+        "performance": {
+          "score": 12,
+          "max": 15
+        },
+        "ux": {
+          "score": 7,
+          "max": 10
+        }
+      },
+      "top_issues": [
+        "Meta description length 30 (ideal 50-160 chars)",
+        "Missing canonical link",
+        "Only 0/5 Open Graph tags present"
+      ]
+    },
+    {
+      "label": "widgets_bist-overview",
+      "project": "Fionera",
+      "score": 62,
+      "grade": "D",
+      "passes": false,
+      "pr_url": "https://github.com/Zakoosh/fionera/pull/4",
+      "branch": "ai/product-fionera-2026-05-15",
+      "file_path": "widgets/bist-overview.html",
+      "validated_at": "2026-05-15T19:02:51Z",
+      "summary": "Grade D — blocked from auto-merge; fix: SEO weak",
+      "categories": {
+        "seo": {
+          "score": 14,
+          "max": 30
+        },
+        "mobile": {
+          "score": 16,
+          "max": 25
+        },
+        "accessibility": {
+          "score": 13,
+          "max": 20
+        },
+        "performance": {
+          "score": 12,
+          "max": 15
+        },
+        "ux": {
+          "score": 7,
+          "max": 10
+        }
+      },
+      "top_issues": [
+        "Meta description length 40 (ideal 50-160 chars)",
+        "Missing canonical link",
+        "Only 0/5 Open Graph tags present"
+      ]
+    },
+    {
+      "label": "components_related-games",
+      "project": "Yallaplays",
+      "score": 60,
+      "grade": "D",
+      "passes": false,
+      "pr_url": "https://github.com/Zakoosh/Yallaplays/pull/6",
+      "branch": "ai/product-yallaplays-2026-05-15",
+      "file_path": "components/related-games.html",
+      "validated_at": "2026-05-15T19:02:49Z",
+      "summary": "Grade D — blocked from auto-merge; fix: SEO weak",
+      "categories": {
+        "seo": {
+          "score": 8,
+          "max": 30
+        },
+        "mobile": {
+          "score": 22,
+          "max": 25
+        },
+        "accessibility": {
+          "score": 13,
+          "max": 20
+        },
+        "performance": {
+          "score": 12,
+          "max": 15
+        },
+        "ux": {
+          "score": 5,
+          "max": 10
+        }
+      },
+      "top_issues": [
+        "Missing meta description",
+        "Missing canonical link",
+        "Only 0/5 Open Graph tags present"
+      ]
+    },
+    {
+      "label": "widgets_ai-insight",
+      "project": "Fionera",
+      "score": 58,
+      "grade": "F",
+      "passes": false,
+      "pr_url": "https://github.com/Zakoosh/fionera/pull/4",
+      "branch": "ai/product-fionera-2026-05-15",
+      "file_path": "widgets/ai-insight.html",
+      "validated_at": "2026-05-15T19:02:50Z",
+      "summary": "Grade F — blocked from auto-merge; fix: SEO weak",
+      "categories": {
+        "seo": {
+          "score": 10,
+          "max": 30
+        },
+        "mobile": {
+          "score": 16,
+          "max": 25
+        },
+        "accessibility": {
+          "score": 13,
+          "max": 20
+        },
+        "performance": {
+          "score": 12,
+          "max": 15
+        },
+        "ux": {
+          "score": 7,
+          "max": 10
+        }
+      },
+      "top_issues": [
+        "Meta description length 33 (ideal 50-160 chars)",
+        "Missing canonical link",
+        "Only 0/5 Open Graph tags present"
+      ]
+    }
+  ]
+}

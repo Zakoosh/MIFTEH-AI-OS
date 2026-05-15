@@ -1,0 +1,57 @@
+{
+  "label": "category_action",
+  "project": "Yallaplays",
+  "validated_at": "2026-05-15T19:02:49Z",
+  "score": 79,
+  "grade": "C",
+  "passes_auto_merge_threshold": true,
+  "categories": {
+    "seo": {
+      "score": 28,
+      "max": 30,
+      "issues": [
+        "Multiple H1 tags (2) — should have exactly one"
+      ]
+    },
+    "mobile": {
+      "score": 18,
+      "max": 25,
+      "issues": [
+        "No CSS media queries detected — layout may break on mobile"
+      ]
+    },
+    "accessibility": {
+      "score": 11,
+      "max": 20,
+      "issues": [
+        "1 heading level jump(s) — headings should not skip levels",
+        "No ARIA attributes found — important for screen reader accessibility",
+        "No :focus styles — keyboard navigation may be invisible"
+      ]
+    },
+    "performance": {
+      "score": 12,
+      "max": 15,
+      "issues": [
+        "No preload/prefetch/preconnect hints — consider adding for critical resources"
+      ]
+    },
+    "ux": {
+      "score": 10,
+      "max": 10,
+      "issues": []
+    }
+  },
+  "all_issues": [
+    "Multiple H1 tags (2) — should have exactly one",
+    "No CSS media queries detected — layout may break on mobile",
+    "1 heading level jump(s) — headings should not skip levels",
+    "No ARIA attributes found — important for screen reader accessibility",
+    "No :focus styles — keyboard navigation may be invisible",
+    "No preload/prefetch/preconnect hints — consider adding for critical resources"
+  ],
+  "summary": "Grade C — passes threshold; improve: accessibility gaps",
+  "pr_url": "https://github.com/Zakoosh/Yallaplays/pull/6",
+  "branch": "ai/product-yallaplays-2026-05-15",
+  "file_path": "category/action.html"
+}

@@ -1,0 +1,66 @@
+{
+  "label": "index",
+  "project": "YallaPlays",
+  "validated_at": "2026-05-15T19:02:47Z",
+  "score": 67,
+  "grade": "D",
+  "passes_auto_merge_threshold": false,
+  "categories": {
+    "seo": {
+      "score": 26,
+      "max": 30,
+      "issues": [
+        "Missing H1 tag"
+      ]
+    },
+    "mobile": {
+      "score": 16,
+      "max": 25,
+      "issues": [
+        "No CSS media queries detected — layout may break on mobile",
+        "No max-width detected — consider constraining layout width"
+      ]
+    },
+    "accessibility": {
+      "score": 9,
+      "max": 20,
+      "issues": [
+        "No heading tags found",
+        "No ARIA attributes found — important for screen reader accessibility",
+        "No :focus styles — keyboard navigation may be invisible"
+      ]
+    },
+    "performance": {
+      "score": 13,
+      "max": 15,
+      "issues": [
+        "2 Google Fonts link(s) without preconnect — consider adding rel='preconnect'"
+      ]
+    },
+    "ux": {
+      "score": 3,
+      "max": 10,
+      "issues": [
+        "No <nav> element — consider adding navigation for usability",
+        "No clear call-to-action button or link found",
+        "Only ~205 words of visible text — consider adding more content"
+      ]
+    }
+  },
+  "all_issues": [
+    "Missing H1 tag",
+    "No CSS media queries detected — layout may break on mobile",
+    "No max-width detected — consider constraining layout width",
+    "No heading tags found",
+    "No ARIA attributes found — important for screen reader accessibility",
+    "No :focus styles — keyboard navigation may be invisible",
+    "2 Google Fonts link(s) without preconnect — consider adding rel='preconnect'",
+    "No <nav> element — consider adding navigation for usability",
+    "No clear call-to-action button or link found",
+    "Only ~205 words of visible text — consider adding more content"
+  ],
+  "summary": "Grade D — blocked from auto-merge; fix: accessibility gaps",
+  "pr_url": "https://github.com/Zakoosh/Yallaplays/pull/5",
+  "branch": "ai/seo-improvements-yallaplays-2026-05-15",
+  "file_path": "index.html"
+}

@@ -358,14 +358,180 @@ function renderOutputs(d) {
 
 // ─── Previews ────────────────────────────────────────────────────────────────
 
+function _qaGradeColor(grade) {
+  return { A: '#22c55e', B: '#84cc16', C: '#eab308', D: '#f97316', F: '#ef4444' }[grade] || '#64748b';
+}
+
+function _qaBar(score, max) {
+  const pct = Math.round((score / max) * 100);
+  const color = pct >= 70 ? '#22c55e' : pct >= 50 ? '#eab308' : '#ef4444';
+  return `<div style="display:flex;align-items:center;gap:6px;">
+    <div style="flex:1;height:4px;background:#1e293b;border-radius:2px;">
+      <div style="width:${pct}%;height:4px;background:${color};border-radius:2px;"></div>
+    </div>
+    <span style="font-size:11px;color:var(--dim);min-width:32px;">${score}/${max}</span>
+  </div>`;
+}
+
 function renderPreviews(d) {
-  const previews = (d.repository || {}).previews || [];
-  set('previews-badge', `<span class="panel-badge badge-dim">${previews.length} files</span>`);
-  set('previews-list', previews.length ? previews.map(p => `
-    <div class="output-row"><span class="output-type-tag">HTML</span>
-    <span class="output-title">${esc(p.filename)}</span>
-    <a href="${esc(p.url)}" target="_blank" style="font-size:11px;color:var(--blue);">Preview →</a></div>
-  `).join('') : '<div class="empty">No HTML previews generated yet</div>');
+  const qa = d.visual_qa || {};
+  const reports = qa.reports || [];
+
+  // Overview cards
+  const cards = [
+    { label: 'QA Total', value: qa.total || 0, color: 'var(--cyan)' },
+    { label: 'Passing', value: qa.passing || 0, color: 'var(--green)' },
+    { label: 'Blocked', value: qa.blocking || 0, color: (qa.blocking || 0) > 0 ? 'var(--red)' : 'var(--dim)' },
+    { label: 'Avg Score', value: (qa.avg_score || 0) + '/100', color: 'var(--yellow)' },
+  ];
+  set('qa-overview-cards', cards.map(c => `
+    <div class="card"><div class="card-value" style="color:${c.color}">${c.value}</div><div class="card-label">${c.label}</div></div>
+  `).join(''));
+
+  set('previews-badge', `<span class="panel-badge badge-dim">${reports.length} files</span>`);
+
+  // QA score cards
+  if (reports.length) {
+    set('qa-score-cards', reports.map(r => {
+      const cats = r.categories || {};
+      const passes = r.passes;
+      const gc = _qaGradeColor(r.grade);
+      const preview_path = `../previews/${r.project}/${(r.label||'').replace(/^[^_]+_/, '')}.html`;
+      return `<div class="panel full" style="margin-bottom:12px;border-left:3px solid ${gc};">
+        <div class="panel-header" style="flex-wrap:wrap;gap:8px;">
+          <div style="display:flex;align-items:center;gap:10px;flex:1;">
+            <span style="font-size:22px;font-weight:800;color:${gc};">${r.grade}</span>
+            <div>
+              <div class="panel-title" style="margin:0;">${esc(r.label)}</div>
+              <div style="font-size:11px;color:var(--dim);">${esc(r.project)} · ${r.score}/100 · ${relTime(r.validated_at)}</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span class="panel-badge ${passes ? 'badge-green' : 'badge-yellow'}">${passes ? '✓ PASS' : '✗ BLOCKED'}</span>
+            ${r.pr_url ? `<a href="${esc(r.pr_url)}" target="_blank" style="font-size:11px;color:var(--blue);">PR →</a>` : ''}
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:12px 0;">
+          ${Object.entries(cats).map(([cat, v]) => `
+            <div>
+              <div style="font-size:11px;color:var(--dim);margin-bottom:4px;">${cat.charAt(0).toUpperCase()+cat.slice(1)}</div>
+              ${_qaBar(v.score, v.max)}
+            </div>
+          `).join('')}
+        </div>
+        ${r.top_issues && r.top_issues.length ? `
+          <div style="font-size:11px;color:var(--dim);margin-top:6px;">
+            ${r.top_issues.map(i => `<div style="padding:2px 0;">• ${esc(i)}</div>`).join('')}
+          </div>` : ''}
+      </div>`;
+    }).join(''));
+  } else {
+    set('qa-score-cards', '<div class="empty">No QA reports yet — run Visual Preview workflow</div>');
+  }
+
+  // Preview gallery
+  set('previews-list', reports.length ? reports.map(r => {
+    const proj = r.project || '';
+    const feat = (r.label || '').replace(/^[^_]+_/, '');
+    const preview_href = `/previews/${proj}/${feat}.html`;
+    return `<div class="output-row">
+      <span class="output-type-tag" style="background:${_qaGradeColor(r.grade)};color:#000;font-weight:700;">${r.grade}</span>
+      <span class="output-title">${esc(r.label)}</span>
+      <span style="font-size:11px;color:var(--dim);margin-left:4px;">${r.score}/100</span>
+      <a href="${esc(r.pr_url||'#')}" target="_blank" style="font-size:11px;color:var(--blue);margin-left:auto;">PR →</a>
+    </div>`;
+  }).join('') : '<div class="empty">No previews yet — run ai-visual-preview workflow</div>');
+}
+
+// ─── System Health ────────────────────────────────────────────────────────────
+
+function renderHealth(d) {
+  const si = d.self_improvement || {};
+  const raw = si.raw_metrics || {};
+  const outputs = raw.outputs || {};
+  const workflows = raw.workflows || {};
+  const qa = raw.visual_qa || {};
+  const automerge = raw.automerge || {};
+
+  // Overview cards
+  const health_score = si.overall_health_score || 0;
+  const eff_score = si.efficiency_score || 0;
+  const qual_score = si.quality_score || 0;
+  const vel_score = si.velocity_score || 0;
+
+  const healthColor = health_score >= 80 ? 'var(--green)' : health_score >= 60 ? 'var(--yellow)' : 'var(--red)';
+
+  set('health-overview-cards', [
+    { label: 'System Health', value: health_score + '/100', color: healthColor },
+    { label: 'Efficiency', value: eff_score + '/100', color: 'var(--cyan)' },
+    { label: 'Quality', value: qual_score + '/100', color: 'var(--blue)' },
+    { label: 'Velocity', value: vel_score + '/100', color: 'var(--yellow)' },
+  ].map(c => `<div class="card"><div class="card-value" style="color:${c.color}">${c.value}</div><div class="card-label">${c.label}</div></div>`).join(''));
+
+  // Token & cost detail
+  const avgTok = outputs.avg_tokens_per_feature || 0;
+  const avgCost = (outputs.avg_cost_per_feature_usd || 0).toFixed(5);
+  const tokEff = outputs.token_efficiency || 0;
+  const totalCost = (outputs.total_cost_usd || 0).toFixed(4);
+  const vel7d = outputs.features_last_7d || 0;
+
+  set('health-token-badge', `<span class="panel-badge badge-dim">${outputs.total || 0} total</span>`);
+  set('health-token-detail', `
+    <div class="output-row"><span class="output-type-tag" style="background:#7c3aed">TOKEN</span>
+      <div><div class="output-title">Avg tokens/feature</div><div class="output-meta">${avgTok.toLocaleString()}</div></div></div>
+    <div class="output-row"><span class="output-type-tag" style="background:#0284c7">COST</span>
+      <div><div class="output-title">Avg cost/feature</div><div class="output-meta">$${avgCost}</div></div></div>
+    <div class="output-row"><span class="output-type-tag" style="background:#0f766e">EFF</span>
+      <div><div class="output-title">Token efficiency</div><div class="output-meta">${tokEff} features/1K tokens</div></div></div>
+    <div class="output-row"><span class="output-type-tag" style="background:#16a34a">COST</span>
+      <div><div class="output-title">Total AI cost</div><div class="output-meta">$${totalCost}</div></div></div>
+    <div class="output-row"><span class="output-type-tag" style="background:#d97706">VEL</span>
+      <div><div class="output-title">Features (7d)</div><div class="output-meta">${vel7d}</div></div></div>
+  `);
+
+  // Workflow detail
+  const wfCount = workflows.total || 0;
+  const mergeRate = automerge.merge_rate_pct || 0;
+  const avgMergeSc = automerge.avg_merge_score || 0;
+  const qaPass = (d.visual_qa || {}).pass_rate_pct || 0;
+
+  set('health-workflow-badge', `<span class="panel-badge badge-dim">${wfCount} workflows</span>`);
+  set('health-workflow-detail', `
+    <div class="output-row"><span class="output-type-tag" style="background:#1d4ed8">WF</span>
+      <div><div class="output-title">Active workflows</div><div class="output-meta">${wfCount}</div></div></div>
+    <div class="output-row"><span class="output-type-tag" style="background:#15803d">MERGE</span>
+      <div><div class="output-title">Auto-merge rate</div><div class="output-meta">${mergeRate}% (avg score ${avgMergeSc}/100)</div></div></div>
+    <div class="output-row"><span class="output-type-tag" style="background:#7c3aed">QA</span>
+      <div><div class="output-title">Visual QA pass rate</div><div class="output-meta">${qaPass}%</div></div></div>
+  ` + (si.health_summary ? `<div style="margin-top:12px;padding:10px;background:#0f1929;border-radius:6px;font-size:12px;color:var(--dim);">${esc(si.health_summary)}</div>` : ''));
+
+  // Self-improvement recommendations
+  const improvements = si.top_improvements || [];
+  set('health-improve-badge', `<span class="panel-badge badge-cyan">${improvements.length}</span>`);
+  if (improvements.length) {
+    const catColor = { token_efficiency: '#7c3aed', prompt_quality: '#0284c7', workflow_health: '#16a34a', qa_quality: '#eab308', cost_reduction: '#dc2626', velocity: '#f97316' };
+    set('health-improvements-list', improvements.map((imp, i) => {
+      const pColor = { high: 'var(--red)', medium: 'var(--yellow)', low: 'var(--dim)' }[imp.priority] || 'var(--dim)';
+      const cc = catColor[imp.category] || '#64748b';
+      return `<div style="padding:14px;border:1px solid #1e293b;border-radius:8px;margin-bottom:10px;border-left:3px solid ${cc};">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:8px;">
+          <div style="font-weight:600;font-size:13px;">${i+1}. ${esc(imp.title)}</div>
+          <div style="display:flex;gap:6px;flex-shrink:0;">
+            <span style="font-size:11px;padding:2px 8px;border-radius:10px;background:#0f172a;border:1px solid ${pColor};color:${pColor};">${imp.priority}</span>
+            <span style="font-size:11px;padding:2px 8px;border-radius:10px;background:${cc}22;color:${cc};">${imp.category}</span>
+          </div>
+        </div>
+        <div style="font-size:12px;color:var(--dim);margin-bottom:6px;">${esc(imp.description)}</div>
+        <div style="font-size:11px;color:var(--blue);">Impact: ${esc(imp.estimated_impact)}</div>
+        <div style="font-size:11px;color:var(--dim);margin-top:2px;">Effort: ${esc(imp.effort)}</div>
+      </div>`;
+    }).join(''));
+  } else {
+    const msg = si.overall_health_score
+      ? `<div style="padding:10px;font-size:12px;color:var(--green);">${esc(si.health_summary || 'System is healthy')}</div>`
+      : '<div class="empty">Run the Self-Improvement workflow to get AI recommendations</div>';
+    set('health-improvements-list', msg);
+  }
 }
 
 // ─── Repository ──────────────────────────────────────────────────────────────
@@ -930,6 +1096,7 @@ async function loadDashboard() {
     renderAnalytics(_data);
     renderProduct(_data);
     renderTrust(_data);
+    renderHealth(_data);
     renderActivity(_data);
     renderSafety(_data);
 

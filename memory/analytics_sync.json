@@ -1,0 +1,50 @@
+{
+  "generated_at": "2026-05-15T19:03:08Z",
+  "data_sources_attempted": [
+    "ai_estimation"
+  ],
+  "projects": {
+    "yallaplays": {
+      "project": "yallaplays",
+      "domain": "yallaplays.com",
+      "analytics": {
+        "data_source": "ai_intelligence",
+        "period": "30d",
+        "visitors": 145000,
+        "pageviews": 203000,
+        "bounce_rate": 50,
+        "avg_session_duration_s": 120,
+        "fetched_at": "2026-05-15T19:03:08Z"
+      },
+      "tracking_snippet": "<!-- Plausible Analytics (privacy-first) -->\n<script defer data-domain=\"yallaplays.com\" src=\"https://plausible.io/js/script.js\"></script>"
+    },
+    "fionera": {
+      "project": "fionera",
+      "domain": "fionera.app",
+      "analytics": {
+        "data_source": "ai_intelligence",
+        "period": "30d",
+        "visitors": 48230,
+        "pageviews": 67522,
+        "bounce_rate": 50,
+        "avg_session_duration_s": 120,
+        "fetched_at": "2026-05-15T19:03:08Z"
+      },
+      "tracking_snippet": "<!-- Plausible Analytics (privacy-first) -->\n<script defer data-domain=\"fionera.app\" src=\"https://plausible.io/js/script.js\"></script>"
+    },
+    "mifteh": {
+      "project": "mifteh",
+      "domain": "miftehos.com",
+      "analytics": {
+        "data_source": "ai_intelligence",
+        "period": "30d",
+        "visitors": 4500,
+        "pageviews": 6300,
+        "bounce_rate": 50,
+        "avg_session_duration_s": 120,
+        "fetched_at": "2026-05-15T19:03:08Z"
+      },
+      "tracking_snippet": "<!-- Plausible Analytics (privacy-first) -->\n<script defer data-domain=\"miftehos.com\" src=\"https://plausible.io/js/script.js\"></script>"
+    }
+  }
+}
