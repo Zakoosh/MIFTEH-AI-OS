@@ -1,0 +1,77 @@
+name: MIFTEH AI Rollback Monitor
+
+# Monitors validation results and trust scores.
+# If a repo's trust score drops below 50 or rollback rate > 20%, flags for suspension.
+# Runs daily at 08:00 UTC after automerge (07:00) + validation.
+
+on:
+  schedule:
+    - cron: '0 8 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Check trust scores and flag degraded repos
+        run: |
+          python - <<'EOF'
+          import json, sys
+          from pathlib import Path
+          sys.path.insert(0, 'scripts')
+          from trust_manager import load, save, _now
+
+          d = load()
+          repos = d.get("repos", {})
+          suspended = d.get("suspended_repos", [])
+          alerts = []
+
+          for repo, stats in repos.items():
+              score = stats.get("score", 85)
+              deploys = stats.get("deploys", 0)
+              rollbacks = stats.get("rollbacks", 0)
+              failures = stats.get("failures", 0)
+
+              rollback_rate = rollbacks / deploys if deploys > 0 else 0
+
+              if score < 50 and repo not in suspended:
+                  alerts.append(f"LOW TRUST: {repo} score={score}")
+                  suspended.append(repo)
+                  print(f"[monitor] SUSPENDED {repo} — score={score} < 50")
+              elif rollback_rate > 0.20 and repo not in suspended:
+                  alerts.append(f"HIGH ROLLBACK: {repo} rate={rollback_rate:.0%}")
+                  suspended.append(repo)
+                  print(f"[monitor] SUSPENDED {repo} — rollback rate={rollback_rate:.0%}")
+              else:
+                  print(f"[monitor] OK: {repo} score={score}, rollbacks={rollbacks}/{deploys}, failures={failures}")
+
+          d["suspended_repos"] = suspended
+          save(d)
+
+          if alerts:
+              print(f"\n[monitor] {len(alerts)} alert(s):")
+              for a in alerts:
+                  print(f"  - {a}")
+          else:
+              print(f"\n[monitor] All repos healthy at {_now()}")
+          EOF
+
+      - name: Commit updated trust state
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "mifteh-ai@users.noreply.github.com"
+          git pull --rebase origin main
+          git add memory/trust_scores.json
+          git diff --cached --quiet || git commit -m "AI: Rollback monitor sweep [$(date -u +%Y-%m-%dT%H:%M:%SZ)] [skip ci]"
+          git push

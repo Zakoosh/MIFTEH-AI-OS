@@ -1,0 +1,45 @@
+name: MIFTEH AI Auto-Merge
+
+# Runs daily after repository analysis, evaluates open draft PRs,
+# and merges only those with safety score >= 90.
+# Also available for manual dispatch.
+
+on:
+  schedule:
+    - cron: '0 7 * * *'   # daily at 07:00 UTC — after ai-repository-analysis at 06:00
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  automerge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Evaluate and merge qualifying PRs
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python scripts/ai_automerge.py
+
+      - name: Commit automerge log and trust scores
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "mifteh-ai@users.noreply.github.com"
+          git pull --rebase origin main
+          git add memory/
+          git diff --cached --quiet || git commit -m "AI: Auto-merge results [$(date -u +%Y-%m-%dT%H:%M:%SZ)] [skip ci]"
+          git push
+
+      - name: Trigger deployment validation
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run ai-deployment-validation.yml --ref main

@@ -78,6 +78,7 @@ function showTab(name, btn) {
     providers: 'AI Provider Runtime', 'ai-analytics': 'AI Generation Analytics',
     outputs: 'Generated Outputs', previews: 'HTML Previews',
     repository: 'PR-Ready Changes', github: 'GitHub Draft PRs',
+    trust: 'Trust Scores & Autonomous Apply',
     activity: 'Operational Activity Feed', safety: 'Safety & Bounded Autonomy',
   };
   const el = document.getElementById('page-title');
@@ -456,6 +457,109 @@ function renderSafety(d) {
   );
 }
 
+// ─── Trust & Apply History ───────────────────────────────────────────────────
+
+function trustBar(score) {
+  const pct = Math.max(0, Math.min(100, score || 0));
+  const color = pct >= 80 ? 'var(--green)' : pct >= 60 ? 'var(--yellow)' : 'var(--red)';
+  return `<div style="display:flex;align-items:center;gap:8px;min-width:0;">
+    <div style="flex:1;height:6px;background:var(--surface2);border-radius:3px;min-width:60px;">
+      <div style="width:${pct}%;height:100%;background:${color};border-radius:3px;transition:width .3s;"></div>
+    </div>
+    <span style="color:${color};font-weight:700;font-size:13px;flex-shrink:0;">${pct}</span>
+  </div>`;
+}
+
+function renderTrust(d) {
+  const trust = d.trust || {};
+  const repos = trust.repos || {};
+  const cats = trust.categories || {};
+  const suspended = trust.suspended_repos || [];
+  const applyHistory = d.apply_history || [];
+  const validationHistory = d.validation_history || [];
+
+  // Overview cards
+  const repoScores = Object.values(repos).map(r => r.score || 0);
+  const avgRepoScore = repoScores.length ? Math.round(repoScores.reduce((a, b) => a + b, 0) / repoScores.length) : 0;
+  const merged = applyHistory.filter(e => e.action === 'merged').length;
+  const rejected = applyHistory.filter(e => e.action === 'rejected').length;
+  set('trust-overview-cards',
+    card('Avg Repo Trust', avgRepoScore, avgRepoScore >= 80 ? 'green' : 'yellow', 'score / 100') +
+    card('Repos Active', Object.keys(repos).length - suspended.length, 'cyan', `${suspended.length} suspended`) +
+    card('Total Merged', merged, 'green', 'auto-applied') +
+    card('Rejected', rejected, 'yellow', 'below score 90') +
+    card('Validations', validationHistory.length, 'blue', 'site checks') +
+    card('Suspended', suspended.length, suspended.length ? 'red' : 'dim', suspended.length ? 'action required' : 'none')
+  );
+
+  // Repo trust
+  set('trust-repos-badge', `<span class="panel-badge badge-dim">${Object.keys(repos).length} repos</span>`);
+  set('trust-repos-list', Object.keys(repos).length ? Object.entries(repos).map(([repo, stats]) => {
+    const isSuspended = suspended.includes(repo);
+    return `<div class="output-row" style="flex-direction:column;align-items:stretch;gap:6px;padding:10px 0;border-bottom:1px solid var(--border);">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-weight:600;font-size:13px;color:${isSuspended ? 'var(--red)' : 'var(--text)'};">
+          ${isSuspended ? '⛔ ' : ''}${esc(repo.split('/')[1])}
+        </span>
+        <span style="font-size:11px;color:var(--muted);">${esc(repo)}</span>
+      </div>
+      ${trustBar(stats.score)}
+      <div style="display:flex;gap:16px;font-size:11px;color:var(--dim);">
+        <span>✅ ${stats.deploys || 0} deploys</span>
+        <span>⏪ ${stats.rollbacks || 0} rollbacks</span>
+        <span>❌ ${stats.failures || 0} failures</span>
+        ${isSuspended ? '<span style="color:var(--red);font-weight:700;">SUSPENDED</span>' : ''}
+      </div>
+    </div>`;
+  }).join('') : '<div class="empty">No trust data yet</div>');
+
+  // Category trust
+  set('trust-cats-list', Object.keys(cats).length ? Object.entries(cats).map(([cat, stats]) => `
+    <div class="output-row" style="flex-direction:column;align-items:stretch;gap:4px;padding:8px 0;border-bottom:1px solid var(--border);">
+      <div style="display:flex;justify-content:space-between;">
+        <span style="font-size:12px;font-weight:600;">${esc(cat.replace(/_/g, ' '))}</span>
+        <span style="font-size:10px;color:var(--dim);">${stats.deploys || 0} deploys</span>
+      </div>
+      ${trustBar(stats.score)}
+    </div>
+  `).join('') : '<div class="empty">No category data yet</div>');
+
+  // Apply history
+  set('apply-history-badge', `<span class="panel-badge badge-dim">${applyHistory.length} events</span>`);
+  const actionColor = { merged: 'var(--green)', rejected: 'var(--yellow)', merge_failed: 'var(--red)', skipped: 'var(--dim)', already_merged: 'var(--cyan)' };
+  const actionIcon = { merged: '✅', rejected: '🚫', merge_failed: '❌', skipped: '–', already_merged: '✓' };
+  set('apply-history-list', applyHistory.length ? [...applyHistory].reverse().map(e => `
+    <div class="activity-item" style="align-items:flex-start;">
+      <div class="activity-icon" style="background:var(--surface2);color:${actionColor[e.action] || 'var(--dim)'};">
+        ${actionIcon[e.action] || '?'}
+      </div>
+      <div class="activity-body">
+        <div class="activity-title">
+          <span style="color:${actionColor[e.action] || 'var(--dim)'};">${esc(e.action?.replace(/_/g, ' ').toUpperCase())}</span>
+          — ${esc(e.repo?.split('/')[1])} PR #${e.pr_number}
+          ${e.pr_url ? `<a href="${esc(e.pr_url)}" target="_blank" style="color:var(--blue);margin-left:6px;font-size:11px;">↗ PR</a>` : ''}
+        </div>
+        <div class="activity-meta">
+          Score: <strong>${e.score || 0}/100</strong> · ${esc(e.reason)} · ${relTime(e.evaluated_at)}
+          ${e.merge_sha ? `· sha:${esc((e.merge_sha||'').slice(0,8))}` : ''}
+        </div>
+      </div>
+    </div>
+  `).join('') : '<div class="empty">No apply events yet — auto-merge runs daily at 07:00 UTC</div>');
+
+  // Validation history
+  set('validation-history-list', validationHistory.length ? [...validationHistory].reverse().map(e => {
+    const pct = e.total ? Math.round((e.passed / e.total) * 100) : 0;
+    return `<div class="activity-item">
+      <div class="activity-icon" style="background:var(--surface2);color:${e.ok ? 'var(--green)' : 'var(--red)'};">${e.ok ? '✓' : '✗'}</div>
+      <div class="activity-body">
+        <div class="activity-title">${esc(e.repo?.split('/')[1])} — <span style="color:${e.ok ? 'var(--green)' : 'var(--red)'};">${e.ok ? 'OK' : 'DEGRADED'}</span></div>
+        <div class="activity-meta">${e.passed}/${e.total} checks (${pct}%) · ${esc(e.base_url)} · ${relTime(e.validated_at)}</div>
+      </div>
+    </div>`;
+  }).join('') : '<div class="empty">No validation events yet</div>');
+}
+
 // ─── Actions (GitHub-native) ─────────────────────────────────────────────────
 
 function triggerLoop(loopId) {
@@ -510,6 +614,7 @@ async function loadDashboard() {
     renderPreviews(_data);
     renderRepository(_data);
     renderGitHub(_data);
+    renderTrust(_data);
     renderActivity(_data);
     renderSafety(_data);
 

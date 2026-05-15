@@ -1,0 +1,75 @@
+{
+  "generated_at": "2026-05-15T15:59:13Z",
+  "categories": {
+    "robots_txt": {
+      "score": 93,
+      "deploys": 4,
+      "rollbacks": 0,
+      "failures": 0
+    },
+    "sitemap_xml": {
+      "score": 93,
+      "deploys": 4,
+      "rollbacks": 0,
+      "failures": 0
+    },
+    "meta_tags": {
+      "score": 86,
+      "deploys": 4,
+      "rollbacks": 0,
+      "failures": 0
+    },
+    "json_ld": {
+      "score": 80,
+      "deploys": 4,
+      "rollbacks": 0,
+      "failures": 0
+    },
+    "manifest_json": {
+      "score": 85,
+      "deploys": 1,
+      "rollbacks": 0,
+      "failures": 0
+    },
+    "open_graph": {
+      "score": 86,
+      "deploys": 4,
+      "rollbacks": 0,
+      "failures": 0
+    },
+    "twitter_card": {
+      "score": 78,
+      "deploys": 0,
+      "rollbacks": 0,
+      "failures": 0
+    },
+    "canonical": {
+      "score": 88,
+      "deploys": 4,
+      "rollbacks": 0,
+      "failures": 0
+    }
+  },
+  "repos": {
+    "Zakoosh/Yallaplays": {
+      "score": 79,
+      "deploys": 2,
+      "rollbacks": 0,
+      "failures": 1
+    },
+    "Zakoosh/fionera": {
+      "score": 67,
+      "deploys": 1,
+      "rollbacks": 0,
+      "failures": 2
+    },
+    "Zakoosh/mifteh-main-site": {
+      "score": 67,
+      "deploys": 1,
+      "rollbacks": 0,
+      "failures": 2
+    }
+  },
+  "suspended_categories": [],
+  "suspended_repos": []
+}

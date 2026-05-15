@@ -1,0 +1,34 @@
+name: MIFTEH AI Deployment Validation
+
+# Validates live sites after auto-merge: HTTP 200, meta tags, robots, sitemap.
+# Triggered by ai-automerge.yml after merges. Also available manually.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Validate live deployments
+        run: python scripts/ai_deployment_validator.py
+
+      - name: Commit validation log and trust scores
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "mifteh-ai@users.noreply.github.com"
+          git pull --rebase origin main
+          git add memory/
+          git diff --cached --quiet || git commit -m "AI: Deployment validation results [$(date -u +%Y-%m-%dT%H:%M:%SZ)] [skip ci]"
+          git push

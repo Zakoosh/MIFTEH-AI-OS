@@ -1,0 +1,53 @@
+[
+  {
+    "base_url": "https://yallaplays.com",
+    "checks": {
+      "homepage_200": true,
+      "description": true,
+      "og:title": true,
+      "og:url": true,
+      "twitter:card": true,
+      "canonical": false,
+      "json_ld": false,
+      "robots_txt_200": true,
+      "sitemap_xml_200": true
+    },
+    "passed": 7,
+    "total": 9,
+    "ok": true,
+    "repo": "Zakoosh/Yallaplays",
+    "validated_at": "2026-05-15T15:59:12Z"
+  },
+  {
+    "base_url": "https://fionera.app",
+    "checks": {
+      "homepage_200": false,
+      "robots_txt_200": false,
+      "sitemap_xml_200": false
+    },
+    "passed": 0,
+    "total": 3,
+    "ok": false,
+    "repo": "Zakoosh/fionera",
+    "validated_at": "2026-05-15T15:59:12Z"
+  },
+  {
+    "base_url": "https://miftehos.com",
+    "checks": {
+      "homepage_200": true,
+      "description": false,
+      "og:title": false,
+      "og:url": false,
+      "twitter:card": false,
+      "canonical": false,
+      "json_ld": false,
+      "robots_txt_200": false,
+      "sitemap_xml_200": false
+    },
+    "passed": 1,
+    "total": 9,
+    "ok": false,
+    "repo": "Zakoosh/mifteh-main-site",
+    "validated_at": "2026-05-15T15:59:13Z"
+  }
+]

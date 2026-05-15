@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-15T15:44:59Z",
+  "generated_at": "2026-05-15T16:02:02Z",
   "architecture": "github-native",
   "scheduler": {
     "scheduler_running": true,
@@ -167,12 +167,12 @@
       "openai": {
         "consecutive_429s": 0,
         "total_429s": 0,
-        "last_success": "2026-05-15T15:44:59Z"
+        "last_success": "2026-05-15T16:02:02Z"
       },
       "gemini": {
         "consecutive_429s": 0,
         "total_429s": 0,
-        "last_success": "2026-05-15T15:44:59Z"
+        "last_success": "2026-05-15T16:02:02Z"
       }
     }
   },
@@ -399,5 +399,168 @@
     "rollback_enabled": true,
     "validation_required": true,
     "audit_tracking": true
-  }
+  },
+  "trust": {
+    "repos": {
+      "Zakoosh/Yallaplays": {
+        "score": 79,
+        "deploys": 2,
+        "rollbacks": 0,
+        "failures": 1
+      },
+      "Zakoosh/fionera": {
+        "score": 67,
+        "deploys": 1,
+        "rollbacks": 0,
+        "failures": 2
+      },
+      "Zakoosh/mifteh-main-site": {
+        "score": 67,
+        "deploys": 1,
+        "rollbacks": 0,
+        "failures": 2
+      }
+    },
+    "categories": {
+      "robots_txt": {
+        "score": 93,
+        "deploys": 4,
+        "rollbacks": 0,
+        "failures": 0
+      },
+      "sitemap_xml": {
+        "score": 93,
+        "deploys": 4,
+        "rollbacks": 0,
+        "failures": 0
+      },
+      "meta_tags": {
+        "score": 86,
+        "deploys": 4,
+        "rollbacks": 0,
+        "failures": 0
+      },
+      "json_ld": {
+        "score": 80,
+        "deploys": 4,
+        "rollbacks": 0,
+        "failures": 0
+      },
+      "manifest_json": {
+        "score": 85,
+        "deploys": 1,
+        "rollbacks": 0,
+        "failures": 0
+      },
+      "open_graph": {
+        "score": 86,
+        "deploys": 4,
+        "rollbacks": 0,
+        "failures": 0
+      },
+      "twitter_card": {
+        "score": 78,
+        "deploys": 0,
+        "rollbacks": 0,
+        "failures": 0
+      },
+      "canonical": {
+        "score": 88,
+        "deploys": 4,
+        "rollbacks": 0,
+        "failures": 0
+      }
+    },
+    "suspended_repos": [],
+    "suspended_categories": [],
+    "last_updated": "2026-05-15T15:59:13Z"
+  },
+  "apply_history": [
+    {
+      "repo": "Zakoosh/Yallaplays",
+      "pr_number": 5,
+      "pr_url": "https://github.com/Zakoosh/Yallaplays/pull/5",
+      "action": "merge_failed",
+      "score": 100,
+      "reason": "merge API call failed",
+      "evaluated_at": "2026-05-15T15:58:22Z",
+      "merge_sha": ""
+    },
+    {
+      "repo": "Zakoosh/fionera",
+      "pr_number": 3,
+      "pr_url": "https://github.com/Zakoosh/fionera/pull/3",
+      "action": "merge_failed",
+      "score": 100,
+      "reason": "merge API call failed",
+      "evaluated_at": "2026-05-15T15:58:23Z",
+      "merge_sha": ""
+    },
+    {
+      "repo": "Zakoosh/mifteh-main-site",
+      "pr_number": 1,
+      "pr_url": "https://github.com/Zakoosh/mifteh-main-site/pull/1",
+      "action": "merge_failed",
+      "score": 100,
+      "reason": "merge API call failed",
+      "evaluated_at": "2026-05-15T15:58:25Z",
+      "merge_sha": ""
+    },
+    {
+      "repo": "Zakoosh/Yallaplays",
+      "pr_number": 5,
+      "pr_url": "https://github.com/Zakoosh/Yallaplays/pull/5",
+      "action": "merged",
+      "score": 100,
+      "reason": "merged successfully at 2026-05-15T15:58:54Z",
+      "evaluated_at": "2026-05-15T15:58:51Z",
+      "merge_sha": "1340d7033106ea86069ca67fc46fb675f27292db"
+    },
+    {
+      "repo": "Zakoosh/fionera",
+      "pr_number": 3,
+      "pr_url": "https://github.com/Zakoosh/fionera/pull/3",
+      "action": "merged",
+      "score": 100,
+      "reason": "merged successfully at 2026-05-15T15:58:58Z",
+      "evaluated_at": "2026-05-15T15:58:54Z",
+      "merge_sha": "b1022a250cb62b19cc890ca4391e9e67e9fbdf64"
+    },
+    {
+      "repo": "Zakoosh/mifteh-main-site",
+      "pr_number": 1,
+      "pr_url": "https://github.com/Zakoosh/mifteh-main-site/pull/1",
+      "action": "merged",
+      "score": 100,
+      "reason": "merged successfully at 2026-05-15T15:59:02Z",
+      "evaluated_at": "2026-05-15T15:58:58Z",
+      "merge_sha": "fd3ba7d034965cb0c10713d91b69a6d22381f506"
+    }
+  ],
+  "validation_history": [
+    {
+      "repo": "Zakoosh/Yallaplays",
+      "base_url": "https://yallaplays.com",
+      "passed": 7,
+      "total": 9,
+      "ok": true,
+      "validated_at": "2026-05-15T15:59:12Z"
+    },
+    {
+      "repo": "Zakoosh/fionera",
+      "base_url": "https://fionera.app",
+      "passed": 0,
+      "total": 3,
+      "ok": false,
+      "validated_at": "2026-05-15T15:59:12Z"
+    },
+    {
+      "repo": "Zakoosh/mifteh-main-site",
+      "base_url": "https://miftehos.com",
+      "passed": 1,
+      "total": 9,
+      "ok": false,
+      "validated_at": "2026-05-15T15:59:13Z"
+    }
+  ]
 }

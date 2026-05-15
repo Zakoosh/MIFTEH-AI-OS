@@ -57,6 +57,21 @@ def read_prs():
     return json.loads(f.read_text()) if f.exists() else []
 
 
+def read_trust():
+    f = Path("memory/trust_scores.json")
+    return json.loads(f.read_text()) if f.exists() else {}
+
+
+def read_automerge_log():
+    f = Path("memory/automerge_log.json")
+    return json.loads(f.read_text()) if f.exists() else []
+
+
+def read_validation_log():
+    f = Path("memory/validation_log.json")
+    return json.loads(f.read_text()) if f.exists() else []
+
+
 def build_loops(outputs):
     by_project = {}
     for o in outputs:
@@ -149,7 +164,10 @@ def main():
 
     outputs = read_outputs()
     prs = read_prs()
-    print(f"[dashboard] {len(outputs)} outputs, {len(prs)} PRs")
+    trust = read_trust()
+    automerge_log = read_automerge_log()
+    validation_log = read_validation_log()
+    print(f"[dashboard] {len(outputs)} outputs, {len(prs)} PRs, {len(automerge_log)} merge events")
 
     loops, active_loops = build_loops(outputs)
     ai_analytics = build_ai_analytics(outputs)
@@ -238,6 +256,37 @@ def main():
             "validation_required": True,
             "audit_tracking": True,
         },
+        "trust": {
+            "repos": trust.get("repos", {}),
+            "categories": trust.get("categories", {}),
+            "suspended_repos": trust.get("suspended_repos", []),
+            "suspended_categories": trust.get("suspended_categories", []),
+            "last_updated": trust.get("generated_at", ""),
+        },
+        "apply_history": [
+            {
+                "repo": e.get("repo"),
+                "pr_number": e.get("pr_number"),
+                "pr_url": e.get("pr_url"),
+                "action": e.get("action"),
+                "score": e.get("score"),
+                "reason": e.get("reason"),
+                "evaluated_at": e.get("evaluated_at"),
+                "merge_sha": e.get("merge_sha", ""),
+            }
+            for e in automerge_log[-50:]
+        ],
+        "validation_history": [
+            {
+                "repo": e.get("repo"),
+                "base_url": e.get("base_url"),
+                "passed": e.get("passed"),
+                "total": e.get("total"),
+                "ok": e.get("ok"),
+                "validated_at": e.get("validated_at"),
+            }
+            for e in validation_log[-50:]
+        ],
     }
 
     out = Path("frontend/dashboard/data/dashboard.json")

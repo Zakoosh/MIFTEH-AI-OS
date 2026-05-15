@@ -1,0 +1,104 @@
+[
+  {
+    "repo": "Zakoosh/Yallaplays",
+    "pr_number": 5,
+    "pr_url": "https://github.com/Zakoosh/Yallaplays/pull/5",
+    "evaluated_at": "2026-05-15T15:58:22Z",
+    "action": "merge_failed",
+    "reason": "merge API call failed",
+    "score": 100,
+    "score_reasons": [
+      "+40: all files are allowed SEO/metadata types",
+      "+20: no forbidden paths",
+      "+20: only 3 files changed",
+      "+10: repo trust score 85",
+      "+10: all category trust scores >= 70"
+    ],
+    "merge_sha": ""
+  },
+  {
+    "repo": "Zakoosh/fionera",
+    "pr_number": 3,
+    "pr_url": "https://github.com/Zakoosh/fionera/pull/3",
+    "evaluated_at": "2026-05-15T15:58:23Z",
+    "action": "merge_failed",
+    "reason": "merge API call failed",
+    "score": 100,
+    "score_reasons": [
+      "+40: all files are allowed SEO/metadata types",
+      "+20: no forbidden paths",
+      "+20: only 3 files changed",
+      "+10: repo trust score 85",
+      "+10: all category trust scores >= 70"
+    ],
+    "merge_sha": ""
+  },
+  {
+    "repo": "Zakoosh/mifteh-main-site",
+    "pr_number": 1,
+    "pr_url": "https://github.com/Zakoosh/mifteh-main-site/pull/1",
+    "evaluated_at": "2026-05-15T15:58:25Z",
+    "action": "merge_failed",
+    "reason": "merge API call failed",
+    "score": 100,
+    "score_reasons": [
+      "+40: all files are allowed SEO/metadata types",
+      "+20: no forbidden paths",
+      "+20: only 4 files changed",
+      "+10: repo trust score 85",
+      "+10: all category trust scores >= 70"
+    ],
+    "merge_sha": ""
+  },
+  {
+    "repo": "Zakoosh/Yallaplays",
+    "pr_number": 5,
+    "pr_url": "https://github.com/Zakoosh/Yallaplays/pull/5",
+    "evaluated_at": "2026-05-15T15:58:51Z",
+    "action": "merged",
+    "reason": "merged successfully at 2026-05-15T15:58:54Z",
+    "score": 100,
+    "score_reasons": [
+      "+40: all files are allowed SEO/metadata types",
+      "+20: no forbidden paths",
+      "+20: only 3 files changed",
+      "+10: repo trust score 75",
+      "+10: all category trust scores >= 70"
+    ],
+    "merge_sha": "1340d7033106ea86069ca67fc46fb675f27292db"
+  },
+  {
+    "repo": "Zakoosh/fionera",
+    "pr_number": 3,
+    "pr_url": "https://github.com/Zakoosh/fionera/pull/3",
+    "evaluated_at": "2026-05-15T15:58:54Z",
+    "action": "merged",
+    "reason": "merged successfully at 2026-05-15T15:58:58Z",
+    "score": 100,
+    "score_reasons": [
+      "+40: all files are allowed SEO/metadata types",
+      "+20: no forbidden paths",
+      "+20: only 3 files changed",
+      "+10: repo trust score 75",
+      "+10: all category trust scores >= 70"
+    ],
+    "merge_sha": "b1022a250cb62b19cc890ca4391e9e67e9fbdf64"
+  },
+  {
+    "repo": "Zakoosh/mifteh-main-site",
+    "pr_number": 1,
+    "pr_url": "https://github.com/Zakoosh/mifteh-main-site/pull/1",
+    "evaluated_at": "2026-05-15T15:58:58Z",
+    "action": "merged",
+    "reason": "merged successfully at 2026-05-15T15:59:02Z",
+    "score": 100,
+    "score_reasons": [
+      "+40: all files are allowed SEO/metadata types",
+      "+20: no forbidden paths",
+      "+20: only 4 files changed",
+      "+10: repo trust score 75",
+      "+10: all category trust scores >= 70"
+    ],
+    "merge_sha": "fd3ba7d034965cb0c10713d91b69a6d22381f506"
+  }
+]

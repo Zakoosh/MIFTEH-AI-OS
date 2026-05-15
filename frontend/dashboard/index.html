@@ -30,6 +30,9 @@
       <button class="nav-btn" onclick="showTab('repository',this)"><span class="icon">⎇</span> PR-Ready Changes</button>
       <button class="nav-btn" onclick="showTab('github',this)"><span class="icon">⑂</span> GitHub PRs</button>
 
+      <div class="nav-section">Autonomy</div>
+      <button class="nav-btn" onclick="showTab('trust',this)"><span class="icon">⚖</span> Trust &amp; Apply</button>
+
       <div class="nav-section">System</div>
       <button class="nav-btn" onclick="showTab('activity',this)"><span class="icon">≡</span> Activity Feed</button>
       <button class="nav-btn" onclick="showTab('safety',this)"><span class="icon">⛨</span> Safety &amp; Limits</button>
@@ -228,10 +231,10 @@
           <div class="panel">
             <div class="panel-header"><div class="panel-title">GitHub Safety</div></div>
             <div class="safety-grid">
-              <div class="safety-item"><span class="safety-icon">🚫</span><span style="color:var(--green);">No auto-merge</span></div>
-              <div class="safety-item"><span class="safety-icon">🚫</span><span style="color:var(--green);">No auto-deploy</span></div>
+              <div class="safety-item"><span class="safety-icon">⚖</span><span style="color:var(--cyan);">Auto-merge: score ≥ 90</span></div>
+              <div class="safety-item"><span class="safety-icon">🚫</span><span style="color:var(--green);">No forbidden files</span></div>
               <div class="safety-item"><span class="safety-icon">✅</span><span style="color:var(--green);">Always draft PRs</span></div>
-              <div class="safety-item"><span class="safety-icon">✅</span><span style="color:var(--green);">Review required</span></div>
+              <div class="safety-item"><span class="safety-icon">✅</span><span style="color:var(--green);">Rollback enabled</span></div>
             </div>
           </div>
         </div>
@@ -241,6 +244,40 @@
             <span class="panel-badge badge-dim" id="github-badge">–</span>
           </div>
           <div id="github-prs-list"></div>
+        </div>
+      </section>
+
+      <!-- TRUST & APPLY TAB -->
+      <section id="tab-trust" class="tab">
+        <div class="section-title">Trust Scores &amp; Autonomous Apply History</div>
+        <div class="cards-grid" id="trust-overview-cards"></div>
+        <div class="panels-row">
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Repo Trust Scores</div>
+              <span class="panel-badge badge-green" id="trust-repos-badge">–</span>
+            </div>
+            <div id="trust-repos-list"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Category Trust Scores</div>
+            </div>
+            <div id="trust-cats-list"></div>
+          </div>
+        </div>
+        <div class="panel full">
+          <div class="panel-header">
+            <div class="panel-title">Apply History</div>
+            <span class="panel-badge badge-dim" id="apply-history-badge">–</span>
+          </div>
+          <div id="apply-history-list"></div>
+        </div>
+        <div class="panel full">
+          <div class="panel-header">
+            <div class="panel-title">Validation History</div>
+          </div>
+          <div id="validation-history-list"></div>
         </div>
       </section>
 
