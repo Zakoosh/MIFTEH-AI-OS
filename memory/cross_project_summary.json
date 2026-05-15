@@ -1,0 +1,90 @@
+{
+  "generated_at": "2026-05-15T20:26:40Z",
+  "total_patterns": 5,
+  "total_shared_opportunities": 1,
+  "total_reusable_prompts": 0,
+  "top_patterns": [
+    {
+      "pattern_id": "seo_hub_structure",
+      "pattern_name": "SEO Hub Page with Topic Clusters",
+      "learned_from": "yallaplays",
+      "applicable_to": [
+        "mifteh",
+        "fionera"
+      ],
+      "pattern_description": "Hub pages with category navigation, keyword-rich H2s, and dense internal linking perform best for organic visibility.",
+      "transfer_instructions": "Create hub pages with clear topic clusters, 8+ internal links, FAQ sections, and breadcrumb schema.",
+      "estimated_impact": "+15\u201325% organic visibility in 60 days",
+      "category": "seo"
+    },
+    {
+      "pattern_id": "dual_cta_placement",
+      "pattern_name": "Above-fold + Mid-content CTA",
+      "learned_from": "fionera",
+      "applicable_to": [
+        "yallaplays",
+        "mifteh"
+      ],
+      "pattern_description": "Two CTAs (top + mid-page) outperform a single bottom CTA by 30\u201340% on conversion rate.",
+      "transfer_instructions": "Always include primary CTA in hero section and secondary CTA after the 2nd content paragraph.",
+      "estimated_impact": "+25\u201340% CTR improvement",
+      "category": "ux"
+    },
+    {
+      "pattern_id": "json_ld_structured_data",
+      "pattern_name": "JSON-LD Structured Data on All Pages",
+      "learned_from": "yallaplays",
+      "applicable_to": [
+        "fionera",
+        "mifteh"
+      ],
+      "pattern_description": "Adding WebPage + BreadcrumbList + FAQ JSON-LD increases rich snippet eligibility and click-through rates.",
+      "transfer_instructions": "Add JSON-LD schema block in <head> for every generated page. Use WebPage, BreadcrumbList, FAQPage where applicable.",
+      "estimated_impact": "+10\u201320% CTR from rich snippets",
+      "category": "seo"
+    },
+    {
+      "pattern_id": "trust_social_proof",
+      "pattern_name": "Trust Signals + Social Proof Section",
+      "learned_from": "mifteh",
+      "applicable_to": [
+        "yallaplays",
+        "fionera"
+      ],
+      "pattern_description": "Pages with star ratings, user count badges, or testimonial quotes convert 18% better than pages without.",
+      "transfer_instructions": "Add a trust strip below the hero: user count, star rating, and one short testimonial.",
+      "estimated_impact": "+15\u201320% conversion rate",
+      "category": "ux"
+    },
+    {
+      "pattern_id": "meta_description_cta",
+      "pattern_name": "Action-Oriented Meta Descriptions",
+      "learned_from": "fionera",
+      "applicable_to": [
+        "yallaplays",
+        "mifteh"
+      ],
+      "pattern_description": "Meta descriptions that include a verb + benefit + implicit CTA (e.g. 'Discover 500+ games. Play free now.') get 12% higher CTR.",
+      "transfer_instructions": "Write meta descriptions in the format: [Verb] + [benefit] + [implicit CTA]. Keep under 155 characters.",
+      "estimated_impact": "+10\u201315% organic CTR",
+      "category": "seo"
+    }
+  ],
+  "shared_opportunities": [
+    {
+      "opportunity": "JSON-LD structured data on all pages",
+      "projects": [
+        "yallaplays",
+        "fionera",
+        "mifteh"
+      ],
+      "rationale": "All 3 sites missing structured data"
+    }
+  ],
+  "project_insights": {
+    "yallaplays": "Category pages need 500+ word content",
+    "fionera": "Widgets need real-time data indicators",
+    "mifteh": "Case studies with metrics convert better"
+  },
+  "reusable_prompts": []
+}

@@ -1,0 +1,60 @@
+name: MIFTEH AI Swarm Orchestrator
+
+# Coordinates multiple specialized AI agents (SEO, UX, Content, Monetization,
+# Analytics, Performance) on growth missions. Merges outputs into one
+# prioritized implementation plan per project.
+# Runs Wednesday 11:00 UTC — after autonomous executor (09:00).
+
+on:
+  schedule:
+    - cron: '0 11 * * 3'   # Wednesday 11:00 UTC
+  workflow_dispatch:
+    inputs:
+      target_project:
+        description: 'Target project (yallaplays|fionera|mifteh|all)'
+        required: false
+        default: 'all'
+        type: choice
+        options: [all, yallaplays, fionera, mifteh]
+      swarm_mission:
+        description: 'Custom mission (leave blank for auto)'
+        required: false
+        default: ''
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  swarm-orchestrator:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install openai
+
+      - name: Run swarm orchestrator
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          TARGET_PROJECT: ${{ inputs.target_project || 'all' }}
+          SWARM_MISSION: ${{ inputs.swarm_mission || '' }}
+        run: python scripts/swarm_orchestrator.py
+
+      - name: Aggregate dashboard
+        run: python scripts/aggregate_dashboard.py
+
+      - name: Commit swarm results
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "mifteh-ai@users.noreply.github.com"
+          git pull --rebase origin main
+          git add memory/swarm/ memory/swarm_summary.json frontend/dashboard/data/
+          git diff --cached --quiet || git commit -m "AI: Swarm orchestration cycle [$(date -u +%Y-%m-%dT%H:%M:%SZ)] [skip ci]"
+          git push

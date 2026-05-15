@@ -1,0 +1,52 @@
+name: MIFTEH AI Priority Engine
+
+# Scores and reorders the autonomous execution queue using multi-factor analysis.
+# Applies execution mode configuration (safe/balanced/aggressive/experimental).
+# Runs Wednesday 07:00 UTC — before autonomous executor (09:00).
+
+on:
+  schedule:
+    - cron: '0 7 * * 3'    # Wednesday 07:00 UTC
+  workflow_dispatch:
+    inputs:
+      execution_mode:
+        description: 'Execution mode (safe|balanced|aggressive|experimental)'
+        required: false
+        default: 'balanced'
+        type: choice
+        options: [safe, balanced, aggressive, experimental]
+
+permissions:
+  contents: write
+
+jobs:
+  priority-engine:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install openai
+
+      - name: Run priority engine
+        env:
+          EXECUTION_MODE: ${{ inputs.execution_mode || 'balanced' }}
+        run: python scripts/priority_engine.py
+
+      - name: Aggregate dashboard
+        run: python scripts/aggregate_dashboard.py
+
+      - name: Commit priority report
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "mifteh-ai@users.noreply.github.com"
+          git pull --rebase origin main
+          git add memory/priority_report.json memory/execution_mode_config.json memory/analytics_intelligence.json frontend/dashboard/data/
+          git diff --cached --quiet || git commit -m "AI: Priority queue reorder [$(date -u +%Y-%m-%dT%H:%M:%SZ)] [skip ci]"
+          git push

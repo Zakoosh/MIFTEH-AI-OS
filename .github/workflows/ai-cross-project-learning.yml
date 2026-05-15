@@ -1,0 +1,45 @@
+name: MIFTEH AI Cross-Project Learning
+
+# Identifies successful patterns from one project and transfers them to others.
+# Builds reusable prompt templates and component strategies.
+# Runs Monday 05:00 UTC — after market intelligence.
+
+on:
+  schedule:
+    - cron: '0 5 * * 1'    # Monday 05:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  cross-project-learning:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install openai
+
+      - name: Run cross-project learning
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python scripts/cross_project_learning.py
+
+      - name: Aggregate dashboard
+        run: python scripts/aggregate_dashboard.py
+
+      - name: Commit cross-project knowledge
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "mifteh-ai@users.noreply.github.com"
+          git pull --rebase origin main
+          git add memory/cross_project/ memory/cross_project_summary.json frontend/dashboard/data/
+          git diff --cached --quiet || git commit -m "AI: Cross-project learning sync [$(date -u +%Y-%m-%dT%H:%M:%SZ)] [skip ci]"
+          git push

@@ -1369,6 +1369,534 @@ function renderMemory(d) {
 }
 
 
+// ─── Revenue ─────────────────────────────────────────────────────────────────
+
+function renderRevenue(d) {
+  const rev = d.revenue || {};
+  const ps = rev.portfolio_summary || {};
+  const ai = rev.ai_analysis || {};
+  const projects = rev.projects || {};
+
+  set('revenue-cards', [
+    { label: 'Portfolio Value/mo', value: '$' + (ps.total_est_value_usd || 0).toFixed(2), color: 'var(--green)' },
+    { label: 'Token ROI', value: (ps.portfolio_roi || 0).toFixed(1) + 'x', color: 'var(--cyan)' },
+    { label: '30d Forecast', value: '$' + (ps['30d_forecast_usd'] || 0).toFixed(2), color: 'var(--blue)' },
+    { label: '90d Forecast', value: '$' + (ps['90d_forecast_usd'] || 0).toFixed(2), color: 'var(--yellow)' },
+  ].map(c => `<div class="card"><div class="card-value" style="color:${c.color}">${c.value}</div><div class="card-label">${c.label}</div></div>`).join(''));
+
+  // Project breakdown
+  set('revenue-projects', Object.entries(projects).map(([proj, data]) => `
+    <div style="padding:10px 0;border-bottom:1px solid var(--border)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+        <span style="font-weight:600;text-transform:uppercase;font-size:11px;color:var(--cyan)">${esc(proj)}</span>
+        <span style="font-size:12px;color:var(--dim)">${esc(data.monetization_model || '')}</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+        <div style="background:var(--bg2);padding:8px;border-radius:6px;text-align:center">
+          <div style="font-size:14px;font-weight:700;color:var(--green)">$${(data.total_estimated_value_usd || 0).toFixed(2)}</div>
+          <div style="font-size:10px;color:var(--dim)">Value/mo</div>
+        </div>
+        <div style="background:var(--bg2);padding:8px;border-radius:6px;text-align:center">
+          <div style="font-size:14px;font-weight:700;color:var(--cyan)">${(data.portfolio_roi || 0).toFixed(1)}x</div>
+          <div style="font-size:10px;color:var(--dim)">Token ROI</div>
+        </div>
+        <div style="background:var(--bg2);padding:8px;border-radius:6px;text-align:center">
+          <div style="font-size:14px;font-weight:700;color:var(--yellow)">${(data.traffic_growth_pct || 0).toFixed(1)}%</div>
+          <div style="font-size:10px;color:var(--dim)">Traffic Growth</div>
+        </div>
+      </div>
+    </div>`).join('') || '<div style="padding:20px;color:var(--dim);text-align:center">No revenue data yet — run revenue engine</div>');
+
+  // Opportunities
+  const opps = ai.revenue_opportunities || [];
+  set('revenue-opportunities', opps.length ? opps.map(o => `
+    <div style="padding:10px 0;border-bottom:1px solid var(--border)">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="font-weight:600;font-size:13px">${esc(o.opportunity || '')}</span>
+        <span style="color:var(--green);font-size:12px;font-weight:700">+$${(o.est_monthly_uplift_usd || 0).toFixed(0)}/mo</span>
+      </div>
+      <div style="font-size:11px;color:var(--dim);margin-top:3px">${esc(o.project || '')} · ${esc(o.effort || '')} effort</div>
+    </div>`).join('') : '<div style="padding:16px;color:var(--dim)">Run revenue engine for opportunities</div>');
+
+  // Top ROI features across all projects
+  const allFeatures = Object.values(projects).flatMap(p => p.top_roi_features || []);
+  allFeatures.sort((a, b) => b.roi_ratio - a.roi_ratio);
+  set('revenue-features', allFeatures.length ? `
+    <table style="width:100%;border-collapse:collapse;font-size:12px">
+      <thead><tr style="border-bottom:1px solid var(--border);color:var(--dim)">
+        <th style="text-align:left;padding:6px 0">Feature</th>
+        <th style="text-align:right;padding:6px">Visits/mo</th>
+        <th style="text-align:right;padding:6px">SEO Value</th>
+        <th style="text-align:right;padding:6px">Revenue</th>
+        <th style="text-align:right;padding:6px">ROI</th>
+      </tr></thead>
+      <tbody>${allFeatures.slice(0, 10).map(f => `<tr style="border-bottom:1px solid var(--border)">
+        <td style="padding:7px 0"><div style="font-weight:500">${esc(f.feature_id || '')}</div><div style="font-size:10px;color:var(--dim)">${esc(f.project || '')} · ${esc(f.feature_type || '')}</div></td>
+        <td style="text-align:right;padding:7px">${(f.est_monthly_visits || 0).toLocaleString()}</td>
+        <td style="text-align:right;padding:7px;color:var(--green)">$${(f.seo_value_usd || 0).toFixed(2)}</td>
+        <td style="text-align:right;padding:7px;color:var(--cyan)">$${(f.direct_revenue_usd || 0).toFixed(2)}</td>
+        <td style="text-align:right;padding:7px;color:var(--yellow);font-weight:700">${(f.roi_ratio || 0).toFixed(0)}x</td>
+      </tr>`).join('')}</tbody>
+    </table>` : '<div style="padding:16px;color:var(--dim)">No feature revenue data yet</div>');
+
+  if (ai.key_insight) {
+    const el = document.getElementById('revenue-projects-panel');
+    if (el) {
+      const tip = document.createElement('div');
+      tip.style.cssText = 'padding:10px;background:var(--bg2);border-left:3px solid var(--cyan);margin-top:12px;font-size:12px;border-radius:0 6px 6px 0';
+      tip.textContent = '💡 ' + ai.key_insight;
+      el.appendChild(tip);
+    }
+  }
+}
+
+// ─── Swarm ────────────────────────────────────────────────────────────────────
+
+function renderSwarm(d) {
+  const sw = d.swarm || {};
+  const missions = sw.recent_missions || [];
+
+  set('swarm-cards', [
+    { label: 'Total Missions', value: sw.total_missions || 0, color: 'var(--cyan)' },
+    { label: 'Agents per Mission', value: '6', color: 'var(--blue)' },
+    { label: 'Active Projects', value: new Set(missions.map(m => m.project)).size || 0, color: 'var(--green)' },
+    { label: 'High Priority Plans', value: missions.filter(m => m.execution_priority === 'high').length, color: 'var(--yellow)' },
+  ].map(c => `<div class="card"><div class="card-value" style="color:${c.color}">${c.value}</div><div class="card-label">${c.label}</div></div>`).join(''));
+
+  const priorityColor = { high: 'var(--red)', medium: 'var(--yellow)', low: 'var(--dim)' };
+  set('swarm-missions', missions.length ? missions.map(m => {
+    const plan = m.implementation_plan || {};
+    const impact = m.estimated_30d_impact || plan.estimated_30d_impact || {};
+    const proposals = m.top_proposals || [];
+    return `<div style="background:var(--bg2);border-radius:8px;padding:16px;margin-bottom:12px;border-left:3px solid var(--cyan)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <div>
+          <div style="font-weight:700;font-size:14px">${esc(plan.plan_title || m.mission || '')}</div>
+          <div style="font-size:11px;color:var(--dim);margin-top:2px">
+            ${esc(m.project || '')} · ${(m.agents_used || []).length} agents · ${esc(m.generated_at ? m.generated_at.slice(0,10) : '')}
+          </div>
+        </div>
+        <span style="padding:4px 10px;border-radius:12px;font-size:11px;font-weight:700;background:var(--bg3);color:${priorityColor[m.execution_priority] || 'var(--dim)'}">${(m.execution_priority || '').toUpperCase()}</span>
+      </div>
+      ${plan.plan_summary ? `<div style="font-size:12px;color:var(--fg2);margin-bottom:10px">${esc(plan.plan_summary)}</div>` : ''}
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px">
+        <div style="background:var(--bg3);padding:6px;border-radius:6px;text-align:center">
+          <div style="font-size:13px;font-weight:700;color:var(--green)">+${impact.traffic_increase_pct || 0}%</div>
+          <div style="font-size:10px;color:var(--dim)">Traffic</div>
+        </div>
+        <div style="background:var(--bg3);padding:6px;border-radius:6px;text-align:center">
+          <div style="font-size:13px;font-weight:700;color:var(--cyan)">$${impact.revenue_increase_usd || 0}</div>
+          <div style="font-size:10px;color:var(--dim)">Revenue</div>
+        </div>
+        <div style="background:var(--bg3);padding:6px;border-radius:6px;text-align:center">
+          <div style="font-size:13px;font-weight:700;color:var(--blue)">+${impact.seo_score_improvement || 0}</div>
+          <div style="font-size:10px;color:var(--dim)">SEO pts</div>
+        </div>
+      </div>
+      ${proposals.length ? `<div style="font-size:11px;color:var(--dim);margin-bottom:6px">TOP PROPOSALS</div>
+      ${proposals.slice(0,3).map(p => `<div style="padding:6px 0;border-top:1px solid var(--border);font-size:12px">
+        <span style="font-weight:600">${esc(p.title || '')}</span>
+        <span style="color:var(--dim);margin-left:8px">${esc(p.source_role || '')}</span>
+        <span style="float:right;color:var(--cyan)">${p.confidence || 0}% conf</span>
+      </div>`).join('')}` : ''}
+    </div>`;
+  }).join('') : '<div style="padding:40px;text-align:center;color:var(--dim)">No swarm missions yet — run the Swarm Orchestrator workflow</div>');
+}
+
+// ─── Strategy ─────────────────────────────────────────────────────────────────
+
+function renderStrategy(d) {
+  const st = d.strategy || {};
+  const plan = st.strategic_plan || {};
+  const d30 = plan['30_day_plan'] || {};
+  const d90 = plan['90_day_plan'] || {};
+  const bottlenecks = st.bottlenecks || [];
+  const matrix = plan.priority_matrix || [];
+  const forecasts = plan.roi_forecasts || {};
+
+  set('strategy-cards', [
+    { label: 'North Star', value: (plan.north_star_metric || 'N/A').slice(0,18), color: 'var(--yellow)' },
+    { label: '30d Traffic', value: '+' + (d30.projected_traffic_growth_pct || 0) + '%', color: 'var(--green)' },
+    { label: '90d Revenue', value: '$' + (d90.projected_revenue_growth_usd || 0), color: 'var(--cyan)' },
+    { label: 'ROI Mult (90d)', value: (forecasts['90d_roi_multiplier'] || 0) + 'x', color: 'var(--blue)' },
+  ].map(c => `<div class="card"><div class="card-value" style="color:${c.color}">${c.value}</div><div class="card-label">${c.label}</div></div>`).join(''));
+
+  if (plan.strategic_summary) {
+    const el = document.getElementById('strategy-30d');
+    if (el) el.insertAdjacentHTML('beforebegin', `<div style="padding:12px;background:var(--bg2);border-left:3px solid var(--yellow);border-radius:0 6px 6px 0;margin-bottom:16px;font-size:13px">${esc(plan.strategic_summary)}</div>`);
+  }
+
+  // 30-day plan
+  const inits30 = d30.key_initiatives || [];
+  set('strategy-30d', `
+    ${d30.theme ? `<div style="font-size:11px;font-weight:700;color:var(--cyan);margin-bottom:8px">THEME: ${esc(d30.theme)}</div>` : ''}
+    ${(d30.objectives || []).map(o => `<div style="padding:4px 0;font-size:12px">• ${esc(o)}</div>`).join('')}
+    ${inits30.length ? `<div style="margin-top:10px;font-size:11px;color:var(--dim)">KEY INITIATIVES</div>` : ''}
+    ${inits30.slice(0,5).map(i => `
+      <div style="padding:8px 0;border-bottom:1px solid var(--border)">
+        <div style="font-weight:600;font-size:13px">${esc(i.initiative || '')}</div>
+        <div style="font-size:11px;color:var(--dim);margin-top:2px">
+          ${esc(i.project || '')} · ${esc(i.effort || '')} effort · ${esc(i.owner || '')}
+        </div>
+        <div style="font-size:11px;color:var(--green);margin-top:2px">${esc(i.expected_impact || '')}</div>
+      </div>`).join('')}`);
+
+  // 90-day milestones
+  const milestones = d90.milestones || [];
+  set('strategy-90d', `
+    ${d90.theme ? `<div style="font-size:11px;font-weight:700;color:var(--blue);margin-bottom:8px">THEME: ${esc(d90.theme)}</div>` : ''}
+    ${milestones.map(m => `
+      <div style="padding:10px;background:var(--bg2);border-radius:6px;margin-bottom:8px">
+        <div style="font-size:10px;color:var(--dim);margin-bottom:4px">WEEK ${m.week}</div>
+        <div style="font-weight:600;font-size:13px">${esc(m.milestone || '')}</div>
+        <div style="font-size:11px;color:var(--cyan);margin-top:4px">${esc(m.metrics || '')}</div>
+      </div>`).join('') || '<div style="color:var(--dim);padding:16px">Run strategy engine to generate milestones</div>'}`);
+
+  // Bottlenecks
+  const sevColor = { critical: 'var(--red)', high: 'var(--yellow)', medium: 'var(--cyan)', low: 'var(--dim)' };
+  set('strategy-bottlenecks', bottlenecks.length ? bottlenecks.map(b => `
+    <div style="padding:10px 0;border-bottom:1px solid var(--border);display:flex;gap:10px;align-items:flex-start">
+      <span style="padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;background:var(--bg2);color:${sevColor[b.severity] || 'var(--dim)'};white-space:nowrap">${(b.severity || '').toUpperCase()}</span>
+      <div>
+        <div style="font-size:13px;font-weight:600">${esc(b.issue || '')}</div>
+        <div style="font-size:11px;color:var(--dim);margin-top:2px">${esc(b.project || '')} · ${esc(b.impact || '')}</div>
+      </div>
+    </div>`).join('') : '<div style="padding:16px;color:var(--green)">No critical bottlenecks detected</div>');
+
+  // Priority matrix
+  const quadrantColor = { do_now: 'var(--green)', plan: 'var(--cyan)', delegate: 'var(--yellow)', drop: 'var(--dim)' };
+  set('strategy-matrix', matrix.length ? matrix.slice(0,8).map(i => `
+    <div style="padding:8px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center">
+      <div>
+        <div style="font-size:13px;font-weight:600">${esc(i.initiative || '')}</div>
+        <div style="font-size:11px;color:var(--dim)">${esc(i.project || '')} · impact: ${esc(i.impact || '')} · effort: ${esc(i.effort || '')}</div>
+      </div>
+      <span style="padding:3px 10px;border-radius:10px;font-size:10px;font-weight:700;background:var(--bg2);color:${quadrantColor[i.quadrant] || 'var(--dim)'};white-space:nowrap">${(i.quadrant || '').replace('_',' ').toUpperCase()}</span>
+    </div>`).join('') : '<div style="padding:16px;color:var(--dim)">Run strategy engine for priority matrix</div>');
+}
+
+// ─── Market Intelligence ──────────────────────────────────────────────────────
+
+function renderMarket(d) {
+  const mk = d.market || {};
+  const trends = mk.trending_topics || {};
+  const kwGaps = mk.keyword_gaps || {};
+  const competitors = mk.competitors || {};
+
+  const totalTopics = Object.values(trends).reduce((a, t) => a + t.length, 0);
+  const totalGaps = Object.values(kwGaps).reduce((a, g) => a + g.length, 0);
+  const totalComps = Object.values(competitors).reduce((a, c) => a + c.length, 0);
+  const reachable = Object.values(competitors).flat().filter(c => c.reachable).length;
+
+  set('market-cards', [
+    { label: 'Trending Topics', value: totalTopics, color: 'var(--cyan)' },
+    { label: 'Keyword Gaps', value: totalGaps, color: 'var(--yellow)' },
+    { label: 'Competitors Tracked', value: totalComps, color: 'var(--blue)' },
+    { label: 'Competitors Reachable', value: reachable, color: 'var(--green)' },
+  ].map(c => `<div class="card"><div class="card-value" style="color:${c.color}">${c.value}</div><div class="card-label">${c.label}</div></div>`).join(''));
+
+  // Trending topics
+  const trendColor = { rising: 'var(--green)', stable: 'var(--cyan)', declining: 'var(--red)' };
+  const allTopics = Object.entries(trends).flatMap(([proj, list]) => list.map(t => ({...t, project: proj})));
+  set('market-topics', allTopics.length ? allTopics.slice(0, 12).map(t => `
+    <div style="padding:8px 0;border-bottom:1px solid var(--border)">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="font-weight:600;font-size:13px">${esc(t.topic || '')}</span>
+        <span style="font-size:10px;color:${trendColor[t.search_trend] || 'var(--dim)'};font-weight:700">${(t.search_trend || '').toUpperCase()}</span>
+      </div>
+      <div style="font-size:11px;color:var(--dim);margin-top:2px">
+        ${esc(t.project || '')} · ~${(t.est_monthly_searches || 0).toLocaleString()} searches/mo · ${esc(t.competition || '')} competition
+      </div>
+      <div style="font-size:11px;color:var(--cyan);margin-top:2px">${esc(t.opportunity || '')}</div>
+    </div>`).join('') : '<div style="padding:20px;color:var(--dim);text-align:center">Run market intelligence to detect trends</div>');
+
+  // Keyword gaps
+  const allGaps = Object.entries(kwGaps).flatMap(([proj, list]) => list.map(g => ({...g, project: proj})));
+  allGaps.sort((a, b) => (b.opportunity_score || 0) - (a.opportunity_score || 0));
+  set('market-keywords', allGaps.length ? allGaps.slice(0, 10).map(g => `
+    <div style="padding:8px 0;border-bottom:1px solid var(--border)">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="font-weight:600;font-size:13px">${esc(g.keyword || '')}</span>
+        <div style="display:flex;gap:6px;align-items:center">
+          <div style="background:var(--bg2);border-radius:4px;padding:2px 0;width:60px;height:6px;overflow:hidden">
+            <div style="background:var(--cyan);height:100%;width:${(g.opportunity_score || 0) * 10}%"></div>
+          </div>
+          <span style="font-size:11px;color:var(--cyan)">${g.opportunity_score || 0}/10</span>
+        </div>
+      </div>
+      <div style="font-size:11px;color:var(--dim);margin-top:2px">
+        ${esc(g.project || '')} · ~${(g.est_monthly_searches || 0).toLocaleString()} searches · coverage: ${esc(g.current_coverage || 'none')}
+      </div>
+    </div>`).join('') : '<div style="padding:20px;color:var(--dim)">No keyword gap data yet</div>');
+
+  // Competitors
+  const allComps = Object.entries(competitors).flatMap(([proj, list]) => list.map(c => ({...c, project: proj})));
+  set('market-competitors', allComps.length ? `
+    <table style="width:100%;border-collapse:collapse;font-size:12px">
+      <thead><tr style="border-bottom:1px solid var(--border);color:var(--dim)">
+        <th style="text-align:left;padding:6px 0">Competitor</th>
+        <th style="text-align:left;padding:6px">Project</th>
+        <th style="text-align:center;padding:6px">Status</th>
+        <th style="text-align:right;padding:6px">Words</th>
+        <th style="text-align:center;padding:6px">Schema</th>
+        <th style="text-align:right;padding:6px">Links</th>
+      </tr></thead>
+      <tbody>${allComps.map(c => `<tr style="border-bottom:1px solid var(--border)">
+        <td style="padding:7px 0"><a href="${esc(c.url || '')}" target="_blank" style="color:var(--cyan);text-decoration:none">${esc(c.name || '')}</a></td>
+        <td style="padding:7px;color:var(--dim)">${esc(c.project || '')}</td>
+        <td style="text-align:center;padding:7px"><span style="color:${c.reachable ? 'var(--green)' : 'var(--red)'}">${c.reachable ? '●' : '○'}</span></td>
+        <td style="text-align:right;padding:7px">${(c.content_word_count || 0).toLocaleString()}</td>
+        <td style="text-align:center;padding:7px">${c.has_structured_data ? '✓' : '–'}</td>
+        <td style="text-align:right;padding:7px">${c.internal_link_count || 0}</td>
+      </tr>`).join('')}</tbody>
+    </table>` : '<div style="padding:16px;color:var(--dim)">No competitor data yet</div>');
+}
+
+// ─── Priority Engine ──────────────────────────────────────────────────────────
+
+function renderPriority(d) {
+  const pr = d.priority || {};
+  const mode = pr.execution_mode || 'balanced';
+  const cfg = pr.mode_config || {};
+  const decisions = pr.top_decisions || [];
+  const weights = pr.score_weights || {};
+
+  const modeColor = { safe: 'var(--blue)', balanced: 'var(--green)', aggressive: 'var(--yellow)', experimental: 'var(--red)' };
+
+  set('priority-cards', [
+    { label: 'Execution Mode', value: mode.toUpperCase(), color: modeColor[mode] || 'var(--cyan)' },
+    { label: 'Queue Depth', value: pr.total_decisions || 0, color: 'var(--cyan)' },
+    { label: 'Max Missions/Cycle', value: cfg.max_missions_per_cycle || 3, color: 'var(--blue)' },
+    { label: 'Trust Threshold', value: (cfg.trust_threshold || 70) + '%', color: 'var(--green)' },
+  ].map(c => `<div class="card"><div class="card-value" style="color:${c.color}">${c.value}</div><div class="card-label">${c.label}</div></div>`).join(''));
+
+  set('priority-mode', `
+    <div style="display:flex;gap:12px;flex-wrap:wrap">
+      ${['safe','balanced','aggressive','experimental'].map(m => `
+        <div style="flex:1;min-width:140px;padding:12px;background:var(--bg2);border-radius:8px;border:2px solid ${m === mode ? (modeColor[m] || 'var(--cyan)') : 'transparent'}">
+          <div style="font-weight:700;font-size:13px;color:${modeColor[m] || 'var(--dim)'}">${m.toUpperCase()}</div>
+          <div style="font-size:11px;color:var(--dim);margin-top:4px">${
+            {safe:'Trust ≥85 · QA ≥75 · 2/cycle', balanced:'Trust ≥70 · QA ≥60 · 3/cycle', aggressive:'Trust ≥50 · QA ≥50 · 5/cycle', experimental:'Trust ≥40 · QA ≥45 · 8/cycle'}[m]
+          }</div>
+        </div>`).join('')}
+    </div>
+    <div style="margin-top:12px;padding:10px;background:var(--bg2);border-radius:6px">
+      <div style="font-size:11px;color:var(--dim);margin-bottom:6px">SCORE WEIGHTS</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        ${Object.entries(weights).map(([k, v]) => `
+          <div style="font-size:11px">
+            <span style="color:var(--cyan)">${k.replace(/_/g,' ')}</span>
+            <span style="color:var(--dim)"> ${((v||0)*100).toFixed(0)}%</span>
+          </div>`).join('')}
+      </div>
+    </div>`);
+
+  set('priority-queue', decisions.length ? decisions.map((d, i) => `
+    <div style="padding:10px;background:var(--bg2);border-radius:6px;margin-bottom:8px;border-left:3px solid var(--cyan)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+        <div style="display:flex;gap:10px;align-items:center">
+          <span style="font-size:20px;font-weight:800;color:var(--dim)">#${i+1}</span>
+          <div>
+            <div style="font-weight:600;font-size:13px">${esc(d.title || d.action || '')}</div>
+            <div style="font-size:11px;color:var(--dim)">${esc(d.project || '')} · ${esc(d.type || d.feature_type || '')} · source: ${esc(d.source || '')}</div>
+          </div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:18px;font-weight:800;color:var(--yellow)">${(d.priority_score || 0).toFixed(1)}</div>
+          <div style="font-size:10px;color:var(--dim)">score</div>
+        </div>
+      </div>
+      ${d.score_breakdown ? `<div style="display:flex;gap:6px;flex-wrap:wrap">
+        ${Object.entries(d.score_breakdown).slice(0,4).map(([k, v]) => `
+          <div style="font-size:10px;background:var(--bg3);padding:3px 7px;border-radius:10px">
+            ${k.replace(/_/g,' ')}: <span style="color:var(--cyan)">${v}</span>
+          </div>`).join('')}
+      </div>` : ''}
+    </div>`).join('') : '<div style="padding:20px;text-align:center;color:var(--dim)">No decisions in queue yet</div>');
+}
+
+// ─── Experiments ──────────────────────────────────────────────────────────────
+
+function renderExperiments(d) {
+  const ex = d.experiments || {};
+  const byType = ex.by_type || {};
+  const promote = ex.promote_recommended || [];
+  const recent = ex.recent || [];
+
+  set('experiments-cards', [
+    { label: 'Total Experiments', value: ex.total || 0, color: 'var(--cyan)' },
+    { label: 'Variant Win Rate', value: (ex.win_rate_pct || 0).toFixed(1) + '%', color: 'var(--green)' },
+    { label: 'Avg Score Delta', value: (ex.avg_score_delta || 0) > 0 ? '+' + (ex.avg_score_delta || 0).toFixed(1) : (ex.avg_score_delta || 0).toFixed(1), color: ex.avg_score_delta > 0 ? 'var(--green)' : 'var(--red)' },
+    { label: 'Ready to Promote', value: promote.length, color: 'var(--yellow)' },
+  ].map(c => `<div class="card"><div class="card-value" style="color:${c.color}">${c.value}</div><div class="card-label">${c.label}</div></div>`).join(''));
+
+  set('experiments-by-type', Object.entries(byType).length ? Object.entries(byType).map(([type, stats]) => `
+    <div style="padding:10px 0;border-bottom:1px solid var(--border)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+        <span style="font-weight:700;font-size:12px;text-transform:uppercase;color:var(--cyan)">${esc(type)}</span>
+        <span style="font-size:11px;color:${stats.avg_delta > 0 ? 'var(--green)' : 'var(--red)'}">${stats.avg_delta > 0 ? '+' : ''}${(stats.avg_delta || 0).toFixed(1)} pts avg</span>
+      </div>
+      <div style="font-size:11px;color:var(--dim)">
+        ${stats.total || 0} experiments · ${stats.variant_wins || 0} variant wins
+        (${stats.total ? Math.round((stats.variant_wins/stats.total)*100) : 0}%)
+      </div>
+    </div>`).join('') : '<div style="padding:16px;color:var(--dim)">Run experiment engine to see results by type</div>');
+
+  set('experiments-promote', promote.length ? promote.map(e => `
+    <div style="padding:10px;background:var(--bg2);border-radius:6px;margin-bottom:8px;border-left:3px solid var(--green)">
+      <div style="font-weight:600;font-size:13px">${esc(e.feature_id || '')}</div>
+      <div style="font-size:11px;color:var(--dim);margin-top:2px">
+        ${esc(e.project || '')} · ${esc(e.experiment_type || '')}
+      </div>
+      <div style="font-size:12px;margin-top:4px">
+        <span style="color:var(--dim)">Control: ${e.control_score || 0}</span>
+        <span style="margin: 0 8px;color:var(--dim)">→</span>
+        <span style="color:var(--green);font-weight:700">Variant: ${e.variant_score || 0} (+${e.score_delta || 0})</span>
+      </div>
+    </div>`).join('') : '<div style="padding:16px;color:var(--dim)">No variants ready to promote yet</div>');
+
+  set('experiments-recent', recent.length ? `
+    <table style="width:100%;border-collapse:collapse;font-size:12px">
+      <thead><tr style="border-bottom:1px solid var(--border);color:var(--dim)">
+        <th style="text-align:left;padding:6px 0">Feature</th>
+        <th style="text-align:left;padding:6px">Type</th>
+        <th style="text-align:center;padding:6px">Winner</th>
+        <th style="text-align:right;padding:6px">Control</th>
+        <th style="text-align:right;padding:6px">Variant</th>
+        <th style="text-align:right;padding:6px">Delta</th>
+      </tr></thead>
+      <tbody>${recent.map(e => `<tr style="border-bottom:1px solid var(--border)">
+        <td style="padding:7px 0"><div>${esc(e.feature_id || '')}</div><div style="font-size:10px;color:var(--dim)">${esc(e.project || '')}</div></td>
+        <td style="padding:7px;color:var(--dim)">${esc(e.experiment_type || '')}</td>
+        <td style="text-align:center;padding:7px">
+          <span style="color:${e.winner === 'variant' ? 'var(--green)' : 'var(--dim)'};font-weight:700">${e.winner === 'variant' ? 'VARIANT' : 'CONTROL'}</span>
+        </td>
+        <td style="text-align:right;padding:7px">${e.control_score || 0}</td>
+        <td style="text-align:right;padding:7px">${e.variant_score || 0}</td>
+        <td style="text-align:right;padding:7px;color:${e.score_delta > 0 ? 'var(--green)' : 'var(--red)'};font-weight:600">${e.score_delta > 0 ? '+' : ''}${e.score_delta || 0}</td>
+      </tr>`).join('')}</tbody>
+    </table>` : '<div style="padding:16px;color:var(--dim)">No experiments run yet</div>');
+}
+
+// ─── Cross-Project Learning ───────────────────────────────────────────────────
+
+function renderCrossLearn(d) {
+  const cl = d.cross_project || {};
+  const patterns = cl.top_patterns || [];
+  const opps = cl.shared_opportunities || [];
+  const insights = cl.project_insights || {};
+  const prompts = cl.reusable_prompts || [];
+
+  set('crosslearn-cards', [
+    { label: 'Transferable Patterns', value: cl.total_patterns || patterns.length, color: 'var(--cyan)' },
+    { label: 'Shared Opportunities', value: cl.total_shared_opportunities || opps.length, color: 'var(--yellow)' },
+    { label: 'Reusable Prompts', value: cl.total_reusable_prompts || prompts.length, color: 'var(--blue)' },
+    { label: 'Projects Learning', value: Object.keys(insights).length || 3, color: 'var(--green)' },
+  ].map(c => `<div class="card"><div class="card-value" style="color:${c.color}">${c.value}</div><div class="card-label">${c.label}</div></div>`).join(''));
+
+  const catColor = { seo: 'var(--green)', ux: 'var(--cyan)', content: 'var(--blue)', monetization: 'var(--yellow)', performance: 'var(--red)' };
+  set('crosslearn-patterns', patterns.length ? patterns.map(p => `
+    <div style="padding:12px;background:var(--bg2);border-radius:8px;margin-bottom:10px;border-left:3px solid ${catColor[p.category] || 'var(--dim)'}">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+        <span style="font-weight:700;font-size:13px">${esc(p.pattern_name || '')}</span>
+        <span style="font-size:10px;padding:2px 8px;border-radius:10px;background:var(--bg3);color:${catColor[p.category] || 'var(--dim)'}">${(p.category || '').toUpperCase()}</span>
+      </div>
+      <div style="font-size:11px;color:var(--dim);margin-bottom:6px">
+        Learned from: <span style="color:var(--cyan)">${esc(p.learned_from || '')}</span>
+        → applies to: <span style="color:var(--green)">${(p.applicable_to || []).join(', ')}</span>
+      </div>
+      <div style="font-size:12px;margin-bottom:6px">${esc(p.pattern_description || '')}</div>
+      <div style="font-size:11px;color:var(--yellow)">Impact: ${esc(p.estimated_impact || '')}</div>
+    </div>`).join('') : '<div style="padding:20px;color:var(--dim);text-align:center">Run cross-project learning to identify patterns</div>');
+
+  set('crosslearn-opportunities', opps.length ? opps.map(o => `
+    <div style="padding:10px 0;border-bottom:1px solid var(--border)">
+      <div style="font-weight:600;font-size:13px;margin-bottom:4px">${esc(o.opportunity || '')}</div>
+      <div style="font-size:11px;color:var(--cyan);margin-bottom:2px">${(o.projects || []).join(' + ')}</div>
+      <div style="font-size:11px;color:var(--dim)">${esc(o.rationale || '')}</div>
+    </div>`).join('') : '<div style="padding:16px;color:var(--dim)">No shared opportunities identified yet</div>');
+
+  set('crosslearn-insights', Object.entries(insights).length ? Object.entries(insights).map(([proj, insight]) => `
+    <div style="padding:10px;background:var(--bg2);border-radius:6px;margin-bottom:8px">
+      <div style="font-size:11px;font-weight:700;color:var(--cyan);margin-bottom:4px">${proj.toUpperCase()}</div>
+      <div style="font-size:13px">${esc(insight || '')}</div>
+    </div>`).join('') : '<div style="padding:16px;color:var(--dim)">No project-specific insights yet</div>');
+}
+
+// ─── Self-Evolution ───────────────────────────────────────────────────────────
+
+function renderEvolution(d) {
+  const ev = d.evolution || {};
+  const recs = ev.recommended_evolutions || [];
+  const thresholds = ev.threshold_recommendations || {};
+  const arch = ev.architecture_recommendations || [];
+  const tok = ev.token_optimization || {};
+  const score = ev.system_maturity_score || 0;
+
+  set('evolution-cards', [
+    { label: 'Maturity Score', value: score + '/100', color: score >= 70 ? 'var(--green)' : score >= 50 ? 'var(--yellow)' : 'var(--red)' },
+    { label: 'Evolutions Pending', value: recs.filter(r => !r.breaking_change).length, color: 'var(--cyan)' },
+    { label: 'Arch Recommendations', value: arch.length, color: 'var(--blue)' },
+    { label: 'Token Target', value: '$' + (tok.target_avg_cost_per_feature_usd || 0).toFixed(4), color: 'var(--yellow)' },
+  ].map(c => `<div class="card"><div class="card-value" style="color:${c.color}">${c.value}</div><div class="card-label">${c.label}</div></div>`).join(''));
+
+  if (ev.evolution_summary) {
+    const el = document.getElementById('evolution-recommendations');
+    if (el) el.insertAdjacentHTML('beforebegin', `<div style="padding:12px;background:var(--bg2);border-left:3px solid var(--cyan);border-radius:0 6px 6px 0;margin-bottom:16px;font-size:13px">${esc(ev.evolution_summary)}</div>`);
+  }
+  if (ev.next_evolution_priority) {
+    const el = document.getElementById('evolution-recommendations');
+    if (el) el.insertAdjacentHTML('beforebegin', `<div style="padding:10px;background:var(--bg2);border-left:3px solid var(--yellow);border-radius:0 6px 6px 0;margin-bottom:16px;font-size:12px">
+      <span style="font-weight:700;color:var(--yellow)">NEXT PRIORITY:</span> ${esc(ev.next_evolution_priority)}
+    </div>`);
+  }
+
+  const targetColor = { prompt_quality: 'var(--cyan)', qa_thresholds: 'var(--green)', merge_criteria: 'var(--yellow)', token_efficiency: 'var(--blue)', workflow_timing: 'var(--dim)', architecture: 'var(--red)' };
+  set('evolution-recommendations', recs.length ? recs.slice(0, 8).map(r => `
+    <div style="padding:10px;background:var(--bg2);border-radius:6px;margin-bottom:8px;border-left:3px solid ${targetColor[r.target] || 'var(--dim)'}">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+        <span style="font-size:10px;font-weight:700;color:${targetColor[r.target] || 'var(--dim)'}">${(r.target || '').replace(/_/g,' ').toUpperCase()}</span>
+        <span style="font-size:11px;color:var(--dim)">priority ${r.priority || 0}</span>
+      </div>
+      <div style="font-weight:600;font-size:13px;margin-bottom:4px">${esc(r.recommended_change || '')}</div>
+      <div style="font-size:11px;color:var(--dim);margin-bottom:4px">Current: ${esc(r.current_state || '')}</div>
+      <div style="font-size:11px;color:var(--green)">${esc(r.expected_improvement || '')}</div>
+    </div>`).join('') : '<div style="padding:16px;color:var(--dim)">Run self-evolution engine to generate recommendations</div>');
+
+  set('evolution-thresholds', `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      ${[
+        {label:'QA Threshold', val: thresholds.qa_threshold, color:'var(--green)'},
+        {label:'Trust Threshold', val: thresholds.trust_threshold, color:'var(--cyan)'},
+        {label:'Auto-Merge Min', val: thresholds.auto_merge_min_score, color:'var(--yellow)'},
+      ].map(t => `
+        <div style="background:var(--bg2);padding:12px;border-radius:8px;text-align:center">
+          <div style="font-size:22px;font-weight:800;color:${t.color}">${t.val || '–'}</div>
+          <div style="font-size:11px;color:var(--dim);margin-top:4px">${t.label}</div>
+        </div>`).join('')}
+    </div>
+    ${thresholds.rationale ? `<div style="margin-top:10px;padding:8px;background:var(--bg2);border-radius:6px;font-size:12px;color:var(--dim)">${esc(thresholds.rationale)}</div>` : ''}`);
+
+  set('evolution-architecture', arch.length ? arch.map(r => `
+    <div style="padding:8px 0;border-bottom:1px solid var(--border);display:flex;gap:8px">
+      <span style="color:var(--blue)">›</span>
+      <span style="font-size:13px">${esc(r)}</span>
+    </div>`).join('') : '<div style="padding:16px;color:var(--dim)">No architecture recommendations yet</div>');
+
+  set('evolution-tokens', `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div style="background:var(--bg2);padding:12px;border-radius:8px;text-align:center">
+        <div style="font-size:18px;font-weight:700;color:var(--red)">$${(tok.current_avg_cost_per_feature_usd || 0).toFixed(4)}</div>
+        <div style="font-size:11px;color:var(--dim);margin-top:4px">Current Avg Cost</div>
+      </div>
+      <div style="background:var(--bg2);padding:12px;border-radius:8px;text-align:center">
+        <div style="font-size:18px;font-weight:700;color:var(--green)">$${(tok.target_avg_cost_per_feature_usd || 0).toFixed(4)}</div>
+        <div style="font-size:11px;color:var(--dim);margin-top:4px">Target Avg Cost</div>
+      </div>
+    </div>
+    ${tok.strategy ? `<div style="margin-top:10px;padding:10px;background:var(--bg2);border-radius:6px;font-size:12px">${esc(tok.strategy)}</div>` : ''}`);
+}
+
 // ─── Actions (GitHub-native) ─────────────────────────────────────────────────
 
 function triggerLoop(loopId) {
@@ -1433,6 +1961,14 @@ async function loadDashboard() {
     renderBrowser(_data);
     renderMonitor(_data);
     renderMemory(_data);
+    renderRevenue(_data);
+    renderSwarm(_data);
+    renderStrategy(_data);
+    renderMarket(_data);
+    renderPriority(_data);
+    renderExperiments(_data);
+    renderCrossLearn(_data);
+    renderEvolution(_data);
     renderActivity(_data);
     renderSafety(_data);
 

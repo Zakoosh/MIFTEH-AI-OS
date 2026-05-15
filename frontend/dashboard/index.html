@@ -33,21 +33,31 @@
       <div class="nav-section">Intelligence</div>
       <button class="nav-btn" onclick="showTab('analytics',this)"><span class="icon">📈</span> Analytics Intel</button>
       <button class="nav-btn" onclick="showTab('roadmap',this)"><span class="icon">☛</span> Product Roadmap</button>
+      <button class="nav-btn" onclick="showTab('market',this)"><span class="icon">◎</span> Market Intel</button>
+
+      <div class="nav-section">Business</div>
+      <button class="nav-btn" onclick="showTab('revenue',this)"><span class="icon">$</span> Revenue Engine</button>
+      <button class="nav-btn" onclick="showTab('strategy',this)"><span class="icon">◆</span> Strategy</button>
 
       <div class="nav-section">Product</div>
       <button class="nav-btn" onclick="showTab('product',this)"><span class="icon">🏗</span> Product Execution</button>
       <button class="nav-btn" onclick="showTab('executor',this)"><span class="icon">⚙</span> Autonomous Executor</button>
+      <button class="nav-btn" onclick="showTab('swarm',this)"><span class="icon">⬡</span> Swarm Intel</button>
 
       <div class="nav-section">Quality</div>
       <button class="nav-btn" onclick="showTab('aiqa',this)"><span class="icon">✦</span> AI QA Engine</button>
       <button class="nav-btn" onclick="showTab('browser',this)"><span class="icon">◉</span> Browser Runtime</button>
+      <button class="nav-btn" onclick="showTab('experiments',this)"><span class="icon">⚗</span> Experiments</button>
 
       <div class="nav-section">Autonomy</div>
+      <button class="nav-btn" onclick="showTab('priority',this)"><span class="icon">▲</span> Priority Engine</button>
       <button class="nav-btn" onclick="showTab('trust',this)"><span class="icon">⚖</span> Trust &amp; Apply</button>
       <button class="nav-btn" onclick="showTab('monitor',this)"><span class="icon">♦</span> Deployment Monitor</button>
 
-      <div class="nav-section">Memory</div>
+      <div class="nav-section">Memory &amp; Evolution</div>
       <button class="nav-btn" onclick="showTab('memory',this)"><span class="icon">◈</span> AI Memory</button>
+      <button class="nav-btn" onclick="showTab('crosslearn',this)"><span class="icon">↔</span> Cross-Project</button>
+      <button class="nav-btn" onclick="showTab('evolution',this)"><span class="icon">⟳</span> Self-Evolution</button>
 
       <div class="nav-section">System</div>
       <button class="nav-btn" onclick="showTab('health',this)"><span class="icon">♥</span> System Health</button>
@@ -629,6 +639,162 @@
         <div class="panel full">
           <div class="panel-header"><div class="panel-title">Audit Summary</div></div>
           <div id="safety-audit"></div>
+        </div>
+      </section>
+
+      <!-- REVENUE TAB -->
+      <section id="tab-revenue" class="tab">
+        <div class="section-title">Revenue Intelligence</div>
+        <div class="cards-grid" id="revenue-cards"></div>
+        <div class="panels-row" style="margin-top:20px">
+          <div class="panel" id="revenue-projects-panel">
+            <div class="panel-header"><div class="panel-title">Project Revenue Breakdown</div></div>
+            <div id="revenue-projects"></div>
+          </div>
+          <div class="panel" id="revenue-opportunities-panel">
+            <div class="panel-header"><div class="panel-title">Revenue Opportunities</div></div>
+            <div id="revenue-opportunities"></div>
+          </div>
+        </div>
+        <div class="panel" style="margin-top:16px" id="revenue-features-panel">
+          <div class="panel-header"><div class="panel-title">Top ROI Features</div></div>
+          <div id="revenue-features"></div>
+        </div>
+      </section>
+
+      <!-- SWARM TAB -->
+      <section id="tab-swarm" class="tab">
+        <div class="section-title">Swarm Intelligence — Multi-Agent Coordination</div>
+        <div class="cards-grid" id="swarm-cards"></div>
+        <div id="swarm-missions" style="margin-top:20px"></div>
+        <div style="margin-top:20px;text-align:center">
+          <a href="https://github.com/Zakoosh/MIFTEH-AI-OS/actions/workflows/ai-swarm-orchestrator.yml" target="_blank" class="trigger-btn" style="padding:8px 16px;text-decoration:none;">⬡ Run Swarm</a>
+        </div>
+      </section>
+
+      <!-- STRATEGY TAB -->
+      <section id="tab-strategy" class="tab">
+        <div class="section-title">Strategic Planning — 30 &amp; 90 Day Plans</div>
+        <div class="cards-grid" id="strategy-cards"></div>
+        <div class="panels-row" style="margin-top:20px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">30-Day Plan</div></div>
+            <div id="strategy-30d"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">90-Day Plan</div></div>
+            <div id="strategy-90d"></div>
+          </div>
+        </div>
+        <div class="panels-row" style="margin-top:16px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Bottlenecks Detected</div></div>
+            <div id="strategy-bottlenecks"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Priority Matrix</div></div>
+            <div id="strategy-matrix"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MARKET INTELLIGENCE TAB -->
+      <section id="tab-market" class="tab">
+        <div class="section-title">Market Intelligence</div>
+        <div class="cards-grid" id="market-cards"></div>
+        <div class="panels-row" style="margin-top:20px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Trending Topics</div></div>
+            <div id="market-topics"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Keyword Gaps</div></div>
+            <div id="market-keywords"></div>
+          </div>
+        </div>
+        <div class="panel" style="margin-top:16px">
+          <div class="panel-header"><div class="panel-title">Competitor Analysis</div></div>
+          <div id="market-competitors"></div>
+        </div>
+      </section>
+
+      <!-- PRIORITY ENGINE TAB -->
+      <section id="tab-priority" class="tab">
+        <div class="section-title">Execution Priority Engine</div>
+        <div class="cards-grid" id="priority-cards"></div>
+        <div class="panel" style="margin-top:20px">
+          <div class="panel-header"><div class="panel-title">Execution Mode</div></div>
+          <div id="priority-mode"></div>
+        </div>
+        <div class="panel" style="margin-top:16px">
+          <div class="panel-header"><div class="panel-title">Ranked Decision Queue</div></div>
+          <div id="priority-queue"></div>
+        </div>
+      </section>
+
+      <!-- EXPERIMENTS TAB -->
+      <section id="tab-experiments" class="tab">
+        <div class="section-title">Autonomous Experiments — A/B Testing</div>
+        <div class="cards-grid" id="experiments-cards"></div>
+        <div class="panels-row" style="margin-top:20px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Results by Type</div></div>
+            <div id="experiments-by-type"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Variants Ready to Promote</div></div>
+            <div id="experiments-promote"></div>
+          </div>
+        </div>
+        <div class="panel" style="margin-top:16px">
+          <div class="panel-header"><div class="panel-title">Recent Experiments</div></div>
+          <div id="experiments-recent"></div>
+        </div>
+      </section>
+
+      <!-- CROSS-PROJECT LEARNING TAB -->
+      <section id="tab-crosslearn" class="tab">
+        <div class="section-title">Cross-Project Learning — Pattern Transfer</div>
+        <div class="cards-grid" id="crosslearn-cards"></div>
+        <div class="panels-row" style="margin-top:20px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Transferable Patterns</div></div>
+            <div id="crosslearn-patterns"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Shared Opportunities</div></div>
+            <div id="crosslearn-opportunities"></div>
+          </div>
+        </div>
+        <div class="panel" style="margin-top:16px">
+          <div class="panel-header"><div class="panel-title">Project-Specific Insights</div></div>
+          <div id="crosslearn-insights"></div>
+        </div>
+      </section>
+
+      <!-- SELF-EVOLUTION TAB -->
+      <section id="tab-evolution" class="tab">
+        <div class="section-title">Self-Evolution Engine</div>
+        <div class="cards-grid" id="evolution-cards"></div>
+        <div class="panels-row" style="margin-top:20px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Recommended Evolutions</div></div>
+            <div id="evolution-recommendations"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Threshold Recommendations</div></div>
+            <div id="evolution-thresholds"></div>
+          </div>
+        </div>
+        <div class="panels-row" style="margin-top:16px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Architecture Recommendations</div></div>
+            <div id="evolution-architecture"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Token Optimization</div></div>
+            <div id="evolution-tokens"></div>
+          </div>
         </div>
       </section>
 

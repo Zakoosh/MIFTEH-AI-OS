@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-15T19:26:28Z",
+  "generated_at": "2026-05-15T20:28:41Z",
   "architecture": "github-native",
   "scheduler": {
     "scheduler_running": true,
@@ -167,12 +167,12 @@
       "openai": {
         "consecutive_429s": 0,
         "total_429s": 0,
-        "last_success": "2026-05-15T19:26:28Z"
+        "last_success": "2026-05-15T20:28:41Z"
       },
       "gemini": {
         "consecutive_429s": 0,
         "total_429s": 0,
-        "last_success": "2026-05-15T19:26:28Z"
+        "last_success": "2026-05-15T20:28:41Z"
       }
     }
   },
@@ -2117,6 +2117,538 @@
   },
   "executor": {},
   "roadmap": {},
+  "revenue": {
+    "generated_at": "2026-05-15T20:26:40Z",
+    "portfolio_summary": {
+      "total_features": 8,
+      "total_est_value_usd": 11829.75,
+      "total_token_cost_usd": 0.010262,
+      "portfolio_roi": 1152772.4,
+      "30d_forecast_usd": 11829.75,
+      "90d_forecast_usd": 37855.2
+    },
+    "ai_analysis": {
+      "portfolio_monthly_value_usd": 11829.75,
+      "highest_roi_project": "mifteh",
+      "revenue_opportunities": [],
+      "token_efficiency_analysis": "AI analysis unavailable",
+      "recommended_budget_allocation": {
+        "yallaplays": 0.5,
+        "fionera": 0.3,
+        "mifteh": 0.2
+      },
+      "30d_revenue_forecast_usd": 11829.75,
+      "90d_revenue_forecast_usd": 37855.2,
+      "key_insight": "Static estimation only — AI analysis failed",
+      "risk_factors": [],
+      "error": "generate_json returned no data"
+    },
+    "projects": {
+      "yallaplays": {
+        "project": "yallaplays",
+        "monetization_model": "display_ads",
+        "total_features": 3,
+        "baseline_monthly_visits": 15000,
+        "added_monthly_visits": 5500,
+        "traffic_growth_pct": 36.7,
+        "total_seo_value_usd": 1925.0,
+        "total_direct_revenue_usd": 24.75,
+        "total_estimated_value_usd": 1949.75,
+        "total_token_cost_usd": 0.004488,
+        "portfolio_roi": 434436.3,
+        "top_roi_features": [
+          {
+            "feature_id": "Arabic SEO Games Hub",
+            "project": "yallaplays",
+            "feature_type": "seo_hub",
+            "est_monthly_visits": 3500,
+            "seo_value_usd": 1225.0,
+            "direct_revenue_usd": 15.75,
+            "total_value_usd": 1240.75,
+            "token_cost_usd": 0.001368,
+            "roi_ratio": 907080.5,
+            "monetization_model": "display_ads"
+          },
+          {
+            "feature_id": "Action Games Category Page",
+            "project": "yallaplays",
+            "feature_type": "category_page",
+            "est_monthly_visits": 2000,
+            "seo_value_usd": 700.0,
+            "direct_revenue_usd": 9.0,
+            "total_value_usd": 709.0,
+            "token_cost_usd": 0.002173,
+            "roi_ratio": 326224.5,
+            "monetization_model": "display_ads"
+          },
+          {
+            "feature_id": "Related Games Carousel Component",
+            "project": "yallaplays",
+            "feature_type": "component",
+            "est_monthly_visits": 0,
+            "seo_value_usd": 0.0,
+            "direct_revenue_usd": 0.0,
+            "total_value_usd": 0.0,
+            "token_cost_usd": 0.000947,
+            "roi_ratio": 0.0,
+            "monetization_model": "display_ads"
+          }
+        ]
+      },
+      "fionera": {
+        "project": "fionera",
+        "monetization_model": "saas_freemium",
+        "total_features": 3,
+        "baseline_monthly_visits": 8000,
+        "added_monthly_visits": 0,
+        "traffic_growth_pct": 0.0,
+        "total_seo_value_usd": 0.0,
+        "total_direct_revenue_usd": 0.0,
+        "total_estimated_value_usd": 0.0,
+        "total_token_cost_usd": 0.003357,
+        "portfolio_roi": 0.0,
+        "top_roi_features": [
+          {
+            "feature_id": "Portfolio Performance Heatmap Widget",
+            "project": "fionera",
+            "feature_type": "widget",
+            "est_monthly_visits": 0,
+            "seo_value_usd": 0.0,
+            "direct_revenue_usd": 0.0,
+            "total_value_usd": 0.0,
+            "token_cost_usd": 0.001176,
+            "roi_ratio": 0.0,
+            "monetization_model": "saas_freemium"
+          },
+          {
+            "feature_id": "AI Market Insight Card Widget",
+            "project": "fionera",
+            "feature_type": "widget",
+            "est_monthly_visits": 0,
+            "seo_value_usd": 0.0,
+            "direct_revenue_usd": 0.0,
+            "total_value_usd": 0.0,
+            "token_cost_usd": 0.001022,
+            "roi_ratio": 0.0,
+            "monetization_model": "saas_freemium"
+          },
+          {
+            "feature_id": "BIST Turkish Market Overview Widget",
+            "project": "fionera",
+            "feature_type": "widget",
+            "est_monthly_visits": 0,
+            "seo_value_usd": 0.0,
+            "direct_revenue_usd": 0.0,
+            "total_value_usd": 0.0,
+            "token_cost_usd": 0.001159,
+            "roi_ratio": 0.0,
+            "monetization_model": "saas_freemium"
+          }
+        ]
+      },
+      "mifteh": {
+        "project": "mifteh",
+        "monetization_model": "portfolio_authority",
+        "total_features": 2,
+        "baseline_monthly_visits": 3000,
+        "added_monthly_visits": 800,
+        "traffic_growth_pct": 26.7,
+        "total_seo_value_usd": 280.0,
+        "total_direct_revenue_usd": 9600.0,
+        "total_estimated_value_usd": 9880.0,
+        "total_token_cost_usd": 0.002417,
+        "portfolio_roi": 4087712.0,
+        "top_roi_features": [
+          {
+            "feature_id": "AI Services Landing Page",
+            "project": "mifteh",
+            "feature_type": "page",
+            "est_monthly_visits": 800,
+            "seo_value_usd": 280.0,
+            "direct_revenue_usd": 9600.0,
+            "total_value_usd": 9880.0,
+            "token_cost_usd": 0.001419,
+            "roi_ratio": 6964122.1,
+            "monetization_model": "portfolio_authority"
+          },
+          {
+            "feature_id": "Lead Generation Funnel Section",
+            "project": "mifteh",
+            "feature_type": "component",
+            "est_monthly_visits": 0,
+            "seo_value_usd": 0.0,
+            "direct_revenue_usd": 0.0,
+            "total_value_usd": 0.0,
+            "token_cost_usd": 0.000998,
+            "roi_ratio": 0.0,
+            "monetization_model": "portfolio_authority"
+          }
+        ]
+      }
+    }
+  },
+  "swarm": {},
+  "cross_project": {
+    "generated_at": "2026-05-15T20:26:40Z",
+    "total_patterns": 5,
+    "total_shared_opportunities": 1,
+    "total_reusable_prompts": 0,
+    "top_patterns": [
+      {
+        "pattern_id": "seo_hub_structure",
+        "pattern_name": "SEO Hub Page with Topic Clusters",
+        "learned_from": "yallaplays",
+        "applicable_to": [
+          "mifteh",
+          "fionera"
+        ],
+        "pattern_description": "Hub pages with category navigation, keyword-rich H2s, and dense internal linking perform best for organic visibility.",
+        "transfer_instructions": "Create hub pages with clear topic clusters, 8+ internal links, FAQ sections, and breadcrumb schema.",
+        "estimated_impact": "+15–25% organic visibility in 60 days",
+        "category": "seo"
+      },
+      {
+        "pattern_id": "dual_cta_placement",
+        "pattern_name": "Above-fold + Mid-content CTA",
+        "learned_from": "fionera",
+        "applicable_to": [
+          "yallaplays",
+          "mifteh"
+        ],
+        "pattern_description": "Two CTAs (top + mid-page) outperform a single bottom CTA by 30–40% on conversion rate.",
+        "transfer_instructions": "Always include primary CTA in hero section and secondary CTA after the 2nd content paragraph.",
+        "estimated_impact": "+25–40% CTR improvement",
+        "category": "ux"
+      },
+      {
+        "pattern_id": "json_ld_structured_data",
+        "pattern_name": "JSON-LD Structured Data on All Pages",
+        "learned_from": "yallaplays",
+        "applicable_to": [
+          "fionera",
+          "mifteh"
+        ],
+        "pattern_description": "Adding WebPage + BreadcrumbList + FAQ JSON-LD increases rich snippet eligibility and click-through rates.",
+        "transfer_instructions": "Add JSON-LD schema block in <head> for every generated page. Use WebPage, BreadcrumbList, FAQPage where applicable.",
+        "estimated_impact": "+10–20% CTR from rich snippets",
+        "category": "seo"
+      },
+      {
+        "pattern_id": "trust_social_proof",
+        "pattern_name": "Trust Signals + Social Proof Section",
+        "learned_from": "mifteh",
+        "applicable_to": [
+          "yallaplays",
+          "fionera"
+        ],
+        "pattern_description": "Pages with star ratings, user count badges, or testimonial quotes convert 18% better than pages without.",
+        "transfer_instructions": "Add a trust strip below the hero: user count, star rating, and one short testimonial.",
+        "estimated_impact": "+15–20% conversion rate",
+        "category": "ux"
+      },
+      {
+        "pattern_id": "meta_description_cta",
+        "pattern_name": "Action-Oriented Meta Descriptions",
+        "learned_from": "fionera",
+        "applicable_to": [
+          "yallaplays",
+          "mifteh"
+        ],
+        "pattern_description": "Meta descriptions that include a verb + benefit + implicit CTA (e.g. 'Discover 500+ games. Play free now.') get 12% higher CTR.",
+        "transfer_instructions": "Write meta descriptions in the format: [Verb] + [benefit] + [implicit CTA]. Keep under 155 characters.",
+        "estimated_impact": "+10–15% organic CTR",
+        "category": "seo"
+      }
+    ],
+    "shared_opportunities": [
+      {
+        "opportunity": "JSON-LD structured data on all pages",
+        "projects": [
+          "yallaplays",
+          "fionera",
+          "mifteh"
+        ],
+        "rationale": "All 3 sites missing structured data"
+      }
+    ],
+    "project_insights": {
+      "yallaplays": "Category pages need 500+ word content",
+      "fionera": "Widgets need real-time data indicators",
+      "mifteh": "Case studies with metrics convert better"
+    },
+    "reusable_prompts": []
+  },
+  "strategy": {
+    "generated_at": "2026-05-15T20:28:35Z",
+    "bottlenecks": [
+      {
+        "type": "quality",
+        "severity": "high",
+        "project": "fionera",
+        "issue": "Site quality score 0/100 — below threshold",
+        "impact": "SEO penalties, poor user experience"
+      },
+      {
+        "type": "revenue",
+        "severity": "medium",
+        "project": "fionera",
+        "issue": "Low feature ROI (0.0x)",
+        "impact": "Token spend not converting to revenue"
+      }
+    ],
+    "executor_items_injected": 0,
+    "strategic_plan": {
+      "strategic_summary": "Strategic analysis unavailable — using defaults",
+      "north_star_metric": "Monthly organic traffic",
+      "30_day_plan": {
+        "theme": "Foundation",
+        "objectives": [
+          "Fix deployment gaps",
+          "Launch 5 SEO pages",
+          "Improve QA score"
+        ],
+        "key_initiatives": [],
+        "success_metrics": [
+          "Traffic +10%",
+          "QA avg ≥75"
+        ],
+        "projected_traffic_growth_pct": 10,
+        "projected_revenue_growth_usd": 50
+      },
+      "90_day_plan": {
+        "theme": "Scale",
+        "objectives": [
+          "Dominate 50 keywords",
+          "Reach $500/mo revenue",
+          "Full automation"
+        ],
+        "milestones": [
+          {
+            "week": 4,
+            "milestone": "SEO foundation complete",
+            "metrics": "+10% traffic"
+          },
+          {
+            "week": 8,
+            "milestone": "Revenue engine active",
+            "metrics": "$200/mo"
+          },
+          {
+            "week": 12,
+            "milestone": "Autonomous at scale",
+            "metrics": "+35% traffic"
+          }
+        ],
+        "projected_traffic_growth_pct": 35,
+        "projected_revenue_growth_usd": 500
+      },
+      "priority_matrix": [],
+      "roi_forecasts": {
+        "30d_roi_multiplier": 5,
+        "90d_roi_multiplier": 20,
+        "confidence_pct": 40
+      }
+    }
+  },
+  "market": {},
+  "priority": {
+    "generated_at": "2026-05-15T20:26:41Z",
+    "execution_mode": "balanced",
+    "mode_config": {
+      "trust_threshold": 70,
+      "qa_gate": 60,
+      "max_missions_per_cycle": 3,
+      "draft_prs_only": false,
+      "description": "Standard automation with review gates",
+      "auto_merge_threshold": 90
+    },
+    "total_decisions": 5,
+    "top_decisions": [
+      {
+        "id": "dec_001",
+        "project": "mifteh",
+        "priority": 1,
+        "type": "content",
+        "title": "Revamp Lead-Funnel Page Content",
+        "rationale": "The lead-funnel page has a high bounce rate of 52.3%, indicating users are not finding value, which needs to be addressed urgently.",
+        "target_file": "mifteh/content/lead-funnel-update.md",
+        "target_repo": "owner/mifteh",
+        "feature_type": "page",
+        "estimated_impact": {
+          "monthly_visits": 1000,
+          "engagement_improvement_pct": 10.0,
+          "conversion_improvement_pct": 10.0
+        },
+        "auto_mergeable": false,
+        "status": "queued",
+        "priority_score": 74.5,
+        "score_breakdown": {
+          "roi": 100.0,
+          "seo_impact": 55.0,
+          "revenue_impact": 100.0,
+          "ux_impact": 40.0,
+          "implementation_ease": 80.0,
+          "deployment_safety": 69.0,
+          "confidence": 60.0,
+          "historical_success": 0.0
+        }
+      },
+      {
+        "id": "dec_004",
+        "project": "mifteh",
+        "priority": 2,
+        "type": "content",
+        "title": "Enhance Call-to-Action on Key Pages",
+        "rationale": "Improving CTAs on low-performing pages can help increase conversion rates, currently at 55, which is underperforming.",
+        "target_file": "mifteh/cta/cta-enhancements.md",
+        "target_repo": "owner/mifteh",
+        "feature_type": "component",
+        "estimated_impact": {
+          "monthly_visits": 500,
+          "engagement_improvement_pct": 15.0,
+          "conversion_improvement_pct": 15.0
+        },
+        "auto_mergeable": false,
+        "status": "queued",
+        "priority_score": 74.5,
+        "score_breakdown": {
+          "roi": 100.0,
+          "seo_impact": 55.0,
+          "revenue_impact": 100.0,
+          "ux_impact": 40.0,
+          "implementation_ease": 80.0,
+          "deployment_safety": 69.0,
+          "confidence": 60.0,
+          "historical_success": 0.0
+        }
+      },
+      {
+        "id": "dec_002",
+        "project": "yallaplays",
+        "priority": 1,
+        "type": "metadata_optimization",
+        "title": "Optimize Low-Performing Pages for SEO",
+        "rationale": "With an SEO opportunity score of 85, optimizing these pages can significantly enhance traffic, which is critical for growth.",
+        "target_file": "yallaplays/seo/low-performing-pages-optimization.md",
+        "target_repo": "owner/yallaplays",
+        "feature_type": "seo_hub",
+        "estimated_impact": {
+          "monthly_visits": 5000,
+          "engagement_improvement_pct": 5.0,
+          "conversion_improvement_pct": 5.0
+        },
+        "auto_mergeable": false,
+        "status": "queued",
+        "priority_score": 72.0,
+        "score_breakdown": {
+          "roi": 100.0,
+          "seo_impact": 50.0,
+          "revenue_impact": 100.0,
+          "ux_impact": 40.0,
+          "implementation_ease": 60.0,
+          "deployment_safety": 81.0,
+          "confidence": 60.0,
+          "historical_success": 0.0
+        }
+      },
+      {
+        "id": "dec_005",
+        "project": "yallaplays",
+        "priority": 3,
+        "type": "widget_generation",
+        "title": "Implement Interactive Quiz Widget",
+        "rationale": "Adding an interactive quiz can enhance user engagement on the homepage and improve session duration, which is currently 310 seconds.",
+        "target_file": "yallaplays/widgets/interactive-quiz.md",
+        "target_repo": "owner/yallaplays",
+        "feature_type": "widget",
+        "estimated_impact": {
+          "monthly_visits": 1500,
+          "engagement_improvement_pct": 5.0,
+          "conversion_improvement_pct": 5.0
+        },
+        "auto_mergeable": true,
+        "status": "queued",
+        "priority_score": 72.0,
+        "score_breakdown": {
+          "roi": 100.0,
+          "seo_impact": 50.0,
+          "revenue_impact": 100.0,
+          "ux_impact": 40.0,
+          "implementation_ease": 60.0,
+          "deployment_safety": 81.0,
+          "confidence": 60.0,
+          "historical_success": 0.0
+        }
+      },
+      {
+        "id": "dec_003",
+        "project": "fionera",
+        "priority": 2,
+        "type": "content",
+        "title": "Improve Content Quality on Key Pages",
+        "rationale": "The bounce rate of 36.7% suggests that enhancing content can improve user engagement, which is vital for retention.",
+        "target_file": "fionera/content/low-performing-page-enhancements.md",
+        "target_repo": "owner/fionera",
+        "feature_type": "page",
+        "estimated_impact": {
+          "monthly_visits": 2000,
+          "engagement_improvement_pct": 7.5,
+          "conversion_improvement_pct": 7.5
+        },
+        "auto_mergeable": false,
+        "status": "queued",
+        "priority_score": 28.9,
+        "score_breakdown": {
+          "roi": 0.0,
+          "seo_impact": 55.0,
+          "revenue_impact": 0.0,
+          "ux_impact": 40.0,
+          "implementation_ease": 80.0,
+          "deployment_safety": 57.0,
+          "confidence": 60.0,
+          "historical_success": 0.0
+        }
+      }
+    ],
+    "score_weights": {
+      "roi": 0.25,
+      "seo_impact": 0.2,
+      "revenue_impact": 0.2,
+      "ux_impact": 0.1,
+      "implementation_ease": 0.1,
+      "deployment_safety": 0.05,
+      "confidence": 0.05,
+      "historical_success": 0.05
+    }
+  },
+  "experiments": {},
+  "evolution": {
+    "generated_at": "2026-05-15T20:28:36Z",
+    "system_maturity_score": 40,
+    "evolution_summary": "Evolution analysis unavailable — using defaults",
+    "next_evolution_priority": "Collect more performance data across 10+ features",
+    "recommended_evolutions": [],
+    "prompt_improvements": [],
+    "threshold_recommendations": {
+      "qa_threshold": 70,
+      "trust_threshold": 85,
+      "auto_merge_min_score": 90,
+      "rationale": "Conservative defaults"
+    },
+    "architecture_recommendations": [
+      "Collect more data before making threshold changes",
+      "Run experiment engine to identify winning content patterns"
+    ],
+    "token_optimization": {
+      "current_avg_cost_per_feature_usd": 0,
+      "target_avg_cost_per_feature_usd": 0,
+      "strategy": "N/A"
+    },
+    "applied_evolutions": [
+      "Threshold recommendations saved: QA≥70, trust≥85",
+      "Saved 2 architecture recommendations"
+    ]
+  },
   "analytics_intelligence": {
     "generated_at": "2026-05-15T18:31:07Z",
     "data_source": "ai_intelligence",
@@ -2841,43 +3373,18 @@
           "conversion_improvement_pct": 10.0
         },
         "auto_mergeable": false,
-        "status": "queued"
-      },
-      {
-        "id": "dec_002",
-        "project": "yallaplays",
-        "priority": 1,
-        "type": "metadata_optimization",
-        "title": "Optimize Low-Performing Pages for SEO",
-        "rationale": "With an SEO opportunity score of 85, optimizing these pages can significantly enhance traffic, which is critical for growth.",
-        "target_file": "yallaplays/seo/low-performing-pages-optimization.md",
-        "target_repo": "owner/yallaplays",
-        "feature_type": "seo_hub",
-        "estimated_impact": {
-          "monthly_visits": 5000,
-          "engagement_improvement_pct": 5.0,
-          "conversion_improvement_pct": 5.0
-        },
-        "auto_mergeable": false,
-        "status": "queued"
-      },
-      {
-        "id": "dec_003",
-        "project": "fionera",
-        "priority": 2,
-        "type": "content",
-        "title": "Improve Content Quality on Key Pages",
-        "rationale": "The bounce rate of 36.7% suggests that enhancing content can improve user engagement, which is vital for retention.",
-        "target_file": "fionera/content/low-performing-page-enhancements.md",
-        "target_repo": "owner/fionera",
-        "feature_type": "page",
-        "estimated_impact": {
-          "monthly_visits": 2000,
-          "engagement_improvement_pct": 7.5,
-          "conversion_improvement_pct": 7.5
-        },
-        "auto_mergeable": false,
-        "status": "queued"
+        "status": "queued",
+        "priority_score": 74.5,
+        "score_breakdown": {
+          "roi": 100.0,
+          "seo_impact": 55.0,
+          "revenue_impact": 100.0,
+          "ux_impact": 40.0,
+          "implementation_ease": 80.0,
+          "deployment_safety": 69.0,
+          "confidence": 60.0,
+          "historical_success": 0.0
+        }
       },
       {
         "id": "dec_004",
@@ -2895,7 +3402,47 @@
           "conversion_improvement_pct": 15.0
         },
         "auto_mergeable": false,
-        "status": "queued"
+        "status": "queued",
+        "priority_score": 74.5,
+        "score_breakdown": {
+          "roi": 100.0,
+          "seo_impact": 55.0,
+          "revenue_impact": 100.0,
+          "ux_impact": 40.0,
+          "implementation_ease": 80.0,
+          "deployment_safety": 69.0,
+          "confidence": 60.0,
+          "historical_success": 0.0
+        }
+      },
+      {
+        "id": "dec_002",
+        "project": "yallaplays",
+        "priority": 1,
+        "type": "metadata_optimization",
+        "title": "Optimize Low-Performing Pages for SEO",
+        "rationale": "With an SEO opportunity score of 85, optimizing these pages can significantly enhance traffic, which is critical for growth.",
+        "target_file": "yallaplays/seo/low-performing-pages-optimization.md",
+        "target_repo": "owner/yallaplays",
+        "feature_type": "seo_hub",
+        "estimated_impact": {
+          "monthly_visits": 5000,
+          "engagement_improvement_pct": 5.0,
+          "conversion_improvement_pct": 5.0
+        },
+        "auto_mergeable": false,
+        "status": "queued",
+        "priority_score": 72.0,
+        "score_breakdown": {
+          "roi": 100.0,
+          "seo_impact": 50.0,
+          "revenue_impact": 100.0,
+          "ux_impact": 40.0,
+          "implementation_ease": 60.0,
+          "deployment_safety": 81.0,
+          "confidence": 60.0,
+          "historical_success": 0.0
+        }
       },
       {
         "id": "dec_005",
@@ -2913,7 +3460,47 @@
           "conversion_improvement_pct": 5.0
         },
         "auto_mergeable": true,
-        "status": "queued"
+        "status": "queued",
+        "priority_score": 72.0,
+        "score_breakdown": {
+          "roi": 100.0,
+          "seo_impact": 50.0,
+          "revenue_impact": 100.0,
+          "ux_impact": 40.0,
+          "implementation_ease": 60.0,
+          "deployment_safety": 81.0,
+          "confidence": 60.0,
+          "historical_success": 0.0
+        }
+      },
+      {
+        "id": "dec_003",
+        "project": "fionera",
+        "priority": 2,
+        "type": "content",
+        "title": "Improve Content Quality on Key Pages",
+        "rationale": "The bounce rate of 36.7% suggests that enhancing content can improve user engagement, which is vital for retention.",
+        "target_file": "fionera/content/low-performing-page-enhancements.md",
+        "target_repo": "owner/fionera",
+        "feature_type": "page",
+        "estimated_impact": {
+          "monthly_visits": 2000,
+          "engagement_improvement_pct": 7.5,
+          "conversion_improvement_pct": 7.5
+        },
+        "auto_mergeable": false,
+        "status": "queued",
+        "priority_score": 28.9,
+        "score_breakdown": {
+          "roi": 0.0,
+          "seo_impact": 55.0,
+          "revenue_impact": 0.0,
+          "ux_impact": 40.0,
+          "implementation_ease": 80.0,
+          "deployment_safety": 57.0,
+          "confidence": 60.0,
+          "historical_success": 0.0
+        }
       }
     ],
     "execution_summary": "The autonomous strategy focuses on enhancing content quality and SEO optimization for critical pages, addressing high bounce rates and low conversion scores. Additionally, interactive elements are introduced to improve engagement metrics.",

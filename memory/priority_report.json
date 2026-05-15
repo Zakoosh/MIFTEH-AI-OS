@@ -1,0 +1,170 @@
+{
+  "generated_at": "2026-05-15T20:26:41Z",
+  "execution_mode": "balanced",
+  "mode_config": {
+    "trust_threshold": 70,
+    "qa_gate": 60,
+    "max_missions_per_cycle": 3,
+    "draft_prs_only": false,
+    "description": "Standard automation with review gates",
+    "auto_merge_threshold": 90
+  },
+  "total_decisions": 5,
+  "top_decisions": [
+    {
+      "id": "dec_001",
+      "project": "mifteh",
+      "priority": 1,
+      "type": "content",
+      "title": "Revamp Lead-Funnel Page Content",
+      "rationale": "The lead-funnel page has a high bounce rate of 52.3%, indicating users are not finding value, which needs to be addressed urgently.",
+      "target_file": "mifteh/content/lead-funnel-update.md",
+      "target_repo": "owner/mifteh",
+      "feature_type": "page",
+      "estimated_impact": {
+        "monthly_visits": 1000,
+        "engagement_improvement_pct": 10.0,
+        "conversion_improvement_pct": 10.0
+      },
+      "auto_mergeable": false,
+      "status": "queued",
+      "priority_score": 74.5,
+      "score_breakdown": {
+        "roi": 100.0,
+        "seo_impact": 55.0,
+        "revenue_impact": 100.0,
+        "ux_impact": 40.0,
+        "implementation_ease": 80.0,
+        "deployment_safety": 69.0,
+        "confidence": 60.0,
+        "historical_success": 0.0
+      }
+    },
+    {
+      "id": "dec_004",
+      "project": "mifteh",
+      "priority": 2,
+      "type": "content",
+      "title": "Enhance Call-to-Action on Key Pages",
+      "rationale": "Improving CTAs on low-performing pages can help increase conversion rates, currently at 55, which is underperforming.",
+      "target_file": "mifteh/cta/cta-enhancements.md",
+      "target_repo": "owner/mifteh",
+      "feature_type": "component",
+      "estimated_impact": {
+        "monthly_visits": 500,
+        "engagement_improvement_pct": 15.0,
+        "conversion_improvement_pct": 15.0
+      },
+      "auto_mergeable": false,
+      "status": "queued",
+      "priority_score": 74.5,
+      "score_breakdown": {
+        "roi": 100.0,
+        "seo_impact": 55.0,
+        "revenue_impact": 100.0,
+        "ux_impact": 40.0,
+        "implementation_ease": 80.0,
+        "deployment_safety": 69.0,
+        "confidence": 60.0,
+        "historical_success": 0.0
+      }
+    },
+    {
+      "id": "dec_002",
+      "project": "yallaplays",
+      "priority": 1,
+      "type": "metadata_optimization",
+      "title": "Optimize Low-Performing Pages for SEO",
+      "rationale": "With an SEO opportunity score of 85, optimizing these pages can significantly enhance traffic, which is critical for growth.",
+      "target_file": "yallaplays/seo/low-performing-pages-optimization.md",
+      "target_repo": "owner/yallaplays",
+      "feature_type": "seo_hub",
+      "estimated_impact": {
+        "monthly_visits": 5000,
+        "engagement_improvement_pct": 5.0,
+        "conversion_improvement_pct": 5.0
+      },
+      "auto_mergeable": false,
+      "status": "queued",
+      "priority_score": 72.0,
+      "score_breakdown": {
+        "roi": 100.0,
+        "seo_impact": 50.0,
+        "revenue_impact": 100.0,
+        "ux_impact": 40.0,
+        "implementation_ease": 60.0,
+        "deployment_safety": 81.0,
+        "confidence": 60.0,
+        "historical_success": 0.0
+      }
+    },
+    {
+      "id": "dec_005",
+      "project": "yallaplays",
+      "priority": 3,
+      "type": "widget_generation",
+      "title": "Implement Interactive Quiz Widget",
+      "rationale": "Adding an interactive quiz can enhance user engagement on the homepage and improve session duration, which is currently 310 seconds.",
+      "target_file": "yallaplays/widgets/interactive-quiz.md",
+      "target_repo": "owner/yallaplays",
+      "feature_type": "widget",
+      "estimated_impact": {
+        "monthly_visits": 1500,
+        "engagement_improvement_pct": 5.0,
+        "conversion_improvement_pct": 5.0
+      },
+      "auto_mergeable": true,
+      "status": "queued",
+      "priority_score": 72.0,
+      "score_breakdown": {
+        "roi": 100.0,
+        "seo_impact": 50.0,
+        "revenue_impact": 100.0,
+        "ux_impact": 40.0,
+        "implementation_ease": 60.0,
+        "deployment_safety": 81.0,
+        "confidence": 60.0,
+        "historical_success": 0.0
+      }
+    },
+    {
+      "id": "dec_003",
+      "project": "fionera",
+      "priority": 2,
+      "type": "content",
+      "title": "Improve Content Quality on Key Pages",
+      "rationale": "The bounce rate of 36.7% suggests that enhancing content can improve user engagement, which is vital for retention.",
+      "target_file": "fionera/content/low-performing-page-enhancements.md",
+      "target_repo": "owner/fionera",
+      "feature_type": "page",
+      "estimated_impact": {
+        "monthly_visits": 2000,
+        "engagement_improvement_pct": 7.5,
+        "conversion_improvement_pct": 7.5
+      },
+      "auto_mergeable": false,
+      "status": "queued",
+      "priority_score": 28.9,
+      "score_breakdown": {
+        "roi": 0.0,
+        "seo_impact": 55.0,
+        "revenue_impact": 0.0,
+        "ux_impact": 40.0,
+        "implementation_ease": 80.0,
+        "deployment_safety": 57.0,
+        "confidence": 60.0,
+        "historical_success": 0.0
+      }
+    }
+  ],
+  "score_weights": {
+    "roi": 0.25,
+    "seo_impact": 0.2,
+    "revenue_impact": 0.2,
+    "ux_impact": 0.1,
+    "implementation_ease": 0.1,
+    "deployment_safety": 0.05,
+    "confidence": 0.05,
+    "historical_success": 0.05
+  }
+}

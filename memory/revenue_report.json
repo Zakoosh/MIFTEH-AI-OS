@@ -1,0 +1,272 @@
+{
+  "generated_at": "2026-05-15T20:26:40Z",
+  "projects": {
+    "yallaplays": {
+      "project": "yallaplays",
+      "monetization_model": "display_ads",
+      "total_features": 3,
+      "baseline_monthly_visits": 15000,
+      "added_monthly_visits": 5500,
+      "traffic_growth_pct": 36.7,
+      "total_seo_value_usd": 1925.0,
+      "total_direct_revenue_usd": 24.75,
+      "total_estimated_value_usd": 1949.75,
+      "total_token_cost_usd": 0.004488,
+      "portfolio_roi": 434436.3,
+      "top_roi_features": [
+        {
+          "feature_id": "Arabic SEO Games Hub",
+          "project": "yallaplays",
+          "feature_type": "seo_hub",
+          "est_monthly_visits": 3500,
+          "seo_value_usd": 1225.0,
+          "direct_revenue_usd": 15.75,
+          "total_value_usd": 1240.75,
+          "token_cost_usd": 0.001368,
+          "roi_ratio": 907080.5,
+          "monetization_model": "display_ads"
+        },
+        {
+          "feature_id": "Action Games Category Page",
+          "project": "yallaplays",
+          "feature_type": "category_page",
+          "est_monthly_visits": 2000,
+          "seo_value_usd": 700.0,
+          "direct_revenue_usd": 9.0,
+          "total_value_usd": 709.0,
+          "token_cost_usd": 0.002173,
+          "roi_ratio": 326224.5,
+          "monetization_model": "display_ads"
+        },
+        {
+          "feature_id": "Related Games Carousel Component",
+          "project": "yallaplays",
+          "feature_type": "component",
+          "est_monthly_visits": 0,
+          "seo_value_usd": 0.0,
+          "direct_revenue_usd": 0.0,
+          "total_value_usd": 0.0,
+          "token_cost_usd": 0.000947,
+          "roi_ratio": 0.0,
+          "monetization_model": "display_ads"
+        }
+      ],
+      "all_features": [
+        {
+          "feature_id": "Related Games Carousel Component",
+          "project": "yallaplays",
+          "feature_type": "component",
+          "est_monthly_visits": 0,
+          "seo_value_usd": 0.0,
+          "direct_revenue_usd": 0.0,
+          "total_value_usd": 0.0,
+          "token_cost_usd": 0.000947,
+          "roi_ratio": 0.0,
+          "monetization_model": "display_ads"
+        },
+        {
+          "feature_id": "Arabic SEO Games Hub",
+          "project": "yallaplays",
+          "feature_type": "seo_hub",
+          "est_monthly_visits": 3500,
+          "seo_value_usd": 1225.0,
+          "direct_revenue_usd": 15.75,
+          "total_value_usd": 1240.75,
+          "token_cost_usd": 0.001368,
+          "roi_ratio": 907080.5,
+          "monetization_model": "display_ads"
+        },
+        {
+          "feature_id": "Action Games Category Page",
+          "project": "yallaplays",
+          "feature_type": "category_page",
+          "est_monthly_visits": 2000,
+          "seo_value_usd": 700.0,
+          "direct_revenue_usd": 9.0,
+          "total_value_usd": 709.0,
+          "token_cost_usd": 0.002173,
+          "roi_ratio": 326224.5,
+          "monetization_model": "display_ads"
+        }
+      ]
+    },
+    "fionera": {
+      "project": "fionera",
+      "monetization_model": "saas_freemium",
+      "total_features": 3,
+      "baseline_monthly_visits": 8000,
+      "added_monthly_visits": 0,
+      "traffic_growth_pct": 0.0,
+      "total_seo_value_usd": 0.0,
+      "total_direct_revenue_usd": 0.0,
+      "total_estimated_value_usd": 0.0,
+      "total_token_cost_usd": 0.003357,
+      "portfolio_roi": 0.0,
+      "top_roi_features": [
+        {
+          "feature_id": "Portfolio Performance Heatmap Widget",
+          "project": "fionera",
+          "feature_type": "widget",
+          "est_monthly_visits": 0,
+          "seo_value_usd": 0.0,
+          "direct_revenue_usd": 0.0,
+          "total_value_usd": 0.0,
+          "token_cost_usd": 0.001176,
+          "roi_ratio": 0.0,
+          "monetization_model": "saas_freemium"
+        },
+        {
+          "feature_id": "AI Market Insight Card Widget",
+          "project": "fionera",
+          "feature_type": "widget",
+          "est_monthly_visits": 0,
+          "seo_value_usd": 0.0,
+          "direct_revenue_usd": 0.0,
+          "total_value_usd": 0.0,
+          "token_cost_usd": 0.001022,
+          "roi_ratio": 0.0,
+          "monetization_model": "saas_freemium"
+        },
+        {
+          "feature_id": "BIST Turkish Market Overview Widget",
+          "project": "fionera",
+          "feature_type": "widget",
+          "est_monthly_visits": 0,
+          "seo_value_usd": 0.0,
+          "direct_revenue_usd": 0.0,
+          "total_value_usd": 0.0,
+          "token_cost_usd": 0.001159,
+          "roi_ratio": 0.0,
+          "monetization_model": "saas_freemium"
+        }
+      ],
+      "all_features": [
+        {
+          "feature_id": "Portfolio Performance Heatmap Widget",
+          "project": "fionera",
+          "feature_type": "widget",
+          "est_monthly_visits": 0,
+          "seo_value_usd": 0.0,
+          "direct_revenue_usd": 0.0,
+          "total_value_usd": 0.0,
+          "token_cost_usd": 0.001176,
+          "roi_ratio": 0.0,
+          "monetization_model": "saas_freemium"
+        },
+        {
+          "feature_id": "AI Market Insight Card Widget",
+          "project": "fionera",
+          "feature_type": "widget",
+          "est_monthly_visits": 0,
+          "seo_value_usd": 0.0,
+          "direct_revenue_usd": 0.0,
+          "total_value_usd": 0.0,
+          "token_cost_usd": 0.001022,
+          "roi_ratio": 0.0,
+          "monetization_model": "saas_freemium"
+        },
+        {
+          "feature_id": "BIST Turkish Market Overview Widget",
+          "project": "fionera",
+          "feature_type": "widget",
+          "est_monthly_visits": 0,
+          "seo_value_usd": 0.0,
+          "direct_revenue_usd": 0.0,
+          "total_value_usd": 0.0,
+          "token_cost_usd": 0.001159,
+          "roi_ratio": 0.0,
+          "monetization_model": "saas_freemium"
+        }
+      ]
+    },
+    "mifteh": {
+      "project": "mifteh",
+      "monetization_model": "portfolio_authority",
+      "total_features": 2,
+      "baseline_monthly_visits": 3000,
+      "added_monthly_visits": 800,
+      "traffic_growth_pct": 26.7,
+      "total_seo_value_usd": 280.0,
+      "total_direct_revenue_usd": 9600.0,
+      "total_estimated_value_usd": 9880.0,
+      "total_token_cost_usd": 0.002417,
+      "portfolio_roi": 4087712.0,
+      "top_roi_features": [
+        {
+          "feature_id": "AI Services Landing Page",
+          "project": "mifteh",
+          "feature_type": "page",
+          "est_monthly_visits": 800,
+          "seo_value_usd": 280.0,
+          "direct_revenue_usd": 9600.0,
+          "total_value_usd": 9880.0,
+          "token_cost_usd": 0.001419,
+          "roi_ratio": 6964122.1,
+          "monetization_model": "portfolio_authority"
+        },
+        {
+          "feature_id": "Lead Generation Funnel Section",
+          "project": "mifteh",
+          "feature_type": "component",
+          "est_monthly_visits": 0,
+          "seo_value_usd": 0.0,
+          "direct_revenue_usd": 0.0,
+          "total_value_usd": 0.0,
+          "token_cost_usd": 0.000998,
+          "roi_ratio": 0.0,
+          "monetization_model": "portfolio_authority"
+        }
+      ],
+      "all_features": [
+        {
+          "feature_id": "AI Services Landing Page",
+          "project": "mifteh",
+          "feature_type": "page",
+          "est_monthly_visits": 800,
+          "seo_value_usd": 280.0,
+          "direct_revenue_usd": 9600.0,
+          "total_value_usd": 9880.0,
+          "token_cost_usd": 0.001419,
+          "roi_ratio": 6964122.1,
+          "monetization_model": "portfolio_authority"
+        },
+        {
+          "feature_id": "Lead Generation Funnel Section",
+          "project": "mifteh",
+          "feature_type": "component",
+          "est_monthly_visits": 0,
+          "seo_value_usd": 0.0,
+          "direct_revenue_usd": 0.0,
+          "total_value_usd": 0.0,
+          "token_cost_usd": 0.000998,
+          "roi_ratio": 0.0,
+          "monetization_model": "portfolio_authority"
+        }
+      ]
+    }
+  },
+  "ai_analysis": {
+    "portfolio_monthly_value_usd": 11829.75,
+    "highest_roi_project": "mifteh",
+    "revenue_opportunities": [],
+    "token_efficiency_analysis": "AI analysis unavailable",
+    "recommended_budget_allocation": {
+      "yallaplays": 0.5,
+      "fionera": 0.3,
+      "mifteh": 0.2
+    },
+    "30d_revenue_forecast_usd": 11829.75,
+    "90d_revenue_forecast_usd": 37855.2,
+    "key_insight": "Static estimation only \u2014 AI analysis failed",
+    "risk_factors": [],
+    "error": "generate_json returned no data"
+  },
+  "portfolio_summary": {
+    "total_features": 8,
+    "total_est_value_usd": 11829.75,
+    "total_token_cost_usd": 0.010262,
+    "portfolio_roi": 1152772.4,
+    "30d_forecast_usd": 11829.75,
+    "90d_forecast_usd": 37855.2
+  }
+}

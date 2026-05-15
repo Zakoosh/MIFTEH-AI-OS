@@ -1,0 +1,15 @@
+{
+  "updated_at": "2026-05-15T20:26:41Z",
+  "mode": "balanced",
+  "trust_threshold": 70,
+  "qa_gate": 60,
+  "max_missions_per_cycle": 3,
+  "draft_prs_only": false,
+  "description": "Standard automation with review gates",
+  "auto_merge_threshold": 90,
+  "evolution_updated_at": "2026-05-15T20:28:36Z",
+  "recommended_qa_threshold": 70,
+  "recommended_trust_threshold": 85,
+  "recommended_auto_merge_min": 90,
+  "threshold_rationale": "Conservative defaults"
+}

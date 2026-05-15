@@ -1,0 +1,45 @@
+name: MIFTEH AI Self-Evolution Engine
+
+# Analyzes system performance and evolves: prompts, QA thresholds, merge
+# criteria, token efficiency, architecture. Applies safe evolutions automatically.
+# Runs Sunday 07:00 UTC — after self-improvement (06:00).
+
+on:
+  schedule:
+    - cron: '0 7 * * 0'    # Sunday 07:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  self-evolution:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install openai
+
+      - name: Run self-evolution engine
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python scripts/self_evolution_engine.py
+
+      - name: Aggregate dashboard
+        run: python scripts/aggregate_dashboard.py
+
+      - name: Commit evolution report
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "mifteh-ai@users.noreply.github.com"
+          git pull --rebase origin main
+          git add memory/evolution_report.json memory/execution_mode_config.json memory/prompt_improvement_suggestions.json memory/architecture_recommendations.json frontend/dashboard/data/
+          git diff --cached --quiet || git commit -m "AI: Self-evolution cycle [$(date -u +%Y-%m-%dT%H:%M:%SZ)] [skip ci]"
+          git push

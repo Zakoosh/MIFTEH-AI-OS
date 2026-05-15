@@ -135,6 +135,96 @@ def read_execution_summary():
     return read_json("memory/execution_summary.json")
 
 
+def read_revenue_report():
+    data = read_json("memory/revenue_report.json")
+    if not data:
+        return {}
+    # Strip all_features arrays (large) from project breakdowns
+    projects = {}
+    for proj, pdata in data.get("projects", {}).items():
+        projects[proj] = {k: v for k, v in pdata.items() if k != "all_features"}
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "portfolio_summary": data.get("portfolio_summary", {}),
+        "ai_analysis": data.get("ai_analysis", {}),
+        "projects": projects,
+    }
+
+
+def read_swarm_summary():
+    return read_json("memory/swarm_summary.json")
+
+
+def read_cross_project_summary():
+    return read_json("memory/cross_project_summary.json")
+
+
+def read_strategy_report():
+    data = read_json("memory/strategy_report.json")
+    if not data:
+        return {}
+    plan = data.get("strategic_plan", {})
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "bottlenecks": data.get("bottlenecks", []),
+        "executor_items_injected": data.get("executor_items_injected", 0),
+        "strategic_plan": {
+            "strategic_summary": plan.get("strategic_summary", ""),
+            "north_star_metric": plan.get("north_star_metric", ""),
+            "30_day_plan": plan.get("30_day_plan", {}),
+            "90_day_plan": plan.get("90_day_plan", {}),
+            "priority_matrix": plan.get("priority_matrix", [])[:10],
+            "roi_forecasts": plan.get("roi_forecasts", {}),
+        },
+    }
+
+
+def read_market_intelligence():
+    data = read_json("memory/market_intelligence.json")
+    if not data:
+        return {}
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "trending_topics": data.get("trending_topics", {}),
+        "keyword_gaps": data.get("keyword_gaps", {}),
+        "new_monetization_angles": data.get("new_monetization_angles", {}),
+        "competitive_gaps": data.get("competitive_gaps", {}),
+        "competitors": {
+            proj: [
+                {k: v for k, v in c.items()}
+                for c in comps
+            ]
+            for proj, comps in data.get("competitors", {}).items()
+        },
+    }
+
+
+def read_priority_report():
+    return read_json("memory/priority_report.json")
+
+
+def read_experiment_summary():
+    return read_json("memory/experiment_summary.json")
+
+
+def read_evolution_report():
+    data = read_json("memory/evolution_report.json")
+    if not data:
+        return {}
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "system_maturity_score": data.get("system_maturity_score", 0),
+        "evolution_summary": data.get("evolution_summary", ""),
+        "next_evolution_priority": data.get("next_evolution_priority", ""),
+        "recommended_evolutions": data.get("recommended_evolutions", [])[:8],
+        "prompt_improvements": data.get("prompt_improvements", [])[:5],
+        "threshold_recommendations": data.get("threshold_recommendations", {}),
+        "architecture_recommendations": data.get("architecture_recommendations", []),
+        "token_optimization": data.get("token_optimization", {}),
+        "applied_evolutions": data.get("applied_evolutions", []),
+    }
+
+
 def read_roadmap():
     data = read_json("memory/roadmap.json")
     if not data:
@@ -334,9 +424,19 @@ def main():
     deployment_monitor = read_deployment_monitor()
     execution_summary = read_execution_summary()
     roadmap = read_roadmap()
+    revenue = read_revenue_report()
+    swarm = read_swarm_summary()
+    cross_project = read_cross_project_summary()
+    strategy = read_strategy_report()
+    market = read_market_intelligence()
+    priority = read_priority_report()
+    experiments = read_experiment_summary()
+    evolution = read_evolution_report()
     print(f"[dashboard] {len(outputs)} outputs, {len(prs)} PRs, {len(automerge_log)} merge events, "
           f"{len(product_outputs)} product features, {visual_qa.get('total', 0)} QA reports, "
-          f"{ai_qa.get('total', 0)} AI QA reviews, {roadmap.get('total_items', 0)} roadmap items")
+          f"{ai_qa.get('total', 0)} AI QA reviews, {roadmap.get('total_items', 0)} roadmap items, "
+          f"{swarm.get('total_missions', 0)} swarm missions, "
+          f"${revenue.get('portfolio_summary', {}).get('total_est_value_usd', 0):.2f} portfolio value")
 
     loops, active_loops = build_loops(outputs)
     ai_analytics = build_ai_analytics(outputs)
@@ -454,6 +554,14 @@ def main():
         "deployment_monitor": deployment_monitor,
         "executor": execution_summary,
         "roadmap": roadmap,
+        "revenue": revenue,
+        "swarm": swarm,
+        "cross_project": cross_project,
+        "strategy": strategy,
+        "market": market,
+        "priority": priority,
+        "experiments": experiments,
+        "evolution": evolution,
         "analytics_intelligence": {
             "generated_at": analytics_intel.get("generated_at", ""),
             "data_source": analytics_intel.get("data_source", ""),

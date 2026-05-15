@@ -1,0 +1,45 @@
+name: MIFTEH AI Revenue Engine
+
+# Estimates RPM, CTR, conversion impact, SEO value, token ROI for every
+# generated feature. Tracks portfolio profitability and budget allocation.
+# Runs Tuesday 07:00 UTC — before roadmap generation (08:00).
+
+on:
+  schedule:
+    - cron: '0 7 * * 2'    # Tuesday 07:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  revenue-engine:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install openai
+
+      - name: Run revenue engine
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python scripts/revenue_engine.py
+
+      - name: Aggregate dashboard
+        run: python scripts/aggregate_dashboard.py
+
+      - name: Commit revenue report
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "mifteh-ai@users.noreply.github.com"
+          git pull --rebase origin main
+          git add memory/revenue_report.json frontend/dashboard/data/
+          git diff --cached --quiet || git commit -m "AI: Revenue intelligence cycle [$(date -u +%Y-%m-%dT%H:%M:%SZ)] [skip ci]"
+          git push

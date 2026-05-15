@@ -1,0 +1,78 @@
+{
+  "generated_at": "2026-05-15T20:28:36Z",
+  "system_maturity_score": 40,
+  "evolution_summary": "Evolution analysis unavailable \u2014 using defaults",
+  "next_evolution_priority": "Collect more performance data across 10+ features",
+  "recommended_evolutions": [],
+  "prompt_improvements": [],
+  "threshold_recommendations": {
+    "qa_threshold": 70,
+    "trust_threshold": 85,
+    "auto_merge_min_score": 90,
+    "rationale": "Conservative defaults"
+  },
+  "architecture_recommendations": [
+    "Collect more data before making threshold changes",
+    "Run experiment engine to identify winning content patterns"
+  ],
+  "token_optimization": {
+    "current_avg_cost_per_feature_usd": 0,
+    "target_avg_cost_per_feature_usd": 0,
+    "strategy": "N/A"
+  },
+  "applied_evolutions": [
+    "Threshold recommendations saved: QA\u226570, trust\u226585",
+    "Saved 2 architecture recommendations"
+  ],
+  "system_snapshot": {
+    "prompt_performance": [],
+    "visual_qa": {
+      "total": 8,
+      "pass_rate_pct": 38,
+      "avg_score": 67,
+      "current_threshold": 70
+    },
+    "ai_qa": {
+      "total": 0,
+      "approve_rate_pct": 0,
+      "avg_composite_score": 0
+    },
+    "merge_stats": {
+      "total_merges": 3,
+      "total_rollbacks": 0,
+      "rollback_rate_pct": 0.0,
+      "current_trust_threshold": 90
+    },
+    "token_efficiency": {
+      "total_tokens": 0,
+      "total_cost_usd": 0,
+      "features_generated": 0,
+      "avg_cost_per_feature_usd": 0,
+      "current_model": "gpt-4o-mini"
+    },
+    "experiments": {
+      "total": 0,
+      "win_rate_pct": 0,
+      "avg_score_delta": 0,
+      "best_experiment_type": "none"
+    },
+    "revenue": {
+      "total_features": 8,
+      "total_est_value_usd": 11829.75,
+      "total_token_cost_usd": 0.010262,
+      "portfolio_roi": 1152772.4,
+      "30d_forecast_usd": 11829.75,
+      "90d_forecast_usd": 37855.2
+    },
+    "execution_mode": {
+      "updated_at": "2026-05-15T20:26:41Z",
+      "mode": "balanced",
+      "trust_threshold": 70,
+      "qa_gate": 60,
+      "max_missions_per_cycle": 3,
+      "draft_prs_only": false,
+      "description": "Standard automation with review gates",
+      "auto_merge_threshold": 90
+    }
+  }
+}

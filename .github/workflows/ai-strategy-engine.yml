@@ -1,0 +1,45 @@
+name: MIFTEH AI Strategy Engine
+
+# Synthesizes all intelligence sources into 30-day and 90-day growth plans.
+# Detects bottlenecks, generates priority matrix, injects top items into executor queue.
+# Runs Friday 09:00 UTC — end of week synthesis.
+
+on:
+  schedule:
+    - cron: '0 9 * * 5'    # Friday 09:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  strategy-engine:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install openai
+
+      - name: Run strategy engine
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python scripts/strategy_engine.py
+
+      - name: Aggregate dashboard
+        run: python scripts/aggregate_dashboard.py
+
+      - name: Commit strategy report
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "mifteh-ai@users.noreply.github.com"
+          git pull --rebase origin main
+          git add memory/strategy_report.json memory/analytics_intelligence.json frontend/dashboard/data/
+          git diff --cached --quiet || git commit -m "AI: Strategic planning cycle [$(date -u +%Y-%m-%dT%H:%M:%SZ)] [skip ci]"
+          git push

@@ -1,0 +1,81 @@
+{
+  "generated_at": "2026-05-15T20:28:35Z",
+  "bottlenecks": [
+    {
+      "type": "quality",
+      "severity": "high",
+      "project": "fionera",
+      "issue": "Site quality score 0/100 \u2014 below threshold",
+      "impact": "SEO penalties, poor user experience"
+    },
+    {
+      "type": "revenue",
+      "severity": "medium",
+      "project": "fionera",
+      "issue": "Low feature ROI (0.0x)",
+      "impact": "Token spend not converting to revenue"
+    }
+  ],
+  "strategic_plan": {
+    "strategic_summary": "Strategic analysis unavailable \u2014 using defaults",
+    "north_star_metric": "Monthly organic traffic",
+    "30_day_plan": {
+      "theme": "Foundation",
+      "objectives": [
+        "Fix deployment gaps",
+        "Launch 5 SEO pages",
+        "Improve QA score"
+      ],
+      "key_initiatives": [],
+      "success_metrics": [
+        "Traffic +10%",
+        "QA avg \u226575"
+      ],
+      "projected_traffic_growth_pct": 10,
+      "projected_revenue_growth_usd": 50
+    },
+    "90_day_plan": {
+      "theme": "Scale",
+      "objectives": [
+        "Dominate 50 keywords",
+        "Reach $500/mo revenue",
+        "Full automation"
+      ],
+      "milestones": [
+        {
+          "week": 4,
+          "milestone": "SEO foundation complete",
+          "metrics": "+10% traffic"
+        },
+        {
+          "week": 8,
+          "milestone": "Revenue engine active",
+          "metrics": "$200/mo"
+        },
+        {
+          "week": 12,
+          "milestone": "Autonomous at scale",
+          "metrics": "+35% traffic"
+        }
+      ],
+      "projected_traffic_growth_pct": 35,
+      "projected_revenue_growth_usd": 500
+    },
+    "priority_matrix": [],
+    "roi_forecasts": {
+      "30d_roi_multiplier": 5,
+      "90d_roi_multiplier": 20,
+      "confidence_pct": 40
+    },
+    "execution_queue": [],
+    "error": "generate_json returned no data"
+  },
+  "intelligence_sources_used": [
+    "analytics",
+    "revenue",
+    "deployment",
+    "self_improvement",
+    "cross_project"
+  ],
+  "executor_items_injected": 0
+}
