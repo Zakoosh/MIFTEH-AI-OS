@@ -97,6 +97,20 @@
       <button class="nav-btn" onclick="showTab('revenue-tracker',this)"><span class="icon">$</span> Revenue Tracker</button>
       <button class="nav-btn" onclick="showTab('page-deployer',this)"><span class="icon">⬆</span> Page Deployer</button>
 
+      <div class="nav-section">Game Studio</div>
+      <button class="nav-btn" onclick="showTab('game-factory',this)"><span class="icon">🎮</span> Game Factory</button>
+      <button class="nav-btn" onclick="showTab('generated-games',this)"><span class="icon">🕹</span> Generated Games</button>
+      <button class="nav-btn" onclick="showTab('game-qa',this)"><span class="icon">✅</span> Game QA</button>
+      <button class="nav-btn" onclick="showTab('game-seo',this)"><span class="icon">⌖</span> Game SEO</button>
+
+      <div class="nav-section">Admin &amp; Governance</div>
+      <button class="nav-btn" onclick="showTab('admin-center',this)"><span class="icon">⚙</span> Admin Center</button>
+      <button class="nav-btn" onclick="showTab('review-queue',this)"><span class="icon">📋</span> Review Queue</button>
+      <button class="nav-btn" onclick="showTab('deploy-center',this)"><span class="icon">🚀</span> Deploy Center</button>
+      <button class="nav-btn" onclick="showTab('deploy-timeline',this)"><span class="icon">⏱</span> Deploy Timeline</button>
+      <button class="nav-btn" onclick="showTab('telegram-logs',this)"><span class="icon">✈</span> Telegram Logs</button>
+      <button class="nav-btn" onclick="showTab('live-alerts',this)"><span class="icon">🔴</span> Live Alerts</button>
+
       <div class="nav-section">Business Growth</div>
       <button class="nav-btn" onclick="showTab('growth',this)"><span class="icon">↑</span> Growth Engine</button>
       <button class="nav-btn" onclick="showTab('revenue',this)"><span class="icon">$</span> Revenue Live</button>
@@ -1661,6 +1675,140 @@
             <div id="page-deployer-recs"></div>
           </div>
         </div>
+      </section>
+
+      <!-- Phase L: Game Studio tabs -->
+      <section id="tab-game-factory" class="tab">
+        <h2 class="section-title">Game Factory</h2>
+        <div class="cards-grid" id="game-factory-cards"></div>
+        <div class="panels-grid">
+          <div class="panel">
+            <div class="panel-title">Games Generated</div>
+            <div id="game-factory-games"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">By Type Breakdown</div>
+            <div id="game-factory-types"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">Cost &amp; Tokens</div>
+            <div id="game-factory-cost"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tab-generated-games" class="tab">
+        <h2 class="section-title">Generated Games</h2>
+        <div id="generated-games-list"></div>
+      </section>
+
+      <section id="tab-game-qa" class="tab">
+        <h2 class="section-title">Game QA</h2>
+        <div class="cards-grid" id="game-qa-cards"></div>
+        <div class="panels-grid">
+          <div class="panel">
+            <div class="panel-title">QA Results</div>
+            <div id="game-qa-results"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">Failed QA</div>
+            <div id="game-qa-failed"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tab-game-seo" class="tab">
+        <h2 class="section-title">Game SEO</h2>
+        <div class="cards-grid" id="game-seo-cards"></div>
+        <div class="panels-grid">
+          <div class="panel">
+            <div class="panel-title">SEO Pages</div>
+            <div id="game-seo-pages"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">Category Hubs</div>
+            <div id="game-seo-hubs"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Phase L: Admin & Governance tabs -->
+      <section id="tab-admin-center" class="tab">
+        <h2 class="section-title">Admin Center</h2>
+        <div class="cards-grid" id="admin-center-cards"></div>
+        <div class="panels-grid">
+          <div class="panel">
+            <div class="panel-title">Queue Summary</div>
+            <div id="admin-center-queue"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">AI Summary</div>
+            <div id="admin-center-ai"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">Recent Audit</div>
+            <div id="admin-center-audit"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tab-review-queue" class="tab">
+        <h2 class="section-title">Review Queue</h2>
+        <div class="cards-grid" id="review-queue-cards"></div>
+        <div class="panels-grid">
+          <div class="panel">
+            <div class="panel-title">Pending Approval</div>
+            <div id="review-queue-pending"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">QA Eligible</div>
+            <div id="review-queue-eligible"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">Approved</div>
+            <div id="review-queue-approved"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">Rejected</div>
+            <div id="review-queue-rejected"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tab-deploy-center" class="tab">
+        <h2 class="section-title">Deploy Center</h2>
+        <div class="cards-grid" id="deploy-center-cards"></div>
+        <div class="panels-grid">
+          <div class="panel">
+            <div class="panel-title">Deployed Games</div>
+            <div id="deploy-center-deployed"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">Rollbacks</div>
+            <div id="deploy-center-rollbacks"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tab-deploy-timeline" class="tab">
+        <h2 class="section-title">Deployment Timeline</h2>
+        <div id="deploy-timeline-audit"></div>
+      </section>
+
+      <section id="tab-telegram-logs" class="tab">
+        <h2 class="section-title">Telegram Logs</h2>
+        <div class="cards-grid" id="telegram-logs-cards"></div>
+        <div class="panels-grid">
+          <div class="panel">
+            <div class="panel-title">Recent Messages</div>
+            <div id="telegram-logs-entries"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tab-live-alerts" class="tab">
+        <h2 class="section-title">Live Alerts</h2>
+        <div id="live-alerts-list"></div>
       </section>
 
     </div>

@@ -1,0 +1,41 @@
+name: AI Game Thumbnail
+
+on:
+  schedule:
+    - cron: '0 4 * * *'   # 04:00 UTC daily
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  aggregate-dashboard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install openai
+
+      - name: Aggregate dashboard data
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          TELEGRAM_LOG_TOKEN: ${{ secrets.TELEGRAM_LOG_TOKEN }}
+          TELEGRAM_ADMIN_LOG_TOKEN: ${{ secrets.TELEGRAM_ADMIN_LOG_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_ADMIN_CHAT_ID: ${{ secrets.TELEGRAM_ADMIN_CHAT_ID }}
+        run: python scripts/aggregate_dashboard.py
+
+      - name: Commit dashboard data
+        run: |
+          git config user.name "MIFTEH OS"
+          git config user.email "actions@mifteh.ai"
+          git add data/dashboard.json || true
+          git diff --cached --quiet || git -c commit.gpgsign=false commit -m "chore: dashboard aggregate run $(date -u +%Y-%m-%d)"
+          git push

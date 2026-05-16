@@ -1131,6 +1131,87 @@ def build_ai_analytics(outputs):
     }
 
 
+def read_game_factory_report():
+    data = read_json("memory/game_factory_report.json")
+    if not data:
+        data = read_json("memory/game_factory/factory_report.json")
+    if not data:
+        return {}
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "total_generated": data.get("total_generated", 0),
+        "total_eligible": data.get("total_eligible", 0),
+        "pass_rate": data.get("pass_rate", "0%"),
+        "avg_qa_score": data.get("avg_qa_score", 0),
+        "total_cost_usd": data.get("total_cost_usd", 0.0),
+        "total_tokens": data.get("total_tokens", 0),
+        "games": [
+            {k: v for k, v in g.items() if k not in ("html",)}
+            for g in data.get("games", [])[:20]
+        ],
+        "by_type": data.get("by_type", {}),
+        "eligible_games": data.get("eligible_games", []),
+    }
+
+
+def read_game_seo_report():
+    data = read_json("memory/game_seo_report.json")
+    if not data:
+        return {}
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "seo_pages_count": data.get("seo_pages_count", 0),
+        "category_hubs_count": data.get("category_hubs_count", 0),
+        "total_keywords": data.get("total_keywords", 0),
+        "total_cost_usd": data.get("total_cost_usd", 0.0),
+        "top_games": data.get("top_games", [])[:10],
+        "hub_types": data.get("hub_types", []),
+    }
+
+
+def read_game_qa_report():
+    data = read_json("memory/game_qa_report.json")
+    if not data:
+        return {}
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "summary": data.get("summary", {}),
+        "games": [
+            {k: v for k, v in g.items() if k not in ("checks",)}
+            for g in data.get("games", [])[:20]
+        ],
+    }
+
+
+def read_admin_governance_report():
+    data = read_json("memory/admin_governance_report.json")
+    if not data:
+        return {}
+    queue = data.get("queue", {})
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "counts": queue.get("counts", {}),
+        "pending": queue.get("pending", [])[:10],
+        "qa_eligible": queue.get("qa_eligible", [])[:10],
+        "approved": queue.get("approved", [])[:10],
+        "deployed": queue.get("deployed", [])[:10],
+        "rejected": queue.get("rejected", [])[:5],
+        "ai_summary": data.get("ai_summary", {}),
+        "recent_audit": data.get("recent_audit", [])[-10:],
+    }
+
+
+def read_telegram_logs():
+    data = read_json("memory/telegram_logs.json")
+    if not data:
+        return {}
+    return {
+        "updated_at": data.get("updated_at", ""),
+        "total_sent": data.get("total_sent", 0),
+        "entries": data.get("entries", [])[-30:],
+    }
+
+
 def main():
     print("[dashboard] Aggregating dashboard data...")
 
@@ -1194,6 +1275,11 @@ def main():
     task_economy = read_task_economy_report()
     agent_evolution = read_agent_evolution_report()
     kernel = read_kernel_report()
+    game_factory = read_game_factory_report()
+    game_seo = read_game_seo_report()
+    game_qa = read_game_qa_report()
+    admin_governance = read_admin_governance_report()
+    telegram_logs = read_telegram_logs()
     print(f"[dashboard] {len(outputs)} outputs, {len(prs)} PRs, {len(automerge_log)} merge events, "
           f"{len(product_outputs)} product features, {visual_qa.get('total', 0)} QA reports, "
           f"{ai_qa.get('total', 0)} AI QA reviews, {roadmap.get('total_items', 0)} roadmap items, "
@@ -1360,6 +1446,11 @@ def main():
         "task_economy": task_economy,
         "agent_evolution": agent_evolution,
         "kernel": kernel,
+        "game_factory": game_factory,
+        "game_seo": game_seo,
+        "game_qa": game_qa,
+        "admin_governance": admin_governance,
+        "telegram_logs": telegram_logs,
         "analytics_intelligence": {
             "generated_at": analytics_intel.get("generated_at", ""),
             "data_source": analytics_intel.get("data_source", ""),

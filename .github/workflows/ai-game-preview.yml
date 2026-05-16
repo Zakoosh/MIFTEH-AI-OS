@@ -1,0 +1,41 @@
+name: AI Game Preview
+
+on:
+  schedule:
+    - cron: '30 3 * * *'   # 03:30 UTC daily
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  game-preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install openai
+
+      - name: Generate previews and notify admin
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          TELEGRAM_LOG_TOKEN: ${{ secrets.TELEGRAM_LOG_TOKEN }}
+          TELEGRAM_ADMIN_LOG_TOKEN: ${{ secrets.TELEGRAM_ADMIN_LOG_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_ADMIN_CHAT_ID: ${{ secrets.TELEGRAM_ADMIN_CHAT_ID }}
+        run: python scripts/admin_governance.py
+
+      - name: Commit governance report
+        run: |
+          git config user.name "MIFTEH OS"
+          git config user.email "actions@mifteh.ai"
+          git add memory/admin_governance_report.json memory/approval_queue.json memory/audit_log.json memory/approvals/ memory/rejections/ memory/deployments/ || true
+          git diff --cached --quiet || git -c commit.gpgsign=false commit -m "chore: governance run $(date -u +%Y-%m-%d)"
+          git push

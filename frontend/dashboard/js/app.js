@@ -3336,6 +3336,295 @@ function renderPageDeployer(d) {
   ).join('') || '<div class="empty-state">No recommendations yet</div>');
 }
 
+// ─── Phase L: Game Studio ─────────────────────────────────────────────────────
+
+function renderGameFactory(d) {
+  const gf = d.game_factory || {};
+  const total = gf.total_generated || 0;
+  const eligible = gf.total_eligible || 0;
+  const passRate = gf.pass_rate || '0%';
+  const avg = gf.avg_qa_score || 0;
+  const cost = gf.total_cost_usd || 0;
+
+  set('game-factory-cards', `
+    <div class="card"><div class="card-label">Games Generated</div><div class="card-value" style="color:var(--blue)">${total}</div></div>
+    <div class="card"><div class="card-label">QA Eligible</div><div class="card-value" style="color:var(--green)">${eligible}</div></div>
+    <div class="card"><div class="card-label">Pass Rate</div><div class="card-value" style="color:var(--yellow)">${passRate}</div></div>
+    <div class="card"><div class="card-label">Avg QA Score</div><div class="card-value" style="color:var(--blue)">${avg}<span style="font-size:14px;color:var(--muted)">/100</span></div></div>
+    <div class="card"><div class="card-label">Total Cost</div><div class="card-value" style="color:var(--muted)">$${cost.toFixed(4)}</div></div>
+  `);
+
+  const games = gf.games || [];
+  set('game-factory-games', games.map(g => {
+    const scoreColor = (g.qa_score||0) >= 75 ? 'green' : (g.qa_score||0) >= 50 ? 'yellow' : 'red';
+    return `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title" style="display:flex;justify-content:space-between">
+        <span>${esc(g.name_en||g.game_id||'')}</span>
+        <span style="color:var(--${scoreColor})">${g.qa_score||0}/100</span>
+      </div>
+      <div class="activity-meta">Type: ${esc(g.game_type||'')} · ID: ${esc(g.game_id||'')} · ${g.qa_eligible?'✅ Eligible':'❌ Not eligible'}</div>
+    </div></div>`;
+  }).join('') || '<div class="empty-state">No games generated yet — factory runs at 02:00 UTC</div>');
+
+  const byType = gf.by_type || {};
+  set('game-factory-types', Object.entries(byType).map(([t, c]) =>
+    `<div class="activity-item"><div class="activity-body"><div class="activity-title">${esc(t)}<span style="float:right;color:var(--blue)">${c} games</span></div></div></div>`
+  ).join('') || '<div class="empty-state">No type data yet</div>');
+
+  set('game-factory-cost', `
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">Total Tokens<span style="float:right;color:var(--blue)">${(gf.total_tokens||0).toLocaleString()}</span></div></div></div>
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">Total Cost<span style="float:right;color:var(--muted)">$${cost.toFixed(4)}</span></div></div></div>
+    <div class="activity-item"><div class="activity-body"><div class="activity-title" style="color:var(--green)">✅ No external images — Phaser Graphics API only</div></div></div>
+    <div class="activity-item"><div class="activity-body"><div class="activity-title" style="color:var(--green)">✅ Admin approval required before deploy</div></div></div>
+  `);
+}
+
+function renderGeneratedGames(d) {
+  const gf = d.game_factory || {};
+  const games = gf.games || [];
+  set('generated-games-list', games.length ? `
+    <div style="overflow-x:auto">
+    <table style="width:100%;border-collapse:collapse;font-size:13px">
+      <thead><tr style="background:#1e293b;color:var(--muted);text-align:left">
+        <th style="padding:10px 12px">Game ID</th>
+        <th style="padding:10px 12px">Name (EN)</th>
+        <th style="padding:10px 12px">Type</th>
+        <th style="padding:10px 12px">QA Score</th>
+        <th style="padding:10px 12px">Status</th>
+      </tr></thead>
+      <tbody>
+        ${games.map(g => {
+          const scoreColor = (g.qa_score||0) >= 75 ? '#22c55e' : (g.qa_score||0) >= 50 ? '#eab308' : '#ef4444';
+          return `<tr style="border-top:1px solid #1e293b">
+            <td style="padding:8px 12px;font-family:monospace;font-size:11px;color:var(--muted)">${esc(g.game_id||'')}</td>
+            <td style="padding:8px 12px">${esc(g.name_en||'')}</td>
+            <td style="padding:8px 12px;color:var(--blue)">${esc(g.game_type||'')}</td>
+            <td style="padding:8px 12px;color:${scoreColor};font-weight:600">${g.qa_score||0}/100</td>
+            <td style="padding:8px 12px">${g.qa_eligible ? '<span style="color:#22c55e">✅ Eligible</span>' : '<span style="color:#ef4444">❌ Below 75</span>'}</td>
+          </tr>`;
+        }).join('')}
+      </tbody>
+    </table></div>
+  ` : '<div class="empty-state" style="padding:40px">No games generated yet. Game Factory runs at 02:00 UTC daily.</div>');
+}
+
+function renderGameQA(d) {
+  const gq = d.game_qa || {};
+  const summary = gq.summary || {};
+  const games = gq.games || [];
+
+  set('game-qa-cards', `
+    <div class="card"><div class="card-label">Total Checked</div><div class="card-value" style="color:var(--blue)">${summary.total_games||0}</div></div>
+    <div class="card"><div class="card-label">Eligible</div><div class="card-value" style="color:var(--green)">${summary.eligible_for_deploy||0}</div></div>
+    <div class="card"><div class="card-label">Failed QA</div><div class="card-value" style="color:var(--red)">${summary.failed_qa||0}</div></div>
+    <div class="card"><div class="card-label">Avg Score</div><div class="card-value" style="color:var(--yellow)">${summary.avg_score||0}</div></div>
+    <div class="card"><div class="card-label">Pass Rate</div><div class="card-value" style="color:var(--blue)">${summary.pass_rate||'0%'}</div></div>
+  `);
+
+  const passed = games.filter(g => g.eligible);
+  const failed = games.filter(g => !g.eligible);
+
+  set('game-qa-results', passed.map(g =>
+    `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title" style="display:flex;justify-content:space-between">
+        <span style="color:var(--green)">✅ ${esc(g.game_name||g.game_id)}</span>
+        <span style="color:var(--green)">${g.qa_score}/100 (${esc(g.grade||'')})</span>
+      </div>
+      <div class="activity-meta">Game ID: ${esc(g.game_id||'')} · ${g.html_size_bytes ? Math.round(g.html_size_bytes/1024)+'KB' : ''}</div>
+    </div></div>`
+  ).join('') || '<div class="empty-state">No games passed QA yet</div>');
+
+  set('game-qa-failed', failed.map(g =>
+    `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title" style="display:flex;justify-content:space-between">
+        <span style="color:var(--red)">❌ ${esc(g.game_name||g.game_id)}</span>
+        <span style="color:var(--red)">${g.qa_score}/100</span>
+      </div>
+      <div class="activity-meta">${esc((g.issues||[]).slice(0,3).join(' · '))}</div>
+    </div></div>`
+  ).join('') || '<div class="empty-state">No QA failures</div>');
+}
+
+function renderGameSeo(d) {
+  const gs = d.game_seo || {};
+  set('game-seo-cards', `
+    <div class="card"><div class="card-label">SEO Pages</div><div class="card-value" style="color:var(--blue)">${gs.seo_pages_count||0}</div></div>
+    <div class="card"><div class="card-label">Category Hubs</div><div class="card-value" style="color:var(--green)">${gs.category_hubs_count||0}</div></div>
+    <div class="card"><div class="card-label">Total Keywords</div><div class="card-value" style="color:var(--yellow)">${(gs.total_keywords||0).toLocaleString()}</div></div>
+    <div class="card"><div class="card-label">Cost</div><div class="card-value" style="color:var(--muted)">$${(gs.total_cost_usd||0).toFixed(4)}</div></div>
+  `);
+
+  const topGames = gs.top_games || [];
+  set('game-seo-pages', topGames.map(g =>
+    `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title">${esc(g.name_en||g.game_id||'')}</div>
+      <div class="activity-meta">${esc(g.keywords_count||0)} keywords · ${esc(g.has_faq?'FAQ ✅':'No FAQ')}</div>
+    </div></div>`
+  ).join('') || '<div class="empty-state">Run game-seo workflow to generate SEO pages</div>');
+
+  const hubs = gs.hub_types || [];
+  set('game-seo-hubs', hubs.length ? hubs.map(h =>
+    `<div class="activity-item"><div class="activity-body"><div class="activity-title">${esc(h)}</div></div></div>`
+  ).join('') : '<div class="empty-state">No category hubs generated yet</div>');
+}
+
+// ─── Phase L: Admin & Governance ─────────────────────────────────────────────
+
+function renderAdminCenter(d) {
+  const ag = d.admin_governance || {};
+  const counts = ag.counts || {};
+  const aiSummary = ag.ai_summary || {};
+  const health = aiSummary.health_status || 'unknown';
+  const healthColor = health === 'healthy' ? 'green' : health === 'needs_attention' ? 'yellow' : 'red';
+
+  set('admin-center-cards', `
+    <div class="card"><div class="card-label">Total Reviews</div><div class="card-value" style="color:var(--blue)">${counts.total||0}</div></div>
+    <div class="card"><div class="card-label">Pending</div><div class="card-value" style="color:var(--yellow)">${counts.pending||0}</div></div>
+    <div class="card"><div class="card-label">QA Eligible</div><div class="card-value" style="color:var(--green)">${counts.qa_eligible||0}</div></div>
+    <div class="card"><div class="card-label">Approved</div><div class="card-value" style="color:var(--green)">${counts.approved||0}</div></div>
+    <div class="card"><div class="card-label">Deployed</div><div class="card-value" style="color:var(--blue)">${counts.deployed||0}</div></div>
+    <div class="card"><div class="card-label">Backlog Risk</div><div class="card-value" style="color:var(--${healthColor})">${esc(aiSummary.backlog_risk||'unknown').toUpperCase()}</div></div>
+  `);
+
+  set('admin-center-queue', `
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">Health Status<span style="float:right;color:var(--${healthColor})">${esc(health).toUpperCase()}</span></div></div></div>
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">Pending Review<span style="float:right;color:var(--yellow)">${counts.pending||0}</span></div></div></div>
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">Approved (awaiting deploy)<span style="float:right;color:var(--green)">${counts.approved||0}</span></div></div></div>
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">Deployed<span style="float:right;color:var(--blue)">${counts.deployed||0}</span></div></div></div>
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">Rejected<span style="float:right;color:var(--red)">${counts.rejected||0}</span></div></div></div>
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">Rolled Back<span style="float:right;color:var(--red)">${counts.rolled_back||0}</span></div></div></div>
+  `);
+
+  const recs = aiSummary.recommendations || [];
+  const actions = aiSummary.action_items || [];
+  set('admin-center-ai', [...recs, ...actions].map(r =>
+    `<div class="activity-item"><div class="activity-body"><div class="activity-title" style="color:var(--yellow)">→ ${esc(r)}</div></div></div>`
+  ).join('') || '<div class="empty-state">No AI recommendations yet</div>');
+
+  const audit = ag.recent_audit || [];
+  set('admin-center-audit', audit.slice().reverse().map(a =>
+    `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title">${esc(a.action||'')} — ${esc(a.item_id||'')} <span style="float:right;color:var(--muted);font-size:11px">${esc((a.timestamp||'').substring(11,16))} UTC</span></div>
+      <div class="activity-meta">${esc(a.detail||'')} (by ${esc(a.actor||'')})</div>
+    </div></div>`
+  ).join('') || '<div class="empty-state">No audit events yet</div>');
+}
+
+function renderReviewQueue(d) {
+  const ag = d.admin_governance || {};
+  const counts = ag.counts || {};
+
+  set('review-queue-cards', `
+    <div class="card"><div class="card-label">Pending</div><div class="card-value" style="color:var(--yellow)">${counts.pending||0}</div></div>
+    <div class="card"><div class="card-label">QA Eligible</div><div class="card-value" style="color:var(--green)">${counts.qa_eligible||0}</div></div>
+    <div class="card"><div class="card-label">Approved</div><div class="card-value" style="color:var(--green)">${counts.approved||0}</div></div>
+    <div class="card"><div class="card-label">Rejected</div><div class="card-value" style="color:var(--red)">${counts.rejected||0}</div></div>
+  `);
+
+  const renderItems = (items, emptyMsg) => (items||[]).map(r =>
+    `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title" style="display:flex;justify-content:space-between">
+        <span>${esc(r.name||r.review_id||'')}</span>
+        <span style="color:${(r.qa_score||0)>=75?'var(--green)':'var(--red)'}">${r.qa_score||0}/100</span>
+      </div>
+      <div class="activity-meta">ID: ${esc(r.review_id||'')} · Type: ${esc(r.game_type||r.type||'')} · ${esc(r.status||'')}</div>
+    </div></div>`
+  ).join('') || `<div class="empty-state">${emptyMsg}</div>`;
+
+  set('review-queue-pending', renderItems(ag.pending, 'No pending reviews'));
+  set('review-queue-eligible', renderItems(ag.qa_eligible, 'No QA-eligible games waiting'));
+  set('review-queue-approved', renderItems(ag.approved, 'No approved games yet'));
+  set('review-queue-rejected', renderItems(ag.rejected, 'No rejections'));
+}
+
+function renderDeployCenter(d) {
+  const ag = d.admin_governance || {};
+  const counts = ag.counts || {};
+
+  set('deploy-center-cards', `
+    <div class="card"><div class="card-label">Deployed</div><div class="card-value" style="color:var(--blue)">${counts.deployed||0}</div></div>
+    <div class="card"><div class="card-label">Rolled Back</div><div class="card-value" style="color:var(--red)">${counts.rolled_back||0}</div></div>
+    <div class="card"><div class="card-label">Approved (Ready)</div><div class="card-value" style="color:var(--green)">${counts.approved||0}</div></div>
+  `);
+
+  set('deploy-center-deployed', (ag.deployed||[]).map(r =>
+    `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title" style="color:var(--green)">✅ ${esc(r.name||r.review_id||'')} — ${esc(r.game_type||'')}</div>
+      ${r.pr_url ? `<div class="activity-meta"><a href="${esc(r.pr_url)}" target="_blank" style="color:var(--blue)">View PR ↗</a></div>` : ''}
+    </div></div>`
+  ).join('') || '<div class="empty-state">No deployed games yet — admin approval required first</div>');
+
+  set('deploy-center-rollbacks', (ag.rolled_back||[]).map(r =>
+    `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title" style="color:var(--red)">↩ ${esc(r.name||r.review_id||'')} rolled back</div>
+      <div class="activity-meta">${esc(r.review_id||'')}</div>
+    </div></div>`
+  ).join('') || '<div class="empty-state">No rollbacks</div>');
+}
+
+function renderDeployTimeline(d) {
+  const ag = d.admin_governance || {};
+  const audit = ag.recent_audit || [];
+  set('deploy-timeline-audit', audit.length ? `
+    <div style="padding:16px">
+      ${audit.slice().reverse().map(a => {
+        const color = a.action === 'deploy' ? 'var(--green)' : a.action === 'approve' ? 'var(--blue)' : a.action === 'reject' ? 'var(--red)' : a.action === 'rollback' ? 'var(--red)' : 'var(--muted)';
+        return `<div class="activity-item"><div class="activity-body">
+          <div class="activity-title" style="color:${color}">${esc(a.action||'').toUpperCase()} — ${esc(a.item_id||'')} <span style="float:right;font-size:11px;color:var(--muted)">${esc((a.timestamp||'').substring(0,16).replace('T',' '))} UTC</span></div>
+          <div class="activity-meta">${esc(a.detail||'')} (${esc(a.actor||'')})</div>
+        </div></div>`;
+      }).join('')}
+    </div>
+  ` : '<div class="empty-state" style="padding:40px">No audit events yet — actions are logged here when admin approves/rejects/deploys games</div>');
+}
+
+function renderTelegramLogs(d) {
+  const tl = d.telegram_logs || {};
+  const entries = tl.entries || [];
+  const total = tl.total_sent || 0;
+
+  set('telegram-logs-cards', `
+    <div class="card"><div class="card-label">Total Sent</div><div class="card-value" style="color:var(--blue)">${total}</div></div>
+    <div class="card"><div class="card-label">Log Entries</div><div class="card-value" style="color:var(--green)">${entries.length}</div></div>
+  `);
+
+  const priorityColor = {info:'var(--muted)',success:'var(--green)',warning:'var(--yellow)',error:'var(--red)',critical:'var(--red)'};
+  set('telegram-logs-entries', entries.slice().reverse().map(e =>
+    `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title" style="display:flex;justify-content:space-between">
+        <span style="color:${priorityColor[e.priority]||'var(--muted)'}">${esc(e.event_type||'')}</span>
+        <span style="color:var(--muted);font-size:11px">${esc((e.timestamp||'').substring(11,16))} UTC</span>
+      </div>
+      <div class="activity-meta">${esc(e.message||'')}</div>
+    </div></div>`
+  ).join('') || '<div class="empty-state">No Telegram messages logged yet — configure TELEGRAM_LOG_TOKEN secret</div>');
+}
+
+function renderLiveAlerts(d) {
+  const ag = d.admin_governance || {};
+  const aiSummary = ag.ai_summary || {};
+  const tl = d.telegram_logs || {};
+  const entries = (tl.entries || []).filter(e => ['warning','error','critical'].includes(e.priority));
+  const gq = d.game_qa || {};
+  const qaFailed = (gq.games||[]).filter(g => !g.eligible);
+
+  const alerts = [];
+  if ((ag.counts||{}).pending > 5) alerts.push({level:'warning',msg:`${ag.counts.pending} games pending admin review`});
+  if (aiSummary.health_status === 'critical') alerts.push({level:'critical',msg:'Admin governance health: CRITICAL'});
+  if (aiSummary.backlog_risk === 'high') alerts.push({level:'warning',msg:'Review backlog risk is HIGH'});
+  qaFailed.slice(0,3).forEach(g => alerts.push({level:'warning',msg:`QA failed: ${g.game_name||g.game_id} — ${g.qa_score}/100`}));
+  entries.slice(0,5).forEach(e => alerts.push({level:e.priority,msg:e.message||''}));
+
+  const colorMap = {warning:'var(--yellow)',error:'var(--red)',critical:'var(--red)',info:'var(--blue)'};
+  set('live-alerts-list', alerts.length ? `<div style="padding:16px">` + alerts.map(a =>
+    `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title" style="color:${colorMap[a.level]||'var(--muted)'}">
+        ${a.level==='critical'?'🚨':a.level==='error'?'🔴':a.level==='warning'?'⚠️':'ℹ️'} ${esc(a.msg)}
+      </div>
+    </div></div>`
+  ).join('') + `</div>` : `<div class="empty-state" style="padding:40px">✅ No active alerts — system operating normally</div>`);
+}
+
 // ─── Actions (GitHub-native) ─────────────────────────────────────────────────
 
 function triggerLoop(loopId) {
@@ -3443,6 +3732,16 @@ async function loadDashboard() {
     renderAnalyticsSyncer(_data);
     renderRevenueTracker(_data);
     renderPageDeployer(_data);
+    renderGameFactory(_data);
+    renderGeneratedGames(_data);
+    renderGameQA(_data);
+    renderGameSeo(_data);
+    renderAdminCenter(_data);
+    renderReviewQueue(_data);
+    renderDeployCenter(_data);
+    renderDeployTimeline(_data);
+    renderTelegramLogs(_data);
+    renderLiveAlerts(_data);
     renderActivity(_data);
     renderSafety(_data);
 

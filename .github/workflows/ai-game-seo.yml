@@ -1,0 +1,41 @@
+name: AI Game SEO
+
+on:
+  schedule:
+    - cron: '0 3 * * *'   # 03:00 UTC daily (after QA)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  game-seo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install openai
+
+      - name: Generate game SEO pages
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          TELEGRAM_LOG_TOKEN: ${{ secrets.TELEGRAM_LOG_TOKEN }}
+          TELEGRAM_ADMIN_LOG_TOKEN: ${{ secrets.TELEGRAM_ADMIN_LOG_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_ADMIN_CHAT_ID: ${{ secrets.TELEGRAM_ADMIN_CHAT_ID }}
+        run: python scripts/game_seo.py
+
+      - name: Commit SEO outputs
+        run: |
+          git config user.name "MIFTEH OS"
+          git config user.email "actions@mifteh.ai"
+          git add memory/game_seo_report.json outputs/yallaplays/game_seo/ || true
+          git diff --cached --quiet || git -c commit.gpgsign=false commit -m "chore: game-seo run $(date -u +%Y-%m-%d)"
+          git push
