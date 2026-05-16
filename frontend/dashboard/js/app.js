@@ -1897,6 +1897,198 @@ function renderEvolution(d) {
     ${tok.strategy ? `<div style="margin-top:10px;padding:10px;background:var(--bg2);border-radius:6px;font-size:12px">${esc(tok.strategy)}</div>` : ''}`);
 }
 
+// ─── Phase G: World Intelligence Render Functions ────────────────────────────
+
+function renderWebIntel(d) {
+  const w = d.web_intel || {};
+  const opps = w.opportunities || {};
+  setCards('webintel-cards', [
+    { label: 'Competitor Changes', value: Object.values(w.competitors || {}).flat().reduce((s,c) => s + (c.change_count||0), 0), sub: 'total detected' },
+    { label: 'HN Stories', value: (w.hn_stories||[]).length, sub: 'fetched' },
+    { label: 'Reddit Posts', value: (w.reddit_posts||[]).length, sub: 'fetched' },
+    { label: 'SEO Opps', value: (opps.seo_opportunities||[]).length, sub: 'from web intel' },
+  ]);
+  const changes = Object.entries(w.competitors||{}).flatMap(([proj,comps]) =>
+    comps.filter(c=>c.change_count>0).map(c=>`<div class="list-item"><span class="badge badge-blue">${proj}</span> ${esc(c.name)}: ${c.change_count} changes</div>`)
+  );
+  set('webintel-changes', changes.length ? changes.join('') : '<div class="empty-state">No competitor changes detected yet</div>');
+  const stories = [...(w.hn_stories||[]).slice(0,5).map(s=>`<div class="list-item"><span class="badge">HN</span> ${esc(s.title)} — ${s.points||0}pts</div>`),
+    ...(w.reddit_posts||[]).slice(0,5).map(p=>`<div class="list-item"><span class="badge badge-green">Reddit</span> ${esc(p.title)} — score ${p.score||0}</div>`)];
+  set('webintel-trends', stories.length ? stories.join('') : '<div class="empty-state">No trend data yet</div>');
+  const seoOpps = (opps.seo_opportunities||[]).map(o=>`<div class="list-item"><span class="badge badge-blue">${esc(o.project||'')}</span> ${esc(o.opportunity||'')} <span style="color:var(--muted);font-size:11px">— ${esc(o.rationale||'')}</span></div>`);
+  const contOpps = (opps.content_opportunities||[]).map(o=>`<div class="list-item"><span class="badge badge-green">${esc(o.project||'')}</span> ${esc(o.topic||'')} via ${esc(o.source_trend||'')}</div>`);
+  set('webintel-opportunities', [...seoOpps,...contOpps].length ? [...seoOpps,...contOpps].join('') : '<div class="empty-state">Run web intelligence engine to detect opportunities</div>');
+}
+
+function renderSeoOpportunities(d) {
+  const s = d.seo_opportunities || {};
+  const traffic = s.total_addressable_traffic || 0;
+  setCards('seoopp-cards', [
+    { label: 'Addressable Traffic', value: traffic.toLocaleString(), sub: 'visits/mo' },
+    { label: 'Queue Items', value: (s.execution_queue||[]).length, sub: 'ready to execute' },
+    { label: 'Injected', value: s.executor_items_injected || 0, sub: 'to executor' },
+    { label: 'Projects', value: Object.keys(s.projects||{}).length, sub: 'analyzed' },
+  ]);
+  const clusters = Object.entries(s.projects||{}).flatMap(([proj,pd]) =>
+    (pd.topical_clusters||[]).map(c=>`<div class="list-item"><span class="badge badge-blue">${proj}</span> ${esc(c.hub_keyword||'')} <span class="badge ${c.difficulty==='easy'?'badge-green':c.difficulty==='medium'?'badge-yellow':'badge-red'}">${esc(c.difficulty||'')}</span> <span style="color:var(--muted);font-size:11px">${(c.est_monthly_searches||0).toLocaleString()}/mo</span></div>`)
+  );
+  set('seoopp-clusters', clusters.length ? clusters.join('') : '<div class="empty-state">Run SEO opportunity engine to generate clusters</div>');
+  const qw = Object.entries(s.projects||{}).flatMap(([proj,pd]) =>
+    (pd.quick_wins||[]).map(w=>`<div class="list-item"><span class="badge badge-green">${proj}</span> ${esc(w.keyword||'')} — +${(w.est_traffic_gain||0).toLocaleString()} visits</div>`)
+  );
+  set('seoopp-quickwins', qw.length ? qw.join('') : '<div class="empty-state">No quick wins yet</div>');
+  const queue = (s.execution_queue||[]).slice(0,10).map(q=>`<div class="list-item"><span class="badge badge-blue">${esc(q.project||'')}</span> ${esc(q.title||'')} <span style="color:var(--muted);font-size:11px">score: ${(q.priority_score||0).toFixed(1)}</span></div>`);
+  set('seoopp-queue', queue.length ? queue.join('') : '<div class="empty-state">Queue empty</div>');
+}
+
+function renderCompetitorMemory(d) {
+  const c = d.competitor_memory || {};
+  setCards('compmem-cards', [
+    { label: 'Competitors Tracked', value: c.total_competitors || 0, sub: 'total' },
+    { label: 'Reachable', value: c.reachable_competitors || 0, sub: 'successfully profiled' },
+    { label: 'Projects', value: Object.keys(c.projects||{}).length, sub: 'monitored' },
+  ]);
+  const profiles = Object.entries(c.projects||{}).flatMap(([proj,pd]) =>
+    (pd.profiles||[]).map(p=>`<div class="list-item"><span class="badge badge-blue">${proj}</span> <strong>${esc(p.name||'')}</strong> ${p.reachable?'<span class="badge badge-green">online</span>':'<span class="badge badge-red">offline</span>'} <span style="color:var(--muted);font-size:11px">${esc((p.seo||{}).title||'')}</span></div>`)
+  );
+  set('compmem-profiles', profiles.length ? profiles.join('') : '<div class="empty-state">Run competitor memory system to profile competitors</div>');
+  const patterns = Object.entries(c.projects||{}).flatMap(([proj,pd]) => {
+    const p = pd.patterns||{};
+    return [...(p.layout_patterns||[]).map(x=>`<div class="list-item"><span class="badge">Layout</span> ${esc(x.pattern||'')} — ${esc(x.transfer_recommendation||'')}</div>`),
+      ...(p.monetization_patterns||[]).map(x=>`<div class="list-item"><span class="badge badge-green">Monetize</span> ${esc(x.pattern||'')} — ${esc(x.est_revenue_impact||'')}</div>`)];
+  });
+  set('compmem-patterns', patterns.length ? patterns.join('') : '<div class="empty-state">No patterns extracted yet</div>');
+  const recs = Object.entries(c.all_recommendations||{}).flatMap(([proj,rs]) =>
+    (rs||[]).map(r=>`<div class="list-item"><span class="badge badge-blue">${proj}</span> ${esc(r)}</div>`)
+  );
+  set('compmem-recs', recs.length ? recs.join('') : '<div class="empty-state">No recommendations yet</div>');
+}
+
+function renderSocialSignals(d) {
+  const s = d.social_signals || {};
+  const totalPosts = s.total_posts_analyzed || 0;
+  setCards('social-cards', [
+    { label: 'Posts Analyzed', value: totalPosts.toLocaleString(), sub: 'total' },
+    { label: 'Projects', value: Object.keys(s.projects||{}).length, sub: 'monitored' },
+    { label: 'Cross-Project Trends', value: (s.cross_project?.cross_project_trends||[]).length, sub: 'detected' },
+  ]);
+  const viral = Object.entries(s.projects||{}).flatMap(([proj,pd]) => {
+    const sa = pd.sentiment_analysis||{};
+    return (sa.viral_topics||[]).map(t=>`<div class="list-item"><span class="badge badge-blue">${proj}</span> ${esc(t.topic||'')} <span class="badge ${t.momentum==='rising'?'badge-green':t.momentum==='declining'?'badge-red':'badge-yellow'}">${esc(t.momentum||'')}</span></div>`);
+  });
+  set('social-viral', viral.length ? viral.join('') : '<div class="empty-state">Run social signal engine to detect viral topics</div>');
+  const contOpps = Object.entries(s.projects||{}).flatMap(([proj,pd]) => {
+    const sa = pd.sentiment_analysis||{};
+    return (sa.content_opportunities||[]).map(o=>`<div class="list-item"><span class="badge badge-blue">${proj}</span> ${esc(o.title||'')} <span class="badge badge-green">${esc(o.format||'')}</span></div>`);
+  });
+  set('social-opportunities', contOpps.length ? contOpps.join('') : '<div class="empty-state">No content opportunities yet</div>');
+  const kws = Object.entries(s.projects||{}).flatMap(([proj,pd]) =>
+    (pd.trending_keywords||[]).slice(0,5).map(k=>`<span style="display:inline-block;margin:3px;padding:3px 8px;background:var(--bg2);border-radius:4px;font-size:12px">${esc(k.word||'')} <span style="color:var(--muted)">(${k.count||0})</span></span>`)
+  );
+  set('social-keywords', kws.length ? `<div style="padding:12px">${kws.join('')}</div>` : '<div class="empty-state">No keywords yet</div>');
+}
+
+function renderTrafficIntel(d) {
+  const t = d.traffic_intel || {};
+  const total6mo = t.total_addressable_6mo || 0;
+  setCards('traffic-cards', [
+    { label: '6mo Addressable', value: total6mo.toLocaleString(), sub: 'visits with SEO' },
+    { label: 'Projects', value: Object.keys(t.projects||{}).length, sub: 'analyzed' },
+  ]);
+  const gaps = Object.entries(t.projects||{}).flatMap(([proj,pd]) =>
+    (pd.traffic_gaps||[]).map(g=>`<div class="list-item"><span class="badge badge-blue">${proj}</span> vs ${esc(g.competitor||'')} — gap: ${(g.gap_visits||0).toLocaleString()} visits (${g.gap_pct||0}%)</div>`)
+  );
+  set('traffic-gaps', gaps.length ? gaps.join('') : '<div class="empty-state">Run traffic intelligence engine</div>');
+  const ctr = Object.entries(t.projects||{}).flatMap(([proj,pd]) =>
+    (pd.ctr_opportunities||[]).slice(0,3).map(k=>`<div class="list-item"><span class="badge badge-blue">${proj}</span> ${esc(k.keyword||'')} — pos #${k.est_serp_position} CTR ${k.est_ctr}% → ${(k.est_monthly_clicks||0).toLocaleString()} clicks/mo</div>`)
+  );
+  set('traffic-ctr', ctr.length ? ctr.join('') : '<div class="empty-state">No CTR data yet</div>');
+  const seasonal = Object.entries(t.projects||{}).map(([proj,pd]) => {
+    const se = pd.seasonal||{};
+    return `<div class="list-item"><span class="badge badge-blue">${proj}</span> ${se.trend||'stable'} — current ×${se.current_multiplier||1} | peak: month ${se.peak_month||'?'} ×${se.peak_multiplier||1} ${se.is_peak_season?'<span class="badge badge-green">PEAK NOW</span>':''}</div>`;
+  });
+  set('traffic-seasonal', seasonal.length ? seasonal.join('') : '<div class="empty-state">No seasonal data</div>');
+}
+
+function renderMonetization(d) {
+  const m = d.monetization || {};
+  const monthlyLift = m.portfolio_monthly_lift_usd || 0;
+  const annualLift = m.portfolio_annual_lift_usd || 0;
+  setCards('monetize-cards', [
+    { label: 'Monthly Lift', value: `$${monthlyLift.toLocaleString()}`, sub: 'est. revenue gain' },
+    { label: 'Annual Lift', value: `$${annualLift.toLocaleString()}`, sub: 'projected' },
+    { label: 'Projects', value: Object.keys(m.projects||{}).length, sub: 'optimized' },
+  ]);
+  const gaps = Object.entries(m.projects||{}).flatMap(([proj,pd]) =>
+    (pd.gaps_detected||[]).map(g=>`<div class="list-item"><span class="badge badge-blue">${proj}</span> <span class="badge ${g.severity==='critical'?'badge-red':g.severity==='high'?'badge-red':'badge-yellow'}">${esc(g.severity||'')}</span> ${esc(g.action||'')} ${g.est_monthly_lift_usd?`<span style="color:var(--muted);font-size:11px">+$${g.est_monthly_lift_usd}/mo</span>`:''}</div>`)
+  );
+  set('monetize-gaps', gaps.length ? gaps.join('') : '<div class="empty-state">Run monetization engine to detect gaps</div>');
+  const qw = Object.entries(m.projects||{}).flatMap(([proj,pd]) =>
+    ((pd.monetization_plan||{}).quick_wins||[]).map(q=>`<div class="list-item"><span class="badge badge-blue">${proj}</span> ${esc(q.action||'')} — ${esc(q.effort||'')} effort → +$${(q.est_monthly_lift_usd||0).toLocaleString()}/mo</div>`)
+  );
+  set('monetize-quickwins', qw.length ? qw.join('') : '<div class="empty-state">No quick wins yet</div>');
+  const streams = Object.entries(m.projects||{}).flatMap(([proj,pd]) =>
+    ((pd.monetization_plan||{}).new_revenue_streams||[]).map(s=>`<div class="list-item"><span class="badge badge-blue">${proj}</span> ${esc(s.stream||'')} — $${(s.est_monthly_usd||0).toLocaleString()}/mo</div>`)
+  );
+  set('monetize-streams', streams.length ? streams.join('') : '<div class="empty-state">No new streams identified yet</div>');
+}
+
+function renderCampaigns(d) {
+  const c = d.campaigns || {};
+  setCards('campaigns-cards', [
+    { label: 'Pages Generated', value: c.total_pages_generated || 0, sub: 'landing pages' },
+    { label: 'Injected', value: c.executor_items_injected || 0, sub: 'to executor' },
+    { label: 'Projects', value: Object.keys(c.projects||{}).length, sub: 'campaigns' },
+  ]);
+  const active = Object.entries(c.projects||{}).flatMap(([proj,pd]) =>
+    (pd.campaigns||[]).map(camp=>`<div class="list-item"><span class="badge badge-blue">${proj}</span> <strong>${esc(camp.hub_keyword||'')}</strong> → <code>${esc(camp.hub_path||'')}</code> <span class="badge ${camp.difficulty==='easy'?'badge-green':camp.difficulty==='medium'?'badge-yellow':'badge-red'}">${esc(camp.difficulty||'')}</span> ${(camp.est_monthly_searches||0).toLocaleString()} searches/mo</div>`)
+  );
+  set('campaigns-active', active.length ? active.join('') : '<div class="empty-state">Run campaign engine to generate landing pages</div>');
+  const seq = Object.values(c.projects||{}).flatMap(pd =>
+    (pd.launch_sequence||[]).slice(0,5).map(s=>`<div class="list-item">Week ${s.week}: <strong>${esc(s.action||'')}</strong> — ${esc(s.title||s.content||s.anchor||'')}</div>`)
+  );
+  set('campaigns-sequence', seq.length ? seq.join('') : '<div class="empty-state">No launch sequence yet</div>');
+}
+
+function renderRealtimeAlerts(d) {
+  const r = d.realtime_alerts || {};
+  const level = r.alert_level || 'normal';
+  const levelColor = { critical: 'badge-red', high: 'badge-red', elevated: 'badge-yellow', normal: 'badge-green' }[level] || 'badge-green';
+  setCards('realtime-cards', [
+    { label: 'Alert Level', value: level.toUpperCase(), sub: 'current status' },
+    { label: 'Posts Scanned', value: (r.posts_scanned||0).toLocaleString(), sub: 'this cycle' },
+    { label: 'Events Detected', value: r.events_detected || 0, sub: 'high-impact' },
+    { label: 'Emergency Injected', value: r.executor_items_injected || 0, sub: 'to queue' },
+  ]);
+  const analysis = r.analysis || {};
+  const alerts = (r.events||[]).slice(0,8).map(e=>`<div class="list-item"><span class="badge ${e.impact_score>=8?'badge-red':'badge-yellow'}">${e.impact_score||0}</span> ${esc(e.title||'')} <span style="color:var(--muted);font-size:11px">${(e.event_types||[]).join(', ')}</span></div>`);
+  set('realtime-alerts', alerts.length ? alerts.join('') : '<div class="empty-state">No high-impact events detected</div>');
+  const actions = (analysis.urgent_actions||[]).map(a=>`<div class="list-item"><span class="badge badge-blue">${esc(a.project||'')}</span> ${esc(a.action||'')} <span style="color:var(--muted);font-size:11px">deadline: ${a.deadline_hours||24}h</span></div>`);
+  set('realtime-actions', actions.length ? actions.join('') : '<div class="empty-state">No urgent actions</div>');
+  const contOpps = (analysis.content_opportunities||[]).map(o=>`<div class="list-item"><span class="badge badge-blue">${esc(o.project||'')}</span> ${esc(o.topic||'')} — ${esc(o.format||'')} | ${esc(o.urgency||'')}</div>`);
+  set('realtime-content', contOpps.length ? contOpps.join('') : '<div class="empty-state">No content opportunities from events</div>');
+}
+
+function renderKnowledgeGraph(d) {
+  const kg = d.knowledge_graph || {};
+  const metrics = kg.metrics || {};
+  const insights = kg.insights || {};
+  setCards('kgraph-cards', [
+    { label: 'Total Nodes', value: metrics.total_nodes || 0, sub: 'entities' },
+    { label: 'Total Edges', value: metrics.total_edges || 0, sub: 'relationships' },
+    { label: 'Density', value: metrics.density || 0, sub: 'graph density' },
+    { label: 'Connections', value: (insights.hidden_connections||[]).length, sub: 'hidden found' },
+  ]);
+  const connections = (insights.hidden_connections||[]).map(c=>`<div class="list-item"><strong>${esc(c.connection||'')}</strong> <span style="color:var(--muted);font-size:11px">— ${esc(c.strategic_value||'')}</span></div>`);
+  set('kgraph-connections', connections.length ? connections.join('') : '<div class="empty-state">Run knowledge graph engine to discover connections</div>');
+  const crossOpps = (insights.cross_project_opportunities||[]).map(o=>`<div class="list-item"><span class="badge badge-blue">${esc(o.from_project||'')}</span> → <span class="badge badge-green">${esc(o.to_project||'')}</span> ${esc(o.opportunity||'')} via ${esc(o.mechanism||'')}</div>`);
+  set('kgraph-crossopp', crossOpps.length ? crossOpps.join('') : '<div class="empty-state">No cross-project opportunities detected</div>');
+  const topNodes = (metrics.top_connected_nodes||[]).map(n=>`<div class="list-item"><code>${esc(n.id||'')}</code> — degree: ${n.degree||0}</div>`);
+  set('kgraph-nodes', topNodes.length ? topNodes.join('') : '<div class="empty-state">No node data</div>');
+  const clusters = (insights.strategic_clusters||[]).map(c=>`<div class="list-item"><strong>${esc(c.cluster_name||'')}</strong> — ${esc(c.theme||'')} (${(c.nodes||[]).length} nodes)</div>`);
+  set('kgraph-clusters', clusters.length ? clusters.join('') : '<div class="empty-state">No clusters identified</div>');
+}
+
 // ─── Actions (GitHub-native) ─────────────────────────────────────────────────
 
 function triggerLoop(loopId) {
@@ -1969,6 +2161,15 @@ async function loadDashboard() {
     renderExperiments(_data);
     renderCrossLearn(_data);
     renderEvolution(_data);
+    renderWebIntel(_data);
+    renderSeoOpportunities(_data);
+    renderCompetitorMemory(_data);
+    renderSocialSignals(_data);
+    renderTrafficIntel(_data);
+    renderMonetization(_data);
+    renderCampaigns(_data);
+    renderRealtimeAlerts(_data);
+    renderKnowledgeGraph(_data);
     renderActivity(_data);
     renderSafety(_data);
 

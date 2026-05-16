@@ -1,0 +1,45 @@
+name: MIFTEH AI Competitor Memory
+
+# Deep competitor profiling: layouts, monetization, SEO structures,
+# CTA styles, content patterns. Transfers best patterns to future generations.
+# Runs Tue 02:00 UTC.
+
+on:
+  schedule:
+    - cron: '0 2 * * 2'    # Tuesday 02:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  competitor-memory:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install openai
+
+      - name: Run competitor memory system
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python scripts/competitor_memory.py
+
+      - name: Aggregate dashboard
+        run: python scripts/aggregate_dashboard.py
+
+      - name: Commit competitor memory data
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "mifteh-ai@users.noreply.github.com"
+          git pull --rebase origin main
+          git add memory/competitor_memory.json memory/competitors/ frontend/dashboard/data/
+          git diff --cached --quiet || git commit -m "AI: Competitor memory cycle [$(date -u +%Y-%m-%dT%H:%M:%SZ)] [skip ci]"
+          git push

@@ -225,6 +225,182 @@ def read_evolution_report():
     }
 
 
+def read_web_intelligence():
+    data = read_json("memory/web_intelligence.json")
+    if not data:
+        return {}
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "competitors": {
+            proj: [
+                {k: v for k, v in c.items() if k != "pages"}
+                for c in comps
+            ]
+            for proj, comps in data.get("competitors", {}).items()
+        },
+        "hn_stories": data.get("hn_stories", [])[:10],
+        "reddit_posts": data.get("reddit_posts", [])[:10],
+        "github_trending": data.get("github_trending", [])[:10],
+        "opportunities": data.get("opportunities", {}),
+    }
+
+
+def read_seo_opportunities():
+    data = read_json("memory/seo_opportunities.json")
+    if not data:
+        return {}
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "total_addressable_traffic": data.get("total_addressable_traffic", 0),
+        "executor_items_injected": data.get("executor_items_injected", 0),
+        "execution_queue": data.get("execution_queue", [])[:15],
+        "projects": {
+            proj: {
+                "topical_clusters": clusters.get("topical_clusters", [])[:5],
+                "long_tail_opportunities": clusters.get("long_tail_opportunities", [])[:5],
+                "quick_wins": clusters.get("quick_wins", [])[:5],
+                "total_addressable_traffic": clusters.get("total_addressable_traffic", 0),
+            }
+            for proj, clusters in data.get("projects", {}).items()
+        },
+    }
+
+
+def read_competitor_memory():
+    data = read_json("memory/competitor_memory.json")
+    if not data:
+        return {}
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "total_competitors": data.get("total_competitors", 0),
+        "reachable_competitors": data.get("reachable_competitors", 0),
+        "all_recommendations": data.get("all_recommendations", {}),
+        "projects": {
+            proj: {
+                "patterns": pd.get("patterns", {}),
+                "profiled_at": pd.get("profiled_at", ""),
+                "profiles": [
+                    {k: v for k, v in p.items() if k not in ("raw_html",)}
+                    for p in pd.get("profiles", [])
+                ],
+            }
+            for proj, pd in data.get("projects", {}).items()
+        },
+    }
+
+
+def read_social_signals():
+    data = read_json("memory/social_signals.json")
+    if not data:
+        return {}
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "total_posts_analyzed": data.get("total_posts_analyzed", 0),
+        "cross_project": data.get("cross_project", {}),
+        "projects": {
+            proj: {
+                "signal_strength": pd.get("signal_strength", 0),
+                "post_count": pd.get("post_count", 0),
+                "trending_keywords": pd.get("trending_keywords", [])[:10],
+                "sentiment_analysis": pd.get("sentiment_analysis", {}),
+                "github_trending": pd.get("github_trending", [])[:5],
+                "top_posts": pd.get("top_posts", [])[:5],
+            }
+            for proj, pd in data.get("projects", {}).items()
+        },
+    }
+
+
+def read_traffic_intelligence():
+    data = read_json("memory/traffic_intelligence.json")
+    if not data:
+        return {}
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "total_addressable_6mo": data.get("total_addressable_6mo", 0),
+        "projects": {
+            proj: {
+                "our_est_monthly_visits": pd.get("our_est_monthly_visits", 0),
+                "traffic_gaps": pd.get("traffic_gaps", []),
+                "seasonal": pd.get("seasonal", {}),
+                "ctr_opportunities": pd.get("ctr_opportunities", [])[:8],
+                "ai_analysis": pd.get("ai_analysis", {}),
+            }
+            for proj, pd in data.get("projects", {}).items()
+        },
+    }
+
+
+def read_monetization_report():
+    data = read_json("memory/monetization_report.json")
+    if not data:
+        return {}
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "portfolio_monthly_lift_usd": data.get("portfolio_monthly_lift_usd", 0),
+        "portfolio_annual_lift_usd": data.get("portfolio_annual_lift_usd", 0),
+        "projects": {
+            proj: {
+                "model": pd.get("model", ""),
+                "gaps_detected": pd.get("gaps_detected", []),
+                "revenue_lift": pd.get("revenue_lift", {}),
+                "monetization_plan": pd.get("monetization_plan", {}),
+            }
+            for proj, pd in data.get("projects", {}).items()
+        },
+    }
+
+
+def read_campaign_report():
+    data = read_json("memory/campaign_report.json")
+    if not data:
+        return {}
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "total_pages_generated": data.get("total_pages_generated", 0),
+        "executor_items_injected": data.get("executor_items_injected", 0),
+        "projects": {
+            proj: {
+                "campaigns": [
+                    {k: v for k, v in c.items() if k != "html"}
+                    for c in pd.get("campaigns", [])
+                ],
+                "launch_sequence": pd.get("launch_sequence", []),
+            }
+            for proj, pd in data.get("projects", {}).items()
+        },
+    }
+
+
+def read_realtime_alerts():
+    data = read_json("memory/realtime_alerts.json")
+    if not data:
+        return {}
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "posts_scanned": data.get("posts_scanned", 0),
+        "events_detected": data.get("events_detected", 0),
+        "new_events": data.get("new_events", 0),
+        "alert_level": data.get("alert_level", "normal"),
+        "executor_items_injected": data.get("executor_items_injected", 0),
+        "analysis": data.get("analysis", {}),
+        "events": data.get("events", [])[:10],
+    }
+
+
+def read_knowledge_graph():
+    data = read_json("memory/knowledge_graph.json")
+    if not data:
+        return {}
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "metrics": data.get("metrics", {}),
+        "insights": data.get("insights", {}),
+        "nodes": data.get("nodes", [])[:50],
+        "edges": data.get("edges", [])[:100],
+    }
+
+
 def read_roadmap():
     data = read_json("memory/roadmap.json")
     if not data:
@@ -432,6 +608,15 @@ def main():
     priority = read_priority_report()
     experiments = read_experiment_summary()
     evolution = read_evolution_report()
+    web_intel = read_web_intelligence()
+    seo_opps = read_seo_opportunities()
+    competitor_mem = read_competitor_memory()
+    social_signals = read_social_signals()
+    traffic_intel = read_traffic_intelligence()
+    monetization = read_monetization_report()
+    campaigns = read_campaign_report()
+    realtime_alerts = read_realtime_alerts()
+    knowledge_graph = read_knowledge_graph()
     print(f"[dashboard] {len(outputs)} outputs, {len(prs)} PRs, {len(automerge_log)} merge events, "
           f"{len(product_outputs)} product features, {visual_qa.get('total', 0)} QA reports, "
           f"{ai_qa.get('total', 0)} AI QA reviews, {roadmap.get('total_items', 0)} roadmap items, "
@@ -562,6 +747,15 @@ def main():
         "priority": priority,
         "experiments": experiments,
         "evolution": evolution,
+        "web_intel": web_intel,
+        "seo_opportunities": seo_opps,
+        "competitor_memory": competitor_mem,
+        "social_signals": social_signals,
+        "traffic_intel": traffic_intel,
+        "monetization": monetization,
+        "campaigns": campaigns,
+        "realtime_alerts": realtime_alerts,
+        "knowledge_graph": knowledge_graph,
         "analytics_intelligence": {
             "generated_at": analytics_intel.get("generated_at", ""),
             "data_source": analytics_intel.get("data_source", ""),

@@ -1,0 +1,45 @@
+name: MIFTEH AI Campaign Engine
+
+# Converts SEO keyword clusters into production HTML landing pages,
+# generates launch sequences, injects campaign items into executor queue.
+# Runs Thu 04:00 UTC.
+
+on:
+  schedule:
+    - cron: '0 4 * * 4'    # Thursday 04:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  campaign-engine:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install openai
+
+      - name: Run campaign engine
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python scripts/campaign_engine.py
+
+      - name: Aggregate dashboard
+        run: python scripts/aggregate_dashboard.py
+
+      - name: Commit campaign data
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "mifteh-ai@users.noreply.github.com"
+          git pull --rebase origin main
+          git add memory/campaign_report.json memory/campaign_html/ memory/analytics_intelligence.json frontend/dashboard/data/
+          git diff --cached --quiet || git commit -m "AI: Campaign engine cycle [$(date -u +%Y-%m-%dT%H:%M:%SZ)] [skip ci]"
+          git push

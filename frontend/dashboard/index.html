@@ -59,6 +59,17 @@
       <button class="nav-btn" onclick="showTab('crosslearn',this)"><span class="icon">↔</span> Cross-Project</button>
       <button class="nav-btn" onclick="showTab('evolution',this)"><span class="icon">⟳</span> Self-Evolution</button>
 
+      <div class="nav-section">World Intelligence</div>
+      <button class="nav-btn" onclick="showTab('webintel',this)"><span class="icon">◉</span> Web Intelligence</button>
+      <button class="nav-btn" onclick="showTab('seoopp',this)"><span class="icon">⌖</span> SEO Opportunities</button>
+      <button class="nav-btn" onclick="showTab('compmem',this)"><span class="icon">◎</span> Competitor Monitor</button>
+      <button class="nav-btn" onclick="showTab('social',this)"><span class="icon">⬡</span> Social Signals</button>
+      <button class="nav-btn" onclick="showTab('trafficintel',this)"><span class="icon">▲</span> Traffic Intel</button>
+      <button class="nav-btn" onclick="showTab('monetize',this)"><span class="icon">$</span> Monetization</button>
+      <button class="nav-btn" onclick="showTab('campaigns',this)"><span class="icon">◆</span> Campaigns</button>
+      <button class="nav-btn" onclick="showTab('realtime',this)"><span class="icon">⚡</span> Realtime Alerts</button>
+      <button class="nav-btn" onclick="showTab('kgraph',this)"><span class="icon">↔</span> Knowledge Graph</button>
+
       <div class="nav-section">System</div>
       <button class="nav-btn" onclick="showTab('health',this)"><span class="icon">♥</span> System Health</button>
       <button class="nav-btn" onclick="showTab('activity',this)"><span class="icon">≡</span> Activity Feed</button>
@@ -794,6 +805,188 @@
           <div class="panel">
             <div class="panel-header"><div class="panel-title">Token Optimization</div></div>
             <div id="evolution-tokens"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- WEB INTELLIGENCE TAB -->
+      <section id="tab-webintel" class="tab">
+        <div class="section-title">Web Intelligence — Competitor &amp; Trend Monitor</div>
+        <div class="cards-grid" id="webintel-cards"></div>
+        <div class="panels-row" style="margin-top:20px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Competitor Changes</div></div>
+            <div id="webintel-changes"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">HN &amp; Reddit Trends</div></div>
+            <div id="webintel-trends"></div>
+          </div>
+        </div>
+        <div class="panel" style="margin-top:16px">
+          <div class="panel-header"><div class="panel-title">Opportunities Detected</div></div>
+          <div id="webintel-opportunities"></div>
+        </div>
+      </section>
+
+      <!-- SEO OPPORTUNITIES TAB -->
+      <section id="tab-seoopp" class="tab">
+        <div class="section-title">SEO Opportunity Engine</div>
+        <div class="cards-grid" id="seoopp-cards"></div>
+        <div class="panels-row" style="margin-top:20px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Topical Clusters</div></div>
+            <div id="seoopp-clusters"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Quick Wins</div></div>
+            <div id="seoopp-quickwins"></div>
+          </div>
+        </div>
+        <div class="panel" style="margin-top:16px">
+          <div class="panel-header"><div class="panel-title">Execution Queue</div></div>
+          <div id="seoopp-queue"></div>
+        </div>
+      </section>
+
+      <!-- COMPETITOR MEMORY TAB -->
+      <section id="tab-compmem" class="tab">
+        <div class="section-title">Competitor Memory — Deep Profile System</div>
+        <div class="cards-grid" id="compmem-cards"></div>
+        <div class="panels-row" style="margin-top:20px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Competitor Profiles</div></div>
+            <div id="compmem-profiles"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Transferable Patterns</div></div>
+            <div id="compmem-patterns"></div>
+          </div>
+        </div>
+        <div class="panel" style="margin-top:16px">
+          <div class="panel-header"><div class="panel-title">Top Recommendations</div></div>
+          <div id="compmem-recs"></div>
+        </div>
+      </section>
+
+      <!-- SOCIAL SIGNALS TAB -->
+      <section id="tab-social" class="tab">
+        <div class="section-title">Social Signal Engine — Viral Topics &amp; Sentiment</div>
+        <div class="cards-grid" id="social-cards"></div>
+        <div class="panels-row" style="margin-top:20px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Viral Topics</div></div>
+            <div id="social-viral"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Content Opportunities</div></div>
+            <div id="social-opportunities"></div>
+          </div>
+        </div>
+        <div class="panel" style="margin-top:16px">
+          <div class="panel-header"><div class="panel-title">Trending Keywords</div></div>
+          <div id="social-keywords"></div>
+        </div>
+      </section>
+
+      <!-- TRAFFIC INTELLIGENCE TAB -->
+      <section id="tab-trafficintel" class="tab">
+        <div class="section-title">Traffic Intelligence — Gap Analysis &amp; CTR Optimization</div>
+        <div class="cards-grid" id="traffic-cards"></div>
+        <div class="panels-row" style="margin-top:20px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Competitor Traffic Gaps</div></div>
+            <div id="traffic-gaps"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">CTR Opportunities</div></div>
+            <div id="traffic-ctr"></div>
+          </div>
+        </div>
+        <div class="panel" style="margin-top:16px">
+          <div class="panel-header"><div class="panel-title">Seasonal Analysis</div></div>
+          <div id="traffic-seasonal"></div>
+        </div>
+      </section>
+
+      <!-- MONETIZATION ENGINE TAB -->
+      <section id="tab-monetize" class="tab">
+        <div class="section-title">Monetization Engine — Gap Detection &amp; Revenue Lift</div>
+        <div class="cards-grid" id="monetize-cards"></div>
+        <div class="panels-row" style="margin-top:20px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Monetization Gaps</div></div>
+            <div id="monetize-gaps"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Quick Wins</div></div>
+            <div id="monetize-quickwins"></div>
+          </div>
+        </div>
+        <div class="panel" style="margin-top:16px">
+          <div class="panel-header"><div class="panel-title">New Revenue Streams</div></div>
+          <div id="monetize-streams"></div>
+        </div>
+      </section>
+
+      <!-- CAMPAIGN ENGINE TAB -->
+      <section id="tab-campaigns" class="tab">
+        <div class="section-title">Campaign Engine — SEO Landing Pages &amp; Launch Sequences</div>
+        <div class="cards-grid" id="campaigns-cards"></div>
+        <div class="panels-row" style="margin-top:20px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Active Campaigns</div></div>
+            <div id="campaigns-active"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Launch Sequence</div></div>
+            <div id="campaigns-sequence"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- REALTIME EVENTS TAB -->
+      <section id="tab-realtime" class="tab">
+        <div class="section-title">Realtime Event Engine — Breaking Intelligence</div>
+        <div class="cards-grid" id="realtime-cards"></div>
+        <div class="panels-row" style="margin-top:20px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Active Alerts</div></div>
+            <div id="realtime-alerts"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Urgent Actions</div></div>
+            <div id="realtime-actions"></div>
+          </div>
+        </div>
+        <div class="panel" style="margin-top:16px">
+          <div class="panel-header"><div class="panel-title">Content Opportunities</div></div>
+          <div id="realtime-content"></div>
+        </div>
+      </section>
+
+      <!-- KNOWLEDGE GRAPH TAB -->
+      <section id="tab-kgraph" class="tab">
+        <div class="section-title">Knowledge Graph — Project Intelligence Network</div>
+        <div class="cards-grid" id="kgraph-cards"></div>
+        <div class="panels-row" style="margin-top:20px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Hidden Connections</div></div>
+            <div id="kgraph-connections"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Cross-Project Opportunities</div></div>
+            <div id="kgraph-crossopp"></div>
+          </div>
+        </div>
+        <div class="panels-row" style="margin-top:16px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Top Connected Nodes</div></div>
+            <div id="kgraph-nodes"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Strategic Clusters</div></div>
+            <div id="kgraph-clusters"></div>
           </div>
         </div>
       </section>

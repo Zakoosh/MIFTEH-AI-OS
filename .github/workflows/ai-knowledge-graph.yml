@@ -1,0 +1,45 @@
+name: MIFTEH AI Knowledge Graph
+
+# Builds relationship graph of projects, features, trends, competitors,
+# keywords, and events. Surfaces hidden connections and cross-project insights.
+# Runs Fri 08:00 UTC — after all other Phase G engines have run.
+
+on:
+  schedule:
+    - cron: '0 8 * * 5'    # Friday 08:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  knowledge-graph:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install openai
+
+      - name: Run knowledge graph engine
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python scripts/knowledge_graph.py
+
+      - name: Aggregate dashboard
+        run: python scripts/aggregate_dashboard.py
+
+      - name: Commit knowledge graph data
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "mifteh-ai@users.noreply.github.com"
+          git pull --rebase origin main
+          git add memory/knowledge_graph.json frontend/dashboard/data/
+          git diff --cached --quiet || git commit -m "AI: Knowledge graph cycle [$(date -u +%Y-%m-%dT%H:%M:%SZ)] [skip ci]"
+          git push
