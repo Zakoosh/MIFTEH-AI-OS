@@ -78,6 +78,15 @@
       <button class="nav-btn" onclick="showTab('kernel',this)"><span class="icon">◉</span> Ops Kernel</button>
       <button class="nav-btn" onclick="showTab('civilization',this)"><span class="icon">◆</span> Civilization</button>
 
+      <div class="nav-section">Infrastructure</div>
+      <button class="nav-btn" onclick="showTab('deployments',this)"><span class="icon">⬆</span> Deployments</button>
+      <button class="nav-btn" onclick="showTab('vecmem',this)"><span class="icon">⬡</span> Vector Memory</button>
+      <button class="nav-btn" onclick="showTab('retrieval',this)"><span class="icon">⊕</span> Retrieval</button>
+      <button class="nav-btn" onclick="showTab('toolruntime',this)"><span class="icon">⚙</span> Tool Runtime</button>
+      <button class="nav-btn" onclick="showTab('research',this)"><span class="icon">⊙</span> Research Lab</button>
+      <button class="nav-btn" onclick="showTab('sandbox',this)"><span class="icon">⬢</span> Sandbox</button>
+      <button class="nav-btn" onclick="showTab('observability',this)"><span class="icon">◉</span> Observability</button>
+
       <div class="nav-section">Business Growth</div>
       <button class="nav-btn" onclick="showTab('growth',this)"><span class="icon">↑</span> Growth Engine</button>
       <button class="nav-btn" onclick="showTab('revenue',this)"><span class="icon">$</span> Revenue Live</button>
@@ -1140,6 +1149,160 @@
           <div class="panel">
             <div class="panel-header"><div class="panel-title">Predicted Issues</div></div>
             <div id="civilization-predictions"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- DEPLOYMENTS TAB -->
+      <section id="tab-deployments" class="tab">
+        <div class="section-title">Deployment Pipeline — Health Scoring + Rollback + Core Web Vitals</div>
+        <div class="cards-grid" id="deployments-cards"></div>
+        <div class="panels-row" style="margin-top:20px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Project Health Scores</div></div>
+            <div id="deployments-health"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Core Web Vitals</div></div>
+            <div id="deployments-cwv"></div>
+          </div>
+        </div>
+        <div class="panels-row" style="margin-top:16px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Rollback Triggers</div></div>
+            <div id="deployments-rollback"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">AI Recommendations</div></div>
+            <div id="deployments-recs"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VECTOR MEMORY TAB -->
+      <section id="tab-vecmem" class="tab">
+        <div class="section-title">Vector Memory — Semantic Knowledge Index</div>
+        <div class="cards-grid" id="vecmem-cards"></div>
+        <div class="panels-row" style="margin-top:20px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Memory by Type</div></div>
+            <div id="vecmem-types"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Index Status</div></div>
+            <div id="vecmem-index"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- RETRIEVAL TAB -->
+      <section id="tab-retrieval" class="tab">
+        <div class="section-title">Retrieval Intelligence — Semantic Search Results</div>
+        <div class="cards-grid" id="retrieval-cards"></div>
+        <div class="panels-row" style="margin-top:20px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Query Results</div></div>
+            <div id="retrieval-results"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Context Injection Payload</div></div>
+            <div id="retrieval-context"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TOOL RUNTIME TAB -->
+      <section id="tab-toolruntime" class="tab">
+        <div class="section-title">Tool Runtime — Agent Tool Registry + Execution Stats</div>
+        <div class="cards-grid" id="toolruntime-cards"></div>
+        <div class="panels-row" style="margin-top:20px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Tool Catalog</div></div>
+            <div id="toolruntime-catalog"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Execution Performance</div></div>
+            <div id="toolruntime-stats"></div>
+          </div>
+        </div>
+        <div class="panels-row" style="margin-top:16px">
+          <div class="panel" style="flex:1">
+            <div class="panel-header"><div class="panel-title">AI Runtime Analysis</div></div>
+            <div id="toolruntime-analysis"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- RESEARCH LAB TAB -->
+      <section id="tab-research" class="tab">
+        <div class="section-title">Research Lab — Autonomous Competitor + Market Research</div>
+        <div class="cards-grid" id="research-cards"></div>
+        <div class="panels-row" style="margin-top:20px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Competitor Signals</div></div>
+            <div id="research-competitors"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Ranking Opportunities</div></div>
+            <div id="research-rankings"></div>
+          </div>
+        </div>
+        <div class="panels-row" style="margin-top:16px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Emerging Technologies</div></div>
+            <div id="research-tech"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">AI Research Synthesis</div></div>
+            <div id="research-synthesis"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SANDBOX TAB -->
+      <section id="tab-sandbox" class="tab">
+        <div class="section-title">Execution Sandbox — Experiments + Checkpoints + Rollbacks</div>
+        <div class="cards-grid" id="sandbox-cards"></div>
+        <div class="panels-row" style="margin-top:20px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Active Sandboxes</div></div>
+            <div id="sandbox-active"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Experiment Templates</div></div>
+            <div id="sandbox-experiments"></div>
+          </div>
+        </div>
+        <div class="panels-row" style="margin-top:16px">
+          <div class="panel" style="flex:1">
+            <div class="panel-header"><div class="panel-title">AI Recommendations</div></div>
+            <div id="sandbox-recs"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- OBSERVABILITY TAB -->
+      <section id="tab-observability" class="tab">
+        <div class="section-title">Observability — Workflow Health + Agent Heatmap + Error Propagation</div>
+        <div class="cards-grid" id="observability-cards"></div>
+        <div class="panels-row" style="margin-top:20px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Workflow Freshness</div></div>
+            <div id="observability-workflows"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Agent Activity Heatmap</div></div>
+            <div id="observability-heatmap"></div>
+          </div>
+        </div>
+        <div class="panels-row" style="margin-top:16px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Bottlenecks + Errors</div></div>
+            <div id="observability-errors"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">AI Analysis</div></div>
+            <div id="observability-analysis"></div>
           </div>
         </div>
       </section>

@@ -511,6 +511,154 @@ def read_scaling_report():
     }
 
 
+def read_deployment_pipeline_report():
+    data = read_json("memory/deployment_pipeline_report.json")
+    if not data:
+        return {}
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "projects_monitored": data.get("projects_monitored", 0),
+        "healthy_projects": data.get("healthy_projects", 0),
+        "projects": {
+            pk: {
+                "domain": pdata.get("domain", ""),
+                "health_score": pdata.get("health_score", 0),
+                "availability": pdata.get("availability", {}),
+                "cwv": pdata.get("cwv", {}),
+                "rollback_triggers": pdata.get("rollback_triggers", []),
+                "recommendations": pdata.get("recommendations", [])[:5],
+                "ai_health_status": pdata.get("ai_health_status", ""),
+            }
+            for pk, pdata in data.get("projects", {}).items()
+        },
+        "ai_analysis": data.get("ai_analysis", {}),
+    }
+
+
+def read_vector_memory_stats():
+    data = read_json("memory/vector_stats.json")
+    if not data:
+        return {}
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "total_memories": data.get("total_memories", 0),
+        "embedded_memories": data.get("embedded_memories", 0),
+        "embedding_coverage_pct": data.get("embedding_coverage_pct", 0),
+        "memories_by_type": data.get("memories_by_type", {}),
+        "memories_pruned": data.get("memories_pruned", 0),
+        "total_tokens": data.get("total_tokens", 0),
+        "total_cost_usd": data.get("total_cost_usd", 0.0),
+        "index_size": data.get("index_size", 0),
+    }
+
+
+def read_retrieval_results():
+    data = read_json("memory/retrieval_results.json")
+    if not data:
+        return {}
+    results = {}
+    for qid, qdata in data.get("results", {}).items():
+        memories = [
+            {k: v for k, v in m.items() if k != "embedding"}
+            for m in qdata.get("memories", [])[:5]
+        ]
+        results[qid] = {
+            "query": qdata.get("query", ""),
+            "memory_count": qdata.get("memory_count", 0),
+            "synthesis": qdata.get("synthesis", ""),
+            "memories": memories,
+        }
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "queries_run": data.get("queries_run", 0),
+        "total_memories_retrieved": data.get("total_memories_retrieved", 0),
+        "index_size": data.get("index_size", 0),
+        "embedded_memories": data.get("embedded_memories", 0),
+        "results": results,
+        "context_payload": data.get("context_injection_payload", {}),
+    }
+
+
+def read_tool_runtime_report():
+    data = read_json("memory/tool_runtime_report.json")
+    if not data:
+        return {}
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "tools_registered": data.get("tools_registered", 0),
+        "tools_executed_this_cycle": data.get("tools_executed_this_cycle", 0),
+        "tools_succeeded": data.get("tools_succeeded", 0),
+        "tools_failed": data.get("tools_failed", 0),
+        "tool_catalog": data.get("tool_catalog", []),
+        "execution_log": data.get("execution_log", [])[:20],
+        "ai_analysis": data.get("ai_analysis", {}),
+    }
+
+
+def read_research_report():
+    data = read_json("memory/research_report.json")
+    if not data:
+        return {}
+    projects = {}
+    for pk, pdata in data.get("projects", {}).items():
+        signals = []
+        for sig in pdata.get("competitor_signals", []):
+            signals.append({k: v for k, v in sig.items() if k not in ("content_length",)})
+        projects[pk] = {
+            "niche": pdata.get("niche", ""),
+            "competitors_researched": pdata.get("competitors_researched", []),
+            "competitor_signals": signals,
+            "ranking_opportunities": pdata.get("ranking_opportunities", {}),
+            "ux_comparison": pdata.get("ux_comparison", {}),
+            "monetization_benchmark": pdata.get("monetization_benchmark", {}),
+            "ai_synthesis": pdata.get("ai_synthesis", {}),
+        }
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "projects_researched": data.get("projects_researched", 0),
+        "total_competitors_analyzed": data.get("total_competitors_analyzed", 0),
+        "emerging_technologies": data.get("emerging_technologies", {}),
+        "projects": projects,
+    }
+
+
+def read_sandbox_report():
+    data = read_json("memory/sandbox_report.json")
+    if not data:
+        return {}
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "active_sandboxes": data.get("active_sandboxes", 0),
+        "expired_this_cycle": data.get("expired_this_cycle", 0),
+        "checkpoints_created": data.get("checkpoints_created", 0),
+        "experiment_templates": data.get("experiment_templates", []),
+        "active_sandbox_list": data.get("active_sandbox_list", []),
+        "new_sandbox": data.get("new_sandbox"),
+        "ai_recommendations": data.get("ai_recommendations", {}),
+    }
+
+
+def read_observability_report():
+    data = read_json("memory/observability_report.json")
+    if not data:
+        return {}
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "observability_score": data.get("observability_score", 0),
+        "operational_status": data.get("operational_status", "unknown"),
+        "fresh_workflow_count": data.get("fresh_workflow_count", 0),
+        "stale_workflow_count": data.get("stale_workflow_count", 0),
+        "workflow_metrics": data.get("workflow_metrics", []),
+        "ai_latency_estimates": data.get("ai_latency_estimates", [])[:10],
+        "total_tracked_ai_cost_usd": data.get("total_tracked_ai_cost_usd", 0.0),
+        "bottlenecks": data.get("bottlenecks", []),
+        "agent_heatmap": data.get("agent_heatmap", {}),
+        "error_propagation": data.get("error_propagation", []),
+        "memory_retrieval_performance": data.get("memory_retrieval_performance", {}),
+        "ai_analysis": data.get("ai_analysis", {}),
+    }
+
+
 def read_agent_bus():
     data = read_json("memory/agent_bus.json")
     if not data:
@@ -839,6 +987,13 @@ def main():
     conversion = read_conversion_report()
     acquisition = read_acquisition_report()
     scaling = read_scaling_report()
+    deployment_pipeline = read_deployment_pipeline_report()
+    vector_memory = read_vector_memory_stats()
+    retrieval = read_retrieval_results()
+    tool_runtime = read_tool_runtime_report()
+    research = read_research_report()
+    sandbox = read_sandbox_report()
+    observability = read_observability_report()
     agent_bus = read_agent_bus()
     cognition = read_cognition_report()
     governance = read_governance_report()
@@ -990,6 +1145,13 @@ def main():
         "conversion": conversion,
         "acquisition": acquisition,
         "scaling": scaling,
+        "deployment_pipeline": deployment_pipeline,
+        "vector_memory": vector_memory,
+        "retrieval": retrieval,
+        "tool_runtime": tool_runtime,
+        "research": research,
+        "sandbox": sandbox,
+        "observability": observability,
         "agent_bus": agent_bus,
         "cognition": cognition,
         "governance": governance,

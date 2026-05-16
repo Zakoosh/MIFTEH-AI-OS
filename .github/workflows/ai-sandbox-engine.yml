@@ -1,0 +1,45 @@
+name: MIFTEH AI Sandbox Engine
+
+# Isolated execution environments, experiment management,
+# memory checkpoints, safe testing, rollback point creation.
+# Runs weekly Sat 01:00 UTC.
+
+on:
+  schedule:
+    - cron: '0 1 * * 6'    # Saturday 01:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sandbox-engine:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install openai
+
+      - name: Run sandbox engine
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python scripts/sandbox_engine.py
+
+      - name: Aggregate dashboard
+        run: python scripts/aggregate_dashboard.py
+
+      - name: Commit sandbox state
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "mifteh-ai@users.noreply.github.com"
+          git pull --rebase origin main
+          git add memory/sandbox_report.json memory/sandboxes/ memory/checkpoints/ frontend/dashboard/data/
+          git diff --cached --quiet || git commit -m "AI: Sandbox engine cycle [$(date -u +%Y-%m-%dT%H:%M:%SZ)] [skip ci]"
+          git push

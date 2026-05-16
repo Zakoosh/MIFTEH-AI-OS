@@ -1,0 +1,48 @@
+name: MIFTEH AI Deployment Pipeline
+
+# Preview deployments, staging validation, production health scoring,
+# rollback trigger detection, Core Web Vitals tracking via PageSpeed API.
+# Runs daily 09:00 UTC.
+
+on:
+  schedule:
+    - cron: '0 9 * * *'    # Daily 09:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  deployments: write
+
+jobs:
+  deployment-pipeline:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install openai
+
+      - name: Run deployment pipeline
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: python scripts/deployment_pipeline.py
+
+      - name: Aggregate dashboard
+        run: python scripts/aggregate_dashboard.py
+
+      - name: Commit deployment state
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "mifteh-ai@users.noreply.github.com"
+          git pull --rebase origin main
+          git add memory/deployment_pipeline_report.json memory/deployment_snapshots/ frontend/dashboard/data/
+          git diff --cached --quiet || git commit -m "AI: Deployment pipeline cycle [$(date -u +%Y-%m-%dT%H:%M:%SZ)] [skip ci]"
+          git push

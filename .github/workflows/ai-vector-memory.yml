@@ -1,0 +1,46 @@
+name: MIFTEH AI Vector Memory
+
+# Embeds knowledge into vector space using OpenAI text-embedding-3-small.
+# Indexes SEO learnings, monetization patterns, UX insights, deployments,
+# experiments, AI reasoning traces for semantic retrieval.
+# Runs daily 10:00 UTC — after deployment pipeline.
+
+on:
+  schedule:
+    - cron: '0 10 * * *'    # Daily 10:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  vector-memory:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install openai
+
+      - name: Run vector memory indexing
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python scripts/vector_memory.py
+
+      - name: Aggregate dashboard
+        run: python scripts/aggregate_dashboard.py
+
+      - name: Commit vector memory state
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "mifteh-ai@users.noreply.github.com"
+          git pull --rebase origin main
+          git add memory/vector_index.json memory/vector_stats.json memory/vectors/ frontend/dashboard/data/
+          git diff --cached --quiet || git commit -m "AI: Vector memory cycle [$(date -u +%Y-%m-%dT%H:%M:%SZ)] [skip ci]"
+          git push

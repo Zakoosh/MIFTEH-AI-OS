@@ -2326,6 +2326,340 @@ function renderCivilization(d) {
   set('civilization-predictions', predictions.length ? predictions.join('') : '<div class="empty-state" style="color:#10b981">No issues predicted</div>');
 }
 
+// ─── Phase J: Infrastructure ─────────────────────────────────────────────────
+
+function renderDeployments(d) {
+  const dep = d.deployment_pipeline || {};
+  const health = dep.overall_health || 0;
+  const status = dep.deployment_status || 'unknown';
+  const projects = dep.projects || {};
+  const ai = dep.ai_analysis || {};
+  const statusColor = status === 'healthy' ? 'green' : status === 'degraded' ? 'yellow' : 'red';
+
+  set('deployments-cards', `
+    <div class="card"><div class="card-label">Overall Health</div><div class="card-value" style="color:var(--${statusColor})">${health}<span style="font-size:14px;color:var(--muted)">/100</span></div></div>
+    <div class="card"><div class="card-label">Status</div><div class="card-value" style="color:var(--${statusColor})">${esc(status.toUpperCase())}</div></div>
+    <div class="card"><div class="card-label">Projects Monitored</div><div class="card-value">${Object.keys(projects).length}</div></div>
+    <div class="card"><div class="card-label">Rollbacks Needed</div><div class="card-value" style="color:var(--${Object.values(projects).some(p=>p.rollback_recommended)?'red':'green'})">${Object.values(projects).filter(p=>p.rollback_recommended).length}</div></div>
+  `);
+
+  const healthRows = Object.entries(projects).map(([pid, p]) => {
+    const hc = p.health_score >= 70 ? 'green' : p.health_score >= 40 ? 'yellow' : 'red';
+    const avail = p.availability || {};
+    return `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title">${esc(pid)} — <span style="color:var(--${hc})">${p.health_score}/100</span> [${esc(p.health_status||'')}]</div>
+      <div class="activity-meta">${p.domain} · ${avail.available ? `✓ ${avail.latency_ms}ms` : '✗ unavailable'}</div>
+    </div></div>`;
+  }).join('');
+  set('deployments-health', healthRows || '<div class="empty-state">No deployment data yet — workflow not yet run</div>');
+
+  const cwvRows = Object.entries(projects).map(([pid, p]) => {
+    const cwv = p.cwv || {};
+    if (!cwv.performance && !cwv.lcp_ms) return `<div class="activity-item"><div class="activity-body"><div class="activity-title">${esc(pid)}</div><div class="activity-meta">CWV data unavailable</div></div></div>`;
+    const lcpColor = (cwv.lcp_ms||0) < 2500 ? 'green' : (cwv.lcp_ms||0) < 4000 ? 'yellow' : 'red';
+    return `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title">${esc(pid)} — Perf ${cwv.performance||0} · SEO ${cwv.seo||0} · Access ${cwv.accessibility||0}</div>
+      <div class="activity-meta">LCP <span style="color:var(--${lcpColor})">${cwv.lcp_ms||0}ms</span> · CLS ${cwv.cls||0} · TTFB ${cwv.ttfb_ms||0}ms</div>
+    </div></div>`;
+  }).join('');
+  set('deployments-cwv', cwvRows || '<div class="empty-state">No CWV data yet</div>');
+
+  const rbRows = Object.entries(projects).flatMap(([pid, p]) =>
+    (p.rollback_triggers || []).length > 0
+      ? [{ pid, triggers: p.rollback_triggers }]
+      : []
+  ).map(({ pid, triggers }) =>
+    `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title" style="color:var(--red)">${esc(pid)} — ROLLBACK RECOMMENDED</div>
+      ${triggers.map(t => `<div class="activity-meta">• ${esc(t)}</div>`).join('')}
+    </div></div>`
+  ).join('');
+  set('deployments-rollback', rbRows || '<div class="empty-state" style="color:var(--green)">No rollback triggers — all deployments healthy</div>');
+
+  const recRows = (ai.recommendations || []).map(r =>
+    `<div class="activity-item"><div class="activity-body"><div class="activity-meta">${esc(r)}</div></div></div>`
+  ).join('');
+  set('deployments-recs', (ai.summary ? `<div class="activity-item"><div class="activity-body"><div class="activity-meta">${esc(ai.summary)}</div></div></div>` : '') + recRows || '<div class="empty-state">No recommendations yet</div>');
+}
+
+function renderVecMem(d) {
+  const vm = d.vector_memory || {};
+  const total = vm.total_memories || 0;
+  const embedded = vm.embedded_memories || 0;
+  const byType = vm.by_type || {};
+  const embRate = total > 0 ? Math.round(embedded / total * 100) : 0;
+
+  set('vecmem-cards', `
+    <div class="card"><div class="card-label">Total Memories</div><div class="card-value" style="color:var(--blue)">${total}</div></div>
+    <div class="card"><div class="card-label">Embedded</div><div class="card-value" style="color:var(--green)">${embedded}</div></div>
+    <div class="card"><div class="card-label">Embedding Rate</div><div class="card-value" style="color:var(--${embRate>=70?'green':embRate>=30?'yellow':'muted'})">${embRate}%</div></div>
+    <div class="card"><div class="card-label">Memory Types</div><div class="card-value">${Object.keys(byType).length}</div></div>
+  `);
+
+  const typeRows = Object.entries(byType).sort((a,b)=>b[1]-a[1]).map(([type, count]) =>
+    `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title">${esc(type.replace(/_/g,' '))}</div>
+      <div class="activity-meta">${count} memories</div>
+    </div></div>`
+  ).join('');
+  set('vecmem-types', typeRows || '<div class="empty-state">No memories indexed yet</div>');
+
+  set('vecmem-index', `
+    <div class="activity-item"><div class="activity-body">
+      <div class="activity-title">Embedding Model</div>
+      <div class="activity-meta">${esc(vm.embedding_model || 'text-embedding-3-small')}</div>
+    </div></div>
+    <div class="activity-item"><div class="activity-body">
+      <div class="activity-title">Embeddings Enabled</div>
+      <div class="activity-meta" style="color:var(--${vm.embeddings_enabled?'green':'yellow'})">${vm.embeddings_enabled ? 'Yes — OpenAI active' : 'No — keyword fallback mode'}</div>
+    </div></div>
+    <div class="activity-item"><div class="activity-body">
+      <div class="activity-title">New Added This Cycle</div>
+      <div class="activity-meta">${vm.new_memories_added || 0} · ${vm.skipped_duplicates || 0} duplicates skipped</div>
+    </div></div>
+    <div class="activity-item"><div class="activity-body">
+      <div class="activity-title">Last Updated</div>
+      <div class="activity-meta">${esc(vm.generated_at || '—')}</div>
+    </div></div>
+  `);
+}
+
+function renderRetrieval(d) {
+  const ret = d.retrieval || {};
+  const results = ret.results || {};
+  const payload = ret.context_injection_payload || {};
+  const queries = Object.keys(results).length;
+  const totalHits = Object.values(results).reduce((s, r) => s + (r.memory_count || 0), 0);
+
+  set('retrieval-cards', `
+    <div class="card"><div class="card-label">Queries Run</div><div class="card-value">${queries}</div></div>
+    <div class="card"><div class="card-label">Total Hits</div><div class="card-value" style="color:var(--green)">${totalHits}</div></div>
+    <div class="card"><div class="card-label">Index Size</div><div class="card-value">${ret.index_size || 0} memories</div></div>
+    <div class="card"><div class="card-label">Embedded</div><div class="card-value" style="color:var(--blue)">${ret.embedded_memories || 0}</div></div>
+  `);
+
+  const resultRows = Object.entries(results).slice(0, 6).map(([qid, r]) => {
+    const synth = r.synthesis || {};
+    return `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title">${esc(qid.replace(/_/g,' '))} — ${r.memory_count || 0} hits</div>
+      <div class="activity-meta">${esc(synth.synthesis || '').slice(0, 120)}</div>
+      ${(synth.key_insights || []).slice(0, 1).map(i => `<div class="activity-meta" style="color:var(--blue)">→ ${esc(i).slice(0,100)}</div>`).join('')}
+    </div></div>`;
+  }).join('');
+  set('retrieval-results', resultRows || '<div class="empty-state">No retrieval results yet — run vector_memory first</div>');
+
+  const ctxRows = Object.entries(payload).slice(0, 4).map(([qid, ctx]) =>
+    `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title">${esc(qid.replace(/_/g,' '))}</div>
+      <div class="activity-meta">${esc(ctx.summary || '').slice(0, 100)}</div>
+      ${(ctx.top_matches || []).slice(0, 1).map(m => `<div class="activity-meta" style="color:var(--muted)">Score: ${m.score} — ${esc(m.text || '').slice(0, 80)}</div>`).join('')}
+    </div></div>`
+  ).join('');
+  set('retrieval-context', ctxRows || '<div class="empty-state">No context payload yet</div>');
+}
+
+function renderToolRuntime(d) {
+  const tr = d.tool_runtime || {};
+  const catalog = tr.tool_catalog || {};
+  const stats = tr.tool_stats || {};
+  const ai = tr.ai_analysis || {};
+  const tests = tr.test_results || {};
+  const health = ai.runtime_health_score || 0;
+
+  set('toolruntime-cards', `
+    <div class="card"><div class="card-label">Runtime Health</div><div class="card-value" style="color:var(--${health>=70?'green':health>=40?'yellow':'red'})">${health}<span style="font-size:14px;color:var(--muted)">/100</span></div></div>
+    <div class="card"><div class="card-label">Registered Tools</div><div class="card-value">${tr.registered_tools || Object.keys(catalog).length}</div></div>
+    <div class="card"><div class="card-label">Tests Passed</div><div class="card-value" style="color:var(--green)">${Object.values(tests).filter(t=>t.success).length}/${Object.keys(tests).length}</div></div>
+    <div class="card"><div class="card-label">Most Used</div><div class="card-value" style="font-size:13px">${esc(ai.most_used_tool || '—')}</div></div>
+  `);
+
+  const catRows = Object.entries(catalog).map(([name, def]) =>
+    `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title">${esc(name)} <span style="color:var(--${def.permission_level==='low'?'green':def.permission_level==='medium'?'yellow':'red'});font-size:11px">[${esc(def.permission_level)}]</span></div>
+      <div class="activity-meta">${esc(def.description || '')} · ${def.rate_limit_per_hour}/hr</div>
+    </div></div>`
+  ).join('');
+  set('toolruntime-catalog', catRows || '<div class="empty-state">No tools registered</div>');
+
+  const statRows = Object.entries(stats).map(([tool, s]) =>
+    `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title">${esc(tool)} — ${s.success_rate_pct || 0}% success</div>
+      <div class="activity-meta">${s.total_executions || 0} runs · avg ${s.avg_latency_ms || 0}ms · max ${s.max_latency_ms || 0}ms</div>
+    </div></div>`
+  ).join('');
+  set('toolruntime-stats', statRows || '<div class="empty-state">No execution stats yet</div>');
+
+  const analysisRows = [
+    ai.reliability_summary ? `<div class="activity-item"><div class="activity-body"><div class="activity-meta">${esc(ai.reliability_summary)}</div></div></div>` : '',
+    ...(ai.recommendations || []).map(r => `<div class="activity-item"><div class="activity-body"><div class="activity-meta" style="color:var(--blue)">→ ${esc(r)}</div></div></div>`),
+    ...(ai.missing_tools_needed || []).map(t => `<div class="activity-item"><div class="activity-body"><div class="activity-meta" style="color:var(--yellow)">Missing: ${esc(t)}</div></div></div>`),
+  ].join('');
+  set('toolruntime-analysis', analysisRows || '<div class="empty-state">No analysis yet</div>');
+}
+
+function renderResearch(d) {
+  const res = d.research || {};
+  const projects = res.projects || {};
+  const emerging = res.emerging_technologies || {};
+  const pids = Object.keys(projects);
+
+  set('research-cards', `
+    <div class="card"><div class="card-label">Projects Researched</div><div class="card-value">${res.projects_researched || 0}</div></div>
+    <div class="card"><div class="card-label">Competitors Analyzed</div><div class="card-value" style="color:var(--blue)">${res.total_competitors_analyzed || 0}</div></div>
+    <div class="card"><div class="card-label">Trending Tech</div><div class="card-value">${(emerging.trending_technologies || []).length}</div></div>
+    <div class="card"><div class="card-label">Top Research Score</div><div class="card-value" style="color:var(--green)">${Math.max(...pids.map(p => (projects[p].ai_synthesis || {}).research_score || 0), 0)}/100</div></div>
+  `);
+
+  const compRows = pids.flatMap(pid =>
+    (projects[pid].competitor_signals || []).slice(0, 2).map(sig =>
+      `<div class="activity-item"><div class="activity-body">
+        <div class="activity-title">${esc(sig.domain)} — ${esc(pid)}</div>
+        <div class="activity-meta">${sig.reachable ? `✓ reachable · "${esc(sig.title || '').slice(0,60)}"` : '✗ unreachable'} · tech: ${(sig.tech_hints||[]).join(', ')||'none'}</div>
+      </div></div>`
+    )
+  ).join('');
+  set('research-competitors', compRows || '<div class="empty-state">No competitor data yet — workflow not yet run</div>');
+
+  const rankRows = pids.map(pid => {
+    const opps = (projects[pid].ranking_opportunities || {}).opportunities || [];
+    return opps.slice(0, 2).map(o =>
+      `<div class="activity-item"><div class="activity-body">
+        <div class="activity-title">${esc(pid)} — ${esc(o.type || '')}</div>
+        <div class="activity-meta">${esc(o.keyword || o.topic || '')} · +${(o.potential_monthly_visits || o.estimated_traffic || 0).toLocaleString()} visits · <span style="color:var(--${(o.priority||'')=='high'?'green':'yellow'})">${esc(o.priority||'')}</span></div>
+      </div></div>`
+    ).join('');
+  }).join('');
+  set('research-rankings', rankRows || '<div class="empty-state">No ranking data yet</div>');
+
+  const techRows = (emerging.trending_technologies || []).map(t =>
+    `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title">${esc(t.tech)}</div>
+      <div class="activity-meta">${t.competitor_adoption} competitors using it</div>
+    </div></div>`
+  ).join('');
+  set('research-tech', techRows || '<div class="empty-state">No tech signals yet</div>');
+
+  const synthRows = pids.map(pid => {
+    const s = projects[pid].ai_synthesis || {};
+    return `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title">${esc(pid)} — score ${s.research_score || 0}/100</div>
+      <div class="activity-meta">${esc(s.biggest_competitive_opportunity || '')}</div>
+      ${(s.ux_quick_wins || []).slice(0,2).map(w => `<div class="activity-meta" style="color:var(--green)">→ ${esc(w)}</div>`).join('')}
+    </div></div>`;
+  }).join('');
+  set('research-synthesis', synthRows || '<div class="empty-state">No synthesis yet</div>');
+}
+
+function renderSandbox(d) {
+  const sb = d.sandbox || {};
+  const experiments = sb.experiment_templates || [];
+  const active = sb.active_sandbox_list || [];
+  const ai = sb.ai_recommendations || {};
+
+  set('sandbox-cards', `
+    <div class="card"><div class="card-label">Active Sandboxes</div><div class="card-value" style="color:var(--blue)">${sb.active_sandboxes || 0}</div></div>
+    <div class="card"><div class="card-label">Checkpoints</div><div class="card-value" style="color:var(--green)">${sb.checkpoints_created || 0}</div></div>
+    <div class="card"><div class="card-label">Experiments</div><div class="card-value">${experiments.length}</div></div>
+    <div class="card"><div class="card-label">Expired This Cycle</div><div class="card-value" style="color:var(--muted)">${sb.expired_this_cycle || 0}</div></div>
+  `);
+
+  const activeRows = active.length
+    ? active.map(s =>
+        `<div class="activity-item"><div class="activity-body">
+          <div class="activity-title">${esc(s.id || '')} [${esc(s.type || '')}]</div>
+          <div class="activity-meta">Risk: ${esc(s.risk_level || '')} · Files: ${(s.snapshotted_files || []).join(', ')} · Expires in ${s.auto_expire_hours || 0}h</div>
+        </div></div>`
+      ).join('')
+    : '<div class="empty-state">No active sandboxes</div>';
+  set('sandbox-active', activeRows);
+
+  const expRows = experiments.map(e =>
+    `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title">${esc(e.id)} [${esc(e.type || '')}] — design score ${e.design_score || 0}/100</div>
+      <div class="activity-meta">${esc(e.hypothesis || '')}</div>
+      <div class="activity-meta" style="color:var(--green)">Success: ${esc(e.success_criteria || '')}</div>
+      <div class="activity-meta" style="color:var(--red)">Rollback if: ${esc(e.rollback_condition || '')}</div>
+    </div></div>`
+  ).join('');
+  set('sandbox-experiments', expRows || '<div class="empty-state">No experiments yet</div>');
+
+  set('sandbox-recs', `
+    <div class="activity-item"><div class="activity-body">
+      <div class="activity-title">Next recommended: ${esc(ai.recommended_next_experiment || '—')}</div>
+      <div class="activity-meta">${esc(ai.reasoning || '')}</div>
+      <div class="activity-meta" style="color:var(--${(ai.risk_assessment||'')==='low'?'green':'yellow'})">Risk: ${esc(ai.risk_assessment || '')}</div>
+      <div class="activity-meta">Velocity: ${esc(ai.experiment_velocity || '')}</div>
+    </div></div>
+    ${(ai.expected_learnings || []).map(l => `<div class="activity-item"><div class="activity-body"><div class="activity-meta" style="color:var(--blue)">→ ${esc(l)}</div></div></div>`).join('')}
+  `);
+}
+
+function renderObservability(d) {
+  const obs = d.observability || {};
+  const score = obs.observability_score || 0;
+  const opStatus = obs.operational_status || 'unknown';
+  const workflows = obs.workflow_metrics || [];
+  const heatmap = obs.agent_heatmap || {};
+  const bottlenecks = obs.bottlenecks || [];
+  const errors = obs.error_propagation || [];
+  const ai = obs.ai_analysis || {};
+  const fresh = obs.fresh_workflow_count || 0;
+  const stale = obs.stale_workflow_count || 0;
+  const statusColor = opStatus === 'green' ? 'green' : opStatus === 'yellow' ? 'yellow' : 'red';
+
+  set('observability-cards', `
+    <div class="card"><div class="card-label">Observability Score</div><div class="card-value" style="color:var(--${statusColor})">${score}<span style="font-size:14px;color:var(--muted)">/100</span></div></div>
+    <div class="card"><div class="card-label">Operational Status</div><div class="card-value" style="color:var(--${statusColor})">${esc(opStatus.toUpperCase())}</div></div>
+    <div class="card"><div class="card-label">Fresh Workflows</div><div class="card-value" style="color:var(--green)">${fresh}/${fresh+stale}</div></div>
+    <div class="card"><div class="card-label">Active Bottlenecks</div><div class="card-value" style="color:var(--${bottlenecks.length>0?'yellow':'green'})">${bottlenecks.length}</div></div>
+  `);
+
+  const wfRows = workflows.slice(0, 10).map(wf => {
+    const sc = wf.status === 'fresh' ? 'green' : wf.status === 'stale' ? 'yellow' : 'red';
+    return `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title" style="color:var(--${sc})">${esc(wf.workflow)} [${esc(wf.status||'')}]</div>
+      <div class="activity-meta">${wf.age_hours !== null ? `${wf.age_hours}h ago` : 'never run'} · $${(wf.cost_usd||0).toFixed(4)} · ${(wf.tokens_used||0).toLocaleString()} tokens</div>
+    </div></div>`;
+  }).join('');
+  set('observability-workflows', wfRows || '<div class="empty-state">No workflow metrics yet</div>');
+
+  const hmRows = Object.entries(heatmap).map(([agent, data]) => {
+    const ac = data.activity_level === 'high' ? 'green' : data.activity_level === 'medium' ? 'blue' : 'muted';
+    return `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title">${esc(agent)} — <span style="color:var(--${ac})">${esc(data.activity_level || '')}</span></div>
+      <div class="activity-meta">${data.total_missions || 0} missions · ${Math.round((data.success_rate || 0) * 100)}% success · confidence ${Math.round((data.confidence || 0) * 100)}%</div>
+    </div></div>`;
+  }).join('');
+  set('observability-heatmap', hmRows || '<div class="empty-state">No agent data yet</div>');
+
+  const errRows = [
+    ...bottlenecks.map(b =>
+      `<div class="activity-item"><div class="activity-body">
+        <div class="activity-title" style="color:var(--${b.severity==='critical'?'red':'yellow'})">${esc(b.type.replace(/_/g,' '))} [${esc(b.severity)}]</div>
+        <div class="activity-meta">${esc(b.details)}</div>
+      </div></div>`
+    ),
+    ...errors.slice(0, 4).map(e =>
+      `<div class="activity-item"><div class="activity-body">
+        <div class="activity-title" style="color:var(--${e.severity==='high'?'red':e.severity==='medium'?'yellow':'muted'})">${esc(e.source)} — ${esc(e.project)}</div>
+        <div class="activity-meta">${esc(e.error || '')}</div>
+      </div></div>`
+    ),
+  ].join('');
+  set('observability-errors', errRows || '<div class="empty-state" style="color:var(--green)">No bottlenecks or errors detected</div>');
+
+  set('observability-analysis', `
+    <div class="activity-item"><div class="activity-body">
+      <div class="activity-meta">${esc(ai.executive_summary || '')}</div>
+    </div></div>
+    <div class="activity-item"><div class="activity-body">
+      <div class="activity-title">Top Bottleneck</div>
+      <div class="activity-meta">${esc(ai.top_bottleneck || 'None')}</div>
+    </div></div>
+    ${(ai.next_actions || []).map(a => `<div class="activity-item"><div class="activity-body"><div class="activity-meta" style="color:var(--blue)">→ ${esc(a)}</div></div></div>`).join('')}
+  `);
+}
+
 // ─── Phase I: Business Growth ────────────────────────────────────────────────
 
 function renderGrowth(d) {
@@ -2716,6 +3050,13 @@ async function loadDashboard() {
     renderConversions(_data);
     renderAcquisition(_data);
     renderScaling(_data);
+    renderDeployments(_data);
+    renderVecMem(_data);
+    renderRetrieval(_data);
+    renderToolRuntime(_data);
+    renderResearch(_data);
+    renderSandbox(_data);
+    renderObservability(_data);
     renderActivity(_data);
     renderSafety(_data);
 
