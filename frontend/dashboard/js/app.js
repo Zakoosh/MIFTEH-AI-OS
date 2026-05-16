@@ -3911,6 +3911,171 @@ function renderLiveAlerts(d) {
   ).join('') + `</div>` : `<div class="empty-state" style="padding:40px">✅ No active alerts — system operating normally</div>`);
 }
 
+// ─── Phase N: Runtime OS ──────────────────────────────────────────────────────
+
+function renderRuntimeHealth(d) {
+  const rw = d.runtime_workers || {};
+  const systemHealth = rw.system_health || 'UNKNOWN';
+  const healthColor = {HEALTHY:'var(--green)',WARNING:'var(--yellow)',DEGRADED:'var(--orange,#f97316)',CRITICAL:'var(--red)',RECOVERING:'var(--blue)',UNKNOWN:'var(--muted)'}[systemHealth] || 'var(--muted)';
+  const workers = rw.workers || {};
+  const issues = rw.all_issues || [];
+  const issueCounts = rw.issue_counts || {};
+
+  set('runtime-health-cards', [
+    card('System Health', `<span style="color:${healthColor};font-size:24px;font-weight:700">${systemHealth}</span>`, '⬡'),
+    card('Total Issues', rw.total_issues || 0, '⚠️'),
+    card('Critical', issueCounts.critical || 0, '🔴'),
+    card('Warning', issueCounts.warning || 0, '🟡'),
+    card('Last Heartbeat', rw.last_heartbeat ? rw.last_heartbeat.replace('T',' ').replace('Z','') : 'Never', '💓'),
+    card('Runtime Status', rw.runtime_status || 'unknown', '⚙'),
+  ].join(''));
+
+  const workerRows = Object.entries(workers).map(([name, w]) => {
+    const hc = {healthy:'var(--green)',warning:'var(--yellow)',degraded:'var(--orange,#f97316)',critical:'var(--red)',error:'var(--red)',not_run:'var(--muted)',unknown:'var(--muted)'}[w.health] || 'var(--muted)';
+    return `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title">${esc(name.replace(/_/g,' '))}</div>
+      <div class="activity-meta">Health: <span style="color:${hc}">${esc(w.health)}</span> · Issues: ${w.issue_count||0} · ${w.timestamp?w.timestamp.replace('T',' ').replace('Z',''):'Never run'}</div>
+    </div></div>`;
+  }).join('') || `<div class="empty-state" style="padding:40px">⚙️ Runtime workers not yet executed — runtime orchestrator will run on schedule</div>`;
+
+  set('runtime-health-workers', `<div style="padding:8px">${workerRows}</div>`);
+
+  const issueRows = issues.length ? issues.map(i => {
+    const sev = i.severity || 'info';
+    const emoji = sev==='critical'?'🔴':sev==='warning'?'🟡':'ℹ️';
+    return `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title">${emoji} ${esc(i.detail||'')}</div>
+      <div class="activity-meta">${esc(i.worker||'')} · ${esc(i.type||'')}</div>
+    </div></div>`;
+  }).join('') : `<div class="empty-state" style="padding:40px">✅ No open issues</div>`;
+
+  set('runtime-health-issues', `<div style="padding:8px">${issueRows}</div>`);
+}
+
+function renderRuntimeWorkers(d) {
+  const rw = d.runtime_workers || {};
+  const workers = rw.workers || {};
+  const ok = rw.scheduler_ok || 0;
+  const errors = rw.scheduler_errors || 0;
+  const elapsed = rw.scheduler_elapsed_sec || 0;
+
+  set('runtime-workers-cards', [
+    card('Workers OK', ok, '✅'),
+    card('Workers Failed', errors, '❌'),
+    card('Elapsed', elapsed ? `${elapsed}s` : '—', '⏱'),
+    card('Total Workers', Object.keys(workers).length, '⚙'),
+  ].join(''));
+
+  const rows = Object.entries(workers).map(([name, w]) => {
+    const hc = {healthy:'var(--green)',warning:'var(--yellow)',degraded:'var(--orange,#f97316)',critical:'var(--red)',error:'var(--red)',not_run:'var(--muted)',unknown:'var(--muted)'}[w.health]||'var(--muted)';
+    const ts = w.timestamp ? w.timestamp.replace('T',' ').replace('Z','') : 'Never run';
+    return `<tr>
+      <td style="padding:8px;border-bottom:1px solid var(--border)">${esc(name.replace(/_/g,' '))}</td>
+      <td style="padding:8px;border-bottom:1px solid var(--border);color:${hc}">${esc(w.health)}</td>
+      <td style="padding:8px;border-bottom:1px solid var(--border);color:var(--muted)">${esc(w.status)}</td>
+      <td style="padding:8px;border-bottom:1px solid var(--border);color:var(--muted);font-size:11px">${ts}</td>
+      <td style="padding:8px;border-bottom:1px solid var(--border);text-align:center">${w.issue_count||0}</td>
+    </tr>`;
+  }).join('');
+
+  set('runtime-workers-manifest', `<div style="padding:8px;overflow-x:auto">
+    <table style="width:100%;border-collapse:collapse;font-size:13px">
+      <thead><tr style="color:var(--muted);font-size:11px">
+        <th style="padding:8px;text-align:left">Worker</th>
+        <th style="padding:8px;text-align:left">Health</th>
+        <th style="padding:8px;text-align:left">Status</th>
+        <th style="padding:8px;text-align:left">Last Run</th>
+        <th style="padding:8px;text-align:center">Issues</th>
+      </tr></thead>
+      <tbody>${rows || '<tr><td colspan="5" style="padding:24px;text-align:center;color:var(--muted)">No worker data yet — orchestrator runs every 4 hours</td></tr>'}</tbody>
+    </table>
+  </div>`);
+}
+
+function renderRuntimeProviders(d) {
+  const rw = d.runtime_workers || {};
+  const ph = (d.providers || {});
+  const oaStatus = rw.provider_openai || ph.openai?.status || 'unknown';
+  const gmStatus = rw.provider_gemini || ph.gemini?.status || 'unknown';
+
+  const statusColor = s => ({healthy:'var(--green)',degraded:'var(--yellow)',critical:'var(--red)',unknown:'var(--muted)'}[s]||'var(--muted)');
+
+  set('runtime-providers-cards', [
+    card('OpenAI', `<span style="color:${statusColor(oaStatus)}">${oaStatus.toUpperCase()}</span>`, '⚡'),
+    card('Gemini', `<span style="color:${statusColor(gmStatus)}">${gmStatus.toUpperCase()}</span>`, '⚡'),
+    card('Failover', 'OpenAI → Gemini', '↺'),
+    card('Mode', ph.ai_mode || 'ai', '⚙'),
+  ].join(''));
+
+  set('runtime-providers-detail', `<div style="padding:16px">
+    <div style="margin-bottom:12px;padding:12px;background:var(--surface2);border-radius:8px">
+      <div style="font-weight:600;margin-bottom:4px">⚡ OpenAI (gpt-4o-mini)</div>
+      <div style="color:${statusColor(oaStatus)};font-size:13px">Status: ${oaStatus}</div>
+      <div style="color:var(--muted);font-size:12px;margin-top:4px">Primary provider · $0.15/1M input · $0.60/1M output</div>
+    </div>
+    <div style="padding:12px;background:var(--surface2);border-radius:8px">
+      <div style="font-weight:600;margin-bottom:4px">⚡ Gemini (gemini-1.5-flash)</div>
+      <div style="color:${statusColor(gmStatus)};font-size:13px">Status: ${gmStatus}</div>
+      <div style="color:var(--muted);font-size:12px;margin-top:4px">Fallback provider · $0.075/1M input · $0.30/1M output · Set GEMINI_API_KEY secret to activate</div>
+    </div>
+  </div>`);
+}
+
+function renderRuntimeReports(d) {
+  const rw = d.runtime_workers || {};
+  set('runtime-reports-cards', [
+    card('Daily Reports', 'memory/daily_reports/', '📋'),
+    card('Weekly Reports', 'memory/weekly_reports/', '📊'),
+    card('Schedule', '06:00 UTC daily · 07:00 UTC Sunday', '🕐'),
+    card('Heartbeat', rw.last_heartbeat ? rw.last_heartbeat.replace('T',' ').replace('Z','') : 'Never', '💓'),
+  ].join(''));
+
+  set('runtime-reports-list', `<div style="padding:16px">
+    <div style="margin-bottom:12px">
+      <div style="font-weight:600;margin-bottom:8px">📋 Daily Reports</div>
+      <div style="color:var(--muted);font-size:13px">Sent daily at 09:00 Istanbul (06:00 UTC) via Telegram.<br>
+      Covers: system health, games, SEO, indexing, revenue, providers, open issues.<br>
+      Stored in: memory/daily_reports/</div>
+    </div>
+    <div style="margin-bottom:12px">
+      <div style="font-weight:600;margin-bottom:8px">📊 Weekly Reports</div>
+      <div style="color:var(--muted);font-size:13px">Sent Sunday at 10:00 Istanbul (07:00 UTC) via Telegram.<br>
+      Covers: week-over-week deltas, revenue progress, AI provider uptime, all worker metrics.<br>
+      Stored in: memory/weekly_reports/</div>
+    </div>
+    <div>
+      <div style="font-weight:600;margin-bottom:8px">⚙️ Runtime Orchestrator</div>
+      <div style="color:var(--muted);font-size:13px">Runs every 4 hours. Executes all 9 workers in sequence.<br>
+      Sends Telegram alert only on DEGRADED or CRITICAL health.<br>
+      Stores heartbeat in: memory/runtime_heartbeat.json</div>
+    </div>
+  </div>`);
+}
+
+function renderRuntimeIncidents(d) {
+  const rw = d.runtime_workers || {};
+  const issues = rw.all_issues || [];
+  const issueCounts = rw.issue_counts || {};
+
+  set('runtime-incidents-cards', [
+    card('Total Issues', rw.total_issues || 0, '⚠️'),
+    card('Critical', issueCounts.critical || 0, '🔴'),
+    card('Warning', issueCounts.warning || 0, '🟡'),
+    card('Info', issueCounts.info || 0, 'ℹ️'),
+  ].join(''));
+
+  const rows = issues.length ? issues.map(i => {
+    const sev = i.severity || 'info';
+    const emoji = sev==='critical'?'🔴':sev==='warning'?'🟡':'ℹ️';
+    return `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title">${emoji} ${esc(i.detail||'')}</div>
+      <div class="activity-meta">${esc(i.worker||'')} · ${esc(i.type||'')} · ${esc(sev)}</div>
+    </div></div>`;
+  }).join('') : `<div class="empty-state" style="padding:40px">✅ No incidents — system operating normally<br><span style="color:var(--muted);font-size:12px">Incidents from AI provider failures are stored in memory/incidents/</span></div>`;
+
+  set('runtime-incidents-list', `<div style="padding:8px">${rows}</div>`);
+}
+
 // ─── Actions (GitHub-native) ─────────────────────────────────────────────────
 
 function triggerLoop(loopId) {
@@ -4038,6 +4203,11 @@ async function loadDashboard() {
     renderDeployTimeline(_data);
     renderTelegramLogs(_data);
     renderLiveAlerts(_data);
+    renderRuntimeHealth(_data);
+    renderRuntimeWorkers(_data);
+    renderRuntimeProviders(_data);
+    renderRuntimeReports(_data);
+    renderRuntimeIncidents(_data);
     renderActivity(_data);
     renderSafety(_data);
 

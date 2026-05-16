@@ -1274,6 +1274,62 @@ def read_telegram_logs():
     }
 
 
+def read_runtime_worker_states() -> dict:
+    snap_dir = Path("memory/snapshots")
+    snapshot_files = [
+        "analytics_snapshot.json",
+        "indexing_snapshot.json",
+        "seo_snapshot.json",
+        "github_snapshot.json",
+        "revenue_snapshot.json",
+        "publishing_snapshot.json",
+        "games_snapshot.json",
+        "telemetry_snapshot.json",
+        "alerts_snapshot.json",
+        "scheduler_manifest.json",
+    ]
+    workers = {}
+    for name in snapshot_files:
+        key = name.replace("_snapshot.json", "").replace("_manifest.json", "")
+        f = snap_dir / name
+        if f.exists():
+            try:
+                data = json.loads(f.read_text())
+                workers[key] = {
+                    "health": data.get("health", "unknown"),
+                    "timestamp": data.get("timestamp"),
+                    "status": data.get("status", "unknown"),
+                    "issue_count": len(data.get("issues", [])),
+                }
+            except Exception:
+                workers[key] = {"health": "error", "timestamp": None, "status": "error", "issue_count": 0}
+        else:
+            workers[key] = {"health": "not_run", "timestamp": None, "status": "not_run", "issue_count": 0}
+
+    system_health_data = read_json("memory/system_health.json")
+    heartbeat = read_json("memory/runtime_heartbeat.json")
+    provider_health = read_json("memory/provider_health.json")
+    scheduler = read_json("memory/snapshots/scheduler_manifest.json")
+    telemetry = read_json("memory/snapshots/telemetry_snapshot.json")
+
+    return {
+        "system_health": system_health_data.get("system_health", "UNKNOWN"),
+        "last_heartbeat": heartbeat.get("timestamp"),
+        "runtime_status": heartbeat.get("status", "unknown"),
+        "workers": workers,
+        "provider_openai": provider_health.get("openai", {}).get("status", "unknown"),
+        "provider_gemini": provider_health.get("gemini", {}).get("status", "unknown"),
+        "scheduler_ok": scheduler.get("ok_count", 0),
+        "scheduler_errors": scheduler.get("error_count", 0),
+        "scheduler_elapsed_sec": scheduler.get("total_elapsed_sec", 0),
+        "total_issues": telemetry.get("total_issues", 0),
+        "issue_counts": telemetry.get("issue_counts", {}),
+        "all_issues": telemetry.get("all_issues", [])[:20],
+        "daily_reports_path": "memory/daily_reports",
+        "weekly_reports_path": "memory/weekly_reports",
+    }
+
+
 def main():
     print("[dashboard] Aggregating dashboard data...")
 
@@ -1345,6 +1401,7 @@ def main():
     indexing = read_indexing_report()
     publishing_pipeline = read_publishing_pipeline_report()
     game_assets = read_game_asset_report()
+    runtime_workers = read_runtime_worker_states()
     print(f"[dashboard] {len(outputs)} outputs, {len(prs)} PRs, {len(automerge_log)} merge events, "
           f"{len(product_outputs)} product features, {visual_qa.get('total', 0)} QA reports, "
           f"{ai_qa.get('total', 0)} AI QA reviews, {roadmap.get('total_items', 0)} roadmap items, "
@@ -1377,8 +1434,16 @@ def main():
             },
         },
         "providers": {
-            "openai": {"configured": True, "available": True},
-            "gemini": {"configured": bool(os.environ.get("GEMINI_API_KEY")), "available": True},
+            "openai": {
+                "configured": True,
+                "available": True,
+                "status": runtime_workers.get("provider_openai", "unknown"),
+            },
+            "gemini": {
+                "configured": bool(os.environ.get("GEMINI_API_KEY")),
+                "available": True,
+                "status": runtime_workers.get("provider_gemini", "unknown"),
+            },
             "github_active": True,
             "ai_mode": "ai" if ai_outs else "template",
             "market_data": {"twelve_data": False, "alpha_vantage": False},
@@ -1519,6 +1584,7 @@ def main():
         "indexing": indexing,
         "publishing_pipeline": publishing_pipeline,
         "game_assets": game_assets,
+        "runtime_workers": runtime_workers,
         "analytics_intelligence": {
             "generated_at": analytics_intel.get("generated_at", ""),
             "data_source": analytics_intel.get("data_source", ""),

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-16T16:24:37Z",
+  "generated_at": "2026-05-16T16:47:46Z",
   "architecture": "github-native",
   "scheduler": {
     "scheduler_running": true,
@@ -167,23 +167,25 @@
       "openai": {
         "consecutive_429s": 0,
         "total_429s": 0,
-        "last_success": "2026-05-16T16:24:37Z"
+        "last_success": "2026-05-16T16:47:46Z"
       },
       "gemini": {
         "consecutive_429s": 0,
         "total_429s": 0,
-        "last_success": "2026-05-16T16:24:37Z"
+        "last_success": "2026-05-16T16:47:46Z"
       }
     }
   },
   "providers": {
     "openai": {
       "configured": true,
-      "available": true
+      "available": true,
+      "status": "unknown"
     },
     "gemini": {
       "configured": false,
-      "available": true
+      "available": true,
+      "status": "unknown"
     },
     "github_active": true,
     "ai_mode": "ai",
@@ -2693,6 +2695,83 @@
   "indexing": {},
   "publishing_pipeline": {},
   "game_assets": {},
+  "runtime_workers": {
+    "system_health": "UNKNOWN",
+    "last_heartbeat": null,
+    "runtime_status": "unknown",
+    "workers": {
+      "analytics": {
+        "health": "not_run",
+        "timestamp": null,
+        "status": "not_run",
+        "issue_count": 0
+      },
+      "indexing": {
+        "health": "not_run",
+        "timestamp": null,
+        "status": "not_run",
+        "issue_count": 0
+      },
+      "seo": {
+        "health": "not_run",
+        "timestamp": null,
+        "status": "not_run",
+        "issue_count": 0
+      },
+      "github": {
+        "health": "not_run",
+        "timestamp": null,
+        "status": "not_run",
+        "issue_count": 0
+      },
+      "revenue": {
+        "health": "not_run",
+        "timestamp": null,
+        "status": "not_run",
+        "issue_count": 0
+      },
+      "publishing": {
+        "health": "not_run",
+        "timestamp": null,
+        "status": "not_run",
+        "issue_count": 0
+      },
+      "games": {
+        "health": "not_run",
+        "timestamp": null,
+        "status": "not_run",
+        "issue_count": 0
+      },
+      "telemetry": {
+        "health": "not_run",
+        "timestamp": null,
+        "status": "not_run",
+        "issue_count": 0
+      },
+      "alerts": {
+        "health": "not_run",
+        "timestamp": null,
+        "status": "not_run",
+        "issue_count": 0
+      },
+      "scheduler": {
+        "health": "not_run",
+        "timestamp": null,
+        "status": "not_run",
+        "issue_count": 0
+      }
+    },
+    "provider_openai": "unknown",
+    "provider_gemini": "unknown",
+    "scheduler_ok": 0,
+    "scheduler_errors": 0,
+    "scheduler_elapsed_sec": 0,
+    "total_issues": 0,
+    "issue_counts": {},
+    "all_issues": [],
+    "daily_reports_path": "memory/daily_reports",
+    "weekly_reports_path": "memory/weekly_reports"
+  },
   "analytics_intelligence": {
     "generated_at": "2026-05-15T18:31:07Z",
     "data_source": "ai_intelligence",

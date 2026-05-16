@@ -1,0 +1,44 @@
+name: AI Runtime Orchestrator
+
+on:
+  schedule:
+    - cron: '0 */4 * * *'  # every 4 hours
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  runtime:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install openai requests google-generativeai
+
+      - name: Run runtime orchestrator
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          TELEGRAM_LOG_TOKEN: ${{ secrets.TELEGRAM_LOG_TOKEN }}
+          TELEGRAM_ADMIN_LOG_TOKEN: ${{ secrets.TELEGRAM_ADMIN_LOG_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_ADMIN_CHAT_ID: ${{ secrets.TELEGRAM_ADMIN_CHAT_ID }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: python scripts/runtime_orchestrator.py
+
+      - name: Commit runtime state
+        run: |
+          git config user.name "MIFTEH OS"
+          git config user.email "actions@mifteh.ai"
+          git add memory/snapshots/ memory/system_health.json memory/runtime_heartbeat.json memory/provider_health.json memory/alerts_log.json memory/incidents/ || true
+          git diff --cached --quiet || git -c commit.gpgsign=false commit -m "chore: runtime snapshot $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          git push

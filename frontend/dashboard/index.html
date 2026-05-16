@@ -132,6 +132,13 @@
       <button class="nav-btn" onclick="showTab('acquisition',this)"><span class="icon">✦</span> Acquisition</button>
       <button class="nav-btn" onclick="showTab('scaling',this)"><span class="icon">◎</span> Scaling</button>
 
+      <div class="nav-section">Runtime OS</div>
+      <button class="nav-btn" onclick="showTab('runtime-health',this)"><span class="icon">⬡</span> System Health</button>
+      <button class="nav-btn" onclick="showTab('runtime-workers',this)"><span class="icon">⚙</span> Worker Status</button>
+      <button class="nav-btn" onclick="showTab('runtime-providers',this)"><span class="icon">⚡</span> AI Providers</button>
+      <button class="nav-btn" onclick="showTab('runtime-reports',this)"><span class="icon">📋</span> Daily Reports</button>
+      <button class="nav-btn" onclick="showTab('runtime-incidents',this)"><span class="icon">🔴</span> Incidents</button>
+
       <div class="nav-section">System</div>
       <button class="nav-btn" onclick="showTab('health',this)"><span class="icon">♥</span> System Health</button>
       <button class="nav-btn" onclick="showTab('activity',this)"><span class="icon">≡</span> Activity Feed</button>
@@ -1925,6 +1932,58 @@
       <section id="tab-live-alerts" class="tab">
         <h2 class="section-title">Live Alerts</h2>
         <div id="live-alerts-list"></div>
+      </section>
+
+      <!-- RUNTIME OS TABS -->
+      <section id="tab-runtime-health" class="tab">
+        <h2 class="section-title">Runtime System Health</h2>
+        <div class="cards-grid" id="runtime-health-cards"></div>
+        <div class="panels-row">
+          <div class="panel">
+            <div class="panel-title">Worker Health Overview</div>
+            <div id="runtime-health-workers"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">Open Issues</div>
+            <div id="runtime-health-issues"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tab-runtime-workers" class="tab">
+        <h2 class="section-title">Worker Status</h2>
+        <div class="cards-grid" id="runtime-workers-cards"></div>
+        <div class="panel">
+          <div class="panel-title">Scheduler Manifest</div>
+          <div id="runtime-workers-manifest"></div>
+        </div>
+      </section>
+
+      <section id="tab-runtime-providers" class="tab">
+        <h2 class="section-title">AI Provider Health</h2>
+        <div class="cards-grid" id="runtime-providers-cards"></div>
+        <div class="panel">
+          <div class="panel-title">Provider Details</div>
+          <div id="runtime-providers-detail"></div>
+        </div>
+      </section>
+
+      <section id="tab-runtime-reports" class="tab">
+        <h2 class="section-title">Daily &amp; Weekly Reports</h2>
+        <div class="cards-grid" id="runtime-reports-cards"></div>
+        <div class="panel">
+          <div class="panel-title">Recent Reports</div>
+          <div id="runtime-reports-list"></div>
+        </div>
+      </section>
+
+      <section id="tab-runtime-incidents" class="tab">
+        <h2 class="section-title">Incidents &amp; Alerts Log</h2>
+        <div class="cards-grid" id="runtime-incidents-cards"></div>
+        <div class="panel">
+          <div class="panel-title">Alerts Log</div>
+          <div id="runtime-incidents-list"></div>
+        </div>
       </section>
 
     </div>

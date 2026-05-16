@@ -1,0 +1,40 @@
+name: AI Daily Reporter
+
+on:
+  schedule:
+    - cron: '0 6 * * *'   # 06:00 UTC = 09:00 Istanbul
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  daily-report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run daily reporter
+        env:
+          TELEGRAM_LOG_TOKEN: ${{ secrets.TELEGRAM_LOG_TOKEN }}
+          TELEGRAM_ADMIN_LOG_TOKEN: ${{ secrets.TELEGRAM_ADMIN_LOG_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_ADMIN_CHAT_ID: ${{ secrets.TELEGRAM_ADMIN_CHAT_ID }}
+        run: python scripts/daily_reporter.py
+
+      - name: Commit daily report
+        run: |
+          git config user.name "MIFTEH OS"
+          git config user.email "actions@mifteh.ai"
+          git add memory/daily_reports/ || true
+          git diff --cached --quiet || git -c commit.gpgsign=false commit -m "chore: daily report $(date -u +%Y-%m-%d)"
+          git push
