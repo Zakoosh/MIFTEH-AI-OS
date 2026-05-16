@@ -144,6 +144,30 @@ GAME_CONFIGS = {
         "target_audience": "all",
         "estimated_monthly_searches": 6200,
     },
+    "reaction": {
+        "name_en": "Reaction Game",
+        "name_ar": "لعبة ردود الأفعال",
+        "category": "reaction",
+        "description_en": "Test your reflexes in this fast-paced reaction time challenge",
+        "description_ar": "اختبر سرعة ردود أفعالك في تحدي سرعة الاستجابة المثير",
+        "keywords_ar": ["العاب ردود افعال", "العاب سرعة استجابة", "العاب تحدي سرعة"],
+        "keywords_en": ["reaction game", "reflex game", "speed test game"],
+        "schema_type": "VideoGame",
+        "target_audience": "all",
+        "estimated_monthly_searches": 4800,
+    },
+    "runner": {
+        "name_en": "Endless Runner Game",
+        "name_ar": "لعبة الجري اللانهائي",
+        "category": "runner",
+        "description_en": "Run, jump and slide through endless obstacles in this addictive runner",
+        "description_ar": "اجري وقفز وتحرك عبر عقبات لا نهاية لها في لعبة الجري المثيرة",
+        "keywords_ar": ["العاب جري", "العاب جري لا نهائية", "العاب قفز وجري"],
+        "keywords_en": ["endless runner", "running game", "jump and run game"],
+        "schema_type": "VideoGame",
+        "target_audience": "all",
+        "estimated_monthly_searches": 7200,
+    },
 }
 
 GAME_PROMPTS = {
@@ -354,6 +378,74 @@ CONTROLS:
 - Desktop: Click tiles / number keys for math
 - Mobile: Full touch support
 - Large tap targets for accessibility
+
+Return ONLY JavaScript for <script> tags. Start with: const config = {...}""",
+
+    "reaction": """Create a complete Phaser 3 reaction time / reflex game JavaScript.
+
+GAME MECHANICS:
+- Screen flashes a random color after a random delay (0.5–3 seconds)
+- Player must tap/click as fast as possible when they see the signal
+- Reaction time recorded in milliseconds
+- False starts (clicking before signal) = penalty
+- 10 rounds per session, average shown at end
+- Leaderboard saved in localStorage (top 5 times)
+- Difficulty levels: easy (longer delays) / hard (shorter delays)
+
+VISUAL SIGNALS:
+- Large colored circle pulses in center when ready
+- Green signal = react now
+- Red screen = false start penalty
+- Progress bar showing round count
+- Real-time ms counter during signal
+
+CONTROLS:
+- Desktop: Space bar or click anywhere
+- Mobile: Tap anywhere on screen
+- Large, full-screen tap area
+
+SCORING:
+- < 200ms: Excellent
+- 200-300ms: Good
+- 300-400ms: Average
+- > 400ms: Slow
+- Average score shown per session
+
+Return ONLY JavaScript for <script> tags. Start with: const config = {...}""",
+
+    "runner": """Create a complete Phaser 3 endless side-scrolling runner game JavaScript.
+
+GAME MECHANICS:
+- Character automatically runs right
+- Obstacles scroll from right to left (cactus, barriers, pits)
+- Jump over obstacles (single and double jump available)
+- Slide under low obstacles (crouch mechanic)
+- Coins scattered along the path — collect for bonus score
+- Speed increases every 500 meters
+- Distance counter as main score
+- High score saved to localStorage
+
+CHARACTER (all drawn with Phaser Graphics):
+- Simple stick figure or geometric runner shape
+- Run animation (alternate between 2 frames using Graphics)
+- Jump arc animation
+- Slide animation
+
+OBSTACLES:
+- Ground obstacles: rectangles of varying heights (jump to avoid)
+- Aerial obstacles: low-hanging barriers (slide to avoid)
+- Pit gaps in ground (jump to avoid)
+- All drawn as colored rectangles/shapes
+
+CONTROLS:
+- Desktop: Space/Up = jump, Down = slide/crouch, double-tap space = double jump
+- Mobile: Tap upper half = jump, tap lower half = slide
+- Auto-run (no left/right control needed)
+
+POWERUPS:
+- Shield (brief invincibility): blue star shape
+- Magnet (coin collector): yellow circle
+- Speed boost: orange triangle
 
 Return ONLY JavaScript for <script> tags. Start with: const config = {...}""",
 }
@@ -768,20 +860,26 @@ def generate_single_game(game_type, index, all_tokens, all_cost):
 
 
 FIRST_BATCH = [
-    # Racing & driving (high search volume)
+    # Priority 1: Racing (highest search volume)
     ("racing", 1), ("racing", 2), ("racing", 3), ("racing", 4), ("racing", 5),
-    ("car", 1), ("car", 2), ("car", 3),
-    ("drift", 1), ("drift", 2),
-    # Action & survival
-    ("action", 1), ("action", 2), ("action", 3), ("action", 4),
-    ("survival", 1), ("survival", 2), ("survival", 3),
-    # Casual & clicker
-    ("clicker", 1), ("clicker", 2), ("clicker", 3),
+    # Priority 2: Drift (high engagement, trending)
+    ("drift", 1), ("drift", 2), ("drift", 3),
+    # Priority 3: Idle (long session duration, monetization)
     ("idle", 1), ("idle", 2), ("idle", 3),
-    # Puzzle & kids
-    ("puzzle", 1), ("puzzle", 2),
-    ("kids", 1), ("kids", 2),
-    # Brain — SEO long tail
+    # Priority 4: Clicker (addictive, high RPM)
+    ("clicker", 1), ("clicker", 2), ("clicker", 3),
+    # Priority 5: Puzzle (broad audience, SEO rich)
+    ("puzzle", 1), ("puzzle", 2), ("puzzle", 3),
+    # Priority 6: Kids educational (family audience, AdSense safe)
+    ("kids", 1), ("kids", 2), ("kids", 3),
+    # Priority 7: Reaction (viral potential, quick sessions)
+    ("reaction", 1), ("reaction", 2), ("reaction", 3),
+    # Priority 8: Endless runner (mobile-first, high retention)
+    ("runner", 1), ("runner", 2), ("runner", 3),
+    # Secondary: Car & action for SEO diversity
+    ("car", 1), ("car", 2),
+    ("action", 1), ("action", 2),
+    ("survival", 1),
     ("brain", 1),
 ]
 

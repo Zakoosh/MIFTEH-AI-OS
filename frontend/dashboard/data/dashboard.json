@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-16T16:47:46Z",
+  "generated_at": "2026-05-16T17:34:30Z",
   "architecture": "github-native",
   "scheduler": {
     "scheduler_running": true,
@@ -167,12 +167,12 @@
       "openai": {
         "consecutive_429s": 0,
         "total_429s": 0,
-        "last_success": "2026-05-16T16:47:46Z"
+        "last_success": "2026-05-16T17:34:30Z"
       },
       "gemini": {
         "consecutive_429s": 0,
         "total_429s": 0,
-        "last_success": "2026-05-16T16:47:46Z"
+        "last_success": "2026-05-16T17:34:30Z"
       }
     }
   },
@@ -2772,6 +2772,53 @@
     "daily_reports_path": "memory/daily_reports",
     "weekly_reports_path": "memory/weekly_reports"
   },
+  "focus_mode": {
+    "mode": "yallaplays_priority",
+    "label": "YallaPlays 7-Day Focus Mode",
+    "active": true,
+    "activated_at": "2026-05-16T17:26:49Z",
+    "expires_at": "2026-05-23T17:26:49Z",
+    "allocation": {
+      "yallaplays": 80,
+      "mifteh": 15,
+      "fionera": 5
+    },
+    "game_priority_order": [
+      "racing",
+      "drift",
+      "idle",
+      "clicker",
+      "puzzle",
+      "kids",
+      "reaction",
+      "runner",
+      "car",
+      "action",
+      "survival",
+      "brain"
+    ],
+    "daily_targets": {
+      "games_generated_min": 5,
+      "seo_pages_min": 20,
+      "mobile_compatibility_pct": 95,
+      "qa_score_min": 80,
+      "indexed_urls_growth": true,
+      "new_keywords_daily": true,
+      "ctr_improvement_weekly": true
+    },
+    "pinned_tabs": [
+      "game-factory",
+      "generated-games",
+      "game-qa",
+      "publishing-pipeline",
+      "indexing-status",
+      "revenue-tracker",
+      "runtime-health"
+    ],
+    "auto_hide_empty": true
+  },
+  "target_tracker": {},
+  "learning_insights": {},
   "analytics_intelligence": {
     "generated_at": "2026-05-15T18:31:07Z",
     "data_source": "ai_intelligence",

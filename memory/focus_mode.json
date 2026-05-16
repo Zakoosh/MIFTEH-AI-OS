@@ -1,0 +1,72 @@
+{
+  "mode": "yallaplays_priority",
+  "label": "YallaPlays 7-Day Focus Mode",
+  "activated_at": "2026-05-16T17:26:49Z",
+  "expires_at": "2026-05-23T17:26:49Z",
+  "allocation": {
+    "yallaplays": 80,
+    "mifteh": 15,
+    "fionera": 5
+  },
+  "game_priority_order": [
+    "racing",
+    "drift",
+    "idle",
+    "clicker",
+    "puzzle",
+    "kids",
+    "reaction",
+    "runner",
+    "car",
+    "action",
+    "survival",
+    "brain"
+  ],
+  "daily_targets": {
+    "games_generated_min": 5,
+    "seo_pages_min": 20,
+    "mobile_compatibility_pct": 95,
+    "qa_score_min": 80,
+    "indexed_urls_growth": true,
+    "new_keywords_daily": true,
+    "ctr_improvement_weekly": true
+  },
+  "pinned_dashboard_tabs": [
+    "game-factory",
+    "generated-games",
+    "game-qa",
+    "publishing-pipeline",
+    "indexing-status",
+    "revenue-tracker",
+    "runtime-health"
+  ],
+  "auto_hide_empty_sections": true,
+  "learning_inputs": [
+    "qa_pass_rates",
+    "indexing_success_failure",
+    "ctr_estimates",
+    "session_duration",
+    "bounce_rate",
+    "trend_signals",
+    "approval_history",
+    "deployment_success",
+    "ranking_improvements",
+    "revenue_performance"
+  ],
+  "reporting_fields": [
+    "games_generated",
+    "games_approved",
+    "games_blocked",
+    "indexing_growth",
+    "seo_growth",
+    "estimated_revenue_impact",
+    "top_performing_categories",
+    "detected_trends",
+    "qa_averages",
+    "deployment_success_rate",
+    "estimated_ctr_growth",
+    "estimated_rpm_growth"
+  ],
+  "active": true,
+  "updated_at": "2026-05-16T17:26:49Z"
+}

@@ -1274,6 +1274,55 @@ def read_telegram_logs():
     }
 
 
+def read_focus_mode() -> dict:
+    data = read_json("memory/focus_mode.json")
+    if not data:
+        return {"mode": "default", "active": False}
+    return {
+        "mode": data.get("mode", "default"),
+        "label": data.get("label", ""),
+        "active": data.get("active", False),
+        "activated_at": data.get("activated_at"),
+        "expires_at": data.get("expires_at"),
+        "allocation": data.get("allocation", {}),
+        "game_priority_order": data.get("game_priority_order", []),
+        "daily_targets": data.get("daily_targets", {}),
+        "pinned_tabs": data.get("pinned_dashboard_tabs", []),
+        "auto_hide_empty": data.get("auto_hide_empty_sections", True),
+    }
+
+
+def read_target_tracker() -> dict:
+    data = read_json("memory/snapshots/target_tracker_snapshot.json")
+    if not data:
+        return {}
+    return {
+        "date": data.get("date"),
+        "targets_met": data.get("targets_met", 0),
+        "targets_total": data.get("targets_total", 0),
+        "all_targets_met": data.get("all_targets_met", False),
+        "checks": data.get("checks", []),
+        "health": data.get("health", "unknown"),
+        "history": data.get("history", [])[-7:],
+    }
+
+
+def read_learning_insights() -> dict:
+    data = read_json("memory/learning_insights.json")
+    if not data:
+        return {}
+    return {
+        "updated_at": data.get("updated_at"),
+        "trends": data.get("trends", []),
+        "recommendations": data.get("recommendations", [])[:6],
+        "qa": data.get("qa", {}),
+        "indexing": data.get("indexing", {}),
+        "approval": data.get("approval", {}),
+        "deployment": data.get("deployment", {}),
+        "revenue": data.get("revenue", {}),
+    }
+
+
 def read_runtime_worker_states() -> dict:
     snap_dir = Path("memory/snapshots")
     snapshot_files = [
@@ -1402,6 +1451,9 @@ def main():
     publishing_pipeline = read_publishing_pipeline_report()
     game_assets = read_game_asset_report()
     runtime_workers = read_runtime_worker_states()
+    focus_mode = read_focus_mode()
+    target_tracker = read_target_tracker()
+    learning_insights = read_learning_insights()
     print(f"[dashboard] {len(outputs)} outputs, {len(prs)} PRs, {len(automerge_log)} merge events, "
           f"{len(product_outputs)} product features, {visual_qa.get('total', 0)} QA reports, "
           f"{ai_qa.get('total', 0)} AI QA reviews, {roadmap.get('total_items', 0)} roadmap items, "
@@ -1585,6 +1637,9 @@ def main():
         "publishing_pipeline": publishing_pipeline,
         "game_assets": game_assets,
         "runtime_workers": runtime_workers,
+        "focus_mode": focus_mode,
+        "target_tracker": target_tracker,
+        "learning_insights": learning_insights,
         "analytics_intelligence": {
             "generated_at": analytics_intel.get("generated_at", ""),
             "data_source": analytics_intel.get("data_source", ""),

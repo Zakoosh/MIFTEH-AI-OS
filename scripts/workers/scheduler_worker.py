@@ -16,6 +16,8 @@ WORKER_ORDER = [
     ("revenue_worker",   "revenue_worker"),
     ("publishing_worker","publishing_worker"),
     ("games_worker",     "games_worker"),
+    ("learning_worker",  "learning_worker"),   # depends on games/qa/indexing
+    ("target_tracker",   "target_tracker"),    # depends on all above
     ("telemetry_worker", "telemetry_worker"),  # must run after others
     ("alerts_worker",    "alerts_worker"),     # must run last
 ]

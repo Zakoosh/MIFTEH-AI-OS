@@ -87,6 +87,167 @@ function showTab(name, btn) {
   if (el) el.textContent = titles[name] || 'Dashboard';
 }
 
+// ─── Nav Search & Command Palette ────────────────────────────────────────────
+
+function filterNav(query) {
+  const q = (query || '').toLowerCase().trim();
+  const nav = document.getElementById('sidebar-nav');
+  if (!nav) return;
+  nav.querySelectorAll('.nav-btn').forEach(btn => {
+    const label = (btn.dataset.label || btn.textContent || '').toLowerCase();
+    btn.style.display = (!q || label.includes(q)) ? '' : 'none';
+  });
+  nav.querySelectorAll('.nav-section').forEach(sec => {
+    // Hide section header if all its buttons are hidden
+    let next = sec.nextElementSibling;
+    let anyVisible = false;
+    while (next && !next.classList.contains('nav-section')) {
+      if (next.style.display !== 'none') anyVisible = true;
+      next = next.nextElementSibling;
+    }
+    sec.style.display = anyVisible ? '' : 'none';
+  });
+}
+
+// ── Command palette ───────────────────────────────────────────────────────────
+
+let _cmdSelectedIdx = -1;
+
+function openCommandPalette() {
+  const el = document.getElementById('command-palette');
+  if (!el) return;
+  el.style.display = 'block';
+  const inp = document.getElementById('cmd-input');
+  if (inp) { inp.value = ''; inp.focus(); }
+  _cmdSelectedIdx = -1;
+  renderCommandResults('');
+}
+
+function closeCommandPalette() {
+  const el = document.getElementById('command-palette');
+  if (el) el.style.display = 'none';
+}
+
+function _allNavItems() {
+  const items = [];
+  document.querySelectorAll('.nav-btn').forEach(btn => {
+    const onclick = btn.getAttribute('onclick') || '';
+    const match = onclick.match(/showTab\('([^']+)'/);
+    if (match) {
+      items.push({
+        id: match[1],
+        label: (btn.dataset.label || btn.textContent || '').trim(),
+        pinned: btn.classList.contains('nav-pinned'),
+        btn,
+      });
+    }
+  });
+  return items;
+}
+
+function renderCommandResults(query) {
+  const q = (query || '').toLowerCase().trim();
+  const items = _allNavItems();
+  const filtered = q ? items.filter(i => i.label.toLowerCase().includes(q)) : items;
+  const container = document.getElementById('cmd-results');
+  if (!container) return;
+
+  if (!filtered.length) {
+    container.innerHTML = `<div style="padding:16px 12px;color:#64748b;text-align:center;font-size:13px">No results for "${esc(query)}"</div>`;
+    return;
+  }
+
+  container.innerHTML = filtered.map((item, idx) => `
+    <div class="cmd-item" data-idx="${idx}" data-tab="${esc(item.id)}"
+      onclick="cmdSelectTab('${esc(item.id)}')"
+      onmouseover="setCmdSelected(${idx})"
+      style="padding:10px 14px;cursor:pointer;border-radius:6px;display:flex;align-items:center;gap:10px;color:#e2e8f0;font-size:13px;${idx===_cmdSelectedIdx?'background:#1e293b':''}">
+      ${item.pinned ? '<span style="color:#6366f1;font-size:10px">📌</span>' : '<span style="color:#475569;font-size:12px">→</span>'}
+      <span>${esc(item.label)}</span>
+    </div>
+  `).join('');
+  _cmdSelectedIdx = -1;
+}
+
+function filterCommandPalette(value) {
+  _cmdSelectedIdx = -1;
+  renderCommandResults(value);
+}
+
+function setCmdSelected(idx) {
+  _cmdSelectedIdx = idx;
+  document.querySelectorAll('.cmd-item').forEach((el, i) => {
+    el.style.background = i === idx ? '#1e293b' : '';
+  });
+}
+
+function handleCmdKey(e) {
+  const items = document.querySelectorAll('.cmd-item');
+  if (e.key === 'Escape') { closeCommandPalette(); return; }
+  if (e.key === 'ArrowDown') {
+    _cmdSelectedIdx = Math.min(_cmdSelectedIdx + 1, items.length - 1);
+    items.forEach((el, i) => el.style.background = i === _cmdSelectedIdx ? '#1e293b' : '');
+    e.preventDefault();
+  } else if (e.key === 'ArrowUp') {
+    _cmdSelectedIdx = Math.max(_cmdSelectedIdx - 1, 0);
+    items.forEach((el, i) => el.style.background = i === _cmdSelectedIdx ? '#1e293b' : '');
+    e.preventDefault();
+  } else if (e.key === 'Enter') {
+    const selected = items[_cmdSelectedIdx] || items[0];
+    if (selected) cmdSelectTab(selected.dataset.tab);
+  }
+}
+
+function cmdSelectTab(tabId) {
+  closeCommandPalette();
+  const btn = document.querySelector(`.nav-btn[onclick*="'${tabId}'"]`);
+  showTab(tabId, btn);
+  // Scroll tab button into view
+  if (btn) btn.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+// ── Auto-hide empty sections ──────────────────────────────────────────────────
+
+function autoHideEmptySections() {
+  if (!window._data) return;
+  // Sections that are "empty" when their primary data key is missing/zero
+  const emptinessRules = [
+    { section: 'previews',     check: () => !(_data.repository?.previews?.length) },
+    { section: 'crosslearn',   check: () => !(_data.cross_project?.projects) },
+    { section: 'sandbox',      check: () => !(_data.sandbox?.active_sandboxes) },
+    { section: 'research',     check: () => !(_data.research?.projects_researched) },
+    { section: 'cognition',    check: () => !(_data.cognition?.health_score) },
+    { section: 'civilization', check: () => !(_data.kernel?.company_mode) },
+    { section: 'agents',       check: () => !(_data.agent_bus?.active_agents?.length) },
+    { section: 'economy',      check: () => !(_data.task_economy?.portfolio) },
+  ];
+
+  emptinessRules.forEach(rule => {
+    const btn = document.querySelector(`.nav-btn[onclick*="'${rule.section}'"]`);
+    if (!btn) return;
+    const isEmpty = rule.check();
+    btn.style.opacity = isEmpty ? '0.35' : '';
+    btn.title = isEmpty ? 'No data yet — will populate when workflows run' : '';
+  });
+}
+
+// ── Focus mode banner ─────────────────────────────────────────────────────────
+
+function renderFocusBanner(d) {
+  const fm = d.focus_mode || {};
+  if (!fm.active && !fm.mode) return;
+  const badge = document.getElementById('focus-mode-badge');
+  const banner = document.getElementById('focus-banner');
+  const bannerText = document.getElementById('focus-banner-text');
+  const bannerExpires = document.getElementById('focus-banner-expires');
+  if (badge) badge.style.display = '';
+  if (banner) banner.style.display = '';
+  if (bannerText) bannerText.textContent = fm.label || 'Focus Mode active';
+  if (bannerExpires && fm.expires_at) {
+    bannerExpires.textContent = `Expires ${fm.expires_at.slice(0, 10)}`;
+  }
+}
+
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
 function esc(s) {
@@ -3911,6 +4072,50 @@ function renderLiveAlerts(d) {
   ).join('') + `</div>` : `<div class="empty-state" style="padding:40px">✅ No active alerts — system operating normally</div>`);
 }
 
+// ─── Phase N.2: Focus Mode & Target Tracker ───────────────────────────────────
+
+function renderTargetTracker(d) {
+  const tt = d.target_tracker || {};
+  const fm = d.focus_mode || {};
+  const checks = tt.checks || [];
+  const history = tt.history || [];
+  const met = tt.targets_met || 0;
+  const total = tt.targets_total || 0;
+  const allMet = tt.all_targets_met;
+  const learning = d.learning_insights || {};
+  const trends = learning.trends || [];
+
+  set('target-tracker-cards', [
+    card('Targets Met Today', `${met}/${total}`, allMet ? '✅' : '🎯'),
+    card('Status', tt.health || 'unknown', tt.health === 'healthy' ? '🟢' : tt.health === 'critical' ? '🔴' : '🟡'),
+    card('Focus Mode', fm.label ? fm.label.replace('YallaPlays ','') : 'Active', '📌'),
+    card('Expires', fm.expires_at ? fm.expires_at.slice(0, 10) : '—', '⏱'),
+    card('Allocation', fm.allocation ? `${fm.allocation.yallaplays || 80}% YP` : '80% YP', '⬡'),
+    card('Trends Detected', trends.length, '📈'),
+  ].join(''));
+
+  const checkRows = checks.length ? checks.map(c => {
+    const icon = c.met ? '✅' : '❌';
+    const gap = c.gap > 0 ? `<span style="color:var(--red);font-size:11px"> (gap: ${c.gap})</span>` : '';
+    return `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title">${icon} ${esc(c.label)}</div>
+      <div class="activity-meta">Actual: <b>${c.actual}</b> / Target: ${c.target}${gap}</div>
+    </div></div>`;
+  }).join('') : `<div class="empty-state" style="padding:40px">🎯 Target data available after first runtime run<br><span style="color:var(--muted);font-size:12px">Orchestrator runs every 4 hours</span></div>`;
+
+  set('target-tracker-checks', `<div style="padding:8px">${checkRows}</div>`);
+
+  const histRows = history.length ? history.slice().reverse().map(h => {
+    const icon = h.all_met ? '✅' : '⚠️';
+    return `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title">${icon} ${esc(h.date)}</div>
+      <div class="activity-meta">Games: ${h.games} · SEO: ${h.seo_pages} · QA: ${h.qa_avg}/100 · Targets: ${h.targets_met}/${h.targets_total}</div>
+    </div></div>`;
+  }).join('') : `<div class="empty-state" style="padding:40px">📅 History builds over 7 days</div>`;
+
+  set('target-tracker-history', `<div style="padding:8px">${histRows}</div>`);
+}
+
 // ─── Phase N: Runtime OS ──────────────────────────────────────────────────────
 
 function renderRuntimeHealth(d) {
@@ -4203,6 +4408,7 @@ async function loadDashboard() {
     renderDeployTimeline(_data);
     renderTelegramLogs(_data);
     renderLiveAlerts(_data);
+    renderTargetTracker(_data);
     renderRuntimeHealth(_data);
     renderRuntimeWorkers(_data);
     renderRuntimeProviders(_data);
@@ -4210,6 +4416,8 @@ async function loadDashboard() {
     renderRuntimeIncidents(_data);
     renderActivity(_data);
     renderSafety(_data);
+    renderFocusBanner(_data);
+    autoHideEmptySections();
 
   } catch (err) {
     console.error('Dashboard load error:', err);
@@ -4225,6 +4433,20 @@ async function loadDashboard() {
 }
 
 (async () => {
+  // Ctrl+K command palette
+  document.addEventListener('keydown', e => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+      e.preventDefault();
+      const palette = document.getElementById('command-palette');
+      if (palette && palette.style.display === 'block') {
+        closeCommandPalette();
+      } else {
+        openCommandPalette();
+      }
+    }
+    if (e.key === 'Escape') closeCommandPalette();
+  });
+
   const ok = await initAuth();
   if (ok) {
     loadDashboard();

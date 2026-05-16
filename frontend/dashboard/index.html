@@ -17,47 +17,65 @@
       <div class="brand">MIFTEH OS</div>
       <div class="sub">miftehos.com</div>
     </div>
-    <nav class="sidebar-nav">
+    <!-- Search bar -->
+    <div style="padding:8px 12px 4px">
+      <input id="nav-search" type="text" placeholder="Search tabs... (Ctrl+K)"
+        oninput="filterNav(this.value)"
+        style="width:100%;padding:6px 10px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:12px;outline:none"/>
+    </div>
+
+    <nav class="sidebar-nav" id="sidebar-nav">
+      <!-- PINNED: Focus Mode Priority Tabs -->
+      <div class="nav-section nav-section-pinned" style="color:var(--accent,#6366f1);font-size:10px;letter-spacing:.08em">📌 YALLAPLAYS FOCUS</div>
+      <button class="nav-btn nav-pinned" onclick="showTab('game-factory',this)" data-tab="game-factory" data-label="Game Factory"><span class="icon">🎮</span> Game Factory</button>
+      <button class="nav-btn nav-pinned" onclick="showTab('generated-games',this)" data-tab="generated-games" data-label="Generated Games"><span class="icon">🕹</span> Generated Games</button>
+      <button class="nav-btn nav-pinned" onclick="showTab('game-qa',this)" data-tab="game-qa" data-label="Game QA"><span class="icon">✅</span> Game QA</button>
+      <button class="nav-btn nav-pinned" onclick="showTab('publishing-pipeline',this)" data-tab="publishing-pipeline" data-label="Publishing Pipeline"><span class="icon">⛓</span> Publishing Pipeline</button>
+      <button class="nav-btn nav-pinned" onclick="showTab('indexing-status',this)" data-tab="indexing-status" data-label="Indexing Status"><span class="icon">🔍</span> Indexing Status</button>
+      <button class="nav-btn nav-pinned" onclick="showTab('revenue-tracker',this)" data-tab="revenue-tracker" data-label="Revenue Tracker"><span class="icon">$</span> Revenue Tracker</button>
+      <button class="nav-btn nav-pinned" onclick="showTab('runtime-health',this)" data-tab="runtime-health" data-label="Runtime Health"><span class="icon">⬡</span> Runtime Health</button>
+      <button class="nav-btn nav-pinned" onclick="showTab('target-tracker',this)" data-tab="target-tracker" data-label="Daily Targets"><span class="icon">🎯</span> Daily Targets</button>
+
       <div class="nav-section">Overview</div>
-      <button class="nav-btn active" onclick="showTab('overview',this)"><span class="icon">◈</span> Dashboard</button>
-      <button class="nav-btn" onclick="showTab('loops',this)"><span class="icon">↺</span> Active Loops</button>
-      <button class="nav-btn" onclick="showTab('providers',this)"><span class="icon">⚡</span> AI Providers</button>
-      <button class="nav-btn" onclick="showTab('ai-analytics',this)"><span class="icon">📊</span> AI Analytics</button>
+      <button class="nav-btn active" onclick="showTab('overview',this)" data-label="Dashboard"><span class="icon">◈</span> Dashboard</button>
+      <button class="nav-btn" onclick="showTab('loops',this)" data-label="Active Loops"><span class="icon">↺</span> Active Loops</button>
+      <button class="nav-btn" onclick="showTab('providers',this)" data-label="AI Providers"><span class="icon">⚡</span> AI Providers</button>
+      <button class="nav-btn" onclick="showTab('ai-analytics',this)" data-label="AI Analytics"><span class="icon">📊</span> AI Analytics</button>
 
       <div class="nav-section">Operations</div>
-      <button class="nav-btn" onclick="showTab('outputs',this)"><span class="icon">◻</span> Generated Outputs</button>
-      <button class="nav-btn" onclick="showTab('previews',this)"><span class="icon">◫</span> Previews</button>
-      <button class="nav-btn" onclick="showTab('repository',this)"><span class="icon">⎇</span> PR-Ready Changes</button>
-      <button class="nav-btn" onclick="showTab('github',this)"><span class="icon">⑂</span> GitHub PRs</button>
+      <button class="nav-btn" onclick="showTab('outputs',this)" data-label="Generated Outputs"><span class="icon">◻</span> Generated Outputs</button>
+      <button class="nav-btn" onclick="showTab('previews',this)" data-label="Previews"><span class="icon">◫</span> Previews</button>
+      <button class="nav-btn" onclick="showTab('repository',this)" data-label="PR-Ready Changes"><span class="icon">⎇</span> PR-Ready Changes</button>
+      <button class="nav-btn" onclick="showTab('github',this)" data-label="GitHub PRs"><span class="icon">⑂</span> GitHub PRs</button>
 
       <div class="nav-section">Intelligence</div>
-      <button class="nav-btn" onclick="showTab('analytics',this)"><span class="icon">📈</span> Analytics Intel</button>
-      <button class="nav-btn" onclick="showTab('roadmap',this)"><span class="icon">☛</span> Product Roadmap</button>
-      <button class="nav-btn" onclick="showTab('market',this)"><span class="icon">◎</span> Market Intel</button>
+      <button class="nav-btn" onclick="showTab('analytics',this)" data-label="Analytics Intel"><span class="icon">📈</span> Analytics Intel</button>
+      <button class="nav-btn" onclick="showTab('roadmap',this)" data-label="Product Roadmap"><span class="icon">☛</span> Product Roadmap</button>
+      <button class="nav-btn" onclick="showTab('market',this)" data-label="Market Intel"><span class="icon">◎</span> Market Intel</button>
 
       <div class="nav-section">Business</div>
-      <button class="nav-btn" onclick="showTab('revenue',this)"><span class="icon">$</span> Revenue Engine</button>
-      <button class="nav-btn" onclick="showTab('strategy',this)"><span class="icon">◆</span> Strategy</button>
+      <button class="nav-btn" onclick="showTab('revenue',this)" data-label="Revenue Engine"><span class="icon">$</span> Revenue Engine</button>
+      <button class="nav-btn" onclick="showTab('strategy',this)" data-label="Strategy"><span class="icon">◆</span> Strategy</button>
 
       <div class="nav-section">Product</div>
-      <button class="nav-btn" onclick="showTab('product',this)"><span class="icon">🏗</span> Product Execution</button>
-      <button class="nav-btn" onclick="showTab('executor',this)"><span class="icon">⚙</span> Autonomous Executor</button>
-      <button class="nav-btn" onclick="showTab('swarm',this)"><span class="icon">⬡</span> Swarm Intel</button>
+      <button class="nav-btn" onclick="showTab('product',this)" data-label="Product Execution"><span class="icon">🏗</span> Product Execution</button>
+      <button class="nav-btn" onclick="showTab('executor',this)" data-label="Autonomous Executor"><span class="icon">⚙</span> Autonomous Executor</button>
+      <button class="nav-btn" onclick="showTab('swarm',this)" data-label="Swarm Intel"><span class="icon">⬡</span> Swarm Intel</button>
 
       <div class="nav-section">Quality</div>
-      <button class="nav-btn" onclick="showTab('aiqa',this)"><span class="icon">✦</span> AI QA Engine</button>
-      <button class="nav-btn" onclick="showTab('browser',this)"><span class="icon">◉</span> Browser Runtime</button>
-      <button class="nav-btn" onclick="showTab('experiments',this)"><span class="icon">⚗</span> Experiments</button>
+      <button class="nav-btn" onclick="showTab('aiqa',this)" data-label="AI QA Engine"><span class="icon">✦</span> AI QA Engine</button>
+      <button class="nav-btn" onclick="showTab('browser',this)" data-label="Browser Runtime"><span class="icon">◉</span> Browser Runtime</button>
+      <button class="nav-btn" onclick="showTab('experiments',this)" data-label="Experiments"><span class="icon">⚗</span> Experiments</button>
 
       <div class="nav-section">Autonomy</div>
-      <button class="nav-btn" onclick="showTab('priority',this)"><span class="icon">▲</span> Priority Engine</button>
-      <button class="nav-btn" onclick="showTab('trust',this)"><span class="icon">⚖</span> Trust &amp; Apply</button>
-      <button class="nav-btn" onclick="showTab('monitor',this)"><span class="icon">♦</span> Deployment Monitor</button>
+      <button class="nav-btn" onclick="showTab('priority',this)" data-label="Priority Engine"><span class="icon">▲</span> Priority Engine</button>
+      <button class="nav-btn" onclick="showTab('trust',this)" data-label="Trust and Apply"><span class="icon">⚖</span> Trust &amp; Apply</button>
+      <button class="nav-btn" onclick="showTab('monitor',this)" data-label="Deployment Monitor"><span class="icon">♦</span> Deployment Monitor</button>
 
       <div class="nav-section">Memory &amp; Evolution</div>
-      <button class="nav-btn" onclick="showTab('memory',this)"><span class="icon">◈</span> AI Memory</button>
-      <button class="nav-btn" onclick="showTab('crosslearn',this)"><span class="icon">↔</span> Cross-Project</button>
-      <button class="nav-btn" onclick="showTab('evolution',this)"><span class="icon">⟳</span> Self-Evolution</button>
+      <button class="nav-btn" onclick="showTab('memory',this)" data-label="AI Memory"><span class="icon">◈</span> AI Memory</button>
+      <button class="nav-btn" onclick="showTab('crosslearn',this)" data-label="Cross-Project"><span class="icon">↔</span> Cross-Project</button>
+      <button class="nav-btn" onclick="showTab('evolution',this)" data-label="Self-Evolution"><span class="icon">⟳</span> Self-Evolution</button>
 
       <div class="nav-section">World Intelligence</div>
       <button class="nav-btn" onclick="showTab('webintel',this)"><span class="icon">◉</span> Web Intelligence</button>
@@ -164,9 +182,18 @@
       </div>
       <div class="topbar-right">
         <span class="last-updated" id="last-updated"></span>
+        <span id="focus-mode-badge" style="display:none;padding:3px 8px;background:rgba(99,102,241,.15);border:1px solid rgba(99,102,241,.4);border-radius:12px;font-size:11px;color:#818cf8;margin-right:6px">📌 Focus Mode</span>
         <span class="live-badge">● LIVE</span>
+        <button class="refresh-btn" onclick="openCommandPalette()" title="Ctrl+K" style="margin-right:4px">⌘ K</button>
         <button class="refresh-btn" onclick="loadDashboard()">↺ Refresh</button>
       </div>
+    </div>
+
+    <!-- Focus Mode Banner -->
+    <div id="focus-banner" style="display:none;padding:6px 20px;background:rgba(99,102,241,.08);border-bottom:1px solid rgba(99,102,241,.2);font-size:12px;color:#818cf8;display:flex;align-items:center;gap:8px">
+      <span>📌</span>
+      <span id="focus-banner-text">YallaPlays Focus Mode active</span>
+      <span id="focus-banner-expires" style="color:rgba(129,140,248,.6)"></span>
     </div>
 
     <div class="content">
@@ -1934,6 +1961,22 @@
         <div id="live-alerts-list"></div>
       </section>
 
+      <!-- TARGET TRACKER TAB -->
+      <section id="tab-target-tracker" class="tab">
+        <h2 class="section-title">Daily Targets — Focus Mode</h2>
+        <div class="cards-grid" id="target-tracker-cards"></div>
+        <div class="panels-row">
+          <div class="panel">
+            <div class="panel-title">Today's Checks</div>
+            <div id="target-tracker-checks"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">7-Day History</div>
+            <div id="target-tracker-history"></div>
+          </div>
+        </div>
+      </section>
+
       <!-- RUNTIME OS TABS -->
       <section id="tab-runtime-health" class="tab">
         <h2 class="section-title">Runtime System Health</h2>
@@ -1987,6 +2030,21 @@
       </section>
 
     </div>
+  </div>
+</div>
+
+<!-- Command Palette -->
+<div id="command-palette" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.6);backdrop-filter:blur(4px)" onclick="if(event.target===this)closeCommandPalette()">
+  <div style="position:absolute;top:15%;left:50%;transform:translateX(-50%);width:min(560px,90vw);background:#1e1e2e;border:1px solid #334155;border-radius:12px;box-shadow:0 24px 64px rgba(0,0,0,.6);overflow:hidden">
+    <div style="padding:12px 16px;border-bottom:1px solid #1e293b;display:flex;align-items:center;gap:8px">
+      <span style="color:#64748b;font-size:14px">⌘</span>
+      <input id="cmd-input" type="text" placeholder="Go to tab, search sections..."
+        oninput="filterCommandPalette(this.value)"
+        onkeydown="handleCmdKey(event)"
+        style="flex:1;background:transparent;border:none;outline:none;color:#f1f5f9;font-size:14px;"/>
+      <kbd style="color:#64748b;font-size:11px;padding:2px 6px;border:1px solid #334155;border-radius:4px">ESC</kbd>
+    </div>
+    <div id="cmd-results" style="max-height:360px;overflow-y:auto;padding:8px"></div>
   </div>
 </div>
 

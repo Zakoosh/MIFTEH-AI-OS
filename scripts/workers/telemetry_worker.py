@@ -15,6 +15,8 @@ WORKER_SNAPSHOTS = [
     "revenue_snapshot.json",
     "publishing_snapshot.json",
     "games_snapshot.json",
+    "learning_snapshot.json",
+    "target_tracker_snapshot.json",
 ]
 
 # Health state precedence (worst wins)
