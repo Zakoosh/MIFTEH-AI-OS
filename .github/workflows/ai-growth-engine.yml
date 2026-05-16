@@ -1,0 +1,45 @@
+name: MIFTEH AI Growth Engine
+
+# SEO growth prioritization, backlink detection, topical authority expansion,
+# internal linking, high-CTR page generation, schema + rich results optimization.
+# Runs daily 05:00 UTC — after SEO optimizer completes.
+
+on:
+  schedule:
+    - cron: '0 5 * * *'    # Daily 05:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  growth-engine:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install openai
+
+      - name: Run growth engine
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python scripts/growth_engine.py
+
+      - name: Aggregate dashboard
+        run: python scripts/aggregate_dashboard.py
+
+      - name: Commit growth state
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "mifteh-ai@users.noreply.github.com"
+          git pull --rebase origin main
+          git add memory/growth_report.json frontend/dashboard/data/
+          git diff --cached --quiet || git commit -m "AI: Growth engine cycle [$(date -u +%Y-%m-%dT%H:%M:%SZ)] [skip ci]"
+          git push

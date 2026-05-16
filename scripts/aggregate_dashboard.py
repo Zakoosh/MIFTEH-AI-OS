@@ -401,6 +401,116 @@ def read_knowledge_graph():
     }
 
 
+def read_growth_report():
+    data = read_json("memory/growth_report.json")
+    if not data:
+        return {}
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "portfolio_growth_score": data.get("portfolio_growth_score", 0),
+        "total_backlink_opportunities": data.get("total_backlink_opportunities", 0),
+        "total_schema_opportunities": data.get("total_schema_opportunities", 0),
+        "all_quick_wins": data.get("all_quick_wins", [])[:8],
+        "projects": {
+            pid: {
+                "domain": pdata.get("domain", ""),
+                "niche": pdata.get("niche", ""),
+                "growth_score": pdata.get("growth_score", 0),
+                "backlink_opportunities": pdata.get("backlink_opportunities", [])[:4],
+                "topical_authority_plan": pdata.get("topical_authority_plan", [])[:4],
+                "schema_opportunities": pdata.get("schema_opportunities", [])[:4],
+                "high_ctr_pages": pdata.get("high_ctr_pages", [])[:4],
+                "indexing_status": pdata.get("indexing_status", {}),
+                "ai_strategy": pdata.get("ai_strategy", {}),
+            }
+            for pid, pdata in data.get("projects", {}).items()
+        },
+    }
+
+
+def read_monetization_runtime_report():
+    data = read_json("memory/monetization_runtime_report.json")
+    if not data:
+        return {}
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "portfolio_current_revenue_usd": data.get("portfolio_current_revenue_usd", 0),
+        "portfolio_target_revenue_usd": data.get("portfolio_target_revenue_usd", 0),
+        "portfolio_revenue_gap_usd": data.get("portfolio_revenue_gap_usd", 0),
+        "projects": {
+            pid: {
+                "model": pdata.get("model", ""),
+                "current_revenue_est_usd": pdata.get("current_revenue_est_usd", 0),
+                "monthly_target_usd": pdata.get("monthly_target_usd", 0),
+                "revenue_gap_usd": pdata.get("revenue_gap_usd", 0),
+                "rpm_estimates": pdata.get("rpm_estimates", {}),
+                "implementations": pdata.get("implementations", {}),
+                "ai_plan": pdata.get("ai_plan", {}),
+            }
+            for pid, pdata in data.get("projects", {}).items()
+        },
+    }
+
+
+def read_conversion_report():
+    data = read_json("memory/conversion_report.json")
+    if not data:
+        return {}
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "portfolio_cro_score": data.get("portfolio_cro_score", 0),
+        "projects": {
+            pid: {
+                "model": pdata.get("model", ""),
+                "primary_conversion": pdata.get("primary_conversion", ""),
+                "conversion_gaps": pdata.get("conversion_gaps", []),
+                "cta_optimization": pdata.get("cta_optimization", {}),
+                "funnel_analysis": pdata.get("funnel_analysis", {}),
+                "revenue_per_visit": pdata.get("revenue_per_visit", {}),
+                "ai_recommendations": pdata.get("ai_recommendations", {}),
+            }
+            for pid, pdata in data.get("projects", {}).items()
+        },
+    }
+
+
+def read_acquisition_report():
+    data = read_json("memory/acquisition_report.json")
+    if not data:
+        return {}
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "portfolio_month_1_session_target": data.get("portfolio_month_1_session_target", 0),
+        "portfolio_month_3_session_target": data.get("portfolio_month_3_session_target", 0),
+        "projects": {
+            pid: {
+                "viral_content_plan": pdata.get("viral_content_plan", [])[:4],
+                "seo_cluster_expansion": pdata.get("seo_cluster_expansion", {}),
+                "social_campaign": pdata.get("social_campaign", {}),
+                "growth_loops": pdata.get("growth_loops", [])[:4],
+                "outreach_plan": pdata.get("outreach_plan", [])[:4],
+                "launch_sequence": pdata.get("launch_sequence", []),
+                "ai_strategy": pdata.get("ai_strategy", {}),
+            }
+            for pid, pdata in data.get("projects", {}).items()
+        },
+    }
+
+
+def read_scaling_report():
+    data = read_json("memory/scaling_report.json")
+    if not data:
+        return {}
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "storage": data.get("storage", {}),
+        "token_usage": data.get("token_usage", {}),
+        "workload_balance": data.get("workload_balance", {}),
+        "optimizations": data.get("optimizations", []),
+        "ai_analysis": data.get("ai_analysis", {}),
+    }
+
+
 def read_agent_bus():
     data = read_json("memory/agent_bus.json")
     if not data:
@@ -724,6 +834,11 @@ def main():
     campaigns = read_campaign_report()
     realtime_alerts = read_realtime_alerts()
     knowledge_graph = read_knowledge_graph()
+    growth = read_growth_report()
+    monetization_runtime = read_monetization_runtime_report()
+    conversion = read_conversion_report()
+    acquisition = read_acquisition_report()
+    scaling = read_scaling_report()
     agent_bus = read_agent_bus()
     cognition = read_cognition_report()
     governance = read_governance_report()
@@ -870,6 +985,11 @@ def main():
         "campaigns": campaigns,
         "realtime_alerts": realtime_alerts,
         "knowledge_graph": knowledge_graph,
+        "growth": growth,
+        "monetization_runtime": monetization_runtime,
+        "conversion": conversion,
+        "acquisition": acquisition,
+        "scaling": scaling,
         "agent_bus": agent_bus,
         "cognition": cognition,
         "governance": governance,

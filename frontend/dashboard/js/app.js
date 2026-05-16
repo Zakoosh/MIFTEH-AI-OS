@@ -2326,6 +2326,304 @@ function renderCivilization(d) {
   set('civilization-predictions', predictions.length ? predictions.join('') : '<div class="empty-state" style="color:#10b981">No issues predicted</div>');
 }
 
+// ─── Phase I: Business Growth ────────────────────────────────────────────────
+
+function renderGrowth(d) {
+  const g = d.growth || {};
+  const score = g.portfolio_growth_score || 0;
+  const backlinks = g.total_backlink_opportunities || 0;
+  const schema = g.total_schema_opportunities || 0;
+  const quickWins = g.all_quick_wins || [];
+  const projects = g.projects || {};
+
+  set('growth-cards', `
+    <div class="card"><div class="card-label">Portfolio Growth Score</div><div class="card-value">${score}<span style="font-size:14px;color:var(--muted)">/100</span></div></div>
+    <div class="card"><div class="card-label">Backlink Opportunities</div><div class="card-value" style="color:var(--green)">${backlinks}</div></div>
+    <div class="card"><div class="card-label">Schema Opportunities</div><div class="card-value" style="color:var(--blue)">${schema}</div></div>
+    <div class="card"><div class="card-label">Projects Analyzed</div><div class="card-value">${Object.keys(projects).length}</div></div>
+  `);
+
+  const blRows = Object.entries(projects).flatMap(([pid, p]) =>
+    (p.backlink_opportunities || []).slice(0, 2).map(b =>
+      `<div class="activity-item"><div class="activity-body">
+        <div class="activity-title">${esc(b.type.replace(/_/g,' '))} — ${esc(pid)}</div>
+        <div class="activity-meta">${esc(b.approach)} · ~${b.estimated_links || 0} links · <span style="color:var(--${b.priority==='high'?'red':b.priority==='medium'?'yellow':'muted'})">${esc(b.priority)}</span></div>
+      </div></div>`
+    )
+  ).join('');
+  set('growth-backlinks', blRows || '<div class="empty-state">No backlink data yet</div>');
+
+  const authRows = Object.entries(projects).flatMap(([pid, p]) =>
+    (p.topical_authority_plan || []).slice(0, 2).map(a =>
+      `<div class="activity-item"><div class="activity-body">
+        <div class="activity-title">${esc(a.pillar.replace(/_/g,' '))} — ${esc(pid)}</div>
+        <div class="activity-meta">${a.recommended_articles} articles · +${(a.estimated_traffic_gain||0).toLocaleString()} est visits · <span style="color:var(--${a.status==='not_started'?'red':'yellow'})">${esc(a.status)}</span></div>
+      </div></div>`
+    )
+  ).join('');
+  set('growth-authority', authRows || '<div class="empty-state">No authority data yet</div>');
+
+  const schemaRows = Object.entries(projects).flatMap(([pid, p]) =>
+    (p.schema_opportunities || []).slice(0, 2).map(s =>
+      `<div class="activity-item"><div class="activity-body">
+        <div class="activity-title">${esc(s.schema)} — ${esc(pid)}</div>
+        <div class="activity-meta">+${s.ctr_boost_pct}% CTR · ${s.applicable_pages} pages · effort: ${esc(s.effort)}</div>
+      </div></div>`
+    )
+  ).join('');
+  set('growth-schema', schemaRows || '<div class="empty-state">No schema data yet</div>');
+
+  const qwRows = quickWins.slice(0, 6).map(qw =>
+    `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title" style="color:var(--green)">${esc(qw.action)}</div>
+      <div class="activity-meta">${esc(qw.impact)} · ${qw.timeline_days}d · <span style="color:var(--blue)">${esc(qw.project||'')}</span></div>
+    </div></div>`
+  ).join('');
+  set('growth-quickwins', qwRows || '<div class="empty-state">No quick wins yet</div>');
+
+  const stratRows = Object.entries(projects).map(([pid, p]) => {
+    const s = p.ai_strategy || {};
+    return `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title">${esc(pid)} — SEO score ${s.seo_growth_score||0}/100 · ${s['90_day_traffic_multiplier']||1}x traffic target</div>
+      <div class="activity-meta">${esc(s.primary_growth_lever||'')}</div>
+      <div class="activity-meta" style="margin-top:4px">${esc(s.executive_summary||'')}</div>
+    </div></div>`;
+  }).join('');
+  set('growth-strategy', stratRows || '<div class="empty-state">No strategy data yet</div>');
+}
+
+function renderRevenue(d) {
+  const m = d.monetization_runtime || {};
+  const current = m.portfolio_current_revenue_usd || 0;
+  const target = m.portfolio_target_revenue_usd || 0;
+  const gap = m.portfolio_revenue_gap_usd || 0;
+  const projects = m.projects || {};
+  const pct = target > 0 ? Math.min(Math.round(current / target * 100), 100) : 0;
+
+  set('revenue-cards', `
+    <div class="card"><div class="card-label">Current Monthly Revenue</div><div class="card-value" style="color:var(--green)">$${current.toLocaleString()}</div></div>
+    <div class="card"><div class="card-label">Portfolio Target</div><div class="card-value">$${target.toLocaleString()}</div></div>
+    <div class="card"><div class="card-label">Revenue Gap</div><div class="card-value" style="color:var(--red)">$${gap.toLocaleString()}</div></div>
+    <div class="card"><div class="card-label">Target Achieved</div><div class="card-value" style="color:var(--${pct>=80?'green':pct>=40?'yellow':'red'})">${pct}%</div></div>
+  `);
+
+  const yp = projects.yallaplays || {};
+  const ypImpl = yp.implementations || {};
+  const ypAds = ypImpl.adsense || {};
+  set('revenue-yallaplays', `
+    <div class="activity-item"><div class="activity-body">
+      <div class="activity-title">Model: ${esc(yp.model||'ad-supported')}</div>
+      <div class="activity-meta">Est revenue: <strong>$${(yp.current_revenue_est_usd||0).toFixed(0)}/mo</strong> → target $${(yp.monthly_target_usd||0).toLocaleString()}</div>
+      ${ypAds.current_rpm !== undefined ? `<div class="activity-meta">RPM: $${ypAds.current_rpm} → $${ypAds.target_rpm} (gap $${ypAds.rpm_gap})</div>` : ''}
+      <div class="activity-meta" style="color:var(--blue)">${esc((yp.ai_plan||{}).top_revenue_action||'')}</div>
+    </div></div>
+  `);
+
+  const fi = projects.fionera || {};
+  const fiImpl = fi.implementations || {};
+  const fiPrem = fiImpl.premium_conversion || {};
+  set('revenue-fionera', `
+    <div class="activity-item"><div class="activity-body">
+      <div class="activity-title">Model: ${esc(fi.model||'freemium')}</div>
+      <div class="activity-meta">Est revenue: <strong>$${(fi.current_revenue_est_usd||0).toFixed(0)}/mo</strong> → target $${(fi.monthly_target_usd||0).toLocaleString()}</div>
+      ${fiPrem.monthly_price ? `<div class="activity-meta">Price: $${fiPrem.monthly_price}/mo · $${fiPrem.annual_price}/yr (save ${fiPrem.annual_discount_pct}%)</div>` : ''}
+      <div class="activity-meta" style="color:var(--blue)">${esc((fi.ai_plan||{}).top_revenue_action||'')}</div>
+    </div></div>
+  `);
+
+  const mi = projects.mifteh || {};
+  const miImpl = mi.implementations || {};
+  const miLead = miImpl.lead_funnel || {};
+  set('revenue-mifteh', `
+    <div class="activity-item"><div class="activity-body">
+      <div class="activity-title">Model: ${esc(mi.model||'b2b-services')}</div>
+      <div class="activity-meta">Est revenue: <strong>$${(mi.current_revenue_est_usd||0).toFixed(0)}/mo</strong> → target $${(mi.monthly_target_usd||0).toLocaleString()}</div>
+      ${miLead.lead_magnet ? `<div class="activity-meta">Lead magnet: ${esc(miLead.lead_magnet)}</div>` : ''}
+      <div class="activity-meta" style="color:var(--blue)">${esc((mi.ai_plan||{}).top_revenue_action||'')}</div>
+    </div></div>
+  `);
+
+  const planRows = Object.entries(projects).map(([pid, p]) => {
+    const plan = p.ai_plan || {};
+    return `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title">${esc(pid)} — M1 $${(plan.month_1_revenue_target_usd||0).toFixed(0)} · M3 $${(plan.month_3_revenue_target_usd||0).toFixed(0)}</div>
+      <div class="activity-meta">${esc(plan.pricing_optimization||'')}</div>
+      <div class="activity-meta" style="color:var(--muted)">${esc(plan.revenue_gap_strategy||'')}</div>
+    </div></div>`;
+  }).join('');
+  set('revenue-plans', planRows || '<div class="empty-state">No revenue plan data yet</div>');
+}
+
+function renderConversions(d) {
+  const c = d.conversion || {};
+  const score = c.portfolio_cro_score || 0;
+  const projects = c.projects || {};
+  const pids = Object.keys(projects);
+
+  set('conversions-cards', `
+    <div class="card"><div class="card-label">Portfolio CRO Score</div><div class="card-value" style="color:var(--${score>=70?'green':score>=45?'yellow':'red'})">${score}<span style="font-size:14px;color:var(--muted)">/100</span></div></div>
+    <div class="card"><div class="card-label">Projects Optimized</div><div class="card-value">${pids.length}</div></div>
+    <div class="card"><div class="card-label">Conversion Goals</div><div class="card-value">${pids.map(p => (projects[p].primary_conversion||'').replace(/_/g,' ')).filter(Boolean).length}</div></div>
+    <div class="card"><div class="card-label">30-Day Lift Target</div><div class="card-value" style="color:var(--green)">${Math.max(...pids.map(p=>(projects[p].ai_recommendations||{})['30_day_conversion_lift_pct']||0))}%</div></div>
+  `);
+
+  const funnelRows = pids.map(pid => {
+    const funnel = (projects[pid].funnel_analysis || {});
+    const stages = funnel.stages || [];
+    const biggest = funnel.biggest_drop_stage || '';
+    const endRate = funnel.end_conversion_rate_pct || 0;
+    return `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title">${esc(pid)} — end rate ${endRate.toFixed(1)}%</div>
+      <div class="activity-meta">Biggest drop: <span style="color:var(--red)">${esc(biggest)}</span> (${funnel.biggest_drop_pct||0}% lost)</div>
+      ${stages.slice(0,3).map(s=>`<div class="activity-meta" style="margin-left:8px">• ${esc(s.stage)}: ${s.visitors_pct}% → drop ${s.drop_off_pct}%</div>`).join('')}
+    </div></div>`;
+  }).join('');
+  set('conversions-funnel', funnelRows || '<div class="empty-state">No funnel data yet</div>');
+
+  const ctaRows = pids.map(pid => {
+    const cta = (projects[pid].cta_optimization || {});
+    const variants = cta.cta_variants || [];
+    const test = cta.recommended_ab_test || {};
+    return `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title">${esc(pid)} — Goal: ${esc(cta.primary_conversion_goal||'').replace(/_/g,' ')}</div>
+      ${variants.slice(0,2).map(v=>`<div class="activity-meta">• "${esc(v.text)}" → ${v.placement} · +${Math.round((v.estimated_ctr_boost||0)*100)}% CTR</div>`).join('')}
+      ${test.control ? `<div class="activity-meta" style="color:var(--blue)">A/B: "${esc(test.control)}" vs "${esc(test.variant_a)}" · ${test.test_duration_days}d</div>` : ''}
+    </div></div>`;
+  }).join('');
+  set('conversions-cta', ctaRows || '<div class="empty-state">No CTA data yet</div>');
+
+  const rpvRows = pids.map(pid => {
+    const rpv = (projects[pid].revenue_per_visit || {});
+    return `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title">${esc(pid)} — $${rpv.current_rpv_usd||0} RPV → $${rpv.target_rpv_usd||0} target</div>
+      <div class="activity-meta">Gap: $${rpv.rpv_gap_usd||0} · Need ${rpv.rpv_multiplier_needed||1}x · ${(rpv.monthly_sessions||0).toLocaleString()} sessions/mo</div>
+    </div></div>`;
+  }).join('');
+  set('conversions-rpv', rpvRows || '<div class="empty-state">No RPV data yet</div>');
+
+  const recRows = pids.map(pid => {
+    const recs = (projects[pid].ai_recommendations || {});
+    return `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title">${esc(pid)} — CRO ${recs.cro_score||0}/100</div>
+      <div class="activity-meta" style="color:var(--green)">${esc(recs.top_priority_fix||'')}</div>
+      ${(recs.quick_wins||[]).slice(0,2).map(q=>`<div class="activity-meta">• ${esc(q.action)} — ${esc(q.impact)}</div>`).join('')}
+    </div></div>`;
+  }).join('');
+  set('conversions-recs', recRows || '<div class="empty-state">No CRO recs yet</div>');
+}
+
+function renderAcquisition(d) {
+  const a = d.acquisition || {};
+  const m1 = a.portfolio_month_1_session_target || 0;
+  const m3 = a.portfolio_month_3_session_target || 0;
+  const projects = a.projects || {};
+  const pids = Object.keys(projects);
+
+  set('acquisition-cards', `
+    <div class="card"><div class="card-label">M1 Session Target</div><div class="card-value" style="color:var(--green)">${m1.toLocaleString()}</div></div>
+    <div class="card"><div class="card-label">M3 Session Target</div><div class="card-value" style="color:var(--blue)">${m3.toLocaleString()}</div></div>
+    <div class="card"><div class="card-label">Campaigns Planned</div><div class="card-value">${pids.length}</div></div>
+    <div class="card"><div class="card-label">Growth Loops</div><div class="card-value">${pids.reduce((s,p)=>s+(projects[p].growth_loops||[]).length,0)}</div></div>
+  `);
+
+  const viralRows = pids.flatMap(pid =>
+    (projects[pid].viral_content_plan || []).slice(0, 2).map(v =>
+      `<div class="activity-item"><div class="activity-body">
+        <div class="activity-title">${esc(v.format.replace(/_/g,' '))} — ${esc(pid)}</div>
+        <div class="activity-meta">${esc(v.hook)} · ~${(v.estimated_reach||0).toLocaleString()} reach · virality ${v.virality_score} · <span style="color:var(--blue)">${esc(v.primary_platform)}</span></div>
+      </div></div>`
+    )
+  ).join('');
+  set('acquisition-viral', viralRows || '<div class="empty-state">No viral content data yet</div>');
+
+  const clusterRows = pids.map(pid => {
+    const cl = projects[pid].seo_cluster_expansion || {};
+    return `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title">${esc(pid)} — ${cl.current_clusters||0} → ${cl.target_clusters||0} clusters</div>
+      <div class="activity-meta">+${cl.new_pages_planned||0} new pages planned</div>
+      ${(cl.cluster_plan||[]).slice(0,2).map(c=>`<div class="activity-meta">• ${esc(c.pillar)} — +${(c.estimated_traffic_gain||0).toLocaleString()} visits · ${c.timeline_weeks}w</div>`).join('')}
+    </div></div>`;
+  }).join('');
+  set('acquisition-clusters', clusterRows || '<div class="empty-state">No cluster data yet</div>');
+
+  const loopRows = pids.flatMap(pid =>
+    (projects[pid].growth_loops || []).slice(0, 2).map(l =>
+      `<div class="activity-item"><div class="activity-body">
+        <div class="activity-title">${esc(l.loop_name.replace(/_/g,' '))} — ${esc(pid)}</div>
+        <div class="activity-meta">K-factor ${l.viral_coefficient} · -${l.cac_reduction_pct}% CAC · ${esc(l.implementation_complexity)} effort</div>
+      </div></div>`
+    )
+  ).join('');
+  set('acquisition-loops', loopRows || '<div class="empty-state">No growth loop data yet</div>');
+
+  const outRows = pids.flatMap(pid =>
+    (projects[pid].outreach_plan || []).slice(0, 2).map(o =>
+      `<div class="activity-item"><div class="activity-body">
+        <div class="activity-title">${esc(o.type.replace(/_/g,' '))} — ${esc(pid)}</div>
+        <div class="activity-meta">${o.target_count} targets · ${(o.estimated_total_reach||0).toLocaleString()} reach · ${o.timeline_weeks}w · <span style="color:var(--${o.priority==='high'?'green':'yellow'})">${esc(o.priority)}</span></div>
+      </div></div>`
+    )
+  ).join('');
+  set('acquisition-outreach', outRows || '<div class="empty-state">No outreach data yet</div>');
+}
+
+function renderScaling(d) {
+  const s = d.scaling || {};
+  const health = (s.ai_analysis || {}).system_health_score || 0;
+  const status = (s.ai_analysis || {}).scaling_status || 'unknown';
+  const storage = s.storage || {};
+  const tokens = s.token_usage || {};
+  const workload = s.workload_balance || {};
+  const opts = s.optimizations || [];
+
+  const statusColor = status === 'healthy' ? 'green' : status === 'degraded' ? 'yellow' : 'red';
+  set('scaling-cards', `
+    <div class="card"><div class="card-label">System Health</div><div class="card-value" style="color:var(--${statusColor})">${health}<span style="font-size:14px;color:var(--muted)">/100</span></div></div>
+    <div class="card"><div class="card-label">Scaling Status</div><div class="card-value" style="color:var(--${statusColor})">${esc(status.toUpperCase())}</div></div>
+    <div class="card"><div class="card-label">Total Storage</div><div class="card-value" style="color:var(--${(storage.total_mb||0)>50?'yellow':'green'})">${(storage.total_mb||0).toFixed(1)} MB</div></div>
+    <div class="card"><div class="card-label">Token Budget Used</div><div class="card-value" style="color:var(--${(tokens.budget_used_pct||0)>100?'red':(tokens.budget_used_pct||0)>70?'yellow':'green'})">${tokens.budget_used_pct||0}%</div></div>
+  `);
+
+  const byScript = tokens.by_script || {};
+  const tokenRows = Object.entries(byScript).sort((a,b)=>b[1].cost_usd-a[1].cost_usd).slice(0,8).map(([script, t]) =>
+    `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title">${esc(script.replace(/_/g,' '))}</div>
+      <div class="activity-meta">${(t.tokens||0).toLocaleString()} tokens · $${(t.cost_usd||0).toFixed(4)}</div>
+    </div></div>`
+  ).join('');
+  set('scaling-tokens', tokenRows || '<div class="empty-state">No token data yet — workflows not yet run</div>');
+
+  const mem = storage.memory || {};
+  const largestFiles = (mem.largest_files || []).slice(0, 5);
+  const storageRows = [
+    `<div class="activity-item"><div class="activity-body"><div class="activity-title">Memory Directory</div><div class="activity-meta">${(mem.total_mb||0).toFixed(1)} MB · ${mem.file_count||0} files · <span style="color:var(--${mem.warning?'red':'green'})">${mem.status||'ok'}</span></div></div></div>`,
+    `<div class="activity-item"><div class="activity-body"><div class="activity-title">Outputs Directory</div><div class="activity-meta">${((storage.outputs||{}).total_mb||0).toFixed(1)} MB · ${(storage.outputs||{}).output_count||0} files</div></div></div>`,
+    ...largestFiles.map(f => `<div class="activity-item"><div class="activity-body"><div class="activity-meta">${esc(f.file)} — ${f.size_kb} KB</div></div></div>`),
+  ].join('');
+  set('scaling-storage', storageRows || '<div class="empty-state">No storage data yet</div>');
+
+  const byCat = workload.by_category || {};
+  const wfRows = [
+    `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title">Total Workflows: ${workload.total_workflows||0}</div>
+      <div class="activity-meta">${workload.daily_workflow_runs||0} daily · ${workload.weekly_workflow_runs||0} weekly · ${workload.schedule_spread_hours||0} spread hours</div>
+    </div></div>`,
+    ...Object.entries(byCat).map(([cat, count]) =>
+      `<div class="activity-item"><div class="activity-body"><div class="activity-meta">${esc(cat)}: ${count} workflows</div></div></div>`
+    ),
+  ].join('');
+  set('scaling-workflows', wfRows || '<div class="empty-state">No workflow data yet</div>');
+
+  const optRows = opts.map(o =>
+    `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title" style="color:var(--${o.priority==='high'?'red':o.priority==='medium'?'yellow':'muted'})">${esc(o.type.replace(/_/g,' '))} [${esc(o.priority)}]</div>
+      <div class="activity-meta">${esc(o.action)}</div>
+      <div class="activity-meta" style="color:var(--green)">Savings: ${esc(o.savings_estimate)}</div>
+    </div></div>`
+  ).join('');
+  set('scaling-optimizations', optRows || '<div class="empty-state">No optimizations identified</div>');
+}
+
 // ─── Actions (GitHub-native) ─────────────────────────────────────────────────
 
 function triggerLoop(loopId) {
@@ -2413,6 +2711,11 @@ async function loadDashboard() {
     renderEconomy(_data);
     renderKernel(_data);
     renderCivilization(_data);
+    renderGrowth(_data);
+    renderRevenue(_data);
+    renderConversions(_data);
+    renderAcquisition(_data);
+    renderScaling(_data);
     renderActivity(_data);
     renderSafety(_data);
 

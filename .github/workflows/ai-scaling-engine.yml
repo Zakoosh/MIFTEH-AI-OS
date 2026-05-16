@@ -1,0 +1,45 @@
+name: MIFTEH AI Scaling Engine
+
+# Execution throttling, token optimization, workload balancing,
+# storage cleanup, dashboard optimization, workflow optimization.
+# Runs weekly Sun 03:00 UTC — after agent evolution.
+
+on:
+  schedule:
+    - cron: '0 3 * * 0'    # Sunday 03:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  scaling-engine:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install openai
+
+      - name: Run scaling engine
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python scripts/scaling_engine.py
+
+      - name: Aggregate dashboard
+        run: python scripts/aggregate_dashboard.py
+
+      - name: Commit scaling state
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "mifteh-ai@users.noreply.github.com"
+          git pull --rebase origin main
+          git add memory/scaling_report.json frontend/dashboard/data/
+          git diff --cached --quiet || git commit -m "AI: Scaling engine cycle [$(date -u +%Y-%m-%dT%H:%M:%SZ)] [skip ci]"
+          git push
