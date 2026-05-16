@@ -1,0 +1,45 @@
+name: MIFTEH AI Revenue Tracker
+
+# Tracks real revenue metrics: RPM, CTR, AdSense earnings, Stripe MRR,
+# leads, conversions, subscriptions. Profitability-first optimization.
+# Depends on analytics-syncer and client-acquisition running first.
+
+on:
+  schedule:
+    - cron: '0 7 * * *'    # Daily 07:00 UTC (after analytics syncer)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  revenue-tracker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install openai
+
+      - name: Run revenue tracker
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python scripts/revenue_tracker.py
+
+      - name: Aggregate dashboard
+        run: python scripts/aggregate_dashboard.py
+
+      - name: Commit revenue state
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "mifteh-ai@users.noreply.github.com"
+          git pull --rebase origin main
+          git add memory/revenue_tracker_report.json memory/revenue_history.json frontend/dashboard/data/
+          git diff --cached --quiet || git commit -m "AI: Revenue tracker cycle [$(date -u +%Y-%m-%dT%H:%M:%SZ)] [skip ci]"
+          git push

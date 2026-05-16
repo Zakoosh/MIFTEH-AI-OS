@@ -1,0 +1,45 @@
+name: MIFTEH AI Programmatic SEO
+
+# Generates 50+ Arabic SEO pages per cycle for YallaPlays:
+# category hubs, long-tail pages, FAQ pages, trending pages,
+# comparison pages. Outputs to outputs/yallaplays/programmatic/.
+
+on:
+  schedule:
+    - cron: '0 3 * * *'    # Daily 03:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  programmatic-seo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install openai
+
+      - name: Run programmatic SEO engine
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python scripts/programmatic_seo.py
+
+      - name: Aggregate dashboard
+        run: python scripts/aggregate_dashboard.py
+
+      - name: Commit SEO output
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "mifteh-ai@users.noreply.github.com"
+          git pull --rebase origin main
+          git add memory/programmatic_seo_report.json outputs/yallaplays/programmatic/ frontend/dashboard/data/
+          git diff --cached --quiet || git commit -m "AI: Programmatic SEO batch [$(date -u +%Y-%m-%dT%H:%M:%SZ)] [skip ci]"
+          git push

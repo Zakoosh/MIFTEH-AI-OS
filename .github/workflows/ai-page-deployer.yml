@@ -1,0 +1,50 @@
+name: MIFTEH AI Page Deployer
+
+# Deploys generated content pages via GitHub API.
+# Creates feature branches + commits + PRs — NEVER auto-merges.
+# Respects: safe staged deployments, rollback metadata, forbidden file patterns.
+
+on:
+  schedule:
+    - cron: '0 8 * * *'    # Daily 08:00 UTC (after content generation)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  page-deployer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install openai
+
+      - name: Run page deployer
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_PAT: ${{ secrets.GH_PAT }}
+          REPO_YALLAPLAYS: ${{ vars.REPO_YALLAPLAYS }}
+          REPO_FIONERA: ${{ vars.REPO_FIONERA }}
+          REPO_MIFTEH: ${{ vars.REPO_MIFTEH }}
+        run: python scripts/page_deployer.py
+
+      - name: Aggregate dashboard
+        run: python scripts/aggregate_dashboard.py
+
+      - name: Commit deployment state
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "mifteh-ai@users.noreply.github.com"
+          git pull --rebase origin main
+          git add memory/deployment_queue.json memory/page_deployer_report.json frontend/dashboard/data/
+          git diff --cached --quiet || git commit -m "AI: Page deployer cycle [$(date -u +%Y-%m-%dT%H:%M:%SZ)] [skip ci]"
+          git push

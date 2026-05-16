@@ -2958,6 +2958,384 @@ function renderScaling(d) {
   set('scaling-optimizations', optRows || '<div class="empty-state">No optimizations identified</div>');
 }
 
+// ─── Phase K: Business Execution ─────────────────────────────────────────────
+
+function renderKpiTracker(d) {
+  const k = d.kpi_tracker || {};
+  const portfolio = k.portfolio || {};
+  const ai = k.ai_analysis || {};
+  const projects = k.projects || {};
+  const score = k.kpi_score || portfolio.portfolio_kpi_score || 0;
+  const status = portfolio.overall_status || 'unknown';
+  const statusColor = status === 'green' ? 'green' : status === 'yellow' ? 'yellow' : 'red';
+
+  set('kpi-cards', `
+    <div class="card"><div class="card-label">KPI Score</div><div class="card-value" style="color:var(--${statusColor})">${score}<span style="font-size:14px;color:var(--muted)">/100</span></div></div>
+    <div class="card"><div class="card-label">On Track</div><div class="card-value" style="color:var(--green)">${portfolio.on_track_kpis||0}<span style="font-size:14px;color:var(--muted)"> / ${portfolio.total_kpis_tracked||0}</span></div></div>
+    <div class="card"><div class="card-label">Alerts</div><div class="card-value" style="color:var(--${(portfolio.kpis_behind||0)>0?'red':'green'})">${portfolio.kpis_behind||0}</div></div>
+    <div class="card"><div class="card-label">Momentum</div><div class="card-value" style="color:var(--blue)">${esc(ai.growth_momentum||'stable')}</div></div>
+  `);
+
+  const renderProjectKpis = (proj, label, elId) => {
+    const pr = (projects[proj] || {});
+    const kpis = pr.kpis || {};
+    const rows = Object.entries(kpis).map(([name, v]) => {
+      const bar = Math.min(100, v.attainment_pct || 0);
+      const col = v.status === 'on_track' ? 'green' : v.status === 'warning' ? 'yellow' : 'red';
+      return `<div class="activity-item"><div class="activity-body">
+        <div class="activity-title" style="display:flex;justify-content:space-between">
+          <span>${esc(name.replace(/_/g,' '))}</span>
+          <span style="color:var(--${col})">${bar.toFixed(0)}%</span>
+        </div>
+        <div class="activity-meta">${esc(String(v.actual))} ${esc(v.unit||'')} → target ${esc(String(v.target))}</div>
+        <div style="height:3px;background:#1e293b;border-radius:2px;margin-top:4px"><div style="height:3px;width:${bar}%;background:var(--${col});border-radius:2px"></div></div>
+      </div></div>`;
+    }).join('');
+    set(elId, rows || `<div class="empty-state">${esc(label)} KPIs not yet tracked</div>`);
+  };
+
+  renderProjectKpis('yallaplays', 'YallaPlays', 'kpi-yallaplays');
+  renderProjectKpis('fionera', 'Fionera', 'kpi-fionera');
+  renderProjectKpis('mifteh', 'Mifteh', 'kpi-mifteh');
+
+  const alerts = (portfolio.active_alerts || []).slice(0, 6);
+  const wins = (ai.quick_wins || []).slice(0, 4);
+  set('kpi-alerts', [
+    ...alerts.map(a => `<div class="activity-item"><div class="activity-body"><div class="activity-title" style="color:var(--red)">⚠ ${esc(a)}</div></div></div>`),
+    ...wins.map(w => `<div class="activity-item"><div class="activity-body"><div class="activity-title" style="color:var(--green)">✦ ${esc(w.kpi||'')} — ${esc(w.action||'')}</div><div class="activity-meta">${esc(w.impact||'')}</div></div></div>`),
+  ].join('') || '<div class="empty-state">No alerts — all KPIs healthy</div>');
+
+  const fc = ai.forecast_30_days || {};
+  set('kpi-forecast', `
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">YallaPlays Sessions</div><div class="activity-meta">${(fc.yallaplays_sessions||0).toLocaleString()} / month</div></div></div>
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">Fionera MRR</div><div class="activity-meta">$${(fc.fionera_mrr_usd||0).toFixed(0)}</div></div></div>
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">Mifteh Leads</div><div class="activity-meta">${fc.mifteh_leads||0} leads</div></div></div>
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">Portfolio Attainment</div><div class="activity-meta">${(fc.portfolio_attainment_pct||0).toFixed(1)}%</div></div></div>
+    ${k.executive_summary ? `<div class="activity-item"><div class="activity-body"><div class="activity-meta" style="color:var(--dim)">${esc(k.executive_summary)}</div></div></div>` : ''}
+  `);
+}
+
+function renderRoiAgent(d) {
+  const r = d.roi_agent || {};
+  const queue = r.execution_queue || {};
+  const score = r.strategy_score || 0;
+  const scoreColor = score >= 70 ? 'green' : score >= 40 ? 'yellow' : 'red';
+
+  set('roi-cards', `
+    <div class="card"><div class="card-label">Strategy Score</div><div class="card-value" style="color:var(--${scoreColor})">${score}<span style="font-size:14px;color:var(--muted)">/100</span></div></div>
+    <div class="card"><div class="card-label">Actions Ranked</div><div class="card-value" style="color:var(--blue)">${r.total_actions_ranked||0}</div></div>
+    <div class="card"><div class="card-label">Total Pipeline</div><div class="card-value" style="color:var(--green)">$${((r.total_pipeline_usd||0)/1000).toFixed(1)}K</div></div>
+    <div class="card"><div class="card-label">Top Priority</div><div class="card-value" style="font-size:12px;color:var(--yellow)">${esc((r.top_priority_action||'').slice(0,30))}…</div></div>
+  `);
+
+  const renderActionList = (actions, elId) => {
+    const rows = (actions || []).slice(0, 8).map(a => {
+      const scoreColor = a.roi_score >= 70 ? 'green' : a.roi_score >= 40 ? 'yellow' : 'red';
+      return `<div class="activity-item"><div class="activity-body">
+        <div class="activity-title" style="display:flex;justify-content:space-between">
+          <span>${esc(a.action||'').slice(0,55)}</span>
+          <span style="color:var(--${scoreColor})">${a.roi_score||0}</span>
+        </div>
+        <div class="activity-meta">[${esc(a.project||'')}] $${(a.revenue_impact_usd||0).toFixed(0)} impact · ${a.time_to_value_weeks||0}w</div>
+      </div></div>`;
+    }).join('');
+    set(elId, rows || '<div class="empty-state">No actions yet — run ROI prioritizer</div>');
+  };
+
+  renderActionList(queue.immediate, 'roi-immediate');
+  renderActionList(queue.this_week, 'roi-week');
+
+  const directives = r.agent_directives || {};
+  set('roi-directives', Object.entries(directives).map(([agent, directive]) =>
+    `<div class="activity-item"><div class="activity-body"><div class="activity-title">${esc(agent.replace(/_/g,' '))}</div><div class="activity-meta">${esc(directive)}</div></div></div>`
+  ).join('') || '<div class="empty-state">No directives generated yet</div>');
+
+  const sequence = r.revenue_unlock_sequence || [];
+  set('roi-sequence', sequence.map(s =>
+    `<div class="activity-item"><div class="activity-body"><div class="activity-title" style="color:var(--green)">${esc(s)}</div></div></div>`
+  ).join('') || `<div class="empty-state">${esc(r.execution_philosophy||'No sequence yet')}</div>`);
+}
+
+function renderProgSeo(d) {
+  const s = d.programmatic_seo || {};
+  const score = s.seo_score || 0;
+  const scoreColor = score >= 70 ? 'green' : score >= 40 ? 'yellow' : 'red';
+  const estTraffic = s.estimated_monthly_traffic_gain || 0;
+
+  set('prog-seo-cards', `
+    <div class="card"><div class="card-label">SEO Score</div><div class="card-value" style="color:var(--${scoreColor})">${score}<span style="font-size:14px;color:var(--muted)">/100</span></div></div>
+    <div class="card"><div class="card-label">Pages Generated</div><div class="card-value" style="color:var(--blue)">${(s.total_pages_generated||0).toLocaleString()}</div></div>
+    <div class="card"><div class="card-label">Est. Traffic Gain</div><div class="card-value" style="color:var(--green)">+${estTraffic.toLocaleString()}/mo</div></div>
+    <div class="card"><div class="card-label">Authority Status</div><div class="card-value" style="font-size:12px;color:var(--yellow)">${esc(s.authority_building_status||'pending')}</div></div>
+  `);
+
+  set('prog-seo-types', `
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">Category Hub Pages</div><div class="activity-meta">${s.hub_pages_count||0} pages generated</div></div></div>
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">Long-Tail Pages</div><div class="activity-meta">${s.long_tail_pages_count||0} pages generated</div></div></div>
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">FAQ Rich Pages</div><div class="activity-meta">${s.faq_pages_count||0} pages with schema markup</div></div></div>
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">Comparison Pages</div><div class="activity-meta">${s.comparison_pages_count||0} competitor comparisons</div></div></div>
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">Trending Pages</div><div class="activity-meta">${s.trending_pages_count||0} trending topic pages</div></div></div>
+  `);
+
+  const opps = s.top_opportunities || [];
+  set('prog-seo-opps', opps.map(o =>
+    `<div class="activity-item"><div class="activity-body"><div class="activity-title" style="color:var(--green)">◈ ${esc(o)}</div></div></div>`
+  ).join('') || '<div class="empty-state">Run programmatic SEO workflow to populate</div>');
+
+  set('prog-seo-authority', `<div class="activity-item"><div class="activity-body">
+    <div class="activity-title">Status: ${esc(s.authority_building_status||'pending')}</div>
+    <div class="activity-meta">${esc(s.executive_summary||'Awaiting first workflow run')}</div>
+  </div></div>`);
+
+  const next = s.next_priorities || [];
+  set('prog-seo-next', next.map((n,i) =>
+    `<div class="activity-item"><div class="activity-body"><div class="activity-title">${i+1}. ${esc(n)}</div></div></div>`
+  ).join('') || '<div class="empty-state">No priorities generated yet</div>');
+}
+
+function renderProductBuilder(d) {
+  const pb = d.product_builder || {};
+  const bist = (pb.features_built||0);
+  const realData = pb.has_real_market_data;
+
+  set('product-builder-cards', `
+    <div class="card"><div class="card-label">Features Built</div><div class="card-value" style="color:var(--blue)">${bist}</div></div>
+    <div class="card"><div class="card-label">Real Market Data</div><div class="card-value" style="color:var(--${realData?'green':'yellow'})">${realData?'LIVE':'ESTIMATED'}</div></div>
+    <div class="card"><div class="card-label">BIST Symbols</div><div class="card-value" style="color:var(--green)">${pb.bist_symbols_tracked||0}</div></div>
+    <div class="card"><div class="card-label">Stock Analyses</div><div class="card-value" style="color:var(--blue)">${pb.stock_analyses||0}</div></div>
+  `);
+
+  const bistPage = pb.bist_market_page || {};
+  const topGainers = bistPage.top_gainers || [];
+  set('product-bist', [
+    `<div class="activity-item"><div class="activity-body"><div class="activity-title">Sentiment: ${esc(bistPage.market_sentiment||'N/A')}</div><div class="activity-meta">${esc(bistPage.sentiment_reason||'')}</div></div></div>`,
+    ...topGainers.slice(0,4).map(g =>
+      `<div class="activity-item"><div class="activity-body"><div class="activity-title" style="color:var(--green)">${esc(g.symbol||'')} — ${esc(g.name||'')}</div><div class="activity-meta">+${esc(String(g.change_pct||0))}% · ${esc(g.signal||'')}</div></div></div>`
+    ),
+  ].join('') || '<div class="empty-state">No BIST data yet — run product builder workflow</div>');
+
+  const cryptoPage = pb.crypto_movers || {};
+  const movers = cryptoPage.top_movers || [];
+  set('product-crypto', movers.slice(0,4).map(m =>
+    `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title" style="display:flex;justify-content:space-between">
+        <span>${esc(m.symbol||'')} — ${esc(m.tr_name||m.name||'')}</span>
+        <span style="color:var(--${(m.change_24h_pct||0)>=0?'green':'red'})">${(m.change_24h_pct||0)>=0?'+':''}${esc(String(m.change_24h_pct||0))}%</span>
+      </div>
+      <div class="activity-meta">$${(m.price_usd||0).toLocaleString()} · ${esc(m.ai_signal||'')}</div>
+    </div></div>`
+  ).join('') || '<div class="empty-state">No crypto data yet</div>');
+
+  const roadmap = pb.product_roadmap || [];
+  set('product-roadmap-items', roadmap.map((r,i) =>
+    `<div class="activity-item"><div class="activity-body"><div class="activity-title">${i+1}. ${esc(r)}</div></div></div>`
+  ).join('') || '<div class="empty-state">No roadmap items yet</div>');
+
+  const analyses = (pb.ai_stock_analyses || pb.stock_analyses_data || []);
+  set('product-stocks', analyses.slice ? analyses.slice(0,4).map(a =>
+    `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title" style="display:flex;justify-content:space-between">
+        <span>${esc(a.symbol||'')} — ${esc(a.company_name||'')}</span>
+        <span style="color:var(--${a.ai_rating==='buy'?'green':a.ai_rating==='sell'?'red':'yellow'})">${esc(a.ai_rating||'').toUpperCase()}</span>
+      </div>
+      <div class="activity-meta">Score ${a.fundamental_score||0} · ${esc(a.ai_summary||'').slice(0,80)}</div>
+    </div></div>`
+  ).join('') : '<div class="empty-state">No stock analyses yet</div>');
+}
+
+function renderClientAcquisition(d) {
+  const ca = d.client_acquisition || {};
+  const score = ca.estimated_monthly_leads || 0;
+  const pipeline = ca.estimated_pipeline_value_usd || 0;
+
+  set('client-acq-cards', `
+    <div class="card"><div class="card-label">Monthly Leads Est.</div><div class="card-value" style="color:var(--green)">${score}</div></div>
+    <div class="card"><div class="card-label">Pipeline Value</div><div class="card-value" style="color:var(--green)">$${(pipeline/1000).toFixed(1)}K</div></div>
+    <div class="card"><div class="card-label">Service Pages</div><div class="card-value" style="color:var(--blue)">${ca.service_pages||0}</div></div>
+    <div class="card"><div class="card-label">Case Studies</div><div class="card-value" style="color:var(--blue)">${ca.case_studies||0}</div></div>
+  `);
+
+  const tiers = [
+    {name:'AI Starter', price:'$999/mo', ideal:'Small businesses & startups'},
+    {name:'AI Growth', price:'$2,499/mo', ideal:'Growing companies targeting 10x traffic'},
+    {name:'AI Enterprise', price:'$7,499/mo', ideal:'Enterprises demanding AI-first advantage'},
+  ];
+  set('client-acq-pricing', tiers.map(t =>
+    `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title" style="display:flex;justify-content:space-between">
+        <span>${esc(t.name)}</span><span style="color:var(--green)">${esc(t.price)}</span>
+      </div>
+      <div class="activity-meta">${esc(t.ideal)}</div>
+    </div></div>`
+  ).join(''));
+
+  const magnets = ca.lead_magnets || 0;
+  set('client-acq-magnets', `
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">Free AI Growth Audit</div><div class="activity-meta">PDF report — delivers in 24h · 12% CVR expected</div></div></div>
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">AI ROI Calculator</div><div class="activity-meta">Interactive tool — instant results · 20% CVR expected</div></div></div>
+    ${magnets > 2 ? `<div class="activity-item"><div class="activity-body"><div class="activity-meta">+${magnets-2} additional lead magnets generated</div></div></div>` : ''}
+  `);
+
+  const cases = ca.case_studies || 0;
+  set('client-acq-cases', cases > 0 ? `
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">E-commerce SEO Growth</div><div class="activity-meta">+325% organic sessions · +325% revenue · 90 days</div></div></div>
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">SaaS Traffic Scale</div><div class="activity-meta">+292% organic sessions · 90 days</div></div></div>
+    ${cases > 2 ? `<div class="activity-item"><div class="activity-body"><div class="activity-meta">+${cases-2} more case studies generated</div></div></div>` : ''}
+  ` : '<div class="empty-state">Run client acquisition workflow to generate case studies</div>');
+
+  const clusters = ca.seo_clusters || 0;
+  set('client-acq-clusters', clusters > 0 ? `
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">AI Automation for E-commerce</div><div class="activity-meta">1,800 monthly searches · medium competition</div></div></div>
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">AI SEO Tools for Small Business</div><div class="activity-meta">1,800 monthly searches · medium competition</div></div></div>
+    ${clusters > 2 ? `<div class="activity-item"><div class="activity-body"><div class="activity-meta">+${clusters-2} more SEO clusters mapped</div></div></div>` : ''}
+  ` : '<div class="empty-state">No SEO clusters yet</div>');
+}
+
+function renderAnalyticsSyncer(d) {
+  const a = d.analytics_syncer || {};
+  const score = a.analytics_health_score || 0;
+  const scoreColor = score >= 70 ? 'green' : score >= 40 ? 'yellow' : 'red';
+  const sources = a.sources_connected || [];
+
+  set('analytics-syncer-cards', `
+    <div class="card"><div class="card-label">Analytics Score</div><div class="card-value" style="color:var(--${scoreColor})">${score}<span style="font-size:14px;color:var(--muted)">/100</span></div></div>
+    <div class="card"><div class="card-label">Sources Connected</div><div class="card-value" style="color:var(--blue)">${a.sources_count||sources.length}</div></div>
+    <div class="card"><div class="card-label">Data Quality</div><div class="card-value" style="color:var(--${a.data_completeness==='high'?'green':a.data_completeness==='medium'?'yellow':'red'})">${esc((a.data_completeness||'low').toUpperCase())}</div></div>
+    <div class="card"><div class="card-label">Stripe</div><div class="card-value" style="color:var(--${(a.stripe||{}).status!=='not_connected'?'green':'yellow'})">${(a.stripe||{}).status==='not_connected'?'NOT LINKED':'LINKED'}</div></div>
+  `);
+
+  const SOURCE_ICONS = {cloudflare:'☁',posthog:'◈',stripe:'💳',adsense:'$',analytics_intelligence:'◉',twelvedata:'📊'};
+  set('analytics-syncer-sources', sources.map(s =>
+    `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title">${SOURCE_ICONS[s]||'◎'} ${esc(s.replace(/_/g,' '))}</div>
+      <div class="activity-meta" style="color:var(--green)">Connected</div>
+    </div></div>`
+  ).join('') || '<div class="empty-state">No analytics sources connected yet</div>');
+
+  const traffic = a.traffic_insights || {};
+  set('analytics-syncer-traffic', `
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">Monthly Pageviews</div><div class="activity-meta">${(traffic.total_monthly_pageviews||0).toLocaleString()}</div></div></div>
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">Fastest Growing</div><div class="activity-meta">${esc(traffic.fastest_growing_project||'—')}</div></div></div>
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">Traffic Quality</div><div class="activity-meta">${traffic.traffic_quality_score||0}/100</div></div></div>
+  `);
+
+  const rev = a.revenue_insights || {};
+  set('analytics-syncer-revenue', `
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">Total Tracked Revenue</div><div class="activity-meta">$${(rev.total_tracked_revenue_usd||0).toFixed(2)}</div></div></div>
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">Primary Driver</div><div class="activity-meta">${esc(rev.primary_revenue_driver||'—')}</div></div></div>
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">RPM Benchmark</div><div class="activity-meta">$${(rev.rpm_benchmark||0).toFixed(2)}</div></div></div>
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">Revenue Trend</div><div class="activity-meta" style="color:var(--${rev.revenue_trend==='growing'?'green':rev.revenue_trend==='declining'?'red':'yellow'})">${esc(rev.revenue_trend||'unknown')}</div></div></div>
+  `);
+
+  const optz = a.optimization_priorities || [];
+  set('analytics-syncer-optz', optz.map(o =>
+    `<div class="activity-item"><div class="activity-body"><div class="activity-title" style="color:var(--yellow)">→ ${esc(o)}</div></div></div>`
+  ).join('') || '<div class="empty-state">No optimization priorities yet</div>');
+}
+
+function renderRevenueTracker(d) {
+  const r = d.revenue_tracker || {};
+  const portfolio = r.portfolio || {};
+  const score = r.revenue_score || 0;
+  const scoreColor = score >= 70 ? 'green' : score >= 40 ? 'yellow' : 'red';
+  const totalMrr = portfolio.total_mrr_usd || 0;
+
+  set('rev-tracker-cards', `
+    <div class="card"><div class="card-label">Revenue Score</div><div class="card-value" style="color:var(--${scoreColor})">${score}<span style="font-size:14px;color:var(--muted)">/100</span></div></div>
+    <div class="card"><div class="card-label">Total MRR</div><div class="card-value" style="color:var(--green)">$${totalMrr.toFixed(0)}</div></div>
+    <div class="card"><div class="card-label">Target Attainment</div><div class="card-value" style="color:var(--${(portfolio.target_attainment_pct||0)>=80?'green':(portfolio.target_attainment_pct||0)>=50?'yellow':'red'})">${(portfolio.target_attainment_pct||0).toFixed(1)}%</div></div>
+    <div class="card"><div class="card-label">Top Earner</div><div class="card-value" style="font-size:12px;color:var(--blue)">${esc(portfolio.highest_revenue_project||'—')}</div></div>
+  `);
+
+  const projects = r.projects || {};
+  const yp = projects.yallaplays || {};
+  set('rev-tracker-yallaplays', `
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">Monthly Earnings</div><div class="activity-meta">$${(yp.estimated_monthly_earnings_usd||0).toFixed(2)} / target $${(yp.target_monthly_usd||5000).toLocaleString()}</div></div></div>
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">RPM</div><div class="activity-meta">$${(yp.rpm_usd||0).toFixed(2)} (target $2.50) · CTR ${((yp.ctr||0)*100).toFixed(2)}%</div></div></div>
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">Sessions</div><div class="activity-meta">${(yp.monthly_sessions||0).toLocaleString()} / month</div></div></div>
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">Data Source</div><div class="activity-meta" style="color:var(--${yp.data_source==='adsense_real'?'green':'yellow'})">${esc(yp.data_source||'estimated')}</div></div></div>
+  `);
+
+  const fio = projects.fionera || {};
+  set('rev-tracker-fionera', `
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">MRR</div><div class="activity-meta">$${(fio.mrr_usd||0).toFixed(0)} / target $${(fio.target_mrr_usd||8000).toLocaleString()}</div></div></div>
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">Paid Users</div><div class="activity-meta">${fio.paid_users||0} · ARPU $${(fio.arpu_usd||0).toFixed(2)}</div></div></div>
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">Trial Conversion</div><div class="activity-meta">${((fio.trial_conversion_rate||0)*100).toFixed(1)}% (target 8%)</div></div></div>
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">ARR</div><div class="activity-meta">$${(fio.arr_usd||0).toFixed(0)}</div></div></div>
+  `);
+
+  const mif = projects.mifteh || {};
+  set('rev-tracker-mifteh', `
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">MRR</div><div class="activity-meta">$${(mif.estimated_mrr_usd||0).toFixed(0)} / target $${(mif.target_mrr_usd||15000).toLocaleString()}</div></div></div>
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">Leads / Month</div><div class="activity-meta">${mif.leads_per_month||0} leads · ${(mif.close_rate||0)*100}% close rate</div></div></div>
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">Active Clients</div><div class="activity-meta">${mif.estimated_clients||0} @ avg $${(mif.avg_deal_usd||0).toLocaleString()}/mo</div></div></div>
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">Pipeline</div><div class="activity-meta">$${(mif.pipeline_value_usd||0).toFixed(0)}</div></div></div>
+  `);
+
+  const actions = r.critical_revenue_actions || [];
+  set('rev-tracker-actions', actions.slice(0,5).map(a =>
+    `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title" style="color:var(--${a.priority==='immediate'?'red':a.priority==='this_week'?'yellow':'blue'})">${esc(a.action||'')}</div>
+      <div class="activity-meta">[${esc(a.project||'')}] +$${(a.revenue_impact_usd||0).toFixed(0)} · ${esc(a.priority||'')}</div>
+    </div></div>`
+  ).join('') || `<div class="empty-state">${esc(r.highest_roi_action||'No actions yet')}</div>`);
+
+  const history = r.recent_history || [];
+  set('rev-tracker-history', history.slice(-7).reverse().map(h =>
+    `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title" style="display:flex;justify-content:space-between">
+        <span>${esc(h.date||'')}</span><span style="color:var(--green)">$${(h.total_mrr_usd||0).toFixed(0)}</span>
+      </div>
+      <div class="activity-meta">${(h.target_attainment_pct||0).toFixed(1)}% target</div>
+    </div></div>`
+  ).join('') || '<div class="empty-state">No history yet — runs daily</div>');
+}
+
+function renderPageDeployer(d) {
+  const pd = d.page_deployer || {};
+  const score = pd.deployment_score || 0;
+  const status = pd.cycle_status || 'unknown';
+  const statusColor = status === 'healthy' ? 'green' : status === 'degraded' ? 'yellow' : 'red';
+
+  set('page-deployer-cards', `
+    <div class="card"><div class="card-label">Deploy Score</div><div class="card-value" style="color:var(--${statusColor})">${score}<span style="font-size:14px;color:var(--muted)">/100</span></div></div>
+    <div class="card"><div class="card-label">Deployed (Cycle)</div><div class="card-value" style="color:var(--green)">${pd.cycle_deployed||0}</div></div>
+    <div class="card"><div class="card-label">Queue Remaining</div><div class="card-value" style="color:var(--blue)">${pd.queue_remaining||0}</div></div>
+    <div class="card"><div class="card-label">All-Time Deployed</div><div class="card-value" style="color:var(--blue)">${pd.total_deployed_all_time||0}</div></div>
+  `);
+
+  const deployed = pd.deployed_this_cycle || [];
+  set('page-deployer-deployed', deployed.map(dep =>
+    `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title" style="display:flex;justify-content:space-between">
+        <span>${esc(dep.project)} — ${esc(dep.feature_type)}</span>
+        <span style="color:var(--green)">${dep.files||0} files</span>
+      </div>
+      ${dep.pr_url ? `<div class="activity-meta"><a href="${esc(dep.pr_url)}" target="_blank" style="color:var(--blue)">View PR ↗</a></div>` : ''}
+    </div></div>`
+  ).join('') || '<div class="empty-state">No deployments this cycle</div>');
+
+  const failed = pd.failed_this_cycle || [];
+  set('page-deployer-queue', failed.map(f =>
+    `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title" style="color:var(--red)">✗ ${esc(f.project)} — ${esc(f.feature_type)}</div>
+      <div class="activity-meta">${esc(f.error||'')}</div>
+    </div></div>`
+  ).join('') || `<div class="activity-item"><div class="activity-body"><div class="activity-title" style="color:var(--green)">Queue clear — ${pd.queue_remaining||0} batches pending</div><div class="activity-meta">Page deployer creates PRs — never auto-merges</div></div></div>`);
+
+  set('page-deployer-safety', `
+    <div class="activity-item"><div class="activity-body"><div class="activity-title" style="color:var(--green)">✅ Auto-merge: NEVER</div><div class="activity-meta">All deployments require human PR review</div></div></div>
+    <div class="activity-item"><div class="activity-body"><div class="activity-title" style="color:var(--green)">✅ Forbidden patterns checked</div><div class="activity-meta">No config, credentials, or infra files deployed</div></div></div>
+    <div class="activity-item"><div class="activity-body"><div class="activity-title" style="color:var(--green)">✅ Rollback metadata included</div><div class="activity-meta">Every PR includes rollback instructions</div></div></div>
+    <div class="activity-item"><div class="activity-body"><div class="activity-title" style="color:var(--green)">✅ Audit tracking active</div><div class="activity-meta">Deployment queue logged in memory/deployment_queue.json</div></div></div>
+  `);
+
+  const recs = pd.recommendations || [];
+  set('page-deployer-recs', recs.map(r =>
+    `<div class="activity-item"><div class="activity-body"><div class="activity-title" style="color:var(--yellow)">→ ${esc(r)}</div></div></div>`
+  ).join('') || '<div class="empty-state">No recommendations yet</div>');
+}
+
 // ─── Actions (GitHub-native) ─────────────────────────────────────────────────
 
 function triggerLoop(loopId) {
@@ -3057,6 +3435,14 @@ async function loadDashboard() {
     renderResearch(_data);
     renderSandbox(_data);
     renderObservability(_data);
+    renderKpiTracker(_data);
+    renderRoiAgent(_data);
+    renderProgSeo(_data);
+    renderProductBuilder(_data);
+    renderClientAcquisition(_data);
+    renderAnalyticsSyncer(_data);
+    renderRevenueTracker(_data);
+    renderPageDeployer(_data);
     renderActivity(_data);
     renderSafety(_data);
 

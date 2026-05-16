@@ -1,0 +1,45 @@
+name: MIFTEH AI KPI Tracker
+
+# Aggregates all execution KPIs: indexed pages, organic traffic,
+# revenue, leads, CTR, engagement, session duration, conversion rate.
+# Tracks historical time series and generates goal progress alerts.
+
+on:
+  schedule:
+    - cron: '0 16 * * *'   # Daily 16:00 UTC (after ROI prioritizer)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  kpi-tracker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install openai
+
+      - name: Run KPI tracker
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python scripts/kpi_tracker.py
+
+      - name: Aggregate dashboard
+        run: python scripts/aggregate_dashboard.py
+
+      - name: Commit KPI state
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "mifteh-ai@users.noreply.github.com"
+          git pull --rebase origin main
+          git add memory/kpi_report.json memory/kpi_history.json frontend/dashboard/data/
+          git diff --cached --quiet || git commit -m "AI: KPI tracker cycle [$(date -u +%Y-%m-%dT%H:%M:%SZ)] [skip ci]"
+          git push

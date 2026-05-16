@@ -1,0 +1,46 @@
+name: MIFTEH AI ROI Prioritizer
+
+# ROI-first autonomous action ranking.
+# Reads all report files to build unified action inventory,
+# scores by revenue × conversion × timeline, outputs execution queue.
+# Runs after all content generation workflows complete.
+
+on:
+  schedule:
+    - cron: '0 15 * * *'   # Daily 15:00 UTC (after all morning workflows)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  roi-prioritizer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install openai
+
+      - name: Run ROI prioritizer
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python scripts/roi_prioritizer.py
+
+      - name: Aggregate dashboard
+        run: python scripts/aggregate_dashboard.py
+
+      - name: Commit ROI state
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "mifteh-ai@users.noreply.github.com"
+          git pull --rebase origin main
+          git add memory/roi_prioritizer_report.json frontend/dashboard/data/
+          git diff --cached --quiet || git commit -m "AI: ROI prioritizer cycle [$(date -u +%Y-%m-%dT%H:%M:%SZ)] [skip ci]"
+          git push

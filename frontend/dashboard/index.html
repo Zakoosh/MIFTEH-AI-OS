@@ -87,6 +87,16 @@
       <button class="nav-btn" onclick="showTab('sandbox',this)"><span class="icon">⬢</span> Sandbox</button>
       <button class="nav-btn" onclick="showTab('observability',this)"><span class="icon">◉</span> Observability</button>
 
+      <div class="nav-section">Business Execution</div>
+      <button class="nav-btn" onclick="showTab('kpi-tracker',this)"><span class="icon">▲</span> KPI Dashboard</button>
+      <button class="nav-btn" onclick="showTab('roi-agent',this)"><span class="icon">◆</span> ROI Prioritizer</button>
+      <button class="nav-btn" onclick="showTab('prog-seo',this)"><span class="icon">⌖</span> Programmatic SEO</button>
+      <button class="nav-btn" onclick="showTab('product-builder',this)"><span class="icon">⬡</span> Product Builder</button>
+      <button class="nav-btn" onclick="showTab('client-acq',this)"><span class="icon">✦</span> Client Acquisition</button>
+      <button class="nav-btn" onclick="showTab('analytics-syncer',this)"><span class="icon">⊕</span> Analytics Syncer</button>
+      <button class="nav-btn" onclick="showTab('revenue-tracker',this)"><span class="icon">$</span> Revenue Tracker</button>
+      <button class="nav-btn" onclick="showTab('page-deployer',this)"><span class="icon">⬆</span> Page Deployer</button>
+
       <div class="nav-section">Business Growth</div>
       <button class="nav-btn" onclick="showTab('growth',this)"><span class="icon">↑</span> Growth Engine</button>
       <button class="nav-btn" onclick="showTab('revenue',this)"><span class="icon">$</span> Revenue Live</button>
@@ -1439,6 +1449,216 @@
           <div class="panel">
             <div class="panel-header"><div class="panel-title">Optimization Opportunities</div></div>
             <div id="scaling-optimizations"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== PHASE K: BUSINESS EXECUTION ===== -->
+
+      <section id="tab-kpi-tracker" class="tab">
+        <div class="section-title">KPI Dashboard — Execution Metrics Across All Projects</div>
+        <div class="cards-grid" id="kpi-cards"></div>
+        <div class="panels-row" style="margin-top:20px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">YallaPlays KPIs</div></div>
+            <div id="kpi-yallaplays"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Fionera KPIs</div></div>
+            <div id="kpi-fionera"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Mifteh KPIs</div></div>
+            <div id="kpi-mifteh"></div>
+          </div>
+        </div>
+        <div class="panels-row" style="margin-top:16px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">KPI Alerts &amp; Quick Wins</div></div>
+            <div id="kpi-alerts"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">30-Day Forecast</div></div>
+            <div id="kpi-forecast"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tab-roi-agent" class="tab">
+        <div class="section-title">ROI Prioritizer — Revenue-First Action Ranking</div>
+        <div class="cards-grid" id="roi-cards"></div>
+        <div class="panels-row" style="margin-top:20px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Immediate Actions (Score ≥ 70)</div></div>
+            <div id="roi-immediate"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">This Week (Score 40-70)</div></div>
+            <div id="roi-week"></div>
+          </div>
+        </div>
+        <div class="panels-row" style="margin-top:16px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Agent Directives</div></div>
+            <div id="roi-directives"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Revenue Unlock Sequence</div></div>
+            <div id="roi-sequence"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tab-prog-seo" class="tab">
+        <div class="section-title">Programmatic SEO — Arabic Page Generation at Scale (YallaPlays)</div>
+        <div class="cards-grid" id="prog-seo-cards"></div>
+        <div class="panels-row" style="margin-top:20px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Page Types Generated</div></div>
+            <div id="prog-seo-types"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">SEO Opportunities</div></div>
+            <div id="prog-seo-opps"></div>
+          </div>
+        </div>
+        <div class="panels-row" style="margin-top:16px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Authority Building Status</div></div>
+            <div id="prog-seo-authority"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Next Priorities</div></div>
+            <div id="prog-seo-next"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tab-product-builder" class="tab">
+        <div class="section-title">Product Builder — Fionera Finance Features</div>
+        <div class="cards-grid" id="product-builder-cards"></div>
+        <div class="panels-row" style="margin-top:20px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">BIST Market Summary</div></div>
+            <div id="product-bist"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Crypto Movers</div></div>
+            <div id="product-crypto"></div>
+          </div>
+        </div>
+        <div class="panels-row" style="margin-top:16px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Product Roadmap</div></div>
+            <div id="product-roadmap-items"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">AI Stock Analysis</div></div>
+            <div id="product-stocks"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tab-client-acq" class="tab">
+        <div class="section-title">Client Acquisition — Mifteh Lead Generation &amp; Conversion Funnels</div>
+        <div class="cards-grid" id="client-acq-cards"></div>
+        <div class="panels-row" style="margin-top:20px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Pricing Tiers</div></div>
+            <div id="client-acq-pricing"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Lead Magnets</div></div>
+            <div id="client-acq-magnets"></div>
+          </div>
+        </div>
+        <div class="panels-row" style="margin-top:16px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Case Studies</div></div>
+            <div id="client-acq-cases"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">SEO Clusters</div></div>
+            <div id="client-acq-clusters"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tab-analytics-syncer" class="tab">
+        <div class="section-title">Analytics Syncer — Multi-Source Real Analytics</div>
+        <div class="cards-grid" id="analytics-syncer-cards"></div>
+        <div class="panels-row" style="margin-top:20px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Connected Sources</div></div>
+            <div id="analytics-syncer-sources"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Traffic Insights</div></div>
+            <div id="analytics-syncer-traffic"></div>
+          </div>
+        </div>
+        <div class="panels-row" style="margin-top:16px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Revenue Insights</div></div>
+            <div id="analytics-syncer-revenue"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Optimization Priorities</div></div>
+            <div id="analytics-syncer-optz"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tab-revenue-tracker" class="tab">
+        <div class="section-title">Revenue Tracker — Real Revenue, RPM, CTR, MRR, Profitability</div>
+        <div class="cards-grid" id="rev-tracker-cards"></div>
+        <div class="panels-row" style="margin-top:20px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">YallaPlays — Ad Revenue</div></div>
+            <div id="rev-tracker-yallaplays"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Fionera — SaaS MRR</div></div>
+            <div id="rev-tracker-fionera"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Mifteh — B2B Revenue</div></div>
+            <div id="rev-tracker-mifteh"></div>
+          </div>
+        </div>
+        <div class="panels-row" style="margin-top:16px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Critical Revenue Actions</div></div>
+            <div id="rev-tracker-actions"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">7-Day Revenue History</div></div>
+            <div id="rev-tracker-history"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tab-page-deployer" class="tab">
+        <div class="section-title">Page Deployer — Automated Content Deployment via GitHub PRs</div>
+        <div class="cards-grid" id="page-deployer-cards"></div>
+        <div class="panels-row" style="margin-top:20px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Deployed This Cycle</div></div>
+            <div id="page-deployer-deployed"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Deployment Queue</div></div>
+            <div id="page-deployer-queue"></div>
+          </div>
+        </div>
+        <div class="panels-row" style="margin-top:16px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Safety Status</div></div>
+            <div id="page-deployer-safety"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Recommendations</div></div>
+            <div id="page-deployer-recs"></div>
           </div>
         </div>
       </section>

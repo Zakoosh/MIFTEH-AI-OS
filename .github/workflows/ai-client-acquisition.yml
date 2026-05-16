@@ -1,0 +1,45 @@
+name: MIFTEH AI Client Acquisition
+
+# Generates Mifteh client acquisition content:
+# pricing pages, service packages, case studies,
+# lead magnets, SEO clusters, consultation funnels.
+
+on:
+  schedule:
+    - cron: '30 5 * * *'   # Daily 05:30 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  client-acquisition:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install openai
+
+      - name: Run client acquisition engine
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python scripts/client_acquisition.py
+
+      - name: Aggregate dashboard
+        run: python scripts/aggregate_dashboard.py
+
+      - name: Commit acquisition output
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "mifteh-ai@users.noreply.github.com"
+          git pull --rebase origin main
+          git add memory/client_acquisition_report.json outputs/mifteh/acquisition/ frontend/dashboard/data/
+          git diff --cached --quiet || git commit -m "AI: Client acquisition cycle [$(date -u +%Y-%m-%dT%H:%M:%SZ)] [skip ci]"
+          git push

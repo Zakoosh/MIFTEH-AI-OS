@@ -511,6 +511,191 @@ def read_scaling_report():
     }
 
 
+def read_programmatic_seo_report():
+    data = read_json("memory/programmatic_seo_report.json")
+    if not data:
+        return {}
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "total_pages_generated": data.get("total_pages_generated", 0),
+        "hub_pages_count": data.get("hub_pages_count", 0),
+        "long_tail_pages_count": data.get("long_tail_pages_count", 0),
+        "faq_pages_count": data.get("faq_pages_count", 0),
+        "comparison_pages_count": data.get("comparison_pages_count", 0),
+        "trending_pages_count": data.get("trending_pages_count", 0),
+        "estimated_monthly_traffic_gain": data.get("estimated_monthly_traffic_gain", 0),
+        "seo_score": data.get("seo_score", 0),
+        "top_opportunities": data.get("top_opportunities", []),
+        "next_priorities": data.get("next_priorities", []),
+        "authority_building_status": data.get("authority_building_status", ""),
+        "executive_summary": data.get("executive_summary", ""),
+    }
+
+
+def read_product_builder_report():
+    data = read_json("memory/product_builder_report.json")
+    if not data:
+        return {}
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "features_built": data.get("features_built", 0),
+        "has_real_market_data": data.get("has_real_market_data", False),
+        "bist_symbols_tracked": data.get("bist_symbols_tracked", 0),
+        "crypto_tracked": data.get("crypto_tracked", 0),
+        "stock_analyses": data.get("stock_analyses", 0),
+        "portfolio_features": data.get("portfolio_features", 0),
+        "alert_types": data.get("alert_types", 0),
+        "product_roadmap": data.get("product_roadmap", []),
+        "bist_market_page": {
+            "market_sentiment": (data.get("bist_market_page") or {}).get("market_sentiment", ""),
+            "sentiment_reason": (data.get("bist_market_page") or {}).get("sentiment_reason", ""),
+            "top_gainers": (data.get("bist_market_page") or {}).get("top_gainers", [])[:5],
+            "top_losers": (data.get("bist_market_page") or {}).get("top_losers", [])[:3],
+            "watch_list_picks": (data.get("bist_market_page") or {}).get("watch_list_picks", [])[:3],
+        },
+        "crypto_movers": {
+            "top_movers": (data.get("crypto_movers") or {}).get("top_movers", [])[:5],
+            "market_dominance": (data.get("crypto_movers") or {}).get("market_dominance", {}),
+            "fear_greed_index": (data.get("crypto_movers") or {}).get("fear_greed_index", {}),
+        },
+    }
+
+
+def read_client_acquisition_report():
+    data = read_json("memory/client_acquisition_report.json")
+    if not data:
+        return {}
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "pricing_tiers": data.get("pricing_tiers", 0),
+        "service_pages": data.get("service_pages", 0),
+        "case_studies": data.get("case_studies", 0),
+        "lead_magnets": data.get("lead_magnets", 0),
+        "seo_clusters": data.get("seo_clusters", 0),
+        "estimated_monthly_leads": data.get("estimated_monthly_leads", 0),
+        "estimated_pipeline_value_usd": data.get("estimated_pipeline_value_usd", 0),
+        "conversion_funnel": data.get("conversion_funnel", []),
+    }
+
+
+def read_analytics_syncer_report():
+    data = read_json("memory/analytics_syncer_report.json")
+    if not data:
+        return {}
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "sources_connected": data.get("sources_connected", []),
+        "sources_count": data.get("sources_count", 0),
+        "analytics_health_score": data.get("analytics_health_score", 0),
+        "data_completeness": data.get("data_completeness", "low"),
+        "revenue_insights": data.get("revenue_insights", {}),
+        "traffic_insights": data.get("traffic_insights", {}),
+        "optimization_priorities": data.get("optimization_priorities", []),
+        "stripe": data.get("stripe", {"status": "not_connected"}),
+        "adsense": data.get("adsense", {"status": "not_connected"}),
+        "project_analytics": {
+            pk: {
+                "cloudflare": pdata.get("cloudflare", {}),
+                "posthog": pdata.get("posthog", {}),
+                "baseline": pdata.get("baseline", {}),
+            }
+            for pk, pdata in data.get("project_analytics", {}).items()
+        },
+    }
+
+
+def read_revenue_tracker_report():
+    data = read_json("memory/revenue_tracker_report.json")
+    if not data:
+        return {}
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "portfolio": data.get("portfolio", {}),
+        "projects": data.get("projects", {}),
+        "revenue_score": data.get("revenue_score", 0),
+        "attainment_status": data.get("attainment_status", ""),
+        "critical_revenue_actions": data.get("critical_revenue_actions", [])[:5],
+        "rpm_optimization": data.get("rpm_optimization", {}),
+        "conversion_opportunities": data.get("conversion_opportunities", []),
+        "highest_roi_action": data.get("highest_roi_action", ""),
+        "profitability_ranking": data.get("profitability_ranking", []),
+        "executive_summary": data.get("executive_summary", ""),
+        "recent_history": data.get("recent_history", [])[-7:],
+    }
+
+
+def read_page_deployer_report():
+    data = read_json("memory/page_deployer_report.json")
+    if not data:
+        return {}
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "cycle_deployed": data.get("cycle_deployed", 0),
+        "cycle_failed": data.get("cycle_failed", 0),
+        "queue_remaining": data.get("queue_remaining", 0),
+        "total_deployed_all_time": data.get("total_deployed_all_time", 0),
+        "deployed_this_cycle": data.get("deployed_this_cycle", []),
+        "failed_this_cycle": data.get("failed_this_cycle", []),
+        "deployment_score": data.get("deployment_score", 0),
+        "cycle_status": data.get("cycle_status", ""),
+        "recommendations": data.get("recommendations", []),
+    }
+
+
+def read_roi_prioritizer_report():
+    data = read_json("memory/roi_prioritizer_report.json")
+    if not data:
+        return {}
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "total_actions_ranked": data.get("total_actions_ranked", 0),
+        "total_pipeline_usd": data.get("total_pipeline_usd", 0),
+        "strategy_score": data.get("strategy_score", 0),
+        "top_priority_action": data.get("top_priority_action", ""),
+        "execution_philosophy": data.get("execution_philosophy", ""),
+        "execution_queue": data.get("execution_queue", {}),
+        "top_20_actions": data.get("top_20_actions", [])[:20],
+        "weekly_sprint_focus": data.get("weekly_sprint_focus", []),
+        "revenue_unlock_sequence": data.get("revenue_unlock_sequence", []),
+        "agent_directives": data.get("agent_directives", {}),
+        "risk_flags": data.get("risk_flags", []),
+        "executive_summary": data.get("executive_summary", ""),
+    }
+
+
+def read_kpi_report():
+    data = read_json("memory/kpi_report.json")
+    if not data:
+        return {}
+    projects_out = {}
+    for pk, pdata in data.get("projects", {}).items():
+        kpis = pdata.get("kpis", {})
+        projects_out[pk] = {
+            "kpis": kpis,
+            "avg_attainment_pct": pdata.get("avg_attainment_pct", 0),
+            "kpi_health_score": pdata.get("kpi_health_score", 0),
+            "alerts": pdata.get("alerts", []),
+            "on_track_count": pdata.get("on_track_count", 0),
+            "total_kpis": pdata.get("total_kpis", 0),
+            "actuals": pdata.get("actuals", {}),
+        }
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "portfolio": data.get("portfolio", {}),
+        "projects": projects_out,
+        "kpi_score": data.get("kpi_score", 0),
+        "executive_summary": data.get("executive_summary", ""),
+        "critical_kpis": data.get("critical_kpis", []),
+        "quick_wins": data.get("quick_wins", []),
+        "growth_momentum": data.get("growth_momentum", "stable"),
+        "forecast_30_days": data.get("forecast_30_days", {}),
+        "kpi_priorities": data.get("kpi_priorities", []),
+        "recent_history": data.get("recent_history", [])[-14:],
+        "goals": data.get("goals", {}),
+        "ai_analysis": data.get("ai_analysis", {}),
+    }
+
+
 def read_deployment_pipeline_report():
     data = read_json("memory/deployment_pipeline_report.json")
     if not data:
@@ -994,6 +1179,14 @@ def main():
     research = read_research_report()
     sandbox = read_sandbox_report()
     observability = read_observability_report()
+    programmatic_seo = read_programmatic_seo_report()
+    product_builder = read_product_builder_report()
+    client_acquisition = read_client_acquisition_report()
+    analytics_syncer = read_analytics_syncer_report()
+    revenue_tracker = read_revenue_tracker_report()
+    page_deployer = read_page_deployer_report()
+    roi_agent = read_roi_prioritizer_report()
+    kpi_tracker = read_kpi_report()
     agent_bus = read_agent_bus()
     cognition = read_cognition_report()
     governance = read_governance_report()
@@ -1152,6 +1345,14 @@ def main():
         "research": research,
         "sandbox": sandbox,
         "observability": observability,
+        "programmatic_seo": programmatic_seo,
+        "product_builder": product_builder,
+        "client_acquisition": client_acquisition,
+        "analytics_syncer": analytics_syncer,
+        "revenue_tracker": revenue_tracker,
+        "page_deployer": page_deployer,
+        "roi_agent": roi_agent,
+        "kpi_tracker": kpi_tracker,
         "agent_bus": agent_bus,
         "cognition": cognition,
         "governance": governance,

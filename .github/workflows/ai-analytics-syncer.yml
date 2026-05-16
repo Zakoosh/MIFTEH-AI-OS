@@ -1,0 +1,57 @@
+name: MIFTEH AI Analytics Syncer
+
+# Connects to multiple analytics sources:
+# Cloudflare Analytics, PostHog, Stripe, AdSense, TwelveData.
+# Graceful fallback to analytics_intelligence baseline if APIs unavailable.
+
+on:
+  schedule:
+    - cron: '0 6 * * *'    # Daily 06:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  analytics-syncer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install openai
+
+      - name: Run analytics syncer
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CF_ZONE_ID_YALLAPLAYS: ${{ secrets.CF_ZONE_ID_YALLAPLAYS }}
+          CF_ZONE_ID_FIONERA: ${{ secrets.CF_ZONE_ID_FIONERA }}
+          CF_ZONE_ID_MIFTEH: ${{ secrets.CF_ZONE_ID_MIFTEH }}
+          POSTHOG_API_KEY: ${{ secrets.POSTHOG_API_KEY }}
+          POSTHOG_PROJECT_ID_YALLAPLAYS: ${{ secrets.POSTHOG_PROJECT_ID_YALLAPLAYS }}
+          POSTHOG_PROJECT_ID_FIONERA: ${{ secrets.POSTHOG_PROJECT_ID_FIONERA }}
+          POSTHOG_PROJECT_ID_MIFTEH: ${{ secrets.POSTHOG_PROJECT_ID_MIFTEH }}
+          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+          ADSENSE_ACCESS_TOKEN: ${{ secrets.ADSENSE_ACCESS_TOKEN }}
+          ADSENSE_PUB_ID: ${{ secrets.ADSENSE_PUB_ID }}
+          TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+        run: python scripts/analytics_syncer.py
+
+      - name: Aggregate dashboard
+        run: python scripts/aggregate_dashboard.py
+
+      - name: Commit analytics sync
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "mifteh-ai@users.noreply.github.com"
+          git pull --rebase origin main
+          git add memory/analytics_syncer_report.json frontend/dashboard/data/
+          git diff --cached --quiet || git commit -m "AI: Analytics syncer cycle [$(date -u +%Y-%m-%dT%H:%M:%SZ)] [skip ci]"
+          git push
