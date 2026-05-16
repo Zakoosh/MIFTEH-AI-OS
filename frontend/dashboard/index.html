@@ -97,6 +97,20 @@
       <button class="nav-btn" onclick="showTab('revenue-tracker',this)"><span class="icon">$</span> Revenue Tracker</button>
       <button class="nav-btn" onclick="showTab('page-deployer',this)"><span class="icon">⬆</span> Page Deployer</button>
 
+      <div class="nav-section">Game Analytics</div>
+      <button class="nav-btn" onclick="showTab('top-games',this)"><span class="icon">🏆</span> Top Games</button>
+      <button class="nav-btn" onclick="showTab('game-revenue',this)"><span class="icon">💰</span> Game Revenue</button>
+      <button class="nav-btn" onclick="showTab('ctr-analytics',this)"><span class="icon">📊</span> CTR Analytics</button>
+      <button class="nav-btn" onclick="showTab('seo-rankings',this)"><span class="icon">📈</span> SEO Rankings</button>
+      <button class="nav-btn" onclick="showTab('publishing-pipeline',this)"><span class="icon">⛓</span> Publishing Pipeline</button>
+      <button class="nav-btn" onclick="showTab('game-assets',this)"><span class="icon">🖼</span> Game Assets</button>
+
+      <div class="nav-section">Indexing</div>
+      <button class="nav-btn" onclick="showTab('indexing-status',this)"><span class="icon">🔍</span> Indexing Status</button>
+      <button class="nav-btn" onclick="showTab('indexing-queue',this)"><span class="icon">⏳</span> Indexing Queue</button>
+      <button class="nav-btn" onclick="showTab('indexed-urls',this)"><span class="icon">✅</span> Indexed URLs</button>
+      <button class="nav-btn" onclick="showTab('failed-indexing',this)"><span class="icon">❌</span> Failed Indexing</button>
+
       <div class="nav-section">Game Studio</div>
       <button class="nav-btn" onclick="showTab('game-factory',this)"><span class="icon">🎮</span> Game Factory</button>
       <button class="nav-btn" onclick="showTab('generated-games',this)"><span class="icon">🕹</span> Generated Games</button>
@@ -1675,6 +1689,108 @@
             <div id="page-deployer-recs"></div>
           </div>
         </div>
+      </section>
+
+      <!-- Phase M: Game Analytics tabs -->
+      <section id="tab-top-games" class="tab">
+        <h2 class="section-title">Top Games</h2>
+        <div class="cards-grid" id="top-games-cards"></div>
+        <div id="top-games-list"></div>
+      </section>
+
+      <section id="tab-game-revenue" class="tab">
+        <h2 class="section-title">Game Revenue</h2>
+        <div class="cards-grid" id="game-revenue-cards"></div>
+        <div class="panels-grid">
+          <div class="panel">
+            <div class="panel-title">Monetization Config</div>
+            <div id="game-revenue-config"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">Revenue Estimates</div>
+            <div id="game-revenue-estimates"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tab-ctr-analytics" class="tab">
+        <h2 class="section-title">CTR Analytics</h2>
+        <div class="cards-grid" id="ctr-analytics-cards"></div>
+        <div id="ctr-analytics-games"></div>
+      </section>
+
+      <section id="tab-seo-rankings" class="tab">
+        <h2 class="section-title">SEO Rankings</h2>
+        <div class="cards-grid" id="seo-rankings-cards"></div>
+        <div class="panels-grid">
+          <div class="panel">
+            <div class="panel-title">SEO Page Coverage</div>
+            <div id="seo-rankings-coverage"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">Keyword Targets</div>
+            <div id="seo-rankings-keywords"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tab-publishing-pipeline" class="tab">
+        <h2 class="section-title">Publishing Pipeline</h2>
+        <div class="cards-grid" id="publishing-pipeline-cards"></div>
+        <div class="panels-grid">
+          <div class="panel">
+            <div class="panel-title">Pipeline Steps</div>
+            <div id="publishing-pipeline-steps"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">Games in Pipeline</div>
+            <div id="publishing-pipeline-games"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">AI Priorities</div>
+            <div id="publishing-pipeline-priorities"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tab-game-assets" class="tab">
+        <h2 class="section-title">Game Assets</h2>
+        <div class="cards-grid" id="game-assets-cards"></div>
+        <div id="game-assets-list"></div>
+      </section>
+
+      <!-- Phase M: Indexing tabs -->
+      <section id="tab-indexing-status" class="tab">
+        <h2 class="section-title">Indexing Status</h2>
+        <div class="cards-grid" id="indexing-status-cards"></div>
+        <div class="panels-grid">
+          <div class="panel">
+            <div class="panel-title">Quota Usage</div>
+            <div id="indexing-status-quota"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">Priority Queue</div>
+            <div id="indexing-status-priority"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tab-indexing-queue" class="tab">
+        <h2 class="section-title">Indexing Queue</h2>
+        <div class="cards-grid" id="indexing-queue-cards"></div>
+        <div id="indexing-queue-list"></div>
+      </section>
+
+      <section id="tab-indexed-urls" class="tab">
+        <h2 class="section-title">Indexed URLs</h2>
+        <div class="cards-grid" id="indexed-urls-cards"></div>
+        <div id="indexed-urls-list"></div>
+      </section>
+
+      <section id="tab-failed-indexing" class="tab">
+        <h2 class="section-title">Failed Indexing</h2>
+        <div class="cards-grid" id="failed-indexing-cards"></div>
+        <div id="failed-indexing-list"></div>
       </section>
 
       <!-- Phase L: Game Studio tabs -->

@@ -1,0 +1,52 @@
+name: AI Indexing Retry
+
+on:
+  schedule:
+    - cron: '0 12 * * *'  # 12:00 UTC — midday retry for failed URLs
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  retry-indexing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install openai google-auth requests oauth2client httplib2 cryptography
+
+      - name: Retry failed indexing submissions
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+          TELEGRAM_LOG_TOKEN: ${{ secrets.TELEGRAM_LOG_TOKEN }}
+          TELEGRAM_ADMIN_LOG_TOKEN: ${{ secrets.TELEGRAM_ADMIN_LOG_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_ADMIN_CHAT_ID: ${{ secrets.TELEGRAM_ADMIN_CHAT_ID }}
+        run: |
+          python -c "
+          import sys
+          sys.path.insert(0, 'scripts')
+          from google_indexing_engine import retry_failed, build_report, send_system_log
+          send_system_log('workflow_started', 'Indexing retry job started', 'info')
+          result = retry_failed()
+          report = build_report()
+          print(f'[retry] Result: {result}')
+          send_system_log('workflow_completed', f'Retry done — {result.get(\"succeeded\",0)} succeeded', 'success')
+          "
+
+      - name: Commit retry state
+        run: |
+          git config user.name "MIFTEH OS"
+          git config user.email "actions@mifteh.ai"
+          git add memory/indexing/ memory/indexing_report.json || true
+          git diff --cached --quiet || git -c commit.gpgsign=false commit -m "chore: indexing retry $(date -u +%Y-%m-%d)"
+          git push

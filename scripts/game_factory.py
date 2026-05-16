@@ -120,6 +120,30 @@ GAME_CONFIGS = {
         "target_audience": "all",
         "estimated_monthly_searches": 5200,
     },
+    "drift": {
+        "name_en": "Drift Racing Game",
+        "name_ar": "لعبة الانجراف",
+        "category": "drift",
+        "description_en": "Master the art of drifting in this thrilling top-down racer",
+        "description_ar": "أتقن فن الانجراف في لعبة السباق المثيرة هذه",
+        "keywords_ar": ["العاب انجراف", "العاب سباق انجراف", "العاب دريفت"],
+        "keywords_en": ["drift game", "drift racing", "car drift game"],
+        "schema_type": "VideoGame",
+        "target_audience": "all",
+        "estimated_monthly_searches": 5800,
+    },
+    "clicker": {
+        "name_en": "Clicker Game",
+        "name_ar": "لعبة النقر",
+        "category": "clicker",
+        "description_en": "Click to earn, upgrade, and dominate the leaderboard",
+        "description_ar": "انقر لتكسب النقاط وترقي قدراتك وتتصدر المتصدرين",
+        "keywords_ar": ["العاب نقر", "لعبة النقر والكسب", "العاب ضغط"],
+        "keywords_en": ["clicker game", "tap game", "click to earn"],
+        "schema_type": "VideoGame",
+        "target_audience": "all",
+        "estimated_monthly_searches": 6200,
+    },
 }
 
 GAME_PROMPTS = {
@@ -744,10 +768,21 @@ def generate_single_game(game_type, index, all_tokens, all_cost):
 
 
 FIRST_BATCH = [
-    ("racing", 1), ("racing", 2), ("racing", 3),
+    # Racing & driving (high search volume)
+    ("racing", 1), ("racing", 2), ("racing", 3), ("racing", 4), ("racing", 5),
+    ("car", 1), ("car", 2), ("car", 3),
+    ("drift", 1), ("drift", 2),
+    # Action & survival
+    ("action", 1), ("action", 2), ("action", 3), ("action", 4),
+    ("survival", 1), ("survival", 2), ("survival", 3),
+    # Casual & clicker
+    ("clicker", 1), ("clicker", 2), ("clicker", 3),
+    ("idle", 1), ("idle", 2), ("idle", 3),
+    # Puzzle & kids
     ("puzzle", 1), ("puzzle", 2),
-    ("idle", 1), ("idle", 2),
     ("kids", 1), ("kids", 2),
+    # Brain — SEO long tail
+    ("brain", 1),
 ]
 
 
@@ -761,7 +796,7 @@ def main():
 
     try:
         from telegram_notifier import notify_workflow_start
-        notify_workflow_start("ai-game-generator", {"batch": len(FIRST_BATCH), "types": "racing,puzzle,idle,kids"})
+        notify_workflow_start("ai-game-generator", {"batch": len(FIRST_BATCH), "types": "racing,car,drift,action,survival,clicker,idle,puzzle,kids,brain"})
     except Exception:
         pass
 

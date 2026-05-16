@@ -3336,6 +3336,292 @@ function renderPageDeployer(d) {
   ).join('') || '<div class="empty-state">No recommendations yet</div>');
 }
 
+// ─── Phase M: Game Analytics ─────────────────────────────────────────────────
+
+function renderTopGames(d) {
+  const gf = d.game_factory || {};
+  const gq = d.game_qa || {};
+  const games = gf.games || [];
+  const qaMap = {};
+  for (const g of (gq.games||[])) qaMap[g.game_id] = g;
+
+  const scored = games.map(g => ({
+    ...g,
+    qa_score: (qaMap[g.game_id]||{}).qa_score || g.qa_score || 0,
+    grade: (qaMap[g.game_id]||{}).grade || g.grade || 'F',
+  })).sort((a, b) => b.qa_score - a.qa_score);
+
+  set('top-games-cards', `
+    <div class="card"><div class="card-label">Total Games</div><div class="card-value" style="color:var(--blue)">${games.length}</div></div>
+    <div class="card"><div class="card-label">Avg QA Score</div><div class="card-value" style="color:var(--yellow)">${gf.avg_qa_score||0}/100</div></div>
+    <div class="card"><div class="card-label">QA Eligible</div><div class="card-value" style="color:var(--green)">${gf.total_eligible||0}</div></div>
+    <div class="card"><div class="card-label">Pass Rate</div><div class="card-value" style="color:var(--blue)">${gf.pass_rate||'0%'}</div></div>
+  `);
+
+  set('top-games-list', scored.length ? `<div style="overflow-x:auto">
+    <table style="width:100%;border-collapse:collapse;font-size:13px">
+      <thead><tr style="background:#1e293b;color:var(--muted);text-align:left">
+        <th style="padding:10px 12px">#</th>
+        <th style="padding:10px 12px">Game</th>
+        <th style="padding:10px 12px">Type</th>
+        <th style="padding:10px 12px">QA</th>
+        <th style="padding:10px 12px">Grade</th>
+        <th style="padding:10px 12px">Status</th>
+      </tr></thead>
+      <tbody>${scored.map((g, i) => {
+        const sc = (g.qa_score||0) >= 75 ? '#22c55e' : (g.qa_score||0) >= 50 ? '#eab308' : '#ef4444';
+        return `<tr style="border-top:1px solid #1e293b">
+          <td style="padding:8px 12px;color:var(--muted)">${i+1}</td>
+          <td style="padding:8px 12px">${esc(g.name_en||g.game_id||'')}</td>
+          <td style="padding:8px 12px;color:var(--blue)">${esc(g.game_type||'')}</td>
+          <td style="padding:8px 12px;color:${sc};font-weight:600">${g.qa_score||0}/100</td>
+          <td style="padding:8px 12px;color:${sc}">${esc(g.grade||'')}</td>
+          <td style="padding:8px 12px">${g.qa_eligible?'<span style="color:#22c55e">✅</span>':'<span style="color:#ef4444">❌</span>'}</td>
+        </tr>`;
+      }).join('')}</tbody>
+    </table></div>` : '<div class="empty-state" style="padding:40px">No games yet — Game Factory runs at 02:00 UTC</div>');
+}
+
+function renderGameRevenue(d) {
+  const pp = d.publishing_pipeline || {};
+  const mon = pp.monetization || {};
+  const config = mon.config || {};
+
+  set('game-revenue-cards', `
+    <div class="card"><div class="card-label">Deployed Games</div><div class="card-value" style="color:var(--blue)">${mon.deployed_games||0}</div></div>
+    <div class="card"><div class="card-label">Est. Monthly Revenue</div><div class="card-value" style="color:var(--green)">$${(mon.est_monthly_revenue_usd||0).toFixed(2)}</div></div>
+    <div class="card"><div class="card-label">Est. RPM</div><div class="card-value" style="color:var(--yellow)">${mon.est_rpm||'$0.00'}</div></div>
+    <div class="card"><div class="card-label">Avg Session</div><div class="card-value" style="color:var(--blue)">${mon.est_session_min||0} min</div></div>
+  `);
+
+  set('game-revenue-config', [
+    ['AdSense Zones', (config.adsense_placement_zones||[]).join(', ')],
+    ['Target Session', `${config.target_session_duration_sec||0}s`],
+    ['Replay Trigger', config.replay_trigger||'game_over'],
+    ['Recommended Games', config.recommended_games_count||6],
+    ['Sticky Mobile Ad', config.sticky_mobile_ad?'✅ Enabled':'❌ Disabled'],
+    ['RPM Target', `$${config.min_rpm_target_usd||0} – $${config.max_rpm_target_usd||0}`],
+  ].map(([k,v]) => `<div class="activity-item"><div class="activity-body"><div class="activity-title">${esc(k)}<span style="float:right;color:var(--blue)">${esc(String(v))}</span></div></div></div>`).join('') || '<div class="empty-state">No config data</div>');
+
+  set('game-revenue-estimates', `
+    <div class="activity-item"><div class="activity-body"><div class="activity-title" style="color:var(--green)">💰 Monthly Revenue Estimate<span style="float:right">$${(mon.est_monthly_revenue_usd||0).toFixed(2)}</span></div><div class="activity-meta">Based on ${mon.deployed_games||0} deployed games × 500 sessions × ${mon.est_rpm||'$1.20'} RPM</div></div></div>
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">Annual Estimate<span style="float:right;color:var(--blue)">$${((mon.est_monthly_revenue_usd||0)*12).toFixed(2)}</span></div></div></div>
+    <div class="activity-item"><div class="activity-body"><div class="activity-title" style="color:var(--muted)">AdSense RPM target: ${config.min_rpm_target_usd||0} – ${config.max_rpm_target_usd||0} USD</div></div></div>
+    <div class="activity-item"><div class="activity-body"><div class="activity-title" style="color:var(--green)">✅ Profitability-first execution mode active</div></div></div>
+  `);
+}
+
+function renderCtrAnalytics(d) {
+  const pp = d.publishing_pipeline || {};
+  const games = pp.games || [];
+
+  set('ctr-analytics-cards', `
+    <div class="card"><div class="card-label">Games Tracked</div><div class="card-value" style="color:var(--blue)">${games.length}</div></div>
+    <div class="card"><div class="card-label">SEO Velocity</div><div class="card-value" style="color:var(--yellow)">${esc(pp.seo_velocity||'normal').toUpperCase()}</div></div>
+    <div class="card"><div class="card-label">Pipeline Health</div><div class="card-value" style="color:var(--${pp.pipeline_health==='healthy'?'green':pp.pipeline_health==='needs_attention'?'yellow':'red'})">${esc(pp.pipeline_health||'unknown').toUpperCase()}</div></div>
+  `);
+
+  set('ctr-analytics-games', games.map(g =>
+    `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title" style="display:flex;justify-content:space-between">
+        <span>${esc(g.name||g.game_id||'')}</span>
+        <span style="color:var(--muted);font-size:11px">${g.completion_pct||0}% complete</span>
+      </div>
+      <div class="activity-meta">
+        Type: ${esc(g.game_type||'')} · QA: ${g.qa_score||0}/100 · Status: ${esc(g.review_status||'')} · Steps: ${g.steps_done||0}/${g.steps_total||11}
+        <div style="margin-top:4px;background:#1e293b;border-radius:4px;height:4px;overflow:hidden">
+          <div style="background:${(g.completion_pct||0)>=75?'#22c55e':'#3b82f6'};width:${g.completion_pct||0}%;height:100%"></div>
+        </div>
+      </div>
+    </div></div>`
+  ).join('') || '<div class="empty-state">No pipeline data yet — run publishing pipeline workflow</div>');
+}
+
+function renderSeoRankings(d) {
+  const gs = d.game_seo || {};
+  const gf = d.game_factory || {};
+
+  set('seo-rankings-cards', `
+    <div class="card"><div class="card-label">SEO Pages</div><div class="card-value" style="color:var(--blue)">${gs.seo_pages_count||0}</div></div>
+    <div class="card"><div class="card-label">Category Hubs</div><div class="card-value" style="color:var(--green)">${gs.category_hubs_count||0}</div></div>
+    <div class="card"><div class="card-label">Keywords</div><div class="card-value" style="color:var(--yellow)">${(gs.total_keywords||0).toLocaleString()}</div></div>
+    <div class="card"><div class="card-label">Games w/ SEO</div><div class="card-value" style="color:var(--blue)">${gs.seo_pages_count||0}/${gf.total_generated||0}</div></div>
+  `);
+
+  set('seo-rankings-coverage', [
+    ['SEO Pages Generated', gs.seo_pages_count||0],
+    ['Category Hub Pages', gs.category_hubs_count||0],
+    ['Total Arabic Keywords', (gs.total_keywords||0).toLocaleString()],
+    ['SEO Engine Cost', `$${(gs.total_cost_usd||0).toFixed(4)}`],
+  ].map(([k,v]) => `<div class="activity-item"><div class="activity-body"><div class="activity-title">${esc(k)}<span style="float:right;color:var(--blue)">${esc(String(v))}</span></div></div></div>`).join('') || '<div class="empty-state">No SEO data yet</div>');
+
+  const hubs = gs.hub_types || [];
+  set('seo-rankings-keywords', hubs.length ? hubs.map(h =>
+    `<div class="activity-item"><div class="activity-body"><div class="activity-title">${esc(h)} <span style="color:var(--green)">✅ Hub Generated</span></div></div></div>`
+  ).join('') : `<div class="activity-item"><div class="activity-body"><div class="activity-title" style="color:var(--muted)">Priority keywords: العاب سباق, العاب اطفال, العاب بازل, العاب اكشن, العاب سيارات</div></div></div>`);
+}
+
+function renderPublishingPipeline(d) {
+  const pp = d.publishing_pipeline || {};
+  const healthColor = pp.pipeline_health==='healthy'?'green':pp.pipeline_health==='needs_attention'?'yellow':'red';
+
+  set('publishing-pipeline-cards', `
+    <div class="card"><div class="card-label">Total Games</div><div class="card-value" style="color:var(--blue)">${pp.total_games||0}</div></div>
+    <div class="card"><div class="card-label">Pending Approval</div><div class="card-value" style="color:var(--yellow)">${pp.pending_approval||0}</div></div>
+    <div class="card"><div class="card-label">Approved</div><div class="card-value" style="color:var(--green)">${pp.approved||0}</div></div>
+    <div class="card"><div class="card-label">Deployed</div><div class="card-value" style="color:var(--blue)">${pp.deployed||0}</div></div>
+    <div class="card"><div class="card-label">Health</div><div class="card-value" style="color:var(--${healthColor})">${esc(pp.pipeline_health||'unknown').toUpperCase()}</div></div>
+    <div class="card"><div class="card-label">Throughput</div><div class="card-value" style="color:var(--muted);font-size:14px">${esc(pp.throughput_estimate||'N/A')}</div></div>
+  `);
+
+  const steps = pp.step_summary || {};
+  const STEP_ORDER = ['generate','qa_check','asset_gen','seo_page','internal_link','sitemap','approval','pr_created','deployed','indexed','tracking'];
+  const STEP_LABELS = {generate:'🎮 Generate',qa_check:'✅ QA Check',asset_gen:'🖼 Assets',seo_page:'📄 SEO Page',internal_link:'🔗 Links',sitemap:'🗺 Sitemap',approval:'👤 Approval',pr_created:'📋 PR',deployed:'🚀 Deploy',indexed:'🔍 Index',tracking:'📊 Track'};
+
+  set('publishing-pipeline-steps', STEP_ORDER.map(sid => {
+    const s = steps[sid] || {};
+    const pct = s.completion_pct || 0;
+    const color = pct >= 75 ? '#22c55e' : pct >= 40 ? '#eab308' : '#ef4444';
+    return `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title" style="display:flex;justify-content:space-between">
+        <span>${esc(STEP_LABELS[sid]||sid)}</span>
+        <span style="color:${color}">${s.done||0}/${s.total||0} (${pct}%)</span>
+      </div>
+      <div style="background:#1e293b;border-radius:4px;height:3px;margin-top:4px;overflow:hidden">
+        <div style="background:${color};width:${pct}%;height:100%"></div>
+      </div>
+    </div></div>`;
+  }).join('') || '<div class="empty-state">No pipeline steps tracked yet</div>');
+
+  const games = (pp.games||[]).slice(0,10);
+  set('publishing-pipeline-games', games.map(g =>
+    `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title" style="display:flex;justify-content:space-between">
+        <span>${esc(g.name||g.game_id)}</span>
+        <span style="color:var(--muted)">${g.completion_pct||0}%</span>
+      </div>
+      <div class="activity-meta">${esc(g.game_type||'')} · ${esc(g.review_status||'')} · QA: ${g.qa_score||0}/100</div>
+    </div></div>`
+  ).join('') || '<div class="empty-state">No games in pipeline</div>');
+
+  const priorities = pp.top_priorities || [];
+  set('publishing-pipeline-priorities', priorities.map(p =>
+    `<div class="activity-item"><div class="activity-body"><div class="activity-title" style="color:var(--yellow)">→ ${esc(p)}</div></div></div>`
+  ).join('') || `<div class="activity-item"><div class="activity-body"><div class="activity-title" style="color:var(--muted)">Bottleneck: ${esc(pp.bottleneck_step||'unknown')}</div></div></div>`);
+}
+
+function renderGameAssets(d) {
+  const ga = d.game_assets || {};
+  set('game-assets-cards', `
+    <div class="card"><div class="card-label">Games w/ Assets</div><div class="card-value" style="color:var(--blue)">${ga.games_processed||0}</div></div>
+    <div class="card"><div class="card-label">Category Banners</div><div class="card-value" style="color:var(--green)">${ga.categories_processed||0}</div></div>
+    <div class="card"><div class="card-label">Total Assets</div><div class="card-value" style="color:var(--yellow)">${ga.total_assets_generated||0}</div></div>
+  `);
+
+  const assets = ga.game_assets || [];
+  const banners = ga.category_banners || [];
+  set('game-assets-list', assets.length ? `<div style="padding:16px">
+    <div style="margin-bottom:12px;color:var(--muted);font-size:12px">GAME ASSETS (thumbnail + OG image + icon per game)</div>
+    ${assets.map(a => `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title">${esc(a.name_en||a.game_id)} <span style="color:var(--muted);font-size:11px">${esc(a.game_type||'')}</span></div>
+      <div class="activity-meta">${(a.assets||[]).map(k=>`${esc(k)} ✅`).join(' · ')}</div>
+    </div></div>`).join('')}
+    ${banners.length ? `<div style="margin:16px 0 8px;color:var(--muted);font-size:12px">CATEGORY BANNERS (${banners.length} types)</div>
+    <div class="activity-item"><div class="activity-body"><div class="activity-title" style="color:var(--green)">${banners.map(b=>esc(b)).join(', ')}</div></div></div>` : ''}
+  </div>` : '<div class="empty-state" style="padding:40px">No assets generated yet — run ai-indexing-validation workflow</div>');
+}
+
+// ─── Phase M: Indexing ────────────────────────────────────────────────────────
+
+function renderIndexingStatus(d) {
+  const idx = d.indexing || {};
+  const quotaUsed = idx.quota_used_today || 0;
+  const quotaTotal = idx.daily_quota || 200;
+  const quotaPct = Math.round(100 * quotaUsed / quotaTotal);
+  const authColor = idx.credentials_configured ? 'green' : 'red';
+  const srColor = (idx.success_rate||'N/A') === 'N/A' ? 'muted' : parseInt(idx.success_rate) >= 80 ? 'green' : 'yellow';
+
+  set('indexing-status-cards', `
+    <div class="card"><div class="card-label">Auth Mode</div><div class="card-value" style="color:var(--${authColor});font-size:14px">${esc(idx.auth_mode||'none').toUpperCase()}</div></div>
+    <div class="card"><div class="card-label">Credentials</div><div class="card-value" style="color:var(--${authColor})">${idx.credentials_configured?'✅':'❌'}</div></div>
+    <div class="card"><div class="card-label">Indexed Today</div><div class="card-value" style="color:var(--blue)">${quotaUsed}</div></div>
+    <div class="card"><div class="card-label">Quota Remaining</div><div class="card-value" style="color:var(--green)">${idx.quota_remaining||quotaTotal}</div></div>
+    <div class="card"><div class="card-label">Total Indexed</div><div class="card-value" style="color:var(--blue)">${idx.total_indexed_all_time||0}</div></div>
+    <div class="card"><div class="card-label">Success Rate</div><div class="card-value" style="color:var(--${srColor})">${esc(idx.success_rate||'N/A')}</div></div>
+  `);
+
+  set('indexing-status-quota', `
+    <div class="activity-item"><div class="activity-body">
+      <div class="activity-title">Daily Quota Usage<span style="float:right;color:${quotaPct>80?'var(--red)':quotaPct>60?'var(--yellow)':'var(--green)'}">${quotaUsed}/${quotaTotal}</span></div>
+      <div style="background:#1e293b;border-radius:4px;height:6px;margin-top:6px;overflow:hidden">
+        <div style="background:${quotaPct>80?'#ef4444':quotaPct>60?'#eab308':'#22c55e'};width:${quotaPct}%;height:100%"></div>
+      </div>
+    </div></div>
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">Queue Size<span style="float:right;color:var(--yellow)">${idx.queue_size||0} URLs</span></div></div></div>
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">Failed Submissions<span style="float:right;color:var(--red)">${idx.failed_count||0}</span></div></div></div>
+    <div class="activity-item"><div class="activity-body"><div class="activity-title" style="color:${idx.credentials_configured?'var(--green)':'var(--red)'}">
+      ${idx.credentials_configured?'✅ GOOGLE_SERVICE_ACCOUNT_JSON configured':'❌ Add GOOGLE_SERVICE_ACCOUNT_JSON to GitHub Secrets'}
+    </div></div></div>
+  `);
+
+  const prio = idx.queue_by_priority || {};
+  set('indexing-status-priority', `
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">High Priority<span style="float:right;color:var(--red)">${prio.high||0} URLs</span></div><div class="activity-meta">Newly deployed games</div></div></div>
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">Normal Priority<span style="float:right;color:var(--yellow)">${prio.normal||0} URLs</span></div><div class="activity-meta">SEO pages, category hubs</div></div></div>
+    <div class="activity-item"><div class="activity-body"><div class="activity-title">Low Priority<span style="float:right;color:var(--muted)">${prio.low||0} URLs</span></div><div class="activity-meta">Supplementary pages</div></div></div>
+  `);
+}
+
+function renderIndexingQueue(d) {
+  const idx = d.indexing || {};
+  const queue = idx.queue_preview || [];
+  set('indexing-queue-cards', `
+    <div class="card"><div class="card-label">Queue Size</div><div class="card-value" style="color:var(--yellow)">${idx.queue_size||0}</div></div>
+    <div class="card"><div class="card-label">High Priority</div><div class="card-value" style="color:var(--red)">${(idx.queue_by_priority||{}).high||0}</div></div>
+    <div class="card"><div class="card-label">Normal</div><div class="card-value" style="color:var(--yellow)">${(idx.queue_by_priority||{}).normal||0}</div></div>
+  `);
+  set('indexing-queue-list', queue.length ? queue.map(item =>
+    `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title" style="display:flex;justify-content:space-between">
+        <span style="word-break:break-all;font-size:12px;color:var(--blue)">${esc((item.url||'').substring(0,80))}</span>
+        <span style="color:${item.priority==='high'?'var(--red)':item.priority==='normal'?'var(--yellow)':'var(--muted)'};white-space:nowrap;margin-left:8px">${esc(item.priority||'normal')}</span>
+      </div>
+      <div class="activity-meta">Source: ${esc(item.source||'')} · Added: ${esc((item.added_at||'').substring(0,10))}</div>
+    </div></div>`
+  ).join('') : '<div class="empty-state" style="padding:40px">Queue empty — all URLs indexed or none queued yet</div>');
+}
+
+function renderIndexedUrls(d) {
+  const idx = d.indexing || {};
+  const urls = idx.recent_indexed || [];
+  set('indexed-urls-cards', `
+    <div class="card"><div class="card-label">Total Indexed</div><div class="card-value" style="color:var(--green)">${idx.total_indexed_all_time||0}</div></div>
+    <div class="card"><div class="card-label">Indexed Today</div><div class="card-value" style="color:var(--blue)">${idx.indexed_today||0}</div></div>
+    <div class="card"><div class="card-label">Success Rate</div><div class="card-value" style="color:var(--green)">${esc(idx.success_rate||'N/A')}</div></div>
+  `);
+  set('indexed-urls-list', urls.length ? urls.map(u =>
+    `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title" style="color:var(--green)">✅ ${esc((u.url||'').substring(0,80))}</div>
+      <div class="activity-meta">${esc((u.submitted_at||'').substring(0,16).replace('T',' '))} UTC · ${esc(u.notification_type||'URL_UPDATED')}</div>
+    </div></div>`
+  ).join('') : '<div class="empty-state" style="padding:40px">No URLs indexed yet — configure GOOGLE_SERVICE_ACCOUNT_JSON in GitHub Secrets</div>');
+}
+
+function renderFailedIndexing(d) {
+  const idx = d.indexing || {};
+  const failed = idx.recent_failed || [];
+  set('failed-indexing-cards', `
+    <div class="card"><div class="card-label">Failed URLs</div><div class="card-value" style="color:var(--red)">${idx.failed_count||0}</div></div>
+    <div class="card"><div class="card-label">Retry Limit</div><div class="card-value" style="color:var(--muted)">3×</div></div>
+  `);
+  set('failed-indexing-list', failed.length ? failed.map(u =>
+    `<div class="activity-item"><div class="activity-body">
+      <div class="activity-title" style="color:var(--red)">❌ ${esc((u.url||'').substring(0,80))}</div>
+      <div class="activity-meta">Error: ${esc(u.error||'')} · Retries: ${u.retry_count||0} · ${esc((u.submitted_at||'').substring(0,16).replace('T',' '))} UTC</div>
+    </div></div>`
+  ).join('') : '<div class="empty-state" style="padding:40px">No failed indexing submissions ✅</div>');
+}
+
 // ─── Phase L: Game Studio ─────────────────────────────────────────────────────
 
 function renderGameFactory(d) {
@@ -3732,6 +4018,16 @@ async function loadDashboard() {
     renderAnalyticsSyncer(_data);
     renderRevenueTracker(_data);
     renderPageDeployer(_data);
+    renderTopGames(_data);
+    renderGameRevenue(_data);
+    renderCtrAnalytics(_data);
+    renderSeoRankings(_data);
+    renderPublishingPipeline(_data);
+    renderGameAssets(_data);
+    renderIndexingStatus(_data);
+    renderIndexingQueue(_data);
+    renderIndexedUrls(_data);
+    renderFailedIndexing(_data);
     renderGameFactory(_data);
     renderGeneratedGames(_data);
     renderGameQA(_data);

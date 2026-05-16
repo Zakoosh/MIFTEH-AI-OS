@@ -1201,6 +1201,68 @@ def read_admin_governance_report():
     }
 
 
+def read_indexing_report():
+    data = read_json("memory/indexing_report.json")
+    if not data:
+        return {}
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "auth_mode": data.get("auth_mode", "none"),
+        "credentials_configured": data.get("credentials_configured", False),
+        "queue_size": data.get("queue_size", 0),
+        "total_indexed_all_time": data.get("total_indexed_all_time", 0),
+        "indexed_today": data.get("indexed_today", 0),
+        "failed_count": data.get("failed_count", 0),
+        "daily_quota": data.get("daily_quota", 200),
+        "quota_used_today": data.get("quota_used_today", 0),
+        "quota_remaining": data.get("quota_remaining", 200),
+        "success_rate": data.get("success_rate", "N/A"),
+        "queue_by_priority": data.get("queue_by_priority", {}),
+        "recent_indexed": data.get("recent_indexed", [])[:15],
+        "recent_failed": data.get("recent_failed", [])[:10],
+        "queue_preview": data.get("queue_preview", [])[:10],
+    }
+
+
+def read_publishing_pipeline_report():
+    data = read_json("memory/publishing_pipeline_report.json")
+    if not data:
+        return {}
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "total_games": data.get("total_games", 0),
+        "pending_approval": data.get("pending_approval", 0),
+        "approved": data.get("approved", 0),
+        "deployed": data.get("deployed", 0),
+        "pipeline_health": data.get("pipeline_health", "unknown"),
+        "bottleneck_step": data.get("bottleneck_step", ""),
+        "throughput_estimate": data.get("throughput_estimate", ""),
+        "monetization": data.get("monetization", {}),
+        "seo_velocity": data.get("seo_velocity", "normal"),
+        "top_priorities": data.get("top_priorities", []),
+        "step_summary": data.get("step_summary", {}),
+        "games": data.get("games", [])[:25],
+    }
+
+
+def read_game_asset_report():
+    data = read_json("memory/game_asset_report.json")
+    if not data:
+        return {}
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "games_processed": data.get("games_processed", 0),
+        "categories_processed": data.get("categories_processed", 0),
+        "total_assets_generated": data.get("total_assets_generated", 0),
+        "category_banners": list(data.get("category_banners", {}).keys()),
+        "game_assets": [
+            {"game_id": a.get("game_id"), "game_type": a.get("game_type"),
+             "name_en": a.get("name_en"), "assets": list(a.get("assets", {}).keys())}
+            for a in data.get("game_assets", [])[:20]
+        ],
+    }
+
+
 def read_telegram_logs():
     data = read_json("memory/telegram_logs.json")
     if not data:
@@ -1280,6 +1342,9 @@ def main():
     game_qa = read_game_qa_report()
     admin_governance = read_admin_governance_report()
     telegram_logs = read_telegram_logs()
+    indexing = read_indexing_report()
+    publishing_pipeline = read_publishing_pipeline_report()
+    game_assets = read_game_asset_report()
     print(f"[dashboard] {len(outputs)} outputs, {len(prs)} PRs, {len(automerge_log)} merge events, "
           f"{len(product_outputs)} product features, {visual_qa.get('total', 0)} QA reports, "
           f"{ai_qa.get('total', 0)} AI QA reviews, {roadmap.get('total_items', 0)} roadmap items, "
@@ -1451,6 +1516,9 @@ def main():
         "game_qa": game_qa,
         "admin_governance": admin_governance,
         "telegram_logs": telegram_logs,
+        "indexing": indexing,
+        "publishing_pipeline": publishing_pipeline,
+        "game_assets": game_assets,
         "analytics_intelligence": {
             "generated_at": analytics_intel.get("generated_at", ""),
             "data_source": analytics_intel.get("data_source", ""),

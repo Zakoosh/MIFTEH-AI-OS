@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-16T15:55:13Z",
+  "generated_at": "2026-05-16T16:24:37Z",
   "architecture": "github-native",
   "scheduler": {
     "scheduler_running": true,
@@ -167,12 +167,12 @@
       "openai": {
         "consecutive_429s": 0,
         "total_429s": 0,
-        "last_success": "2026-05-16T15:55:13Z"
+        "last_success": "2026-05-16T16:24:37Z"
       },
       "gemini": {
         "consecutive_429s": 0,
         "total_429s": 0,
-        "last_success": "2026-05-16T15:55:13Z"
+        "last_success": "2026-05-16T16:24:37Z"
       }
     }
   },
@@ -2690,6 +2690,9 @@
   "game_qa": {},
   "admin_governance": {},
   "telegram_logs": {},
+  "indexing": {},
+  "publishing_pipeline": {},
+  "game_assets": {},
   "analytics_intelligence": {
     "generated_at": "2026-05-15T18:31:07Z",
     "data_source": "ai_intelligence",
