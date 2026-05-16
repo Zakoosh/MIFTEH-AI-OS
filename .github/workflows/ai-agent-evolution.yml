@@ -1,0 +1,45 @@
+name: MIFTEH AI Agent Evolution
+
+# Agents improve their own prompts, strategy, execution quality,
+# collaboration, and reasoning chains. Updates persistent agent profiles.
+# Runs Sun 02:00 UTC — weekly deep evolution cycle.
+
+on:
+  schedule:
+    - cron: '0 2 * * 0'    # Sunday 02:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  agent-evolution:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install openai
+
+      - name: Run agent evolution engine
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python scripts/agent_evolution.py
+
+      - name: Aggregate dashboard
+        run: python scripts/aggregate_dashboard.py
+
+      - name: Commit evolved agent profiles
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "mifteh-ai@users.noreply.github.com"
+          git pull --rebase origin main
+          git add memory/agents/ memory/agent_evolution_report.json memory/agent_evolution_log.json frontend/dashboard/data/
+          git diff --cached --quiet || git commit -m "AI: Agent evolution cycle [$(date -u +%Y-%m-%dT%H:%M:%SZ)] [skip ci]"
+          git push

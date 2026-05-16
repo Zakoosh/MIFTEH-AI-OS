@@ -70,6 +70,14 @@
       <button class="nav-btn" onclick="showTab('realtime',this)"><span class="icon">⚡</span> Realtime Alerts</button>
       <button class="nav-btn" onclick="showTab('kgraph',this)"><span class="icon">↔</span> Knowledge Graph</button>
 
+      <div class="nav-section">Agentic OS</div>
+      <button class="nav-btn" onclick="showTab('agents',this)"><span class="icon">⬡</span> Agent Network</button>
+      <button class="nav-btn" onclick="showTab('cognition',this)"><span class="icon">◈</span> Cognition</button>
+      <button class="nav-btn" onclick="showTab('governance',this)"><span class="icon">⚖</span> Governance</button>
+      <button class="nav-btn" onclick="showTab('economy',this)"><span class="icon">$</span> Task Economy</button>
+      <button class="nav-btn" onclick="showTab('kernel',this)"><span class="icon">◉</span> Ops Kernel</button>
+      <button class="nav-btn" onclick="showTab('civilization',this)"><span class="icon">◆</span> Civilization</button>
+
       <div class="nav-section">System</div>
       <button class="nav-btn" onclick="showTab('health',this)"><span class="icon">♥</span> System Health</button>
       <button class="nav-btn" onclick="showTab('activity',this)"><span class="icon">≡</span> Activity Feed</button>
@@ -987,6 +995,144 @@
           <div class="panel">
             <div class="panel-header"><div class="panel-title">Strategic Clusters</div></div>
             <div id="kgraph-clusters"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- AGENT NETWORK TAB -->
+      <section id="tab-agents" class="tab">
+        <div class="section-title">Agent Network — Persistent AI Civilization</div>
+        <div class="cards-grid" id="agents-cards"></div>
+        <div class="panels-row" style="margin-top:20px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Agent Hierarchy</div></div>
+            <div id="agents-hierarchy"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Agent Performance</div></div>
+            <div id="agents-performance"></div>
+          </div>
+        </div>
+        <div class="panel" style="margin-top:16px">
+          <div class="panel-header"><div class="panel-title">Agent Skills &amp; Confidence</div></div>
+          <div id="agents-skills"></div>
+        </div>
+      </section>
+
+      <!-- COGNITION TAB -->
+      <section id="tab-cognition" class="tab">
+        <div class="section-title">Cognition Engine — Continuous AI Reasoning</div>
+        <div class="cards-grid" id="cognition-cards"></div>
+        <div class="panels-row" style="margin-top:20px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Reasoning Chain</div></div>
+            <div id="cognition-chain"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Reflection Cycle</div></div>
+            <div id="cognition-reflection"></div>
+          </div>
+        </div>
+        <div class="panels-row" style="margin-top:16px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">12-Month Horizon Plan</div></div>
+            <div id="cognition-horizon"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Active Objectives</div></div>
+            <div id="cognition-objectives"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- GOVERNANCE TAB -->
+      <section id="tab-governance" class="tab">
+        <div class="section-title">Governance Engine — Autonomous Control System</div>
+        <div class="cards-grid" id="governance-cards"></div>
+        <div class="panels-row" style="margin-top:20px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Approved Actions</div></div>
+            <div id="governance-approved"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Blocked Actions</div></div>
+            <div id="governance-blocked"></div>
+          </div>
+        </div>
+        <div class="panel" style="margin-top:16px">
+          <div class="panel-header"><div class="panel-title">Risk Flags &amp; Recommendations</div></div>
+          <div id="governance-risks"></div>
+        </div>
+      </section>
+
+      <!-- TASK ECONOMY TAB -->
+      <section id="tab-economy" class="tab">
+        <div class="section-title">Task Economy — ROI-Driven Resource Allocation</div>
+        <div class="cards-grid" id="economy-cards"></div>
+        <div class="panels-row" style="margin-top:20px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Top Tasks by Economy Score</div></div>
+            <div id="economy-tasks"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Portfolio by Project</div></div>
+            <div id="economy-portfolio"></div>
+          </div>
+        </div>
+        <div class="panel" style="margin-top:16px">
+          <div class="panel-header"><div class="panel-title">Economy Intelligence</div></div>
+          <div id="economy-insights"></div>
+        </div>
+      </section>
+
+      <!-- OPERATIONS KERNEL TAB -->
+      <section id="tab-kernel" class="tab">
+        <div class="section-title">Operations Kernel — Central Nervous System</div>
+        <div class="cards-grid" id="kernel-cards"></div>
+        <div class="panels-row" style="margin-top:20px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Execution Bottlenecks</div></div>
+            <div id="kernel-bottlenecks"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Swarm Activity</div></div>
+            <div id="kernel-swarm"></div>
+          </div>
+        </div>
+        <div class="panels-row" style="margin-top:16px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Token &amp; Cost Flow</div></div>
+            <div id="kernel-tokenflow"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Operational Insights</div></div>
+            <div id="kernel-insights"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CIVILIZATION TAB -->
+      <section id="tab-civilization" class="tab">
+        <div class="section-title">Civilization Mode — Autonomous Company Control</div>
+        <div class="cards-grid" id="civilization-cards"></div>
+        <div class="panels-row" style="margin-top:20px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Company Mode Status</div></div>
+            <div id="civilization-mode"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Execution Graph</div></div>
+            <div id="civilization-graph"></div>
+          </div>
+        </div>
+        <div class="panels-row" style="margin-top:16px">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Immediate Actions</div></div>
+            <div id="civilization-actions"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Predicted Issues</div></div>
+            <div id="civilization-predictions"></div>
           </div>
         </div>
       </section>

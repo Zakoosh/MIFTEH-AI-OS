@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-16T05:10:34Z",
+  "generated_at": "2026-05-16T05:33:49Z",
   "architecture": "github-native",
   "scheduler": {
     "scheduler_running": true,
@@ -167,12 +167,12 @@
       "openai": {
         "consecutive_429s": 0,
         "total_429s": 0,
-        "last_success": "2026-05-16T05:10:34Z"
+        "last_success": "2026-05-16T05:33:49Z"
       },
       "gemini": {
         "consecutive_429s": 0,
         "total_429s": 0,
-        "last_success": "2026-05-16T05:10:34Z"
+        "last_success": "2026-05-16T05:33:49Z"
       }
     }
   },
@@ -2658,6 +2658,13 @@
   "campaigns": {},
   "realtime_alerts": {},
   "knowledge_graph": {},
+  "agent_bus": {},
+  "cognition": {},
+  "governance": {},
+  "runtime": {},
+  "task_economy": {},
+  "agent_evolution": {},
+  "kernel": {},
   "analytics_intelligence": {
     "generated_at": "2026-05-15T18:31:07Z",
     "data_source": "ai_intelligence",

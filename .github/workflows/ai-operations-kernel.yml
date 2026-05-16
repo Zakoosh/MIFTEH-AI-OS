@@ -1,0 +1,53 @@
+name: MIFTEH AI Operations Kernel
+
+# Central nervous system — tracks live agent state, active missions,
+# execution graph, token flow, memory flow, task queues, bottlenecks.
+# Runs daily 04:00 UTC — after all other daily cycles complete.
+
+on:
+  schedule:
+    - cron: '0 4 * * *'    # Daily 04:00 UTC
+  workflow_dispatch:
+    inputs:
+      company_mode:
+        description: 'Company operating mode'
+        required: false
+        default: 'semi_autonomous'
+        type: choice
+        options: [assisted, semi_autonomous, autonomous, civilization]
+
+permissions:
+  contents: write
+
+jobs:
+  operations-kernel:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install openai
+
+      - name: Run operations kernel
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          COMPANY_MODE: ${{ inputs.company_mode || 'semi_autonomous' }}
+        run: python scripts/operations_kernel.py
+
+      - name: Aggregate dashboard
+        run: python scripts/aggregate_dashboard.py
+
+      - name: Commit kernel state
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "mifteh-ai@users.noreply.github.com"
+          git pull --rebase origin main
+          git add memory/kernel_report.json memory/company_mode.json frontend/dashboard/data/
+          git diff --cached --quiet || git commit -m "AI: Operations kernel cycle [$(date -u +%Y-%m-%dT%H:%M:%SZ)] [skip ci]"
+          git push

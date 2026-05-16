@@ -1,0 +1,86 @@
+name: MIFTEH AI Civilization Mode
+
+# Master civilization workflow — runs the full Phase H pipeline in sequence:
+# agent_bus → governance → distributed_runtime → task_economy → cognition → operations_kernel
+# Runs Sat 00:00 UTC — weekly full civilization cycle.
+
+on:
+  schedule:
+    - cron: '0 0 * * 6'    # Saturday 00:00 UTC
+  workflow_dispatch:
+    inputs:
+      company_mode:
+        description: 'Company mode for this civilization run'
+        required: false
+        default: 'autonomous'
+        type: choice
+        options: [assisted, semi_autonomous, autonomous, civilization]
+
+permissions:
+  contents: write
+
+jobs:
+  civilization:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install openai
+
+      - name: Phase 1 — Agent Bus
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python scripts/agent_bus.py
+
+      - name: Phase 2 — Governance
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          COMPANY_MODE: ${{ inputs.company_mode || 'autonomous' }}
+        run: python scripts/governance_engine.py
+
+      - name: Phase 3 — Distributed Runtime
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python scripts/distributed_runtime.py
+
+      - name: Phase 4 — Task Economy
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python scripts/task_economy.py
+
+      - name: Phase 5 — Cognition Engine
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python scripts/cognition_engine.py
+
+      - name: Phase 6 — Operations Kernel
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          COMPANY_MODE: ${{ inputs.company_mode || 'autonomous' }}
+        run: python scripts/operations_kernel.py
+
+      - name: Aggregate dashboard
+        run: python scripts/aggregate_dashboard.py
+
+      - name: Commit civilization state
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "mifteh-ai@users.noreply.github.com"
+          git pull --rebase origin main
+          git add \
+            memory/agent_bus.json memory/agents/ \
+            memory/governance_state.json memory/governance_report.json \
+            memory/runtime_state.json memory/runtime_report.json \
+            memory/task_economy_report.json \
+            memory/cognition_state.json memory/cognition_report.json memory/reasoning_chains/ \
+            memory/kernel_report.json memory/company_mode.json \
+            frontend/dashboard/data/
+          git diff --cached --quiet || git commit -m "AI: Civilization cycle [$(date -u +%Y-%m-%dT%H:%M:%SZ)] [skip ci]"
+          git push

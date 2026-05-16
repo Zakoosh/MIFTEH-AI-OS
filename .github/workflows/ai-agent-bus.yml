@@ -1,0 +1,45 @@
+name: MIFTEH AI Agent Bus
+
+# Asynchronous communication layer — routes tasks between persistent agents,
+# publishes events, manages delegation and escalation queues.
+# Runs daily 00:30 UTC — first in the daily Phase H pipeline.
+
+on:
+  schedule:
+    - cron: '30 0 * * *'   # Daily 00:30 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  agent-bus:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install openai
+
+      - name: Run agent bus
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python scripts/agent_bus.py
+
+      - name: Aggregate dashboard
+        run: python scripts/aggregate_dashboard.py
+
+      - name: Commit agent bus state
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "mifteh-ai@users.noreply.github.com"
+          git pull --rebase origin main
+          git add memory/agent_bus.json memory/agent_bus_log.json memory/agents/ frontend/dashboard/data/
+          git diff --cached --quiet || git commit -m "AI: Agent bus cycle [$(date -u +%Y-%m-%dT%H:%M:%SZ)] [skip ci]"
+          git push

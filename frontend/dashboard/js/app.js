@@ -2089,6 +2089,243 @@ function renderKnowledgeGraph(d) {
   set('kgraph-clusters', clusters.length ? clusters.join('') : '<div class="empty-state">No clusters identified</div>');
 }
 
+// ─── Phase H: Agentic OS Render Functions ────────────────────────────────────
+
+function renderAgents(d) {
+  const k = d.kernel || {};
+  const agentStates = k.agent_states || {};
+  const swarm = k.swarm_activity || {};
+  const evo = d.agent_evolution || {};
+  const evoResults = evo.evolution_results || {};
+  const hierarchy = evo.hierarchy || {};
+
+  setCards('agents-cards', [
+    { label: 'Active Agents', value: swarm.active_agents || Object.keys(agentStates).length, sub: `of ${swarm.total_agents || 8} total` },
+    { label: 'Avg Performance', value: `${(swarm.avg_agent_performance || 0).toFixed(1)}/100`, sub: 'composite score' },
+    { label: 'Swarm Health', value: (swarm.swarm_health || 'unknown').toUpperCase(), sub: 'overall state' },
+    { label: 'Evolution Cycles', value: swarm.evolution_cycles || 0, sub: 'completed' },
+  ]);
+
+  // Hierarchy
+  const tier1 = (hierarchy.tier_1 || ['orchestrator']).join(', ');
+  const tier2 = (hierarchy.tier_2 || []).join(', ');
+  const tier3 = (hierarchy.tier_3 || []).join(', ');
+  const standouts = (hierarchy.standout_agents || []).join(', ');
+  set('agents-hierarchy', `
+    <div style="padding:16px;font-family:monospace">
+      <div style="text-align:center;color:var(--accent);font-weight:700;margin-bottom:8px">Tier 1: ${esc(tier1)}</div>
+      <div style="text-align:center;font-size:20px;margin:4px 0">↓</div>
+      <div style="text-align:center;color:#10b981;font-weight:600;margin-bottom:8px">Tier 2: ${esc(tier2 || 'seo, analytics')}</div>
+      <div style="text-align:center;font-size:20px;margin:4px 0">↓</div>
+      <div style="text-align:center;color:var(--muted);margin-bottom:12px">Tier 3: ${esc(tier3 || 'executor, reviewer, optimizer, monetizer')}</div>
+      ${standouts ? `<div style="text-align:center;font-size:11px;color:#f59e0b">⭐ Standouts: ${esc(standouts)}</div>` : ''}
+      <div style="text-align:center;font-size:11px;color:var(--muted);margin-top:8px">Hierarchy health: ${hierarchy.hierarchy_health_score || 70}/100</div>
+    </div>`);
+
+  // Performance
+  const perfItems = Object.entries(agentStates).map(([id, a]) => {
+    const er = evoResults[id] || {};
+    const score = er.performance_score || a.performance_score || 50;
+    const conf = (er.new_confidence || a.confidence || 0.75) * 100;
+    const bar = `<div style="height:4px;background:var(--bg2);border-radius:2px;margin-top:4px"><div style="height:4px;background:${score>=70?'#10b981':score>=50?'#f59e0b':'#ef4444'};width:${score}%;border-radius:2px"></div></div>`;
+    return `<div class="list-item"><strong>${esc(a.name||id)}</strong> <span class="badge badge-blue">${esc(a.role||id)}</span> score: ${score}/100 | conf: ${conf.toFixed(0)}% ${bar}</div>`;
+  });
+  set('agents-performance', perfItems.length ? perfItems.join('') : '<div class="empty-state">Run agent evolution to see performance</div>');
+
+  // Skills
+  const skillItems = Object.entries(agentStates).map(([id, a]) => {
+    const skills = a.skills || {};
+    const topSkills = Object.entries(skills).sort((x,y)=>y[1]-x[1]).slice(0,3)
+      .map(([sk, v]) => `<span style="margin:2px;padding:2px 6px;background:var(--bg2);border-radius:3px;font-size:11px">${esc(sk)}: ${(v*100).toFixed(0)}%</span>`).join('');
+    return `<div class="list-item"><span class="badge badge-blue">${esc(id)}</span> ${topSkills || '<span style="color:var(--muted)">no skills data</span>'}</div>`;
+  });
+  set('agents-skills', skillItems.length ? skillItems.join('') : '<div class="empty-state">Run agent bus to initialize agents</div>');
+}
+
+function renderCognition(d) {
+  const cog = d.cognition || {};
+  setCards('cognition-cards', [
+    { label: 'Cognition Cycle', value: `#${cog.cognition_cycle || 0}`, sub: 'lifetime' },
+    { label: 'Health Score', value: `${cog.health_score || 0}/100`, sub: 'overall cognition' },
+    { label: 'Chain Confidence', value: `${((cog.chain_confidence || 0) * 100).toFixed(0)}%`, sub: 'reasoning quality' },
+    { label: 'Reasoning Steps', value: cog.reasoning_steps || 0, sub: 'in latest chain' },
+  ]);
+
+  const chain = cog.latest_chain || {};
+  const steps = (chain.reasoning_steps || []).map(s =>
+    `<div class="list-item"><span class="badge badge-blue">Step ${s.step}</span> <strong>${esc(s.action||'')}</strong> → ${esc(s.expected_outcome||'')} <span style="color:var(--muted);font-size:11px">${s.timeline_weeks}w | ${((s.confidence||0)*100).toFixed(0)}%</span></div>`
+  );
+  set('cognition-chain', steps.length ? steps.join('') : '<div class="empty-state">Run cognition engine to build reasoning chain</div>');
+
+  const reflection = cog.reflection || {};
+  const dims = Object.entries(reflection.dimension_scores || {}).map(([k,v]) =>
+    `<div class="list-item" style="display:flex;justify-content:space-between"><span>${esc(k.replace(/_/g,' '))}</span><span style="color:${v>=70?'#10b981':v>=50?'#f59e0b':'#ef4444'}">${v}/100</span></div>`
+  );
+  const reflItems = [
+    ...(reflection.what_is_working || []).map(w => `<div class="list-item"><span style="color:#10b981">✓</span> ${esc(w)}</div>`),
+    ...(reflection.what_is_not_working || []).map(w => `<div class="list-item"><span style="color:#ef4444">✗</span> ${esc(w)}</div>`),
+  ];
+  set('cognition-reflection', [...dims, ...reflItems].length ? [...dims, ...reflItems].join('') : '<div class="empty-state">No reflection data</div>');
+
+  const plan = cog.long_horizon_plan || {};
+  const quarters = (plan.quarters || []).map(q =>
+    `<div class="list-item"><strong>${esc(q.quarter||'')}</strong>: ${esc(q.theme||'')} — ${(q.primary_objectives||[]).join(', ')}</div>`
+  );
+  set('cognition-horizon', quarters.length ? quarters.join('') : '<div class="empty-state">Run cognition engine (every 5 cycles) to generate 12-month plan</div>');
+
+  const objs = (cog.active_objectives || []).map((o,i) =>
+    `<div class="list-item"><span class="badge badge-blue">${i+1}</span> ${esc(o)}</div>`
+  );
+  set('cognition-objectives', objs.length ? objs.join('') : '<div class="empty-state">No objectives set</div>');
+}
+
+function renderGovernance(d) {
+  const gov = d.governance || {};
+  const aiReview = gov.ai_review || {};
+  const riskColor = { critical: '#ef4444', high: '#f97316', medium: '#f59e0b', low: '#10b981' };
+  setCards('governance-cards', [
+    { label: 'Company Mode', value: (gov.mode || 'semi_autonomous').replace(/_/g,' ').toUpperCase(), sub: gov.mode_config?.description || '' },
+    { label: 'Approved', value: gov.approved || 0, sub: 'actions cleared' },
+    { label: 'Blocked', value: gov.blocked || 0, sub: 'actions stopped' },
+    { label: 'Portfolio Risk', value: `${aiReview.portfolio_risk_score || 30}/100`, sub: 'governance score' },
+  ]);
+
+  const approved = (gov.approved_actions || []).slice(0,8).map(a =>
+    `<div class="list-item"><span class="badge badge-green">✓</span> <span class="badge badge-blue">${esc(a.project||'')}</span> ${esc(a.title||'')} <span style="color:var(--muted);font-size:11px">risk: ${a.governance?.risk_assessment?.risk_score||0}</span></div>`
+  );
+  set('governance-approved', approved.length ? approved.join('') : '<div class="empty-state">No approved actions yet</div>');
+
+  const blocked = (gov.blocked_actions || []).slice(0,8).map(a =>
+    `<div class="list-item"><span class="badge badge-red">✗</span> <span class="badge badge-blue">${esc(a.project||'')}</span> ${esc(a.title||'')} <span style="color:#ef4444;font-size:11px">${esc(a.governance?.reason||'')}</span></div>`
+  );
+  set('governance-blocked', blocked.length ? blocked.join('') : '<div class="empty-state">No blocked actions</div>');
+
+  const flags = (aiReview.risk_flags || []).map(f =>
+    `<div class="list-item"><span style="color:${riskColor[f.severity]||'#f59e0b'}">[${esc(f.severity||'')}]</span> ${esc(f.flag||'')}</div>`
+  );
+  const recs = (aiReview.recommendations || []).map(r =>
+    `<div class="list-item"><span class="badge badge-blue">rec</span> ${esc(r)}</div>`
+  );
+  set('governance-risks', [...flags, ...recs].length ? [...flags, ...recs].join('') : '<div class="empty-state">No risk flags — governance healthy</div>');
+}
+
+function renderEconomy(d) {
+  const econ = d.task_economy || {};
+  const portfolio = econ.portfolio || {};
+  const ai = econ.ai_analysis || {};
+  const healthColor = { excellent: '#10b981', good: '#3b82f6', fair: '#f59e0b', poor: '#ef4444' };
+
+  setCards('economy-cards', [
+    { label: 'Tasks Scored', value: econ.tasks_scored || 0, sub: 'this cycle' },
+    { label: 'Selected', value: portfolio.total_tasks || 0, sub: `$${(portfolio.budget_used_usd||0).toFixed(4)} used` },
+    { label: 'Est. Annual Value', value: `$${(portfolio.total_est_annual_value_usd||0).toLocaleString()}`, sub: 'portfolio ROI' },
+    { label: 'Economy Health', value: (ai.economy_health||'good').toUpperCase(), sub: `score: ${ai.economy_score||0}/100` },
+  ]);
+
+  const tasks = (econ.top_tasks || []).slice(0,10).map(t =>
+    `<div class="list-item"><span style="color:#f59e0b;font-weight:700;min-width:40px;display:inline-block">${(t.economy_score||0).toFixed(1)}</span> <span class="badge badge-blue">${esc(t.project||'')}</span> ${esc(t.title||'')} <span style="color:var(--muted);font-size:11px">ROI ${(t.roi_model?.roi_ratio||0).toLocaleString()}× | $${(t.roi_model?.total_value_annual_usd||0).toFixed(0)}/yr</span></div>`
+  );
+  set('economy-tasks', tasks.length ? tasks.join('') : '<div class="empty-state">Run task economy engine to score tasks</div>');
+
+  const byProj = Object.entries(econ.by_project || {}).map(([proj, data]) =>
+    `<div class="list-item"><span class="badge badge-blue">${esc(proj)}</span> ${data.count} tasks | $${(data.total_annual_value_usd||0).toFixed(0)}/yr | $${(data.total_cost_usd||0).toFixed(4)} cost</div>`
+  );
+  set('economy-portfolio', byProj.length ? byProj.join('') : '<div class="empty-state">No portfolio data</div>');
+
+  const insights = (ai.economy_insights || []).map(i => `<div class="list-item">${esc(i)}</div>`);
+  const reallocSugs = (ai.reallocation_suggestions || []).map(s =>
+    `<div class="list-item"><span class="badge badge-yellow">realloc</span> ${esc(s.from||'')} → ${esc(s.to||'')} — ${esc(s.rationale||'')}</div>`
+  );
+  set('economy-insights', [...insights, ...reallocSugs].length ? [...insights, ...reallocSugs].join('') :
+    `<div style="padding:12px;color:var(--muted)">${esc(ai.budget_efficiency||'No insights yet')}</div>`);
+}
+
+function renderKernel(d) {
+  const k = d.kernel || {};
+  const swarm = k.swarm_activity || {};
+  const tokenFlow = k.token_flow || {};
+  const memFlow = k.memory_flow || {};
+  const ai = k.ai_analysis || {};
+  const statusColor = { nominal:'#10b981', excellent:'#3b82f6', degraded:'#f59e0b', critical:'#ef4444' };
+
+  setCards('kernel-cards', [
+    { label: 'Ops Status', value: (k.operational_status||'nominal').toUpperCase(), sub: `score: ${k.ops_score||0}/100` },
+    { label: 'Memory', value: `${(memFlow.total_size_kb||0).toFixed(0)} KB`, sub: `${memFlow.total_memory_files||0} files` },
+    { label: 'Token Flow', value: `${(tokenFlow.est_tokens_per_day||0).toLocaleString()}/day`, sub: `$${(tokenFlow.est_cost_per_day_usd||0).toFixed(4)}/day` },
+    { label: 'Intel Sources', value: k.intelligence_sources_loaded || 0, sub: 'loaded this cycle' },
+  ]);
+
+  const bottlenecks = (k.bottlenecks || []).map(b => {
+    const sev = { high:'badge-red', medium:'badge-yellow', low:'badge-green' }[b.severity] || 'badge-yellow';
+    return `<div class="list-item"><span class="badge ${sev}">${esc(b.severity||'')}</span> <strong>${esc(b.component||'')}</strong> — ${esc(b.description||'')}</div>`;
+  });
+  set('kernel-bottlenecks', bottlenecks.length ? bottlenecks.join('') : '<div class="empty-state" style="color:#10b981">No bottlenecks detected — system flowing smoothly</div>');
+
+  const swarmItems = [
+    `<div class="list-item">Active agents: <strong>${swarm.active_agents||0}/${swarm.total_agents||8}</strong></div>`,
+    `<div class="list-item">Active tasks: <strong>${swarm.active_tasks||0}</strong></div>`,
+    `<div class="list-item">Tasks dispatched: <strong>${swarm.tasks_dispatched_cycle||0}</strong> this cycle</div>`,
+    `<div class="list-item">Avg performance: <strong>${(swarm.avg_agent_performance||0).toFixed(1)}/100</strong></div>`,
+    `<div class="list-item">Evolution cycles: <strong>${swarm.evolution_cycles||0}</strong></div>`,
+  ];
+  set('kernel-swarm', swarmItems.join(''));
+
+  const flowItems = [
+    `<div class="list-item">Total tokens all-time: <strong>${(tokenFlow.total_tokens_all_time||0).toLocaleString()}</strong></div>`,
+    `<div class="list-item">Total cost all-time: <strong>$${(tokenFlow.total_cost_all_time_usd||0).toFixed(4)}</strong></div>`,
+    `<div class="list-item">Est. per day: <strong>${(tokenFlow.est_tokens_per_day||0).toLocaleString()} tokens / $${(tokenFlow.est_cost_per_day_usd||0).toFixed(4)}</strong></div>`,
+  ];
+  set('kernel-tokenflow', flowItems.join(''));
+
+  const insights = [
+    ...(ai.immediate_actions||[]).map(a => `<div class="list-item"><span class="badge badge-red">now</span> ${esc(a)}</div>`),
+    ...(ai.optimization_opportunities||[]).map(o => `<div class="list-item"><span class="badge badge-green">optimize</span> ${esc(o)}</div>`),
+  ];
+  const insight = ai.kernel_insight ? `<div style="padding:12px;background:var(--bg2);border-radius:6px;font-size:12px;margin-top:8px">${esc(ai.kernel_insight)}</div>` : '';
+  set('kernel-insights', insights.length ? insights.join('') + insight : `<div class="empty-state">Run operations kernel for insights</div>${insight}`);
+}
+
+function renderCivilization(d) {
+  const k = d.kernel || {};
+  const modeInfo = k.mode_info || {};
+  const ai = k.ai_analysis || {};
+  const execGraph = k.execution_graph || {};
+  const modeColors = { assisted:'#6b7280', semi_autonomous:'#3b82f6', autonomous:'#10b981', civilization:'#8b5cf6' };
+  const mode = k.company_mode || 'semi_autonomous';
+  const modeColor = modeColors[mode] || '#3b82f6';
+
+  setCards('civilization-cards', [
+    { label: 'Company Mode', value: (modeInfo.label||mode).toUpperCase(), sub: `Autonomy level ${modeInfo.autonomy||1}/4` },
+    { label: 'Exec Graph Nodes', value: execGraph.node_count || 0, sub: `${execGraph.edge_count||0} edges` },
+    { label: 'Mode Recommendation', value: (ai.mode_recommendation||mode).replace(/_/g,' '), sub: 'AI suggested' },
+    { label: 'Company Velocity', value: 'VIEW BELOW', sub: 'see description' },
+  ]);
+
+  set('civilization-mode', `
+    <div style="padding:20px;text-align:center">
+      <div style="font-size:2rem;font-weight:900;color:${modeColor};margin-bottom:8px">${esc(modeInfo.label||mode)}</div>
+      <div style="color:var(--muted);margin-bottom:16px">Autonomy Level ${modeInfo.autonomy||1}/4</div>
+      <div style="padding:12px;background:var(--bg2);border-radius:8px;font-size:13px">${esc(ai.company_velocity||'Standard autonomous execution')}</div>
+      ${ai.mode_recommendation && ai.mode_recommendation !== mode ?
+        `<div style="margin-top:12px;padding:8px;background:#1e1b4b;border-radius:6px;font-size:11px;color:#a78bfa">AI recommends switching to: <strong>${esc(ai.mode_recommendation)}</strong></div>` : ''}
+    </div>`);
+
+  const nodes = (execGraph.nodes || []).slice(0,12).map(n =>
+    `<span style="display:inline-block;margin:3px;padding:3px 8px;background:${n.type==='agent'?'#1e3a5f':'var(--bg2)'};border-radius:4px;font-size:11px;color:${n.type==='agent'?'#60a5fa':'var(--fg)'}">${esc(n.label||n.id||'')}</span>`
+  );
+  set('civilization-graph', nodes.length ? `<div style="padding:12px">${nodes.join('')}</div>` : '<div class="empty-state">Graph building — run operations kernel</div>');
+
+  const actions = (ai.immediate_actions||[]).map(a =>
+    `<div class="list-item"><span class="badge badge-red">urgent</span> ${esc(a)}</div>`
+  );
+  set('civilization-actions', actions.length ? actions.join('') : '<div class="empty-state" style="color:#10b981">No immediate actions required</div>');
+
+  const predictions = (ai.predicted_issues||[]).map(p =>
+    `<div class="list-item"><span class="badge badge-yellow">${esc(p.timeline||'?')}</span> ${esc(p.issue||'')} <span style="color:var(--muted);font-size:11px">(${((p.probability||0)*100).toFixed(0)}% probability)</span></div>`
+  );
+  set('civilization-predictions', predictions.length ? predictions.join('') : '<div class="empty-state" style="color:#10b981">No issues predicted</div>');
+}
+
 // ─── Actions (GitHub-native) ─────────────────────────────────────────────────
 
 function triggerLoop(loopId) {
@@ -2170,6 +2407,12 @@ async function loadDashboard() {
     renderCampaigns(_data);
     renderRealtimeAlerts(_data);
     renderKnowledgeGraph(_data);
+    renderAgents(_data);
+    renderCognition(_data);
+    renderGovernance(_data);
+    renderEconomy(_data);
+    renderKernel(_data);
+    renderCivilization(_data);
     renderActivity(_data);
     renderSafety(_data);
 

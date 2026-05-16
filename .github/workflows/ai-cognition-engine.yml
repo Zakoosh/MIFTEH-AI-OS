@@ -1,0 +1,45 @@
+name: MIFTEH AI Cognition Engine
+
+# Multi-step reasoning, strategic planning loops, recursive self-analysis,
+# long-horizon thinking, objective decomposition, and reflection cycles.
+# Runs Mon/Thu 01:00 UTC — heavy cognitive cycle.
+
+on:
+  schedule:
+    - cron: '0 1 * * 1,4'  # Monday + Thursday 01:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  cognition:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install openai
+
+      - name: Run cognition engine
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python scripts/cognition_engine.py
+
+      - name: Aggregate dashboard
+        run: python scripts/aggregate_dashboard.py
+
+      - name: Commit cognition state
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "mifteh-ai@users.noreply.github.com"
+          git pull --rebase origin main
+          git add memory/cognition_state.json memory/cognition_report.json memory/reasoning_chains/ frontend/dashboard/data/
+          git diff --cached --quiet || git commit -m "AI: Cognition cycle [$(date -u +%Y-%m-%dT%H:%M:%SZ)] [skip ci]"
+          git push

@@ -1,0 +1,45 @@
+name: MIFTEH AI Task Economy
+
+# ROI-weighted task allocation — every task scored for expected ROI,
+# execution cost, confidence, urgency, risk, and resource weight.
+# Runs daily 03:00 UTC — after runtime dispatches tasks.
+
+on:
+  schedule:
+    - cron: '0 3 * * *'    # Daily 03:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  task-economy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install openai
+
+      - name: Run task economy engine
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python scripts/task_economy.py
+
+      - name: Aggregate dashboard
+        run: python scripts/aggregate_dashboard.py
+
+      - name: Commit economy report
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "mifteh-ai@users.noreply.github.com"
+          git pull --rebase origin main
+          git add memory/task_economy_report.json frontend/dashboard/data/
+          git diff --cached --quiet || git commit -m "AI: Task economy cycle [$(date -u +%Y-%m-%dT%H:%M:%SZ)] [skip ci]"
+          git push

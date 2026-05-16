@@ -401,6 +401,113 @@ def read_knowledge_graph():
     }
 
 
+def read_agent_bus():
+    data = read_json("memory/agent_bus.json")
+    if not data:
+        return {}
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "active_agents": data.get("active_agents", []),
+        "total_events": data.get("total_events", 0),
+        "tasks_routed": data.get("tasks_routed", 0),
+        "delegations": data.get("delegations", 0),
+        "escalations": data.get("escalations", 0),
+        "bus_health": data.get("bus_health", {}),
+        "event_queue": data.get("event_queue", [])[:10],
+        "task_queue": data.get("task_queue", [])[:10],
+    }
+
+
+def read_cognition_report():
+    data = read_json("memory/cognition_report.json")
+    if not data:
+        return {}
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "health_score": data.get("health_score", 0),
+        "cognition_cycle": data.get("cognition_cycle", {}),
+        "reflection": data.get("reflection", {}),
+        "latest_chain": data.get("latest_chain", {}),
+        "long_horizon_plan": data.get("long_horizon_plan", {}),
+    }
+
+
+def read_governance_report():
+    data = read_json("memory/governance_report.json")
+    if not data:
+        return {}
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "mode": data.get("mode", ""),
+        "approved_actions": data.get("approved_actions", 0),
+        "blocked_actions": data.get("blocked_actions", 0),
+        "deferred_actions": data.get("deferred_actions", 0),
+        "risk_score_avg": data.get("risk_score_avg", 0),
+        "ai_review": data.get("ai_review", {}),
+        "decisions": data.get("decisions", [])[:10],
+    }
+
+
+def read_runtime_report():
+    data = read_json("memory/runtime_report.json")
+    if not data:
+        return {}
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "tasks_dispatched": data.get("tasks_dispatched", 0),
+        "tasks_completed": data.get("tasks_completed", 0),
+        "tasks_failed": data.get("tasks_failed", 0),
+        "tasks_retried": data.get("tasks_retried", 0),
+        "workload_balance": data.get("workload_balance", {}),
+        "ai_analysis": data.get("ai_analysis", {}),
+    }
+
+
+def read_task_economy_report():
+    data = read_json("memory/task_economy_report.json")
+    if not data:
+        return {}
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "portfolio": data.get("portfolio", {}),
+        "top_tasks": data.get("top_tasks", [])[:10],
+        "by_project": data.get("by_project", {}),
+        "ai_analysis": data.get("ai_analysis", {}),
+    }
+
+
+def read_agent_evolution_report():
+    data = read_json("memory/agent_evolution_report.json")
+    if not data:
+        return {}
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "evolution_results": data.get("evolution_results", {}),
+        "hierarchy": data.get("hierarchy", {}),
+        "avg_composite_score": data.get("avg_composite_score", 0),
+        "top_performer": data.get("top_performer", ""),
+        "most_improved": data.get("most_improved", ""),
+    }
+
+
+def read_kernel_report():
+    data = read_json("memory/kernel_report.json")
+    if not data:
+        return {}
+    return {
+        "generated_at": data.get("generated_at", ""),
+        "company_mode": data.get("company_mode", ""),
+        "mode_info": data.get("mode_info", {}),
+        "ops_score": data.get("ops_score", 0),
+        "bottlenecks": data.get("bottlenecks", []),
+        "swarm_activity": data.get("swarm_activity", {}),
+        "token_flow": data.get("token_flow", {}),
+        "agent_states": data.get("agent_states", {}),
+        "ai_analysis": data.get("ai_analysis", {}),
+        "execution_graph": data.get("execution_graph", {}),
+    }
+
+
 def read_roadmap():
     data = read_json("memory/roadmap.json")
     if not data:
@@ -617,6 +724,13 @@ def main():
     campaigns = read_campaign_report()
     realtime_alerts = read_realtime_alerts()
     knowledge_graph = read_knowledge_graph()
+    agent_bus = read_agent_bus()
+    cognition = read_cognition_report()
+    governance = read_governance_report()
+    runtime = read_runtime_report()
+    task_economy = read_task_economy_report()
+    agent_evolution = read_agent_evolution_report()
+    kernel = read_kernel_report()
     print(f"[dashboard] {len(outputs)} outputs, {len(prs)} PRs, {len(automerge_log)} merge events, "
           f"{len(product_outputs)} product features, {visual_qa.get('total', 0)} QA reports, "
           f"{ai_qa.get('total', 0)} AI QA reviews, {roadmap.get('total_items', 0)} roadmap items, "
@@ -756,6 +870,13 @@ def main():
         "campaigns": campaigns,
         "realtime_alerts": realtime_alerts,
         "knowledge_graph": knowledge_graph,
+        "agent_bus": agent_bus,
+        "cognition": cognition,
+        "governance": governance,
+        "runtime": runtime,
+        "task_economy": task_economy,
+        "agent_evolution": agent_evolution,
+        "kernel": kernel,
         "analytics_intelligence": {
             "generated_at": analytics_intel.get("generated_at", ""),
             "data_source": analytics_intel.get("data_source", ""),
