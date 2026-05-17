@@ -1,6 +1,8 @@
 name: Deploy YallaPlays AdSense Branch
 
 on:
+  schedule:
+    - cron: '37 10 17 5 *'
   workflow_dispatch:
     inputs:
       branch_name:
@@ -26,7 +28,7 @@ jobs:
       - name: Clone Yallaplays with GH_PAT
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
-          BRANCH: ${{ github.event.inputs.branch_name }}
+          BRANCH: ${{ github.event.inputs.branch_name || 'feat/adsense-production-activation' }}
         run: |
           git clone "https://x-access-token:${GH_PAT}@github.com/Zakoosh/Yallaplays.git" /tmp/yallaplays
           cd /tmp/yallaplays
@@ -42,7 +44,7 @@ jobs:
       - name: Commit and push
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
-          BRANCH: ${{ github.event.inputs.branch_name }}
+          BRANCH: ${{ github.event.inputs.branch_name || 'feat/adsense-production-activation' }}
         run: |
           cd /tmp/yallaplays
           git add -A
@@ -56,7 +58,7 @@ jobs:
       - name: Create PR
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
-          BRANCH: ${{ github.event.inputs.branch_name }}
+          BRANCH: ${{ github.event.inputs.branch_name || 'feat/adsense-production-activation' }}
         run: |
           echo "$GH_PAT" | gh auth login --with-token
           printf 'Production AdSense Deployment by MIFTEH AI OS\n\nPublisher: ca-pub-1206965892808259\nAdSense injected across 100+ pages, compliance pages added, score 80/100.\n' > /tmp/pr_body.txt
