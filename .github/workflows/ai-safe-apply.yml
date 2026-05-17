@@ -1,7 +1,7 @@
 name: MIFTEH AI Safe Apply
 
-# This workflow validates and can auto-apply pre-approved safe changes.
-# NEVER runs automatically — ONLY via manual workflow_dispatch.
+# Validates and applies pre-approved safe changes.
+# NEVER runs automatically — only via manual workflow_dispatch.
 # Always creates a draft PR for human review — never force-merges.
 
 on:
@@ -50,48 +50,43 @@ jobs:
       - name: Install dependencies
         run: pip install openai
 
-      - name: Run safe apply
+      - name: Validate target repo
+        env:
+          TARGET_REPO: ${{ inputs.repo }}
+        run: |
+          echo "[safe-apply] Target: $TARGET_REPO | Operation: ${{ inputs.operation }} | Dry run: ${{ inputs.dry_run }}"
+          case "$TARGET_REPO" in
+            yallaplays|fionera|mifteh) echo "[safe-apply] Target repo valid: $TARGET_REPO" ;;
+            *) echo "[safe-apply] ERROR: Unknown target repo: $TARGET_REPO"; exit 1 ;;
+          esac
+
+      - name: Run safe apply (production)
+        if: ${{ inputs.dry_run == 'false' }}
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           GH_PAT: ${{ secrets.GH_PAT }}
           TARGET_REPO: ${{ inputs.repo }}
           OPERATION: ${{ inputs.operation }}
-          DRY_RUN: ${{ inputs.dry_run }}
+          DRY_RUN: 'false'
+          GITHUB_REPO_YALLAPLAYS: Zakoosh/Yallaplays
+          GITHUB_REPO_FIONERA: Zakoosh/fionera
+          GITHUB_REPO_MIFTEH: Zakoosh/mifteh-main-site
+        run: python scripts/analyze_repo_and_create_pr.py
+
+      - name: Run safe apply (dry run)
+        if: ${{ inputs.dry_run != 'false' }}
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GH_PAT: ${{ secrets.GH_PAT }}
+          TARGET_REPO: ${{ inputs.repo }}
+          OPERATION: ${{ inputs.operation }}
+          DRY_RUN: 'true'
           GITHUB_REPO_YALLAPLAYS: Zakoosh/Yallaplays
           GITHUB_REPO_FIONERA: Zakoosh/fionera
           GITHUB_REPO_MIFTEH: Zakoosh/mifteh-main-site
         run: |
-          echo "[safe-apply] Target: $TARGET_REPO | Operation: $OPERATION | Dry run: $DRY_RUN"
-          if [ "$TARGET_REPO" = "yallaplays" ] || [ "$TARGET_REPO" = "fionera" ] || [ "$TARGET_REPO" = "mifteh" ]; then
-            if [ "$DRY_RUN" = "false" ]; then
-              python scripts/analyze_repo_and_create_pr.py
-            else
-              echo "[safe-apply] Dry run mode — analysis only, no commits"
-              python -c "
-import sys; sys.path.insert(0,'scripts')
-from analyze_repo_and_create_pr import build_files_context, analyze_and_improve
-import os
-repos = {'yallaplays': ('Zakoosh/Yallaplays','yallaplays.com'), 'fionera': ('Zakoosh/fionera','fionera.app'), 'mifteh': ('Zakoosh/mifteh-main-site','miftehos.com')}
-target = os.environ.get('TARGET_REPO','yallaplays')
-repo_full, domain = repos.get(target, ('Zakoosh/Yallaplays','yallaplays.com'))
-owner, repo = repo_full.split('/')
-from analyze_repo_and_create_pr import build_files_context, get_default_branch
-branch = get_default_branch(owner, repo)
-ctx, files = build_files_context(owner, repo, ['index.html', 'robots.txt', 'sitemap.xml'], branch)
-print(f'[dry-run] Read {len(files)} file(s): {list(files.keys())}')
-data, tokens, cost, ok = analyze_and_improve(target, domain, 'web', ctx)
-if ok:
-    issues = (data or {}).get('analysis', {}).get('issues_found', [])
-    print(f'[dry-run] Found {len(issues)} issues, {tokens} tokens, \${cost:.4f}')
-    for i in issues: print(f'  - {i}')
-else:
-    print('[dry-run] Analysis failed')
-"
-            fi
-          else
-            echo "[safe-apply] Unknown target repo: $TARGET_REPO"
-            exit 1
-          fi
+          echo "[safe-apply] Dry run mode — analysis only, no commits"
+          python scripts/safe_apply_dry_run.py
 
       - name: Commit outputs (if not dry run)
         if: ${{ inputs.dry_run == 'false' }}
@@ -99,6 +94,6 @@ else:
           git config user.name "MIFTEH AI OS"
           git config user.email "mifteh-ai@users.noreply.github.com"
           git pull --rebase origin main
-          git add outputs/ memory/
+          git add outputs/ memory/ 2>/dev/null || true
           git diff --cached --quiet || git commit -m "AI: Safe apply — ${{ inputs.repo }} ${{ inputs.operation }} [$(date -u +%Y-%m-%dT%H:%M:%SZ)] [skip ci]"
           git push
