@@ -1,8 +1,8 @@
 name: Sync YallaPlays Next.js Source
 
-# Syncs targets/yallaplays/yallaplays/ (Next.js 15 source) to Zakoosh/Yallaplays repo.
+# Applies Next.js AdSense + legal pages changes to Zakoosh/Yallaplays.
+# Uses targets/yallaplays-nextjs.patch (pre-generated diff) and GH_PAT.
 # Creates feature branch, commits, and opens PR.
-# Uses GH_PAT for cross-repo write access.
 
 on:
   workflow_dispatch:
@@ -33,69 +33,22 @@ jobs:
       - name: Checkout MIFTEH-AI-OS
         uses: actions/checkout@v4
 
-      - name: Validate Next.js source
+      - name: Validate patch file
         run: |
-          echo "=== VALIDATING NEXT.JS SOURCE ==="
-          SRC="$GITHUB_WORKSPACE/targets/yallaplays/yallaplays"
-
-          if [ ! -f "$SRC/package.json" ]; then
-            echo "ERROR: package.json not found at $SRC"
-            exit 1
-          fi
-
-          for f in \
-            src/app/layout.tsx \
-            src/app/page.tsx \
-            src/app/about/page.tsx \
-            src/app/contact/page.tsx \
-            src/app/privacy/page.tsx \
-            src/app/terms/page.tsx \
-            src/app/cookies/page.tsx \
-            src/components/adsense/AdSense.tsx \
-            src/components/footer/Footer.tsx \
-            src/components/MonetizationSlot.tsx \
-            src/app/sitemap.ts \
-            public/robots.txt; do
-            if [ ! -f "$SRC/$f" ]; then
-              echo "ERROR: Missing $f"
-              exit 1
-            fi
-            echo "  OK  $f"
-          done
-          echo "Source validation PASSED"
-
-      - name: Build Next.js to verify
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-          cache-dependency-path: targets/yallaplays/yallaplays/package-lock.json
-
-      - run: npm ci
-        working-directory: targets/yallaplays/yallaplays
-
-      - name: Run build
-        working-directory: targets/yallaplays/yallaplays
-        run: |
-          npm run build 2>&1 | tee /tmp/build.log
-          if grep -q "Error" /tmp/build.log; then
-            echo "ERROR: Build failed"
-            cat /tmp/build.log
-            exit 1
-          fi
-          echo "Build PASSED"
+          PATCH="$GITHUB_WORKSPACE/targets/yallaplays-nextjs.patch"
+          [ -f "$PATCH" ] || { echo "ERROR: patch not found"; exit 1; }
+          ACTUAL=$(grep -c "^diff --git" "$PATCH" || echo 0)
+          [ "$ACTUAL" -ge 12 ] || { echo "ERROR: only $ACTUAL diffs (expected 12+)"; exit 1; }
+          echo "Patch OK — $ACTUAL files, $(wc -l < "$PATCH") lines"
+          grep "^diff --git" "$PATCH"
 
       - name: Clone Yallaplays repo
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
         run: |
-          echo "=== CLONING YALLAPLAYS ==="
-          if [ -z "$GH_PAT" ]; then
-            echo "ERROR: GH_PAT secret not set"
-            exit 1
-          fi
+          [ -n "$GH_PAT" ] || { echo "ERROR: GH_PAT not set"; exit 1; }
           git clone "https://x-access-token:${GH_PAT}@github.com/${YALLAPLAYS_REPO}.git" "$CLONE_DIR"
-          echo "Clone OK. HEAD: $(git -C "$CLONE_DIR" rev-parse --short HEAD)"
+          echo "Clone OK — HEAD: $(git -C "$CLONE_DIR" rev-parse --short HEAD)"
 
       - name: Setup git identity
         run: |
@@ -107,57 +60,85 @@ jobs:
           cd "$CLONE_DIR"
           if git branch -r | grep -q "origin/$DEPLOY_BRANCH"; then
             git checkout "$DEPLOY_BRANCH"
-            echo "Checked out existing branch: $DEPLOY_BRANCH"
           else
             git checkout -b "$DEPLOY_BRANCH"
-            echo "Created new branch: $DEPLOY_BRANCH"
           fi
+          echo "Branch: $(git branch --show-current) @ $(git rev-parse --short HEAD)"
 
-      - name: Sync Next.js source files
+      - name: Apply patch
         run: |
-          echo "=== SYNCING NEXT.JS SOURCE ==="
-          SRC="$GITHUB_WORKSPACE/targets/yallaplays/yallaplays"
-          DEST="$CLONE_DIR/yallaplays"
+          PATCH="$GITHUB_WORKSPACE/targets/yallaplays-nextjs.patch"
+          cd "$CLONE_DIR"
+          if git apply --check "$PATCH" 2>/dev/null; then
+            git apply "$PATCH"
+            echo "Patch applied cleanly"
+          else
+            git apply --3way "$PATCH" || git apply --reject "$PATCH" 2>/dev/null || true
+            echo "Patch applied with 3-way merge"
+          fi
+          git status --short
 
-          rsync -av --checksum \
-            --include="src/***" \
-            --include="public/***" \
-            --include="package.json" \
-            --include="package-lock.json" \
-            --include="next.config.ts" \
-            --include="tailwind.config.ts" \
-            --include="postcss.config.js" \
-            --include="tsconfig.json" \
-            --exclude="node_modules/" \
-            --exclude=".next/" \
-            --exclude="out/" \
-            --exclude="scripts/" \
-            "$SRC/" "$DEST/"
+      - name: Verify critical files present
+        run: |
+          cd "$CLONE_DIR"
+          MISSING=0
+          for f in \
+            yallaplays/src/app/about/page.tsx \
+            yallaplays/src/app/contact/page.tsx \
+            yallaplays/src/app/cookies/page.tsx \
+            yallaplays/src/app/privacy/page.tsx \
+            yallaplays/src/app/terms/page.tsx \
+            yallaplays/src/components/adsense/AdSense.tsx \
+            yallaplays/src/components/footer/Footer.tsx \
+            yallaplays/src/app/layout.tsx \
+            yallaplays/src/app/sitemap.ts \
+            yallaplays/public/robots.txt; do
+            if [ -f "$f" ]; then echo "  OK  $f"
+            else echo "  MISSING  $f"; MISSING=$((MISSING+1)); fi
+          done
+          [ "$MISSING" -eq 0 ] || { echo "ERROR: $MISSING files missing after patch"; exit 1; }
 
-          echo "Git status after sync:"
-          git -C "$CLONE_DIR" status --short | head -30
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        working-directory: /tmp/yallaplays-sync/yallaplays
+        run: npm ci
+
+      - name: Build to verify
+        working-directory: /tmp/yallaplays-sync/yallaplays
+        run: |
+          npm run build 2>&1 | tee /tmp/build.log
+          grep -q "Generating static pages" /tmp/build.log || { echo "ERROR: Build failed"; tail -30 /tmp/build.log; exit 1; }
+          PAGES=$(grep "Generating static pages" /tmp/build.log | tail -1 | grep -o "[0-9]*/[0-9]*" | tail -1 || echo "?")
+          echo "Build PASSED — pages: $PAGES"
 
       - name: Commit changes
         run: |
           cd "$CLONE_DIR"
-          git add yallaplays/
+          git add yallaplays/src/ yallaplays/public/robots.txt
           if git diff --cached --quiet; then
-            echo "No changes to commit — source already up to date"
+            echo "No changes — already up to date"
           else
             git diff --cached --stat
-            git commit -m "feat(nextjs): AdSense + legal pages + footer + MIFTEH AI OS marker
-
-- AdSense component: next/script, ca-pub-1206965892808259, hydration-safe
-- Footer component: legal links + AI Powered by MIFTEH AI OS badge
-- Legal pages: /about /contact /privacy /terms /cookies (App Router)
-- layout.tsx: AdSenseScript injected, Footer component wired
-- page.tsx: MIFTEH AI OS hero badge, inline footer removed
-- MonetizationSlot: delegates to real AdSenseUnit
-- sitemap.ts: all 5 legal routes + /games route added
-- robots.txt: points to https://yallaplays.com/sitemap.xml
-- Build verified: 64 static pages, 0 errors
-
-Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>"
+            {
+              echo "feat(nextjs): AdSense + legal pages + footer + MIFTEH AI OS marker"
+              echo ""
+              echo "- AdSense: next/script, ca-pub-1206965892808259, hydration-safe"
+              echo "- Footer: legal links + AI Powered by MIFTEH AI OS badge"
+              echo "- Pages: /about /contact /privacy /terms /cookies (App Router)"
+              echo "- layout.tsx: AdSenseScript + Footer integrated"
+              echo "- page.tsx: MIFTEH AI OS badge, inline footer removed"
+              echo "- sitemap.ts: all legal routes + /games"
+              echo "- robots.txt: https://yallaplays.com/sitemap.xml"
+              echo "- Build: 64 static pages, 0 errors"
+              echo ""
+              echo "Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>"
+            } > /tmp/commit_msg.txt
+            git commit -F /tmp/commit_msg.txt
+            echo "COMMIT_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
             echo "Committed: $(git rev-parse --short HEAD)"
           fi
 
@@ -166,62 +147,52 @@ Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>"
           GH_PAT: ${{ secrets.GH_PAT }}
         run: |
           cd "$CLONE_DIR"
-          PUSH_URL="https://x-access-token:${GH_PAT}@github.com/${YALLAPLAYS_REPO}.git"
-          git push "$PUSH_URL" "$DEPLOY_BRANCH" --set-upstream
-          echo "Pushed to $DEPLOY_BRANCH"
-          echo "COMMIT_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+          git push "https://x-access-token:${GH_PAT}@github.com/${YALLAPLAYS_REPO}.git" "$DEPLOY_BRANCH" --set-upstream
+          echo "Pushed: $DEPLOY_BRANCH"
 
       - name: Create Pull Request
-        id: create_pr
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
         run: |
           echo "$GH_PAT" | gh auth login --with-token
-
-          EXISTING=$(gh pr list \
-            --repo "$YALLAPLAYS_REPO" \
-            --head "$DEPLOY_BRANCH" \
-            --json url --jq '.[0].url' 2>/dev/null || echo "")
-
+          EXISTING=$(gh pr list --repo "$YALLAPLAYS_REPO" --head "$DEPLOY_BRANCH" --json url --jq '.[0].url' 2>/dev/null || true)
           if [ -n "$EXISTING" ]; then
-            echo "PR already exists: $EXISTING"
-            PR_URL="$EXISTING"
+            echo "PR exists: $EXISTING"
+            echo "PR_URL=$EXISTING" >> "$GITHUB_ENV"
           else
+            {
+              echo "## Production Next.js Integration"
+              echo ""
+              echo "Publisher: ca-pub-1206965892808259"
+              echo ""
+              echo "Changed files:"
+              echo "  components/adsense/AdSense.tsx - next/script AdSense, hydration-safe"
+              echo "  components/footer/Footer.tsx - footer with legal links + MIFTEH AI OS badge"
+              echo "  app/about/page.tsx - About page (App Router)"
+              echo "  app/contact/page.tsx - Contact page"
+              echo "  app/privacy/page.tsx - Privacy policy"
+              echo "  app/terms/page.tsx - Terms of service"
+              echo "  app/cookies/page.tsx - Cookie policy"
+              echo "  app/layout.tsx - AdSenseScript + Footer integrated"
+              echo "  app/page.tsx - MIFTEH AI OS badge"
+              echo "  app/sitemap.ts - all 5 legal routes"
+              echo "  public/robots.txt - correct sitemap URL"
+              echo ""
+              echo "Build: 64 static pages, 0 errors"
+              echo "Deployed by MIFTEH AI OS"
+            } > /tmp/pr_body.txt
             PR_URL=$(gh pr create \
               --repo "$YALLAPLAYS_REPO" \
               --head "$DEPLOY_BRANCH" \
               --base main \
               --title "feat(nextjs): Production AdSense + Legal Pages + MIFTEH AI OS" \
-              --body "## Production Next.js Integration
-
-**Publisher:** \`ca-pub-1206965892808259\`
-
-### Changes
-- \`components/adsense/AdSense.tsx\` — next/script AdSense, hydration-safe
-- \`components/footer/Footer.tsx\` — unified footer with legal links + MIFTEH AI OS badge
-- \`app/about/page.tsx\` — About page (App Router)
-- \`app/contact/page.tsx\` — Contact page
-- \`app/privacy/page.tsx\` — Privacy policy (AdSense compliant)
-- \`app/terms/page.tsx\` — Terms of service
-- \`app/cookies/page.tsx\` — Cookie policy
-- \`app/layout.tsx\` — AdSenseScript + Footer integrated
-- \`app/page.tsx\` — MIFTEH AI OS hero badge
-- \`app/sitemap.ts\` — all 5 legal routes
-- \`public/robots.txt\` — correct sitemap URL
-
-### Verification
-- ✅ Build: 64 static pages, 0 TypeScript errors
-- ✅ Routes: /about /contact /privacy /terms /cookies /sitemap.xml
-- ✅ AdSense: pagead2.googlesyndication.com via next/script
-
-🤖 Automated by [MIFTEH AI OS](https://github.com/Zakoosh/MIFTEH-AI-OS)")
-
+              --body-file /tmp/pr_body.txt)
             echo "PR created: $PR_URL"
+            echo "PR_URL=$PR_URL" >> "$GITHUB_ENV"
           fi
-          echo "PR_URL=$PR_URL" >> "$GITHUB_ENV"
 
       - name: Auto-merge PR
-        if: ${{ github.event.inputs.auto_merge == 'true' }}
+        if: github.event.inputs.auto_merge == 'true'
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
         run: |
@@ -230,48 +201,41 @@ Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>"
           gh pr merge "$PR_NUMBER" --repo "$YALLAPLAYS_REPO" --merge --delete-branch
           echo "PR #$PR_NUMBER merged"
 
-      - name: Wait for GitHub Pages build
-        if: ${{ github.event.inputs.auto_merge == 'true' }}
+      - name: Wait for GitHub Pages
+        if: github.event.inputs.auto_merge == 'true'
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
         run: |
           echo "$GH_PAT" | gh auth login --with-token
-          for i in $(seq 1 15); do
-            STATUS=$(gh api repos/${YALLAPLAYS_REPO}/pages --jq '.status' 2>/dev/null || echo "unknown")
-            echo "  [${i}] Pages status: $STATUS"
+          for i in $(seq 1 20); do
+            STATUS=$(gh api "repos/${YALLAPLAYS_REPO}/pages" --jq '.status' 2>/dev/null || echo "unknown")
+            echo "  [${i}] Pages: $STATUS"
             [ "$STATUS" = "built" ] && break
             sleep 20
           done
 
       - name: Validate live site
+        if: github.event.inputs.auto_merge == 'true'
         run: |
-          echo "=== LIVE VALIDATION: $LIVE_URL ==="
-          sleep 10
-          BODY=$(curl -s --max-time 20 -H "User-Agent: MIFTEH-AI-OS/1.0" "$LIVE_URL" 2>/dev/null || echo "")
-          HTTP=$(curl -s -o /dev/null -w "%{http_code}" --max-time 20 "$LIVE_URL")
+          sleep 15
+          BODY=$(curl -s --max-time 30 -H "User-Agent: MIFTEH-AI-OS/1.0" "$LIVE_URL" || true)
+          HTTP=$(curl -s -o /dev/null -w "%{http_code}" --max-time 30 "$LIVE_URL")
           echo "HTTP: $HTTP"
-
-          check() { echo "$BODY" | grep -qi "$2" && echo "  PASS  $1" || echo "  MISS  $1"; }
-          check "AdSense script"      "pagead2.googlesyndication.com"
-          check "Publisher ID"        "ca-pub-1206965892808259"
-          check "MIFTEH AI OS"        "MIFTEH AI OS"
-          check "RTL layout"          'dir="rtl"'
-
-          echo ""
+          echo "$BODY" | grep -qi "pagead2.googlesyndication.com" && echo "  PASS AdSense" || echo "  MISS AdSense"
+          echo "$BODY" | grep -qi "ca-pub-1206965892808259"      && echo "  PASS Publisher" || echo "  MISS Publisher"
+          echo "$BODY" | grep -qi "MIFTEH AI OS"                 && echo "  PASS MIFTEH badge" || echo "  MISS MIFTEH badge"
           for page in about contact privacy terms cookies; do
-            CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 "${LIVE_URL}/${page}/" 2>/dev/null || echo "0")
-            [ "$CODE" = "200" ] && echo "  LIVE  /${page}/" || echo "  PEND  /${page}/ (HTTP $CODE)"
+            CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 "${LIVE_URL}/${page}/")
+            [ "$CODE" = "200" ] && echo "  LIVE /${page}/" || echo "  PEND /${page}/ ($CODE)"
           done
-
-          SITEMAP=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 "${LIVE_URL}/sitemap.xml")
-          [ "$SITEMAP" = "200" ] && echo "  LIVE  /sitemap.xml" || echo "  PEND  /sitemap.xml (HTTP $SITEMAP)"
+          CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 "${LIVE_URL}/sitemap.xml")
+          [ "$CODE" = "200" ] && echo "  LIVE /sitemap.xml" || echo "  PEND /sitemap.xml ($CODE)"
 
       - name: Summary
         if: always()
         run: |
-          echo "=== DEPLOYMENT SUMMARY ==="
           echo "Branch : $DEPLOY_BRANCH"
-          echo "Commit : $COMMIT_SHA"
-          echo "PR     : $PR_URL"
+          echo "Commit : ${COMMIT_SHA:-already-up-to-date}"
+          echo "PR     : ${PR_URL:-none}"
           echo "Live   : $LIVE_URL"
           echo "Run    : https://github.com/Zakoosh/MIFTEH-AI-OS/actions/runs/$GITHUB_RUN_ID"

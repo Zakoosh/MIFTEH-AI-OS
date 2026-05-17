@@ -1,0 +1,884 @@
+diff --git a/yallaplays/public/robots.txt b/yallaplays/public/robots.txt
+index 575ff3e..1d9882d 100644
+--- a/yallaplays/public/robots.txt
++++ b/yallaplays/public/robots.txt
+@@ -1,4 +1,4 @@
+ User-agent: *
+ Allow: /
+-Disallow:
+-Sitemap: https://yallaplays.example/sitemap.xml
++Disallow: /_next/
++Sitemap: https://yallaplays.com/sitemap.xml
+diff --git a/yallaplays/src/app/about/page.tsx b/yallaplays/src/app/about/page.tsx
+new file mode 100644
+index 0000000..fd00622
+--- /dev/null
++++ b/yallaplays/src/app/about/page.tsx
+@@ -0,0 +1,85 @@
++import type { Metadata } from 'next'
++import Link from 'next/link'
++
++export const metadata: Metadata = {
++  title: 'من نحن | يلا بلاي',
++  description: 'تعرف على يلا بلاي — منصة الألعاب العربية الأولى التي تجمع أفضل ألعاب HTML5 مجاناً.',
++  alternates: { canonical: 'https://yallaplays.com/about' },
++}
++
++export default function AboutPage() {
++  return (
++    <div className="relative min-h-screen" dir="rtl">
++      <div className="bg-grid" aria-hidden="true" />
++      <div className="bg-orb bg-orb-1" aria-hidden="true" />
++      <div className="bg-orb bg-orb-2" aria-hidden="true" />
++
++      <div className="relative z-10 container mx-auto max-w-3xl px-4 py-24">
++        <div className="mb-8">
++          <Link href="/" className="text-violet-400 hover:text-violet-300 text-sm transition-colors">
++            ← العودة للرئيسية
++          </Link>
++        </div>
++
++        <h1 className="text-4xl font-black text-white mb-4">
++          من <span className="text-gradient">نحن</span>
++        </h1>
++        <p className="text-[var(--text-muted)] text-lg mb-12">
++          يلا بلاي — منصة الألعاب العربية الأولى
++        </p>
++
++        <div className="space-y-8 text-[var(--text-secondary)] leading-relaxed">
++
++          <section className="community-card">
++            <h2 className="text-xl font-bold text-white mb-3 flex items-center gap-2">
++              <span>🎮</span> ما هو يلا بلاي؟
++            </h2>
++            <p>
++              يلا بلاي هي منصة ألعاب عربية مجانية بالكامل، تتيح للاعبين من جميع أنحاء العالم العربي اللعب أكثر من 500 لعبة HTML5 مباشرة من المتصفح، بدون تحميل أو تسجيل.
++            </p>
++          </section>
++
++          <section className="community-card">
++            <h2 className="text-xl font-bold text-white mb-3 flex items-center gap-2">
++              <span>🚀</span> رسالتنا
++            </h2>
++            <p>
++              نؤمن بأن الترفيه الرقمي يجب أن يكون متاحاً للجميع. هدفنا توفير تجربة لعب عالية الجودة باللغة العربية، تعمل على جميع الأجهزة، وتحترم خصوصية المستخدم.
++            </p>
++          </section>
++
++          <section className="community-card">
++            <h2 className="text-xl font-bold text-white mb-3 flex items-center gap-2">
++              <span>⚡</span> ما يميزنا
++            </h2>
++            <ul className="space-y-2 list-none">
++              {[
++                'تشغيل فوري بدون تحميل أو تسجيل',
++                'أكثر من 500 لعبة HTML5 مجانية',
++                'واجهة عربية كاملة مع دعم RTL',
++                'يعمل على الجوال والكمبيوتر',
++                'تحديثات مستمرة بألعاب جديدة',
++                'مدعوم بتقنية MIFTEH AI OS',
++              ].map((item) => (
++                <li key={item} className="flex items-center gap-2">
++                  <span className="text-violet-400">✓</span>
++                  <span>{item}</span>
++                </li>
++              ))}
++            </ul>
++          </section>
++
++          <section className="community-card">
++            <h2 className="text-xl font-bold text-white mb-3 flex items-center gap-2">
++              <span>🤖</span> مدعوم بالذكاء الاصطناعي
++            </h2>
++            <p>
++              يلا بلاي مدعوم بنظام MIFTEH AI OS، منصة ذكاء اصطناعي متكاملة تعمل على تحسين تجربة المستخدم، وإضافة محتوى جديد، وتحسين محركات البحث بشكل مستمر وآلي.
++            </p>
++          </section>
++
++        </div>
++      </div>
++    </div>
++  )
++}
+diff --git a/yallaplays/src/app/contact/page.tsx b/yallaplays/src/app/contact/page.tsx
+new file mode 100644
+index 0000000..325903c
+--- /dev/null
++++ b/yallaplays/src/app/contact/page.tsx
+@@ -0,0 +1,85 @@
++import type { Metadata } from 'next'
++import Link from 'next/link'
++
++export const metadata: Metadata = {
++  title: 'تواصل معنا | يلا بلاي',
++  description: 'تواصل مع فريق يلا بلاي للاستفسارات، الشراكات، أو الإبلاغ عن مشكلة.',
++  alternates: { canonical: 'https://yallaplays.com/contact' },
++}
++
++export default function ContactPage() {
++  return (
++    <div className="relative min-h-screen" dir="rtl">
++      <div className="bg-grid" aria-hidden="true" />
++      <div className="bg-orb bg-orb-1" aria-hidden="true" />
++      <div className="bg-orb bg-orb-2" aria-hidden="true" />
++
++      <div className="relative z-10 container mx-auto max-w-3xl px-4 py-24">
++        <div className="mb-8">
++          <Link href="/" className="text-violet-400 hover:text-violet-300 text-sm transition-colors">
++            ← العودة للرئيسية
++          </Link>
++        </div>
++
++        <h1 className="text-4xl font-black text-white mb-4">
++          تواصل <span className="text-gradient">معنا</span>
++        </h1>
++        <p className="text-[var(--text-muted)] text-lg mb-12">
++          يسعدنا سماع رأيك واستفساراتك
++        </p>
++
++        <div className="space-y-6">
++
++          <div className="community-card">
++            <h2 className="text-xl font-bold text-white mb-3 flex items-center gap-2">
++              <span>📧</span> البريد الإلكتروني
++            </h2>
++            <p className="text-[var(--text-secondary)] mb-2">للاستفسارات العامة والدعم الفني:</p>
++            <a
++              href="mailto:contact@yallaplays.com"
++              className="text-violet-400 hover:text-violet-300 transition-colors font-medium"
++            >
++              contact@yallaplays.com
++            </a>
++          </div>
++
++          <div className="community-card">
++            <h2 className="text-xl font-bold text-white mb-3 flex items-center gap-2">
++              <span>💼</span> الشراكات والإعلانات
++            </h2>
++            <p className="text-[var(--text-secondary)] mb-2">للشراكات التجارية وفرص الإعلان:</p>
++            <a
++              href="mailto:ads@yallaplays.com"
++              className="text-violet-400 hover:text-violet-300 transition-colors font-medium"
++            >
++              ads@yallaplays.com
++            </a>
++          </div>
++
++          <div className="community-card">
++            <h2 className="text-xl font-bold text-white mb-3 flex items-center gap-2">
++              <span>🛡️</span> الخصوصية والامتثال
++            </h2>
++            <p className="text-[var(--text-secondary)] mb-2">لطلبات الخصوصية وحقوق البيانات:</p>
++            <a
++              href="mailto:privacy@yallaplays.com"
++              className="text-violet-400 hover:text-violet-300 transition-colors font-medium"
++            >
++              privacy@yallaplays.com
++            </a>
++          </div>
++
++          <div className="community-card">
++            <h2 className="text-xl font-bold text-white mb-3 flex items-center gap-2">
++              <span>⏱️</span> وقت الاستجابة
++            </h2>
++            <p className="text-[var(--text-secondary)]">
++              نسعى للرد على جميع الرسائل خلال 2-3 أيام عمل. للمشاكل العاجلة، يُرجى ذكر "عاجل" في عنوان الرسالة.
++            </p>
++          </div>
++
++        </div>
++      </div>
++    </div>
++  )
++}
+diff --git a/yallaplays/src/app/cookies/page.tsx b/yallaplays/src/app/cookies/page.tsx
+new file mode 100644
+index 0000000..0f2ca70
+--- /dev/null
++++ b/yallaplays/src/app/cookies/page.tsx
+@@ -0,0 +1,108 @@
++import type { Metadata } from 'next'
++import Link from 'next/link'
++
++export const metadata: Metadata = {
++  title: 'سياسة الكوكيز | يلا بلاي',
++  description: 'سياسة ملفات تعريف الارتباط لموقع يلا بلاي — ما هي الكوكيز وكيف نستخدمها.',
++  alternates: { canonical: 'https://yallaplays.com/cookies' },
++}
++
++const LAST_UPDATED = '1 مايو 2026'
++
++export default function CookiesPage() {
++  return (
++    <div className="relative min-h-screen" dir="rtl">
++      <div className="bg-grid" aria-hidden="true" />
++      <div className="bg-orb bg-orb-1" aria-hidden="true" />
++
++      <div className="relative z-10 container mx-auto max-w-3xl px-4 py-24">
++        <div className="mb-8">
++          <Link href="/" className="text-violet-400 hover:text-violet-300 text-sm transition-colors">
++            ← العودة للرئيسية
++          </Link>
++        </div>
++
++        <h1 className="text-4xl font-black text-white mb-2">سياسة الكوكيز</h1>
++        <p className="text-[var(--text-muted)] text-sm mb-12">آخر تحديث: {LAST_UPDATED}</p>
++
++        <div className="space-y-8 text-[var(--text-secondary)] leading-relaxed">
++
++          <section className="community-card">
++            <h2 className="text-xl font-bold text-white mb-3">ما هي ملفات تعريف الارتباط؟</h2>
++            <p>
++              ملفات تعريف الارتباط (الكوكيز) هي ملفات نصية صغيرة تُخزَّن على جهازك عند زيارتك لمواقع الويب. تُستخدم لتحسين تجربة التصفح وتذكر تفضيلاتك.
++            </p>
++          </section>
++
++          <section className="community-card">
++            <h2 className="text-xl font-bold text-white mb-3">أنواع الكوكيز التي نستخدمها</h2>
++            <div className="space-y-4">
++              <div>
++                <h3 className="font-bold text-white mb-1">كوكيز ضرورية</h3>
++                <p>ضرورية لتشغيل الموقع بشكل صحيح. لا يمكن تعطيلها.</p>
++              </div>
++              <div>
++                <h3 className="font-bold text-white mb-1">كوكيز الأداء والتحليل</h3>
++                <p>تساعدنا على فهم كيفية تفاعل المستخدمين مع الموقع (Google Analytics).</p>
++              </div>
++              <div>
++                <h3 className="font-bold text-white mb-1">كوكيز الإعلانات</h3>
++                <p>تُستخدم من قبل Google AdSense لعرض إعلانات ملائمة بناءً على اهتماماتك.</p>
++              </div>
++              <div>
++                <h3 className="font-bold text-white mb-1">كوكيز التفضيلات</h3>
++                <p>تتذكر تفضيلاتك مثل اللغة المختارة.</p>
++              </div>
++            </div>
++          </section>
++
++          <section className="community-card">
++            <h2 className="text-xl font-bold text-white mb-3">كوكيز Google AdSense</h2>
++            <p className="mb-3">
++              يستخدم Google AdSense ملفات تعريف الارتباط لعرض إعلانات ذات صلة. يمكنك إدارة تفضيلات إعلانات Google من خلال:
++            </p>
++            <ul className="space-y-2 list-disc list-inside">
++              <li>
++                <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer" className="text-violet-400 hover:text-violet-300 transition-colors">
++                  إعدادات إعلانات Google
++                </a>
++              </li>
++              <li>
++                <a href="https://www.google.com/policies/privacy/" target="_blank" rel="noopener noreferrer" className="text-violet-400 hover:text-violet-300 transition-colors">
++                  سياسة خصوصية Google
++                </a>
++              </li>
++            </ul>
++          </section>
++
++          <section className="community-card">
++            <h2 className="text-xl font-bold text-white mb-3">كيفية التحكم في الكوكيز</h2>
++            <p className="mb-3">
++              يمكنك التحكم في الكوكيز أو حذفها عبر إعدادات متصفحك:
++            </p>
++            <ul className="space-y-1 list-disc list-inside">
++              <li>Chrome: الإعدادات ← الخصوصية والأمان ← ملفات تعريف الارتباط</li>
++              <li>Firefox: الإعدادات ← الخصوصية والأمان</li>
++              <li>Safari: التفضيلات ← الخصوصية</li>
++              <li>Edge: الإعدادات ← الخصوصية والبحث</li>
++            </ul>
++            <p className="mt-3 text-sm text-[var(--text-muted)]">
++              ملاحظة: تعطيل بعض الكوكيز قد يؤثر على أداء الموقع.
++            </p>
++          </section>
++
++          <section className="community-card">
++            <h2 className="text-xl font-bold text-white mb-3">التواصل معنا</h2>
++            <p>
++              لأي استفسار حول سياسة الكوكيز، تواصل معنا على{' '}
++              <a href="mailto:privacy@yallaplays.com" className="text-violet-400 hover:text-violet-300 transition-colors">
++                privacy@yallaplays.com
++              </a>
++            </p>
++          </section>
++
++        </div>
++      </div>
++    </div>
++  )
++}
+diff --git a/yallaplays/src/app/layout.tsx b/yallaplays/src/app/layout.tsx
+index df634e5..13af0c1 100644
+--- a/yallaplays/src/app/layout.tsx
++++ b/yallaplays/src/app/layout.tsx
+@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
+ import './globals.css'
+ import { LanguageProvider } from '@/contexts/LanguageContext'
+ import Header from '@/components/Header'
++import Footer from '@/components/footer/Footer'
++import { AdSenseScript } from '@/components/adsense/AdSense'
+ 
+ export const metadata: Metadata = {
+   title: 'يلا بلاي - أفضل موقع ألعاب عربية HTML5',
+@@ -35,17 +37,13 @@ export default function RootLayout({
+         />
+       </head>
+       <body className="min-h-screen star-bg" style={{ backgroundColor: '#0a0a14' }}>
++        <AdSenseScript />
+         <LanguageProvider>
+           <Header />
+           <main className="relative z-10">
+             {children}
+           </main>
+-          <footer className="relative z-10 border-t border-white/10 mt-16 py-8 text-center text-text-muted">
+-            <div className="container mx-auto px-4">
+-              <p className="text-sm opacity-70 mb-1">© 2026 يلا بلاي | YallaPlays</p>
+-              <p className="text-xs opacity-50">صُنع بـ ❤️ للاعبين في كل مكان</p>
+-            </div>
+-          </footer>
++          <Footer />
+         </LanguageProvider>
+       </body>
+     </html>
+diff --git a/yallaplays/src/app/page.tsx b/yallaplays/src/app/page.tsx
+index 8f69de2..caad5bd 100644
+--- a/yallaplays/src/app/page.tsx
++++ b/yallaplays/src/app/page.tsx
+@@ -91,6 +91,12 @@ export default function HomePage() {
+                     </div>
+                   ))}
+                 </div>
++
++                {/* MIFTEH AI OS badge */}
++                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-violet-600/10 border border-violet-500/20 text-violet-300 text-xs font-semibold w-fit">
++                  <span>🤖</span>
++                  <span>AI Powered by MIFTEH AI OS</span>
++                </div>
+               </div>
+ 
+               {/* Right - Game Mosaic */}
+@@ -338,74 +344,6 @@ export default function HomePage() {
+           </div>
+         </section>
+ 
+-        {/* ===========================
+-            FOOTER
+-            =========================== */}
+-        <footer className="site-footer">
+-          <div className="container mx-auto max-w-7xl px-4">
+-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+-              {/* Brand */}
+-              <div className="md:col-span-2">
+-                <div className="footer-brand mb-4">YallaPlay 🎮</div>
+-                <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-sm">
+-                  منصة الألعاب العربية الأولى. أكثر من 500 لعبة HTML5 مجانية، بدون تحميل، بدون تسجيل. العب الآن من متصفحك مباشرةً!
+-                </p>
+-                <div className="flex items-center gap-3 mt-4">
+-                  <div className="flex items-center gap-2 text-[var(--green)] text-sm font-semibold">
+-                    <span className="w-2 h-2 bg-[var(--green)] rounded-full animate-pulse" />
+-                    <span>1,500+ يلعبون الآن</span>
+-                  </div>
+-                </div>
+-              </div>
+-              {/* Links */}
+-              <div>
+-                <h4 className="text-white font-bold mb-4">التصنيفات</h4>
+-                <ul className="space-y-2">
+-                  {CATEGORIES.filter(c => c.id !== 'all').slice(0, 5).map((cat) => (
+-                    <li key={cat.id}>
+-                      <a
+-                        href={`/games?category=${cat.id}`}
+-                        className="text-[var(--text-muted)] text-sm hover:text-[var(--accent-light)] transition-colors flex items-center gap-2"
+-                      >
+-                        <span>{cat.icon}</span>
+-                        <span>{cat.label}</span>
+-                      </a>
+-                    </li>
+-                  ))}
+-                </ul>
+-              </div>
+-              <div>
+-                <h4 className="text-white font-bold mb-4">روابط مهمة</h4>
+-                <ul className="space-y-2">
+-                  {[
+-                    { label: 'الرئيسية', href: '/' },
+-                    { label: 'جميع الألعاب', href: '/games' },
+-                    { label: 'المجتمع', href: '/community' },
+-                    { label: 'سياسة الخصوصية', href: '/privacy' },
+-                  ].map((link) => (
+-                    <li key={link.href}>
+-                      <Link
+-                        href={link.href}
+-                        className="text-[var(--text-muted)] text-sm hover:text-[var(--accent-light)] transition-colors"
+-                      >
+-                        {link.label}
+-                      </Link>
+-                    </li>
+-                  ))}
+-                </ul>
+-              </div>
+-            </div>
+-            <div className="border-t border-[var(--border)] pt-6 flex items-center justify-between flex-wrap gap-4">
+-              <p className="text-[var(--text-muted)] text-sm">
+-                © 2025 YallaPlay. جميع الحقوق محفوظة.
+-              </p>
+-              <p className="text-[var(--text-muted)] text-sm">
+-                صُنع بـ ❤️ للعالم العربي
+-              </p>
+-            </div>
+-          </div>
+-        </footer>
+-
+       </div>
+     </div>
+   )
+diff --git a/yallaplays/src/app/privacy/page.tsx b/yallaplays/src/app/privacy/page.tsx
+new file mode 100644
+index 0000000..223a06d
+--- /dev/null
++++ b/yallaplays/src/app/privacy/page.tsx
+@@ -0,0 +1,98 @@
++import type { Metadata } from 'next'
++import Link from 'next/link'
++
++export const metadata: Metadata = {
++  title: 'سياسة الخصوصية | يلا بلاي',
++  description: 'سياسة الخصوصية لموقع يلا بلاي — كيف نجمع بياناتك ونستخدمها ونحميها.',
++  alternates: { canonical: 'https://yallaplays.com/privacy' },
++}
++
++const LAST_UPDATED = '1 مايو 2026'
++
++export default function PrivacyPage() {
++  return (
++    <div className="relative min-h-screen" dir="rtl">
++      <div className="bg-grid" aria-hidden="true" />
++      <div className="bg-orb bg-orb-1" aria-hidden="true" />
++
++      <div className="relative z-10 container mx-auto max-w-3xl px-4 py-24">
++        <div className="mb-8">
++          <Link href="/" className="text-violet-400 hover:text-violet-300 text-sm transition-colors">
++            ← العودة للرئيسية
++          </Link>
++        </div>
++
++        <h1 className="text-4xl font-black text-white mb-2">سياسة الخصوصية</h1>
++        <p className="text-[var(--text-muted)] text-sm mb-12">آخر تحديث: {LAST_UPDATED}</p>
++
++        <div className="space-y-8 text-[var(--text-secondary)] leading-relaxed">
++
++          <section className="community-card">
++            <h2 className="text-xl font-bold text-white mb-3">1. المعلومات التي نجمعها</h2>
++            <p className="mb-3">نحن لا نطلب منك التسجيل أو إنشاء حساب. نجمع المعلومات التالية تلقائياً:</p>
++            <ul className="space-y-1 list-disc list-inside">
++              <li>بيانات الاستخدام (الصفحات المزارة، الألعاب المشغلة)</li>
++              <li>بيانات الجهاز والمتصفح (النوع، الإصدار)</li>
++              <li>عنوان IP والموقع الجغرافي التقريبي</li>
++              <li>ملفات تعريف الارتباط (الكوكيز) — انظر سياسة الكوكيز</li>
++            </ul>
++          </section>
++
++          <section className="community-card">
++            <h2 className="text-xl font-bold text-white mb-3">2. كيف نستخدم المعلومات</h2>
++            <ul className="space-y-1 list-disc list-inside">
++              <li>تحسين تجربة المستخدم وأداء الموقع</li>
++              <li>تحليل الاستخدام وتطوير المحتوى</li>
++              <li>عرض إعلانات ملائمة عبر Google AdSense</li>
++              <li>الامتثال للمتطلبات القانونية</li>
++            </ul>
++          </section>
++
++          <section className="community-card">
++            <h2 className="text-xl font-bold text-white mb-3">3. Google AdSense والإعلانات</h2>
++            <p className="mb-3">
++              يستخدم هذا الموقع Google AdSense لعرض الإعلانات. قد يستخدم Google ملفات تعريف الارتباط لعرض إعلانات بناءً على زياراتك السابقة لهذا الموقع وغيره من المواقع.
++            </p>
++            <p>
++              يمكنك إلغاء الاشتراك في إعلانات Google المخصصة من خلال{' '}
++              <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer" className="text-violet-400 hover:text-violet-300 transition-colors">
++                إعدادات الإعلانات
++              </a>.
++            </p>
++          </section>
++
++          <section className="community-card">
++            <h2 className="text-xl font-bold text-white mb-3">4. مشاركة البيانات</h2>
++            <p>
++              لا نبيع بياناتك الشخصية لأطراف ثالثة. قد نشارك بيانات مجهولة الهوية مع مزودي خدمات التحليل (مثل Google Analytics) لتحسين خدماتنا.
++            </p>
++          </section>
++
++          <section className="community-card">
++            <h2 className="text-xl font-bold text-white mb-3">5. حقوقك</h2>
++            <ul className="space-y-1 list-disc list-inside">
++              <li>الحق في الوصول إلى بياناتك</li>
++              <li>الحق في تصحيح البيانات غير الدقيقة</li>
++              <li>الحق في حذف بياناتك</li>
++              <li>الحق في الاعتراض على المعالجة</li>
++            </ul>
++            <p className="mt-3">
++              للممارسة هذه الحقوق، تواصل معنا على{' '}
++              <a href="mailto:privacy@yallaplays.com" className="text-violet-400 hover:text-violet-300 transition-colors">
++                privacy@yallaplays.com
++              </a>
++            </p>
++          </section>
++
++          <section className="community-card">
++            <h2 className="text-xl font-bold text-white mb-3">6. التعديلات على السياسة</h2>
++            <p>
++              نحتفظ بحق تعديل هذه السياسة في أي وقت. سيتم إشعارك بأي تغييرات جوهرية عبر إشعار بارز على الموقع.
++            </p>
++          </section>
++
++        </div>
++      </div>
++    </div>
++  )
++}
+diff --git a/yallaplays/src/app/sitemap.ts b/yallaplays/src/app/sitemap.ts
+index f763e0e..ddf3b0c 100644
+--- a/yallaplays/src/app/sitemap.ts
++++ b/yallaplays/src/app/sitemap.ts
+@@ -5,15 +5,26 @@ export const revalidate = 86400
+ 
+ const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://yallaplays.com'
+ 
++const STATIC_ROUTES = [
++  { path: '', priority: 1.0 },
++  { path: '/games', priority: 0.9 },
++  { path: '/about', priority: 0.7 },
++  { path: '/contact', priority: 0.6 },
++  { path: '/privacy', priority: 0.5 },
++  { path: '/terms', priority: 0.5 },
++  { path: '/cookies', priority: 0.4 },
++]
++
+ export default function sitemap() {
++  const now = new Date()
+   return [
+-    {
+-      url: baseUrl,
+-      lastModified: new Date(),
+-    },
++    ...STATIC_ROUTES.map(({ path }) => ({
++      url: `${baseUrl}${path}`,
++      lastModified: now,
++    })),
+     ...importedGames.map(game => ({
+       url: `${baseUrl}/games/${game.slug}`,
+-      lastModified: new Date(),
++      lastModified: now,
+     })),
+   ]
+ }
+diff --git a/yallaplays/src/app/terms/page.tsx b/yallaplays/src/app/terms/page.tsx
+new file mode 100644
+index 0000000..365a679
+--- /dev/null
++++ b/yallaplays/src/app/terms/page.tsx
+@@ -0,0 +1,90 @@
++import type { Metadata } from 'next'
++import Link from 'next/link'
++
++export const metadata: Metadata = {
++  title: 'شروط الاستخدام | يلا بلاي',
++  description: 'شروط وأحكام استخدام موقع يلا بلاي للألعاب العربية.',
++  alternates: { canonical: 'https://yallaplays.com/terms' },
++}
++
++const LAST_UPDATED = '1 مايو 2026'
++
++export default function TermsPage() {
++  return (
++    <div className="relative min-h-screen" dir="rtl">
++      <div className="bg-grid" aria-hidden="true" />
++      <div className="bg-orb bg-orb-1" aria-hidden="true" />
++
++      <div className="relative z-10 container mx-auto max-w-3xl px-4 py-24">
++        <div className="mb-8">
++          <Link href="/" className="text-violet-400 hover:text-violet-300 text-sm transition-colors">
++            ← العودة للرئيسية
++          </Link>
++        </div>
++
++        <h1 className="text-4xl font-black text-white mb-2">شروط الاستخدام</h1>
++        <p className="text-[var(--text-muted)] text-sm mb-12">آخر تحديث: {LAST_UPDATED}</p>
++
++        <div className="space-y-8 text-[var(--text-secondary)] leading-relaxed">
++
++          <section className="community-card">
++            <h2 className="text-xl font-bold text-white mb-3">1. القبول بالشروط</h2>
++            <p>
++              باستخدامك لموقع يلا بلاي، فإنك توافق على الالتزام بهذه الشروط والأحكام. إذا كنت لا توافق على هذه الشروط، يُرجى عدم استخدام الموقع.
++            </p>
++          </section>
++
++          <section className="community-card">
++            <h2 className="text-xl font-bold text-white mb-3">2. الاستخدام المسموح به</h2>
++            <p className="mb-3">يُسمح باستخدام الموقع للأغراض الترفيهية الشخصية فقط. يُحظر:</p>
++            <ul className="space-y-1 list-disc list-inside">
++              <li>نسخ أو توزيع محتوى الموقع دون إذن</li>
++              <li>استخدام أدوات آلية أو روبوتات لاستخراج البيانات</li>
++              <li>محاولة اختراق أو تعطيل الموقع</li>
++              <li>أي استخدام تجاري دون موافقة مسبقة</li>
++            </ul>
++          </section>
++
++          <section className="community-card">
++            <h2 className="text-xl font-bold text-white mb-3">3. الملكية الفكرية</h2>
++            <p>
++              جميع محتويات الموقع، بما في ذلك التصميم والنصوص والصور، هي ملك حصري لـ يلا بلاي أو مرخصة لها. الألعاب المضمنة تعود ملكيتها لمطوريها الأصليين.
++            </p>
++          </section>
++
++          <section className="community-card">
++            <h2 className="text-xl font-bold text-white mb-3">4. إخلاء المسؤولية</h2>
++            <p>
++              يُقدَّم الموقع "كما هو" بدون أي ضمانات. لا نتحمل المسؤولية عن أي أضرار ناجمة عن استخدام الموقع أو عدم القدرة على استخدامه.
++            </p>
++          </section>
++
++          <section className="community-card">
++            <h2 className="text-xl font-bold text-white mb-3">5. الإعلانات</h2>
++            <p>
++              يعرض هذا الموقع إعلانات عبر Google AdSense. نحن لا نتحمل المسؤولية عن محتوى الإعلانات الخارجية. إذا وجدت إعلاناً غير لائق، يُرجى{' '}
++              <Link href="/contact" className="text-violet-400 hover:text-violet-300 transition-colors">
++                التواصل معنا
++              </Link>.
++            </p>
++          </section>
++
++          <section className="community-card">
++            <h2 className="text-xl font-bold text-white mb-3">6. التعديلات</h2>
++            <p>
++              نحتفظ بحق تعديل هذه الشروط في أي وقت. الاستمرار في استخدام الموقع بعد نشر التعديلات يعني موافقتك عليها.
++            </p>
++          </section>
++
++          <section className="community-card">
++            <h2 className="text-xl font-bold text-white mb-3">7. القانون الحاكم</h2>
++            <p>
++              تخضع هذه الشروط وتُفسَّر وفقاً للقوانين المعمول بها. أي نزاع يُحل بطريقة ودية في المقام الأول.
++            </p>
++          </section>
++
++        </div>
++      </div>
++    </div>
++  )
++}
+diff --git a/yallaplays/src/components/MonetizationSlot.tsx b/yallaplays/src/components/MonetizationSlot.tsx
+index f85b8ae..355d00c 100644
+--- a/yallaplays/src/components/MonetizationSlot.tsx
++++ b/yallaplays/src/components/MonetizationSlot.tsx
+@@ -1,20 +1,39 @@
++'use client'
++
++import { AdSenseUnit } from '@/components/adsense/AdSense'
++
++const SLOT_MAP: Record<string, string> = {
++  'home-top':    '1234567890',
++  'home-middle': '0987654321',
++  'home-bottom': '1122334455',
++  'game-top':    '5544332211',
++  'game-bottom': '6677889900',
++}
++
+ interface MonetizationSlotProps {
+   placement: string
+   size?: 'leaderboard' | 'inline' | 'square' | 'skyscraper'
+   className?: string
+ }
+ 
++const FORMAT_MAP: Record<string, 'horizontal' | 'rectangle' | 'auto'> = {
++  leaderboard: 'horizontal',
++  square: 'rectangle',
++  skyscraper: 'vertical' as 'auto',
++  inline: 'auto',
++}
++
+ export default function MonetizationSlot({ placement, size = 'inline', className = '' }: MonetizationSlotProps) {
++  const slot = SLOT_MAP[placement] ?? '1234567890'
++  const format = FORMAT_MAP[size] ?? 'auto'
++
+   return (
+     <div
+       className={`monetization-slot ${className}`}
+       data-placement={placement}
+       data-size={size}
+-      aria-hidden="true"
+     >
+-      <div className="monetization-slot__surface">
+-        <span>Advertisement</span>
+-      </div>
++      <AdSenseUnit slot={slot} format={format} responsive />
+     </div>
+   )
+ }
+diff --git a/yallaplays/src/components/adsense/AdSense.tsx b/yallaplays/src/components/adsense/AdSense.tsx
+new file mode 100644
+index 0000000..e0f362a
+--- /dev/null
++++ b/yallaplays/src/components/adsense/AdSense.tsx
+@@ -0,0 +1,53 @@
++'use client'
++
++import Script from 'next/script'
++import { useEffect, useRef } from 'react'
++
++const PUBLISHER_ID = 'ca-pub-1206965892808259'
++
++interface AdSenseUnitProps {
++  slot: string
++  format?: 'auto' | 'rectangle' | 'horizontal' | 'vertical'
++  responsive?: boolean
++  className?: string
++  style?: React.CSSProperties
++}
++
++export function AdSenseUnit({ slot, format = 'auto', responsive = true, className = '', style }: AdSenseUnitProps) {
++  const ref = useRef<HTMLModElement>(null)
++
++  useEffect(() => {
++    try {
++      // eslint-disable-next-line @typescript-eslint/no-explicit-any
++      const adsbygoogle = (window as any).adsbygoogle
++      if (adsbygoogle) {
++        adsbygoogle.push({})
++      }
++    } catch {
++      // adsbygoogle not ready yet
++    }
++  }, [])
++
++  return (
++    <ins
++      ref={ref}
++      className={`adsbygoogle ${className}`}
++      style={{ display: 'block', ...style }}
++      data-ad-client={PUBLISHER_ID}
++      data-ad-slot={slot}
++      data-ad-format={format}
++      data-full-width-responsive={responsive ? 'true' : 'false'}
++    />
++  )
++}
++
++export function AdSenseScript() {
++  return (
++    <Script
++      id="adsense-init"
++      strategy="afterInteractive"
++      src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${PUBLISHER_ID}`}
++      crossOrigin="anonymous"
++    />
++  )
++}
+diff --git a/yallaplays/src/components/footer/Footer.tsx b/yallaplays/src/components/footer/Footer.tsx
+new file mode 100644
+index 0000000..fff9030
+--- /dev/null
++++ b/yallaplays/src/components/footer/Footer.tsx
+@@ -0,0 +1,103 @@
++import Link from 'next/link'
++
++const CATEGORIES = [
++  { id: 'action', label: 'أكشن', icon: '⚡' },
++  { id: 'puzzle', label: 'ألغاز', icon: '🧩' },
++  { id: 'sports', label: 'رياضة', icon: '⚽' },
++  { id: 'racing', label: 'سباقات', icon: '🏎️' },
++  { id: 'adventure', label: 'مغامرات', icon: '🗺️' },
++]
++
++const LEGAL_LINKS = [
++  { label: 'الرئيسية', href: '/' },
++  { label: 'جميع الألعاب', href: '/games' },
++  { label: 'من نحن', href: '/about' },
++  { label: 'تواصل معنا', href: '/contact' },
++  { label: 'سياسة الخصوصية', href: '/privacy' },
++  { label: 'شروط الاستخدام', href: '/terms' },
++  { label: 'سياسة الكوكيز', href: '/cookies' },
++]
++
++export default function Footer() {
++  return (
++    <footer className="site-footer" dir="rtl">
++      <div className="container mx-auto max-w-7xl px-4">
++        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
++
++          {/* Brand */}
++          <div className="md:col-span-2">
++            <div className="footer-brand mb-4">YallaPlays 🎮</div>
++            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-sm">
++              منصة الألعاب العربية الأولى. أكثر من 500 لعبة HTML5 مجانية، بدون تحميل، بدون تسجيل. العب الآن من متصفحك مباشرةً!
++            </p>
++            <div className="flex items-center gap-3 mt-4">
++              <div className="flex items-center gap-2 text-[var(--green)] text-sm font-semibold">
++                <span className="w-2 h-2 bg-[var(--green)] rounded-full animate-pulse" />
++                <span>1,500+ يلعبون الآن</span>
++              </div>
++            </div>
++            {/* MIFTEH AI OS attribution */}
++            <div className="mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-violet-600/10 border border-violet-500/20 text-violet-300 text-xs font-semibold">
++              <span>🤖</span>
++              <span>AI Powered by MIFTEH AI OS</span>
++            </div>
++          </div>
++
++          {/* Categories */}
++          <div>
++            <h4 className="text-white font-bold mb-4">التصنيفات</h4>
++            <ul className="space-y-2">
++              {CATEGORIES.map((cat) => (
++                <li key={cat.id}>
++                  <a
++                    href={`/games?category=${cat.id}`}
++                    className="text-[var(--text-muted)] text-sm hover:text-[var(--accent-light)] transition-colors flex items-center gap-2"
++                  >
++                    <span>{cat.icon}</span>
++                    <span>{cat.label}</span>
++                  </a>
++                </li>
++              ))}
++            </ul>
++          </div>
++
++          {/* Legal Links */}
++          <div>
++            <h4 className="text-white font-bold mb-4">روابط مهمة</h4>
++            <ul className="space-y-2">
++              {LEGAL_LINKS.map((link) => (
++                <li key={link.href}>
++                  <Link
++                    href={link.href}
++                    className="text-[var(--text-muted)] text-sm hover:text-[var(--accent-light)] transition-colors"
++                  >
++                    {link.label}
++                  </Link>
++                </li>
++              ))}
++            </ul>
++          </div>
++        </div>
++
++        {/* Bottom bar */}
++        <div className="border-t border-[var(--border)] pt-6 flex items-center justify-between flex-wrap gap-4">
++          <p className="text-[var(--text-muted)] text-sm">
++            © 2026 YallaPlays. جميع الحقوق محفوظة.
++          </p>
++          <div className="flex items-center gap-4 flex-wrap">
++            <Link href="/privacy" className="text-[var(--text-muted)] text-xs hover:text-[var(--accent-light)] transition-colors">
++              الخصوصية
++            </Link>
++            <Link href="/terms" className="text-[var(--text-muted)] text-xs hover:text-[var(--accent-light)] transition-colors">
++              الشروط
++            </Link>
++            <Link href="/cookies" className="text-[var(--text-muted)] text-xs hover:text-[var(--accent-light)] transition-colors">
++              الكوكيز
++            </Link>
++            <span className="text-[var(--text-muted)] text-xs">صُنع بـ ❤️ للعالم العربي</span>
++          </div>
++        </div>
++      </div>
++    </footer>
++  )
++}
