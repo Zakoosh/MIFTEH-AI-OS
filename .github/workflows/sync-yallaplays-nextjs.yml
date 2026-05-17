@@ -5,23 +5,29 @@ name: Sync YallaPlays Next.js Source
 # Creates feature branch, commits, and opens PR.
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'targets/yallaplays-nextjs.patch'
+      - '.github/workflows/sync-yallaplays-nextjs.yml'
+      - 'targets/sync-trigger'
   workflow_dispatch:
     inputs:
       branch_name:
         description: 'Target branch in Yallaplays repo'
         required: false
-        default: 'feat/adsense-production-activation'
+        default: 'feat/nextjs-production-v2'
       auto_merge:
         description: 'Auto-merge PR after creation'
         required: false
-        default: 'false'
+        default: 'true'
 
 permissions:
   contents: write
 
 env:
   YALLAPLAYS_REPO: Zakoosh/Yallaplays
-  DEPLOY_BRANCH: ${{ github.event.inputs.branch_name || 'feat/adsense-production-activation' }}
+  DEPLOY_BRANCH: ${{ github.event.inputs.branch_name || 'feat/nextjs-production-v2' }}
   LIVE_URL: https://yallaplays.com
   CLONE_DIR: /tmp/yallaplays-sync
 
@@ -192,7 +198,7 @@ jobs:
           fi
 
       - name: Auto-merge PR
-        if: github.event.inputs.auto_merge == 'true'
+        if: github.event.inputs.auto_merge == 'true' || github.event_name == 'push'
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
         run: |
@@ -202,7 +208,7 @@ jobs:
           echo "PR #$PR_NUMBER merged"
 
       - name: Wait for GitHub Pages
-        if: github.event.inputs.auto_merge == 'true'
+        if: github.event.inputs.auto_merge == 'true' || github.event_name == 'push'
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
         run: |
@@ -215,7 +221,7 @@ jobs:
           done
 
       - name: Validate live site
-        if: github.event.inputs.auto_merge == 'true'
+        if: github.event.inputs.auto_merge == 'true' || github.event_name == 'push'
         run: |
           sleep 15
           BODY=$(curl -s --max-time 30 -H "User-Agent: MIFTEH-AI-OS/1.0" "$LIVE_URL" || true)
