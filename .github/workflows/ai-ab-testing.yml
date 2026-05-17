@@ -1,0 +1,60 @@
+name: AI A/B Testing Engine
+
+on:
+  schedule:
+    - cron: '0 8 * * 1'
+  workflow_dispatch:
+    inputs:
+      project_id:
+        description: 'Project ID'
+        required: false
+        default: 'yallaplays'
+      test_id:
+        description: 'Specific test ID (leave empty for full suite)'
+        required: false
+        default: ''
+
+jobs:
+  ab-testing:
+    name: A/B Testing Analysis
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run A/B testing suite
+        run: |
+          PROJECT="${{ github.event.inputs.project_id || 'yallaplays' }}"
+          TEST_ID="${{ github.event.inputs.test_id }}"
+          python3 -c "
+          import json, sys
+          sys.path.insert(0, '.')
+          from scripts.growth.ab_testing import run_full_suite, analyze_test
+          if '$TEST_ID':
+              r = analyze_test('$TEST_ID')
+              print(f'Test: {r.get(\"test_id\", \"?\")}')
+              print(f'Winner: {r.get(\"winner\", \"inconclusive\")}')
+              print(f'Significant: {r.get(\"significant\", False)}')
+              print(f'Uplift: {r.get(\"uplift_pct\", 0):.1f}%')
+          else:
+              results = run_full_suite('$PROJECT')
+              winners = [t for t in results.get('tests', []) if t.get('winner') != 'inconclusive']
+              print(f'Tests run: {results.get(\"tests_run\", 0)}')
+              print(f'Winners found: {len(winners)}')
+              for t in results.get('tests', []):
+                  sig = \"*\" if t.get('significant') else \" \"
+                  print(f'  [{sig}] {t.get(\"test_id\", \"?\"):20} winner={t.get(\"winner\", \"inconclusive\")} uplift={t.get(\"uplift_pct\", 0):.1f}%')
+          " 2>&1
+      - name: Commit report
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "ai@mifteh.com"
+          git add memory/reports/ab_tests/ || true
+          git diff --cached --quiet || git -c commit.gpgsign=false commit -m "chore(growth): A/B testing report $(date -u +%Y%m%dT%H%MZ)"
+          git push origin main || true

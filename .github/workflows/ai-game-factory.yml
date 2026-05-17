@@ -1,0 +1,54 @@
+name: AI Game Factory
+
+on:
+  schedule:
+    - cron: '0 2 1 * *'
+  workflow_dispatch:
+    inputs:
+      project_id:
+        description: 'Project ID'
+        required: false
+        default: 'yallaplays'
+      game_ids:
+        description: 'Comma-separated game IDs (leave empty for all)'
+        required: false
+        default: ''
+
+jobs:
+  game-factory:
+    name: Generate HTML5 Games
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Generate games
+        run: |
+          PROJECT="${{ github.event.inputs.project_id || 'yallaplays' }}"
+          GAME_IDS="${{ github.event.inputs.game_ids }}"
+          python3 -c "
+          import json, sys
+          sys.path.insert(0, '.')
+          from scripts.growth.game_factory import generate_batch, GAME_TEMPLATES
+          ids = '$GAME_IDS'.split(',') if '$GAME_IDS' else list(GAME_TEMPLATES.keys())
+          ids = [i.strip() for i in ids if i.strip()]
+          r = generate_batch('$PROJECT', ids)
+          print(f'Generated: {r[\"generated\"]}/{r[\"requested\"]} games')
+          print(f'Errors: {r[\"errors\"]}')
+          print(f'Total HTML: {r[\"total_html_bytes\"]:,} bytes')
+          for g in r.get('games', []):
+              print(f'  {g[\"slug\"]:20} [{g[\"category\"]}] {g[\"name_ar\"]}')
+          " 2>&1
+      - name: Commit games and report
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "ai@mifteh.com"
+          git add memory/reports/games/ || true
+          git diff --cached --quiet || git -c commit.gpgsign=false commit -m "chore(growth): game factory batch $(date -u +%Y%m%dT%H%MZ)"
+          git push origin main || true

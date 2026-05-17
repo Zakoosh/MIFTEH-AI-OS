@@ -1,0 +1,50 @@
+name: AI Content Expansion Engine
+
+on:
+  schedule:
+    - cron: '0 3 * * 3'
+  workflow_dispatch:
+    inputs:
+      project_id:
+        description: 'Project ID'
+        required: false
+        default: 'yallaplays'
+
+jobs:
+  content-expansion:
+    name: Content Expansion
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Generate content plan
+        run: |
+          PROJECT="${{ github.event.inputs.project_id || 'yallaplays' }}"
+          python3 -c "
+          import json, sys
+          sys.path.insert(0, '.')
+          from scripts.growth.content_engine import generate_content_plan
+          r = generate_content_plan('$PROJECT')
+          s = r.get('plan_summary', {})
+          print(f'Game landing pages: {s.get(\"game_landing_pages\", 0)}')
+          print(f'Category pages: {s.get(\"category_pages\", 0)}')
+          print(f'Multilingual sets: {s.get(\"multilingual_sets\", 0)}')
+          print(f'Total new pages: {s.get(\"total_pages_to_create\", 0)}')
+          seo = r.get('seo_impact', {})
+          print(f'Est. indexed keywords: {seo.get(\"estimated_indexed_keywords\", 0)}')
+          print(f'Schema types: {seo.get(\"schema_types\", [])}')
+          " 2>&1
+      - name: Commit report
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "ai@mifteh.com"
+          git add memory/reports/content/ || true
+          git diff --cached --quiet || git -c commit.gpgsign=false commit -m "chore(growth): content expansion plan $(date -u +%Y%m%dT%H%MZ)"
+          git push origin main || true

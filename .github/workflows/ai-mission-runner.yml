@@ -1,0 +1,67 @@
+name: AI Mission Runner
+
+on:
+  schedule:
+    - cron: '0 4 * * *'
+  workflow_dispatch:
+    inputs:
+      project_id:
+        description: 'Project ID'
+        required: false
+        default: 'yallaplays'
+      mission_id:
+        description: 'Specific mission ID (leave empty for all)'
+        required: false
+        default: ''
+      force:
+        description: 'Force run ignoring cadence gate (true/false)'
+        required: false
+        default: 'false'
+
+jobs:
+  mission-runner:
+    name: Autonomous Mission Runner
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run missions
+        run: |
+          PROJECT="${{ github.event.inputs.project_id || 'yallaplays' }}"
+          MISSION="${{ github.event.inputs.mission_id }}"
+          FORCE="${{ github.event.inputs.force || 'false' }}"
+          python3 -c "
+          import json, sys
+          sys.path.insert(0, '.')
+          from scripts.growth.mission_runner import run_mission, run_all_missions, mission_status
+          force = '$FORCE'.lower() == 'true'
+          if '$MISSION':
+              r = run_mission('$MISSION', '$PROJECT', force=force)
+              print(f'Mission: {r.get(\"mission_id\", \"?\")}')
+              print(f'Status: {r.get(\"status\", \"?\")}')
+              print(f'Steps completed: {r.get(\"steps_completed\", 0)}/{r.get(\"steps_total\", 0)}')
+              if r.get('skipped_reason'):
+                  print(f'Skipped: {r[\"skipped_reason\"]}')
+          else:
+              results = run_all_missions('$PROJECT', force=force)
+              print(f'Missions run: {results.get(\"missions_run\", 0)}')
+              print(f'Missions skipped: {results.get(\"missions_skipped\", 0)}')
+              print(f'Total steps: {results.get(\"total_steps\", 0)}')
+              for m in results.get('missions', []):
+                  status_icon = '✓' if m.get('status') == 'completed' else ('→' if m.get('status') == 'skipped' else '✗')
+                  print(f'  {status_icon} {m.get(\"mission_id\", \"?\"):25} {m.get(\"status\", \"?\")}')
+          " 2>&1
+      - name: Commit mission state and reports
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "ai@mifteh.com"
+          git add memory/reports/ || true
+          git diff --cached --quiet || git -c commit.gpgsign=false commit -m "chore(growth): autonomous missions cycle $(date -u +%Y%m%dT%H%MZ)"
+          git push origin main || true

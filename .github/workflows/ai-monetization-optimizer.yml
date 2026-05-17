@@ -1,0 +1,52 @@
+name: AI Monetization Optimizer
+
+on:
+  schedule:
+    - cron: '0 7 * * *'
+  workflow_dispatch:
+    inputs:
+      project_id:
+        description: 'Project ID'
+        required: false
+        default: 'yallaplays'
+
+jobs:
+  monetization-optimizer:
+    name: Monetization Optimization Analysis
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run monetization analysis
+        run: |
+          PROJECT="${{ github.event.inputs.project_id || 'yallaplays' }}"
+          python3 -c "
+          import json, sys
+          sys.path.insert(0, '.')
+          from scripts.growth.monetization_optimizer import optimize_project
+          r = optimize_project('$PROJECT')
+          scoring = r.get('scoring', {})
+          print(f'Monetization score: {scoring.get(\"monetization_score\", 0)}/100 ({scoring.get(\"status\", \"?\")})')
+          cls = r.get('cls_risk', {})
+          print(f'CLS risk: {cls.get(\"estimated_cls\", 0):.3f} ({cls.get(\"cls_status\", \"?\")})')
+          density = r.get('ad_density', {})
+          print(f'Ad density: {density.get(\"ads_per_screen\", 0)} ads/screen, policy ok: {density.get(\"policy_compliant\", False)}')
+          policy = r.get('policy_risks', {})
+          print(f'Policy risks: {policy.get(\"risk_count\", 0)} found')
+          for rec in r.get('recommendations', [])[:3]:
+              print(f'  → {rec}')
+          " 2>&1
+      - name: Commit report
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "ai@mifteh.com"
+          git add memory/reports/monetization/ || true
+          git diff --cached --quiet || git -c commit.gpgsign=false commit -m "chore(growth): monetization optimizer report $(date -u +%Y%m%dT%H%MZ)"
+          git push origin main || true

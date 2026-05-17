@@ -1,0 +1,53 @@
+name: AI Revenue Intelligence
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+    inputs:
+      project_id:
+        description: 'Project ID'
+        required: false
+        default: 'yallaplays'
+      monthly_pageviews:
+        description: 'Estimated monthly pageviews'
+        required: false
+        default: '10000'
+
+jobs:
+  revenue-intelligence:
+    name: Revenue Intelligence Analysis
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run revenue analysis
+        run: |
+          PROJECT="${{ github.event.inputs.project_id || 'yallaplays' }}"
+          PV="${{ github.event.inputs.monthly_pageviews || '10000' }}"
+          python3 -c "
+          import json, sys
+          sys.path.insert(0, '.')
+          from scripts.growth.revenue_intelligence import analyze_project
+          r = analyze_project('$PROJECT', int('$PV'))
+          scoring = r.get('scoring', {})
+          print(f'Monetization score: {scoring.get(\"monetization_score\", 0)}/100 ({scoring.get(\"status\", \"?\")})')
+          rev = r.get('revenue', {}).get('revenue_usd', {})
+          print(f'Revenue estimate: \${rev.get(\"low\", 0)} - \${rev.get(\"high\", 0)}/mo')
+          print(f'Ad coverage: {r.get(\"adsense\", {}).get(\"coverage_pct\", 0)}%')
+          print(f'Top suggestion: {r.get(\"suggestions\", [{}])[0].get(\"action\", \"N/A\")}')
+          " 2>&1
+      - name: Commit report
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "ai@mifteh.com"
+          git add memory/reports/revenue/ || true
+          git diff --cached --quiet || git -c commit.gpgsign=false commit -m "chore(growth): revenue intelligence report $(date -u +%Y%m%dT%H%MZ)"
+          git push origin main || true

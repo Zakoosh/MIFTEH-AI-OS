@@ -1,45 +1,55 @@
-name: MIFTEH AI Traffic Intelligence
-
-# Estimates competitor traffic, detects CTR shifts, identifies seasonal spikes,
-# models traffic opportunity by keyword cluster and content gap.
-# Runs Wed 02:00 UTC.
+name: AI Traffic Intelligence
 
 on:
   schedule:
-    - cron: '0 2 * * 3'    # Wednesday 02:00 UTC
+    - cron: '0 9 * * 2'
   workflow_dispatch:
-
-permissions:
-  contents: write
+    inputs:
+      project_id:
+        description: 'Project ID'
+        required: false
+        default: 'yallaplays'
 
 jobs:
   traffic-intelligence:
+    name: Traffic Intelligence Analysis
     runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
-
-      - name: Install dependencies
-        run: pip install openai
-
-      - name: Run traffic intelligence engine
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        run: python scripts/traffic_intelligence.py
-
-      - name: Aggregate dashboard
-        run: python scripts/aggregate_dashboard.py
-
-      - name: Commit traffic intelligence data
+          python-version: '3.11'
+      - name: Run traffic analysis
+        run: |
+          PROJECT="${{ github.event.inputs.project_id || 'yallaplays' }}"
+          python3 -c "
+          import json, sys
+          sys.path.insert(0, '.')
+          from scripts.growth.traffic_intelligence import analyze_project
+          r = analyze_project('$PROJECT')
+          kw = r.get('keywords', {})
+          print(f'Keyword opportunities: {kw.get(\"total_opportunities\", 0)}')
+          print(f'Top keywords: {kw.get(\"top_opportunities\", [])}')
+          serp = r.get('serp_quality', {})
+          print(f'SERP quality score: {serp.get(\"overall_score\", 0)}/100')
+          trends = r.get('trends', {})
+          seasonal = trends.get('seasonal_opportunities', [])
+          if seasonal:
+              print(f'Seasonal opportunity: {seasonal[0].get(\"period\", \"?\")} ({seasonal[0].get(\"multiplier\", 1)}x)')
+          pages = r.get('top_pages', {})
+          print(f'Top pages analyzed: {pages.get(\"pages_analyzed\", 0)}')
+          for rec in r.get('recommendations', [])[:3]:
+              print(f'  → {rec}')
+          " 2>&1
+      - name: Commit report
         run: |
           git config user.name "MIFTEH AI OS"
-          git config user.email "mifteh-ai@users.noreply.github.com"
-          git pull --rebase origin main
-          git add memory/traffic_intelligence.json frontend/dashboard/data/
-          git diff --cached --quiet || git commit -m "AI: Traffic intelligence cycle [$(date -u +%Y-%m-%dT%H:%M:%SZ)] [skip ci]"
-          git push
+          git config user.email "ai@mifteh.com"
+          git add memory/reports/traffic/ || true
+          git diff --cached --quiet || git -c commit.gpgsign=false commit -m "chore(growth): traffic intelligence report $(date -u +%Y%m%dT%H%MZ)"
+          git push origin main || true

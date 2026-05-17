@@ -1,0 +1,51 @@
+name: AI Indexing Intelligence
+
+on:
+  schedule:
+    - cron: '0 5 * * *'
+  workflow_dispatch:
+    inputs:
+      project_id:
+        description: 'Project ID'
+        required: false
+        default: 'yallaplays'
+
+jobs:
+  indexing:
+    name: Indexing Intelligence Analysis
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run indexing analysis
+        run: |
+          PROJECT="${{ github.event.inputs.project_id || 'yallaplays' }}"
+          python3 -c "
+          import json, sys
+          sys.path.insert(0, '.')
+          from scripts.growth.indexing_intelligence import analyze_project
+          r = analyze_project('$PROJECT')
+          print(f'Indexing score: {r.get(\"indexing_score\", 0)}/100 ({r.get(\"indexing_status\", \"?\")})')
+          sm = r.get('sitemap', {})
+          print(f'Sitemap URLs: {sm.get(\"total_urls\", 0)}, freshness: {sm.get(\"freshness_days\", \"?\")} days')
+          orphans = r.get('orphans', {})
+          print(f'Orphan pages: {orphans.get(\"orphan_count\", 0)} ({orphans.get(\"orphan_pct\", 0)}%)')
+          idx = r.get('indexability', {})
+          print(f'Indexable: {idx.get(\"indexable\", 0)}/{idx.get(\"checked\", 0)} ({idx.get(\"indexability_pct\", 0)}%)')
+          for rec in r.get('recommendations', [])[:3]:
+              print(f'  → {rec}')
+          " 2>&1
+      - name: Commit report
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "ai@mifteh.com"
+          git add memory/reports/indexing/ || true
+          git diff --cached --quiet || git -c commit.gpgsign=false commit -m "chore(growth): indexing intelligence report $(date -u +%Y%m%dT%H%MZ)"
+          git push origin main || true

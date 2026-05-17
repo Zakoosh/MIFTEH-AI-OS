@@ -1,0 +1,53 @@
+name: AI Executive Dashboard
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+    inputs:
+      project_id:
+        description: 'Project ID'
+        required: false
+        default: 'yallaplays'
+
+jobs:
+  executive-dashboard:
+    name: Executive Dashboard Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Build executive dashboard
+        run: |
+          PROJECT="${{ github.event.inputs.project_id || 'yallaplays' }}"
+          python3 -c "
+          import json, sys
+          sys.path.insert(0, '.')
+          from scripts.growth.executive_dashboard import build_dashboard, print_executive_summary
+          r = build_dashboard('$PROJECT')
+          health = r.get('health', {})
+          print(f'Overall health: {health.get(\"overall_score\", 0)}/100 ({health.get(\"status\", \"?\")})')
+          recs = r.get('ai_recommendations', [])
+          critical = [x for x in recs if x.get('priority') == 'critical']
+          high = [x for x in recs if x.get('priority') == 'high']
+          print(f'AI recommendations: {len(recs)} total ({len(critical)} critical, {len(high)} high)')
+          forecast = r.get('growth_forecast', {})
+          m3 = forecast.get('3_month', {})
+          print(f'3-month revenue forecast: \${m3.get(\"realistic\", {}).get(\"revenue\", 0):.0f}/mo')
+          for rec in recs[:3]:
+              print(f'  [{rec.get(\"priority\", \"?\").upper()}] {rec.get(\"action\", \"?\")}')
+          " 2>&1
+      - name: Commit dashboard data
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "ai@mifteh.com"
+          git add data/executive_dashboard.json memory/reports/summary_latest.json || true
+          git diff --cached --quiet || git -c commit.gpgsign=false commit -m "chore(growth): executive dashboard update $(date -u +%Y%m%dT%H%MZ)"
+          git push origin main || true
