@@ -1,0 +1,77 @@
+name: AI Live Validator
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+    inputs:
+      project_id:
+        description: 'Project ID to validate (leave empty for all)'
+        required: false
+        default: ''
+      check_links:
+        description: 'Check broken links (slow)'
+        required: false
+        default: 'false'
+
+jobs:
+  validate:
+    name: Live Validation
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run live validator
+        id: validate
+        run: |
+          PROJECT="${{ github.event.inputs.project_id }}"
+          CHECK_LINKS="${{ github.event.inputs.check_links }}"
+          if [ -n "$PROJECT" ]; then
+            python3 -m scripts.intelligence.live_validator "$PROJECT" ${CHECK_LINKS:+--links} > /tmp/live_report.json 2>&1
+          else
+            python3 -c "
+          import json, sys
+          sys.path.insert(0, '.')
+          from scripts.intelligence.live_validator import validate_all
+          r = validate_all(check_links=False)
+          print(json.dumps(r, indent=2))
+          " > /tmp/live_report.json 2>&1
+          fi
+          echo "Validation complete"
+
+      - name: Print summary
+        run: |
+          python3 -c "
+          import json
+          try:
+              data = json.load(open('/tmp/live_report.json'))
+              if isinstance(data, dict) and 'health_score' in data:
+                  print(f'Health score: {data[\"health_score\"]}/100')
+                  print(f'Overall OK: {data[\"overall_ok\"]}')
+              else:
+                  for pid, r in data.items():
+                      if isinstance(r, dict):
+                          print(f'{pid}: {r.get(\"health_score\",\"?\")}/100  OK={r.get(\"overall_ok\",\"?\")}')
+          except Exception as e:
+              print(f'Could not parse report: {e}')
+          " || true
+
+      - name: Commit reports
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "ai@mifteh.com"
+          git add memory/reports/ || true
+          git diff --cached --quiet || git -c commit.gpgsign=false commit -m "chore(intelligence): live validation report $(date -u +%Y%m%dT%H%MZ)"
+          git push origin main || true

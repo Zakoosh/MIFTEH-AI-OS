@@ -1,0 +1,146 @@
+name: AI Autonomous Apply Pipeline
+
+on:
+  workflow_dispatch:
+    inputs:
+      project_id:
+        description: 'Target project ID'
+        required: true
+        default: 'yallaplays'
+      branch:
+        description: 'Branch name for changes'
+        required: true
+        default: 'feat/ai-autonomous-apply'
+      pr_title:
+        description: 'PR title'
+        required: false
+        default: 'chore: autonomous AI apply'
+      auto_merge:
+        description: 'Auto-merge PR if all checks pass'
+        required: false
+        default: 'false'
+      dry_run:
+        description: 'Dry run — validate only, no PR/deploy'
+        required: false
+        default: 'true'
+      patch_file:
+        description: 'Path to .patch file relative to repo root'
+        required: false
+        default: ''
+
+jobs:
+  apply-pipeline:
+    name: Autonomous Apply Pipeline
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout MIFTEH-AI-OS
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Validate source enforcer rules
+        run: |
+          python3 -c "
+          import sys
+          sys.path.insert(0, '.')
+          from scripts.intelligence.source_enforcer import validate_all_writes
+          from scripts.intelligence.registry import get_production_source
+          pid = '${{ github.event.inputs.project_id }}'
+          src = get_production_source(pid)
+          print(f'Production source: {src}')
+          test_writes = [
+              {'path': 'frontend/dashboard/previews/test.html'},
+              {'path': 'deploy/yallaplays/index.html'},
+              {'path': f'{src}/src/app/page.tsx'},
+          ]
+          result = validate_all_writes(test_writes, pid)
+          print(f'Allowed: {result[\"allowed\"]}  Blocked: {result[\"blocked\"]}')
+          for r in result['results']:
+              status = 'ALLOWED' if r['allowed'] else f'BLOCKED ({r[\"rule\"]})'
+              print(f'  {status}: {r[\"path\"]}')
+          " 2>&1
+
+      - name: Apply patch to Yallaplays repo
+        if: ${{ github.event.inputs.patch_file != '' && github.event.inputs.dry_run == 'false' && secrets.GH_PAT != '' }}
+        run: |
+          PATCH_FILE="${{ github.event.inputs.patch_file }}"
+          BRANCH="${{ github.event.inputs.branch }}"
+          PROJECT="${{ github.event.inputs.project_id }}"
+          GH_PAT="${{ secrets.GH_PAT }}"
+
+          git clone "https://x-access-token:${GH_PAT}@github.com/Zakoosh/Yallaplays.git" /tmp/yallaplays_apply
+          cd /tmp/yallaplays_apply
+          git checkout -b "$BRANCH" 2>/dev/null || git checkout "$BRANCH"
+          git apply "${GITHUB_WORKSPACE}/${PATCH_FILE}" --verbose
+          echo "Patch applied successfully"
+
+      - name: Build verification
+        if: ${{ github.event.inputs.patch_file != '' && github.event.inputs.dry_run == 'false' }}
+        run: |
+          cd /tmp/yallaplays_apply/yallaplays 2>/dev/null || true
+          if [ -f package.json ]; then
+            npm ci --prefer-offline 2>&1 | tail -20
+            npm run build 2>&1 | tail -40
+          fi
+
+      - name: Create PR
+        if: ${{ github.event.inputs.dry_run == 'false' && secrets.GH_PAT != '' }}
+        run: |
+          cd /tmp/yallaplays_apply 2>/dev/null || { echo "No patch applied — skipping PR"; exit 0; }
+          BRANCH="${{ github.event.inputs.branch }}"
+          PR_TITLE="${{ github.event.inputs.pr_title }}"
+          PROJECT="${{ github.event.inputs.project_id }}"
+          GH_PAT="${{ secrets.GH_PAT }}"
+
+          git config user.name "MIFTEH AI OS"
+          git config user.email "ai@mifteh.com"
+          git add -A
+          git -c commit.gpgsign=false commit -m "$PR_TITLE" || echo "Nothing to commit"
+          git push "https://x-access-token:${GH_PAT}@github.com/Zakoosh/Yallaplays.git" "$BRANCH" --force-with-lease
+
+          PR_BODY="Autonomous apply by MIFTEH AI OS
+
+          Project: $PROJECT
+          Branch: $BRANCH
+          Triggered: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          echo "$PR_BODY" > /tmp/pr_body.txt
+
+          export GH_TOKEN="$GH_PAT"
+          cd /tmp/yallaplays_apply
+          gh pr create --title "$PR_TITLE" --body-file /tmp/pr_body.txt \
+            --head "$BRANCH" --base main --repo Zakoosh/Yallaplays 2>&1 || \
+            echo "PR creation attempted"
+
+      - name: Run pipeline validation report
+        run: |
+          python3 -c "
+          import json, sys
+          sys.path.insert(0, '.')
+          from scripts.intelligence.pipeline import validate_and_report
+          r = validate_and_report('${{ github.event.inputs.project_id }}')
+          print(json.dumps({k: v for k, v in r.items() if k != 'steps'}, indent=2))
+          steps = r.get('steps', [])
+          for step in steps:
+              status = step.get('status', '?').upper()
+              name = step.get('step', '?')
+              print(f'  [{status:8}] {name}')
+          " 2>&1
+
+      - name: Commit pipeline reports
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "ai@mifteh.com"
+          git add memory/reports/ || true
+          git diff --cached --quiet || git -c commit.gpgsign=false commit -m "chore(intelligence): autonomous apply pipeline report $(date -u +%Y%m%dT%H%MZ)"
+          git push origin main || true

@@ -1,0 +1,58 @@
+name: AI Health Dashboard
+
+on:
+  schedule:
+    - cron: '0 */3 * * *'
+  workflow_dispatch:
+
+jobs:
+  health-dashboard:
+    name: Production Health Dashboard
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run health dashboard
+        run: |
+          python3 -c "
+          import json, sys
+          sys.path.insert(0, '.')
+          from scripts.intelligence.health_dashboard import build_dashboard, print_dashboard
+          d = build_dashboard()
+          print_dashboard(d)
+          summary = {k: v for k, v in d.items() if k != 'projects'}
+          print('\nJSON summary:')
+          print(json.dumps(summary, indent=2))
+          " 2>&1
+
+      - name: Update dashboard data file
+        run: |
+          python3 -c "
+          import json, sys
+          sys.path.insert(0, '.')
+          from scripts.intelligence.health_dashboard import build_dashboard
+          d = build_dashboard()
+          with open('data/health_dashboard.json', 'w') as f:
+              json.dump(d, f, indent=2)
+          print('Dashboard data updated')
+          " || true
+
+      - name: Commit dashboard
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "ai@mifteh.com"
+          git add memory/reports/ data/health_dashboard.json || true
+          git diff --cached --quiet || git -c commit.gpgsign=false commit -m "chore(dashboard): health dashboard update $(date -u +%Y%m%dT%H%MZ)"
+          git push origin main || true

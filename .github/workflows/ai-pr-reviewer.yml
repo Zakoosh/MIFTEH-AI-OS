@@ -1,0 +1,127 @@
+name: AI PR Reviewer
+
+on:
+  workflow_dispatch:
+    inputs:
+      project_id:
+        description: 'Project ID'
+        required: true
+        default: 'yallaplays'
+      pr_number:
+        description: 'PR number to review (leave empty to review local diff)'
+        required: false
+        default: ''
+      repo:
+        description: 'GitHub repo (owner/repo) for PR fetch'
+        required: false
+        default: 'Zakoosh/Yallaplays'
+
+jobs:
+  pr-review:
+    name: Automated PR Risk Review
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Generate or fetch diff
+        id: diff
+        run: |
+          PROJECT="${{ github.event.inputs.project_id }}"
+          PR_NUMBER="${{ github.event.inputs.pr_number }}"
+          if [ -n "$PR_NUMBER" ] && [ -n "${{ secrets.GH_PAT }}" ]; then
+            python3 -c "
+          import json, sys
+          sys.path.insert(0, '.')
+          from scripts.intelligence.pr_reviewer import review_pr_from_github
+          r = review_pr_from_github('$PROJECT', $PR_NUMBER, '${{ secrets.GH_PAT }}')
+          print(json.dumps(r, indent=2))
+          " > /tmp/pr_review.json 2>&1
+          else
+            git diff HEAD~1 HEAD > /tmp/local.diff 2>/dev/null || git diff HEAD > /tmp/local.diff
+            python3 -c "
+          import json, sys
+          sys.path.insert(0, '.')
+          from scripts.intelligence.pr_reviewer import review_diff
+          diff = open('/tmp/local.diff').read()
+          r = review_diff(diff, '$PROJECT')
+          print(json.dumps(r, indent=2))
+          " > /tmp/pr_review.json 2>&1
+          fi
+
+      - name: Print review summary
+        run: |
+          python3 -c "
+          import json
+          try:
+              data = json.load(open('/tmp/pr_review.json'))
+              rec = data.get('recommendation', '?')
+              reason = data.get('recommendation_reason', '')
+              risk_summary = data.get('risk_summary', {})
+              print(f'Recommendation: {rec}')
+              print(f'Reason: {reason}')
+              print(f'Risks: HIGH={risk_summary.get(\"high\",0)}  MEDIUM={risk_summary.get(\"medium\",0)}  LOW={risk_summary.get(\"low\",0)}')
+              for category, risks in data.get('risks', {}).items():
+                  for risk in risks:
+                      print(f'  [{risk[\"level\"].upper():6}] [{category}] {risk[\"description\"]}')
+          except Exception as e:
+              print(f'Could not parse report: {e}')
+          " || true
+
+      - name: Comment on PR
+        if: ${{ github.event.inputs.pr_number != '' && secrets.GH_PAT != '' }}
+        run: |
+          PR_NUMBER="${{ github.event.inputs.pr_number }}"
+          REPO="${{ github.event.inputs.repo }}"
+          python3 -c "
+          import json, urllib.request
+          data = json.load(open('/tmp/pr_review.json'))
+          rec = data.get('recommendation', 'N/A')
+          reason = data.get('recommendation_reason', '')
+          rs = data.get('risk_summary', {})
+          lines = [
+              '## MIFTEH AI OS — Automated PR Review',
+              f'**Recommendation:** {rec}',
+              f'**Reason:** {reason}',
+              f'**Risks:** HIGH={rs.get(\"high\",0)} MEDIUM={rs.get(\"medium\",0)} LOW={rs.get(\"low\",0)}',
+              '',
+          ]
+          for category, risks in data.get('risks', {}).items():
+              for risk in risks:
+                  lines.append(f'- [{risk[\"level\"].upper()}] [{category}] {risk[\"description\"]}')
+          body = '\n'.join(lines)
+          payload = json.dumps({'body': body}).encode()
+          req = urllib.request.Request(
+              f'https://api.github.com/repos/$REPO/issues/$PR_NUMBER/comments',
+              data=payload,
+              headers={
+                  'Authorization': 'Bearer ${{ secrets.GH_PAT }}',
+                  'Content-Type': 'application/json',
+                  'User-Agent': 'MIFTEH-AI-OS/1.0',
+              },
+              method='POST',
+          )
+          urllib.request.urlopen(req, timeout=15)
+          print('Comment posted')
+          " || true
+
+      - name: Commit review report
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "ai@mifteh.com"
+          git add memory/reports/pr_reviews/ || true
+          git diff --cached --quiet || git -c commit.gpgsign=false commit -m "chore(intelligence): PR review report $(date -u +%Y%m%dT%H%MZ)"
+          git push origin main || true

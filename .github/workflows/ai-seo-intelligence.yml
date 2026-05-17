@@ -1,0 +1,70 @@
+name: AI SEO Intelligence
+
+on:
+  schedule:
+    - cron: '0 4 * * 1'
+  workflow_dispatch:
+    inputs:
+      project_id:
+        description: 'Project ID to analyze'
+        required: false
+        default: 'yallaplays'
+
+jobs:
+  seo-analysis:
+    name: SEO Intelligence Analysis
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run SEO analysis
+        id: seo
+        run: |
+          PROJECT="${{ github.event.inputs.project_id || 'yallaplays' }}"
+          python3 -c "
+          import json, sys
+          sys.path.insert(0, '.')
+          from scripts.intelligence.seo_engine import analyze_project
+          r = analyze_project('$PROJECT')
+          summary = {k: v for k, v in r.items() if k != 'pages'}
+          print(json.dumps(summary, indent=2))
+          " > /tmp/seo_report.json 2>&1
+          echo "SEO analysis complete"
+
+      - name: Print SEO summary
+        run: |
+          python3 -c "
+          import json
+          try:
+              data = json.load(open('/tmp/seo_report.json'))
+              print(f'Overall SEO score: {data.get(\"overall_seo_score\", \"?\")}/100')
+              print(f'Indexing ready: {data.get(\"indexing_ready\", \"?\")}')
+              print(f'Total issues: {data.get(\"total_issues\", \"?\")}')
+              print(f'Orphan pages: {data.get(\"orphan_count\", \"?\")}')
+              print(f'Sitemap URLs: {data.get(\"sitemap_url_count\", \"?\")}')
+              issues = data.get('issues', [])[:5]
+              for issue in issues:
+                  print(f'  [{issue[\"page\"]}] {issue[\"issue\"]}')
+          except Exception as e:
+              print(f'Could not parse report: {e}')
+          " || true
+
+      - name: Commit SEO reports
+        run: |
+          git config user.name "MIFTEH AI OS"
+          git config user.email "ai@mifteh.com"
+          git add memory/reports/seo/ || true
+          git diff --cached --quiet || git -c commit.gpgsign=false commit -m "chore(intelligence): SEO analysis report $(date -u +%Y%m%dT%H%MZ)"
+          git push origin main || true

@@ -1,0 +1,8 @@
+# Cloned repositories — tracked separately via their own git remotes
+# Only registry.json and this file belong in the parent repo
+yallaplays/*
+!yallaplays/.gitkeep
+fionera/*
+!fionera/.gitkeep
+mifteh-main-site/*
+!mifteh-main-site/.gitkeep
