@@ -2,7 +2,7 @@ name: Deploy YallaPlays AdSense Branch
 
 on:
   schedule:
-    - cron: '37 10 17 5 *'
+    - cron: '11 11 17 5 *'
   workflow_dispatch:
     inputs:
       branch_name:
@@ -37,8 +37,7 @@ jobs:
       - name: Sync production files
         run: |
           cd /tmp/yallaplays
-          rsync -av --exclude='.git' --exclude='*.py' \
-            "${GITHUB_WORKSPACE}/targets/yallaplays/" .
+          rsync -av "${GITHUB_WORKSPACE}/deploy/yallaplays/" .
           git status --short | head -50
 
       - name: Commit and push
