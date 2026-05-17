@@ -1,8 +1,8 @@
 name: Sync YallaPlays Next.js Source
 
-# Applies Next.js AdSense + legal pages changes to Zakoosh/Yallaplays.
-# Uses targets/yallaplays-nextjs.patch (pre-generated diff) and GH_PAT.
-# Creates feature branch, commits, and opens PR.
+# Applies Next.js UI upgrade patch to Zakoosh/Yallaplays.
+# Uses targets/yallaplays-nextjs.patch (pre-generated unified diff) and GH_PAT.
+# Creates feature branch, commits, opens PR, and auto-merges.
 
 on:
   push:
@@ -13,10 +13,6 @@ on:
       - 'targets/sync-trigger'
   workflow_dispatch:
     inputs:
-      branch_name:
-        description: 'Target branch in Yallaplays repo'
-        required: false
-        default: 'feat/nextjs-production-v2'
       auto_merge:
         description: 'Auto-merge PR after creation'
         required: false
@@ -27,7 +23,7 @@ permissions:
 
 env:
   YALLAPLAYS_REPO: Zakoosh/Yallaplays
-  DEPLOY_BRANCH: ${{ github.event.inputs.branch_name || 'feat/nextjs-production-v2' }}
+  DEPLOY_BRANCH: feat/ui-upgrade-v${{ github.run_number }}
   LIVE_URL: https://yallaplays.com
   CLONE_DIR: /tmp/yallaplays-sync
 
@@ -44,7 +40,7 @@ jobs:
           PATCH="$GITHUB_WORKSPACE/targets/yallaplays-nextjs.patch"
           [ -f "$PATCH" ] || { echo "ERROR: patch not found"; exit 1; }
           ACTUAL=$(grep -c "^diff --git" "$PATCH" || echo 0)
-          [ "$ACTUAL" -ge 12 ] || { echo "ERROR: only $ACTUAL diffs (expected 12+)"; exit 1; }
+          [ "$ACTUAL" -ge 7 ] || { echo "ERROR: only $ACTUAL diffs (expected 7+)"; exit 1; }
           echo "Patch OK — $ACTUAL files, $(wc -l < "$PATCH") lines"
           grep "^diff --git" "$PATCH"
 
@@ -61,15 +57,11 @@ jobs:
           git config --global user.name "MIFTEH AI OS"
           git config --global user.email "mifteh-ai@users.noreply.github.com"
 
-      - name: Create or checkout feature branch
+      - name: Create fresh feature branch
         run: |
           cd "$CLONE_DIR"
-          if git branch -r | grep -q "origin/$DEPLOY_BRANCH"; then
-            git checkout "$DEPLOY_BRANCH"
-          else
-            git checkout -b "$DEPLOY_BRANCH"
-          fi
-          echo "Branch: $(git branch --show-current) @ $(git rev-parse --short HEAD)"
+          git checkout -b "$DEPLOY_BRANCH"
+          echo "Branch: $DEPLOY_BRANCH @ $(git rev-parse --short HEAD)"
 
       - name: Apply patch
         run: |
@@ -91,14 +83,13 @@ jobs:
           for f in \
             yallaplays/src/app/about/page.tsx \
             yallaplays/src/app/contact/page.tsx \
-            yallaplays/src/app/cookies/page.tsx \
-            yallaplays/src/app/privacy/page.tsx \
-            yallaplays/src/app/terms/page.tsx \
+            yallaplays/src/app/page.tsx \
+            yallaplays/src/app/globals.css \
+            yallaplays/src/app/layout.tsx \
             yallaplays/src/components/adsense/AdSense.tsx \
             yallaplays/src/components/footer/Footer.tsx \
-            yallaplays/src/app/layout.tsx \
-            yallaplays/src/app/sitemap.ts \
-            yallaplays/public/robots.txt; do
+            yallaplays/src/components/MobileAnchorAd.tsx \
+            yallaplays/src/components/ImportedGameCard.tsx; do
             if [ -f "$f" ]; then echo "  OK  $f"
             else echo "  MISSING  $f"; MISSING=$((MISSING+1)); fi
           done
@@ -117,29 +108,41 @@ jobs:
         working-directory: /tmp/yallaplays-sync/yallaplays
         run: |
           npm run build 2>&1 | tee /tmp/build.log
-          grep -q "Generating static pages" /tmp/build.log || { echo "ERROR: Build failed"; tail -30 /tmp/build.log; exit 1; }
+          grep -q "Generating static pages" /tmp/build.log || { echo "ERROR: Build failed"; tail -40 /tmp/build.log; exit 1; }
           PAGES=$(grep "Generating static pages" /tmp/build.log | tail -1 | grep -o "[0-9]*/[0-9]*" | tail -1 || echo "?")
           echo "Build PASSED — pages: $PAGES"
 
       - name: Commit changes
         run: |
           cd "$CLONE_DIR"
-          git add yallaplays/src/ yallaplays/public/robots.txt
+          git add yallaplays/src/
           if git diff --cached --quiet; then
             echo "No changes — already up to date"
           else
             git diff --cached --stat
             {
-              echo "feat(nextjs): AdSense + legal pages + footer + MIFTEH AI OS marker"
+              echo "feat(ui): production UI upgrade — trending, AI picks, ratings, share"
               echo ""
-              echo "- AdSense: next/script, ca-pub-1206965892808259, hydration-safe"
-              echo "- Footer: legal links + AI Powered by MIFTEH AI OS badge"
-              echo "- Pages: /about /contact /privacy /terms /cookies (App Router)"
-              echo "- layout.tsx: AdSenseScript + Footer integrated"
-              echo "- page.tsx: MIFTEH AI OS badge, inline footer removed"
-              echo "- sitemap.ts: all legal routes + /games"
-              echo "- robots.txt: https://yallaplays.com/sitemap.xml"
-              echo "- Build: 64 static pages, 0 errors"
+              echo "Homepage new sections:"
+              echo "  - Trending Now horizontal scroll (12 games with rank badges)"
+              echo "  - AI Recommended 4-card grid with MIFTEH AI OS badge"
+              echo "  - New This Week horizontal scroll"
+              echo "  - Most Played ranked list (top 5)"
+              echo ""
+              echo "Component upgrades:"
+              echo "  - ImportedGameCard: star ratings, play count, hover play overlay, badges"
+              echo "  - Footer: gradient top border, sitemap link, 4-column layout"
+              echo "  - GameDetail: share buttons (copy/WhatsApp/Twitter), improved sidebar"
+              echo "  - MonetizationSlot: CLS-safe min-heights per format"
+              echo "  - Hero mosaic: real game thumbnails from GameDistribution"
+              echo ""
+              echo "New component:"
+              echo "  - MobileAnchorAd: sticky bottom ad on mobile (dismissible)"
+              echo ""
+              echo "Performance:"
+              echo "  - width/height on all img elements (CLS prevention)"
+              echo "  - Reserved min-heights on all ad slots"
+              echo "  - Lazy loading on non-hero images"
               echo ""
               echo "Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>"
             } > /tmp/commit_msg.txt
@@ -161,41 +164,46 @@ jobs:
           GH_PAT: ${{ secrets.GH_PAT }}
         run: |
           echo "$GH_PAT" | gh auth login --with-token
-          EXISTING=$(gh pr list --repo "$YALLAPLAYS_REPO" --head "$DEPLOY_BRANCH" --json url --jq '.[0].url' 2>/dev/null || true)
-          if [ -n "$EXISTING" ]; then
-            echo "PR exists: $EXISTING"
-            echo "PR_URL=$EXISTING" >> "$GITHUB_ENV"
-          else
-            {
-              echo "## Production Next.js Integration"
-              echo ""
-              echo "Publisher: ca-pub-1206965892808259"
-              echo ""
-              echo "Changed files:"
-              echo "  components/adsense/AdSense.tsx - next/script AdSense, hydration-safe"
-              echo "  components/footer/Footer.tsx - footer with legal links + MIFTEH AI OS badge"
-              echo "  app/about/page.tsx - About page (App Router)"
-              echo "  app/contact/page.tsx - Contact page"
-              echo "  app/privacy/page.tsx - Privacy policy"
-              echo "  app/terms/page.tsx - Terms of service"
-              echo "  app/cookies/page.tsx - Cookie policy"
-              echo "  app/layout.tsx - AdSenseScript + Footer integrated"
-              echo "  app/page.tsx - MIFTEH AI OS badge"
-              echo "  app/sitemap.ts - all 5 legal routes"
-              echo "  public/robots.txt - correct sitemap URL"
-              echo ""
-              echo "Build: 64 static pages, 0 errors"
-              echo "Deployed by MIFTEH AI OS"
-            } > /tmp/pr_body.txt
-            PR_URL=$(gh pr create \
-              --repo "$YALLAPLAYS_REPO" \
-              --head "$DEPLOY_BRANCH" \
-              --base main \
-              --title "feat(nextjs): Production AdSense + Legal Pages + MIFTEH AI OS" \
-              --body-file /tmp/pr_body.txt)
-            echo "PR created: $PR_URL"
-            echo "PR_URL=$PR_URL" >> "$GITHUB_ENV"
-          fi
+          {
+            echo "## Production UI Upgrade — MIFTEH AI OS"
+            echo ""
+            echo "### Homepage New Sections"
+            echo "- **Trending Now** horizontal scroll — 12 games with rank badges"
+            echo "- **AI Recommended** 4-card grid — curated by MIFTEH AI OS"
+            echo "- **New This Week** horizontal scroll"
+            echo "- **Most Played** ranked list (top 5)"
+            echo ""
+            echo "### Game Cards Upgraded"
+            echo "- Star ratings (deterministic 3.5–5.0★)"
+            echo "- Play count display (2K–100K)"
+            echo "- Hover play button overlay"
+            echo "- AI/Trending/New/Hot badge system"
+            echo ""
+            echo "### New Components"
+            echo "- **MobileAnchorAd** — sticky bottom ad on mobile, dismissible"
+            echo "- **ShareButtons** — copy link, WhatsApp, Twitter on game pages"
+            echo ""
+            echo "### UI Polish"
+            echo "- Footer: gradient top border + sitemap link"
+            echo "- Hero mosaic: real game thumbnails"
+            echo "- GameDetail: improved sidebar with thumbnails in related games"
+            echo "- MIFTEH AI OS badge in game sidebar"
+            echo ""
+            echo "### AdSense / Performance"
+            echo "- All ad slots have CLS-safe min-heights"
+            echo "- img elements have width/height attributes"
+            echo "- Non-hero images lazy-loaded"
+            echo ""
+            echo "Build: verified ✓ | Deployed by MIFTEH AI OS | Run #${{ github.run_number }}"
+          } > /tmp/pr_body.txt
+          PR_URL=$(gh pr create \
+            --repo "$YALLAPLAYS_REPO" \
+            --head "$DEPLOY_BRANCH" \
+            --base main \
+            --title "feat(ui): Trending, AI Picks, Ratings, Share — production UI v2" \
+            --body-file /tmp/pr_body.txt)
+          echo "PR created: $PR_URL"
+          echo "PR_URL=$PR_URL" >> "$GITHUB_ENV"
 
       - name: Auto-merge PR
         if: github.event.inputs.auto_merge == 'true' || github.event_name == 'push'
@@ -213,7 +221,7 @@ jobs:
           GH_PAT: ${{ secrets.GH_PAT }}
         run: |
           echo "$GH_PAT" | gh auth login --with-token
-          for i in $(seq 1 20); do
+          for i in $(seq 1 24); do
             STATUS=$(gh api "repos/${YALLAPLAYS_REPO}/pages" --jq '.status' 2>/dev/null || echo "unknown")
             echo "  [${i}] Pages: $STATUS"
             [ "$STATUS" = "built" ] && break
@@ -223,19 +231,20 @@ jobs:
       - name: Validate live site
         if: github.event.inputs.auto_merge == 'true' || github.event_name == 'push'
         run: |
-          sleep 15
+          sleep 20
           BODY=$(curl -s --max-time 30 -H "User-Agent: MIFTEH-AI-OS/1.0" "$LIVE_URL" || true)
           HTTP=$(curl -s -o /dev/null -w "%{http_code}" --max-time 30 "$LIVE_URL")
           echo "HTTP: $HTTP"
-          echo "$BODY" | grep -qi "pagead2.googlesyndication.com" && echo "  PASS AdSense" || echo "  MISS AdSense"
-          echo "$BODY" | grep -qi "ca-pub-1206965892808259"      && echo "  PASS Publisher" || echo "  MISS Publisher"
+          echo "$BODY" | grep -qi "pagead2.googlesyndication.com" && echo "  PASS AdSense script" || echo "  MISS AdSense script"
+          echo "$BODY" | grep -qi "ca-pub-1206965892808259"      && echo "  PASS Publisher ID" || echo "  MISS Publisher ID"
           echo "$BODY" | grep -qi "MIFTEH AI OS"                 && echo "  PASS MIFTEH badge" || echo "  MISS MIFTEH badge"
+          echo "$BODY" | grep -qi "الأكثر لعبًا"                && echo "  PASS Trending section" || echo "  MISS Trending section"
+          echo "$BODY" | grep -qi "مقترحات الذكاء"              && echo "  PASS AI Picks section" || echo "  MISS AI Picks section"
+          echo "$BODY" | grep -qi "جديد هذا الأسبوع"            && echo "  PASS New This Week section" || echo "  MISS New This Week section"
           for page in about contact privacy terms cookies; do
             CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 "${LIVE_URL}/${page}/")
             [ "$CODE" = "200" ] && echo "  LIVE /${page}/" || echo "  PEND /${page}/ ($CODE)"
           done
-          CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 "${LIVE_URL}/sitemap.xml")
-          [ "$CODE" = "200" ] && echo "  LIVE /sitemap.xml" || echo "  PEND /sitemap.xml ($CODE)"
 
       - name: Summary
         if: always()

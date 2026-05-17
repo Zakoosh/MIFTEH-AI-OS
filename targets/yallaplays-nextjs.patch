@@ -1,852 +1,1398 @@
-diff --git a/yallaplays/public/robots.txt b/yallaplays/public/robots.txt
-index 575ff3e..1d9882d 100644
---- a/yallaplays/public/robots.txt
-+++ b/yallaplays/public/robots.txt
-@@ -1,4 +1,4 @@
- User-agent: *
- Allow: /
--Disallow:
--Sitemap: https://yallaplays.example/sitemap.xml
-+Disallow: /_next/
-+Sitemap: https://yallaplays.com/sitemap.xml
-diff --git a/yallaplays/src/app/about/page.tsx b/yallaplays/src/app/about/page.tsx
-new file mode 100644
-index 0000000..fd00622
---- /dev/null
-+++ b/yallaplays/src/app/about/page.tsx
-@@ -0,0 +1,85 @@
-+import type { Metadata } from 'next'
-+import Link from 'next/link'
+diff --git a/yallaplays/src/app/games/[slug]/GameDetail.tsx b/yallaplays/src/app/games/[slug]/GameDetail.tsx
+index 5a609b0..b9ab551 100644
+--- a/yallaplays/src/app/games/[slug]/GameDetail.tsx
++++ b/yallaplays/src/app/games/[slug]/GameDetail.tsx
+@@ -1,7 +1,7 @@
+ 'use client'
+ 
+ import Link from 'next/link'
+-import { useMemo, useRef, useState } from 'react'
++import { useMemo, useRef, useState, useCallback } from 'react'
+ import { useLang } from '@/contexts/LanguageContext'
+ import MonetizationSlot from '@/components/MonetizationSlot'
+ import GamePromoRail from '@/components/GamePromoRail'
+@@ -13,11 +13,56 @@ interface GameDetailProps {
+   allGames: GameInfo[]
+ }
+ 
++function ShareButtons({ title, slug }: { title: string; slug: string }) {
++  const [copied, setCopied] = useState(false)
++  const url = typeof window !== 'undefined' ? window.location.href : `https://yallaplays.com/games/${slug}/`
 +
-+export const metadata: Metadata = {
-+  title: 'من نحن | يلا بلاي',
-+  description: 'تعرف على يلا بلاي — منصة الألعاب العربية الأولى التي تجمع أفضل ألعاب HTML5 مجاناً.',
-+  alternates: { canonical: 'https://yallaplays.com/about' },
++  const copyLink = useCallback(() => {
++    navigator.clipboard.writeText(url).then(() => {
++      setCopied(true)
++      setTimeout(() => setCopied(false), 2000)
++    }).catch(() => {})
++  }, [url])
++
++  const shareTwitter = () => {
++    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(`العب ${title} مجاناً على YallaPlays!`)}&url=${encodeURIComponent(url)}`, '_blank', 'noopener,noreferrer')
++  }
++
++  const shareWhatsapp = () => {
++    window.open(`https://wa.me/?text=${encodeURIComponent(`العب ${title} مجاناً على YallaPlays! ${url}`)}`, '_blank', 'noopener,noreferrer')
++  }
++
++  return (
++    <div className="share-section">
++      <h3 className="share-title">شارك اللعبة</h3>
++      <div className="share-buttons">
++        <button onClick={copyLink} className="share-btn share-btn-copy" title="نسخ الرابط">
++          {copied ? (
++            <><span>✓</span><span>تم النسخ!</span></>
++          ) : (
++            <><span>🔗</span><span>نسخ الرابط</span></>
++          )}
++        </button>
++        <button onClick={shareWhatsapp} className="share-btn share-btn-whatsapp" title="شارك على واتساب">
++          <span>💬</span>
++          <span>واتساب</span>
++        </button>
++        <button onClick={shareTwitter} className="share-btn share-btn-twitter" title="شارك على تويتر">
++          <span>🐦</span>
++          <span>تويتر</span>
++        </button>
++      </div>
++    </div>
++  )
 +}
 +
-+export default function AboutPage() {
-+  return (
-+    <div className="relative min-h-screen" dir="rtl">
-+      <div className="bg-grid" aria-hidden="true" />
-+      <div className="bg-orb bg-orb-1" aria-hidden="true" />
-+      <div className="bg-orb bg-orb-2" aria-hidden="true" />
+ export default function GameDetail({ game, allGames }: GameDetailProps) {
+   const { t } = useLang()
+   const iframeRef = useRef<HTMLIFrameElement>(null)
+   const [loaded, setLoaded] = useState(false)
++  const [fullscreenActive, setFullscreenActive] = useState(false)
+   const categoryLabel = game.genres?.[0] || 'Game'
 +
-+      <div className="relative z-10 container mx-auto max-w-3xl px-4 py-24">
-+        <div className="mb-8">
-+          <Link href="/" className="text-violet-400 hover:text-violet-300 text-sm transition-colors">
-+            ← العودة للرئيسية
-+          </Link>
-+        </div>
+   const similarGames = allGames
+     .filter(item => item.slug !== game.slug && item.genres?.some(genre => game.genres?.includes(genre)))
+     .slice(0, 4)
+@@ -27,12 +72,14 @@ export default function GameDetail({ game, allGames }: GameDetailProps) {
+   const trendingGames = allGames
+     .filter(item => item.slug !== game.slug && item.thumbnail)
+     .slice(0, 8)
 +
-+        <h1 className="text-4xl font-black text-white mb-4">
-+          من <span className="text-gradient">نحن</span>
-+        </h1>
-+        <p className="text-[var(--text-muted)] text-lg mb-12">
-+          يلا بلاي — منصة الألعاب العربية الأولى
-+        </p>
+   const detailItems = [
+-    game.type && { label: 'Type', value: game.type },
+-    game.orientation && { label: 'Orientation', value: game.orientation },
+-    game.dimensions && { label: 'Dimensions', value: game.dimensions },
+-    game.company && { label: 'Publisher', value: game.company },
++    game.type && { label: 'النوع', value: game.type },
++    game.orientation && { label: 'الاتجاه', value: game.orientation === 'landscape' ? 'عرضي' : 'طولي' },
++    game.dimensions && { label: 'الأبعاد', value: game.dimensions },
++    game.company && { label: 'الناشر', value: game.company },
+   ].filter(Boolean) as Array<{ label: string; value: string }>
 +
-+        <div className="space-y-8 text-[var(--text-secondary)] leading-relaxed">
+   const instructionSteps = useMemo(() => {
+     return game.instructions
+       ?.split(/(?:\s*●\s*|\s*\|\s*|\n+)/)
+@@ -44,6 +91,7 @@ export default function GameDetail({ game, allGames }: GameDetailProps) {
+   const handleFullscreen = () => {
+     if (iframeRef.current?.requestFullscreen) {
+       iframeRef.current.requestFullscreen()
++      setFullscreenActive(true)
+     }
+   }
+ 
+@@ -66,30 +114,28 @@ export default function GameDetail({ game, allGames }: GameDetailProps) {
+   }
+ 
+   return (
+-    <div className="min-h-screen bg-[#08080f] px-4 py-10">
++    <div className="min-h-screen bg-[#08080f] px-4 py-10" dir="rtl">
+       <script
+         type="application/ld+json"
+-        dangerouslySetInnerHTML={{
+-          __html: JSON.stringify(jsonLd),
+-        }}
++        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+       />
+       <div className="container mx-auto max-w-7xl">
+-        <nav className="mb-6 text-sm text-text-muted">
+-          <Link href="/" className="transition-colors hover:text-white">
+-            {t.siteName}
+-          </Link>
+-          <span className="mx-2">/</span>
+-          <Link href="/games" className="transition-colors hover:text-white">
+-            Games
+-          </Link>
+-          <span className="mx-2">/</span>
 +
-+          <section className="community-card">
-+            <h2 className="text-xl font-bold text-white mb-3 flex items-center gap-2">
-+              <span>🎮</span> ما هو يلا بلاي؟
-+            </h2>
-+            <p>
-+              يلا بلاي هي منصة ألعاب عربية مجانية بالكامل، تتيح للاعبين من جميع أنحاء العالم العربي اللعب أكثر من 500 لعبة HTML5 مباشرة من المتصفح، بدون تحميل أو تسجيل.
-+            </p>
-+          </section>
-+
-+          <section className="community-card">
-+            <h2 className="text-xl font-bold text-white mb-3 flex items-center gap-2">
-+              <span>🚀</span> رسالتنا
-+            </h2>
-+            <p>
-+              نؤمن بأن الترفيه الرقمي يجب أن يكون متاحاً للجميع. هدفنا توفير تجربة لعب عالية الجودة باللغة العربية، تعمل على جميع الأجهزة، وتحترم خصوصية المستخدم.
-+            </p>
-+          </section>
-+
-+          <section className="community-card">
-+            <h2 className="text-xl font-bold text-white mb-3 flex items-center gap-2">
-+              <span>⚡</span> ما يميزنا
-+            </h2>
-+            <ul className="space-y-2 list-none">
-+              {[
-+                'تشغيل فوري بدون تحميل أو تسجيل',
-+                'أكثر من 500 لعبة HTML5 مجانية',
-+                'واجهة عربية كاملة مع دعم RTL',
-+                'يعمل على الجوال والكمبيوتر',
-+                'تحديثات مستمرة بألعاب جديدة',
-+                'مدعوم بتقنية MIFTEH AI OS',
-+              ].map((item) => (
-+                <li key={item} className="flex items-center gap-2">
-+                  <span className="text-violet-400">✓</span>
-+                  <span>{item}</span>
-+                </li>
++        {/* Breadcrumb */}
++        <nav className="mb-6 text-sm text-text-muted flex items-center gap-2 flex-wrap">
++          <Link href="/" className="transition-colors hover:text-white">{t.siteName}</Link>
++          <span>/</span>
++          <Link href="/games" className="transition-colors hover:text-white">الألعاب</Link>
++          <span>/</span>
+           <span className="text-white">{game.title}</span>
+         </nav>
+ 
++        {/* Top ad */}
+         <div className="mb-8">
+           <MonetizationSlot placement={`game-${game.slug}-top`} size="leaderboard" />
+         </div>
+ 
++        {/* Game header */}
+         <div className="mb-8 grid gap-6 lg:grid-cols-[1fr_360px] lg:items-end">
+           <div>
+             <div className="mb-4 flex flex-wrap items-center gap-2">
+@@ -101,46 +147,62 @@ export default function GameDetail({ game, allGames }: GameDetailProps) {
+                   {game.orientation}
+                 </span>
+               )}
++              {game.genres?.slice(1).map(g => (
++                <span key={g} className="rounded-lg border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold text-text-muted">
++                  {g}
++                </span>
 +              ))}
-+            </ul>
-+          </section>
-+
-+          <section className="community-card">
-+            <h2 className="text-xl font-bold text-white mb-3 flex items-center gap-2">
-+              <span>🤖</span> مدعوم بالذكاء الاصطناعي
-+            </h2>
-+            <p>
-+              يلا بلاي مدعوم بنظام MIFTEH AI OS، منصة ذكاء اصطناعي متكاملة تعمل على تحسين تجربة المستخدم، وإضافة محتوى جديد، وتحسين محركات البحث بشكل مستمر وآلي.
-+            </p>
-+          </section>
-+
-+        </div>
-+      </div>
-+    </div>
-+  )
-+}
-diff --git a/yallaplays/src/app/contact/page.tsx b/yallaplays/src/app/contact/page.tsx
-new file mode 100644
-index 0000000..325903c
---- /dev/null
-+++ b/yallaplays/src/app/contact/page.tsx
-@@ -0,0 +1,85 @@
-+import type { Metadata } from 'next'
-+import Link from 'next/link'
-+
-+export const metadata: Metadata = {
-+  title: 'تواصل معنا | يلا بلاي',
-+  description: 'تواصل مع فريق يلا بلاي للاستفسارات، الشراكات، أو الإبلاغ عن مشكلة.',
-+  alternates: { canonical: 'https://yallaplays.com/contact' },
-+}
-+
-+export default function ContactPage() {
-+  return (
-+    <div className="relative min-h-screen" dir="rtl">
-+      <div className="bg-grid" aria-hidden="true" />
-+      <div className="bg-orb bg-orb-1" aria-hidden="true" />
-+      <div className="bg-orb bg-orb-2" aria-hidden="true" />
-+
-+      <div className="relative z-10 container mx-auto max-w-3xl px-4 py-24">
-+        <div className="mb-8">
-+          <Link href="/" className="text-violet-400 hover:text-violet-300 text-sm transition-colors">
-+            ← العودة للرئيسية
-+          </Link>
-+        </div>
-+
-+        <h1 className="text-4xl font-black text-white mb-4">
-+          تواصل <span className="text-gradient">معنا</span>
-+        </h1>
-+        <p className="text-[var(--text-muted)] text-lg mb-12">
-+          يسعدنا سماع رأيك واستفساراتك
-+        </p>
-+
-+        <div className="space-y-6">
-+
-+          <div className="community-card">
-+            <h2 className="text-xl font-bold text-white mb-3 flex items-center gap-2">
-+              <span>📧</span> البريد الإلكتروني
-+            </h2>
-+            <p className="text-[var(--text-secondary)] mb-2">للاستفسارات العامة والدعم الفني:</p>
-+            <a
-+              href="mailto:contact@yallaplays.com"
-+              className="text-violet-400 hover:text-violet-300 transition-colors font-medium"
-+            >
-+              contact@yallaplays.com
-+            </a>
-+          </div>
-+
-+          <div className="community-card">
-+            <h2 className="text-xl font-bold text-white mb-3 flex items-center gap-2">
-+              <span>💼</span> الشراكات والإعلانات
-+            </h2>
-+            <p className="text-[var(--text-secondary)] mb-2">للشراكات التجارية وفرص الإعلان:</p>
-+            <a
-+              href="mailto:ads@yallaplays.com"
-+              className="text-violet-400 hover:text-violet-300 transition-colors font-medium"
-+            >
-+              ads@yallaplays.com
-+            </a>
-+          </div>
-+
-+          <div className="community-card">
-+            <h2 className="text-xl font-bold text-white mb-3 flex items-center gap-2">
-+              <span>🛡️</span> الخصوصية والامتثال
-+            </h2>
-+            <p className="text-[var(--text-secondary)] mb-2">لطلبات الخصوصية وحقوق البيانات:</p>
-+            <a
-+              href="mailto:privacy@yallaplays.com"
-+              className="text-violet-400 hover:text-violet-300 transition-colors font-medium"
-+            >
-+              privacy@yallaplays.com
-+            </a>
-+          </div>
-+
-+          <div className="community-card">
-+            <h2 className="text-xl font-bold text-white mb-3 flex items-center gap-2">
-+              <span>⏱️</span> وقت الاستجابة
-+            </h2>
-+            <p className="text-[var(--text-secondary)]">
-+              نسعى للرد على جميع الرسائل خلال 2-3 أيام عمل. للمشاكل العاجلة، يُرجى ذكر "عاجل" في عنوان الرسالة.
-+            </p>
-+          </div>
-+
-+        </div>
-+      </div>
-+    </div>
-+  )
-+}
-diff --git a/yallaplays/src/app/cookies/page.tsx b/yallaplays/src/app/cookies/page.tsx
-new file mode 100644
-index 0000000..0f2ca70
---- /dev/null
-+++ b/yallaplays/src/app/cookies/page.tsx
-@@ -0,0 +1,108 @@
-+import type { Metadata } from 'next'
-+import Link from 'next/link'
-+
-+export const metadata: Metadata = {
-+  title: 'سياسة الكوكيز | يلا بلاي',
-+  description: 'سياسة ملفات تعريف الارتباط لموقع يلا بلاي — ما هي الكوكيز وكيف نستخدمها.',
-+  alternates: { canonical: 'https://yallaplays.com/cookies' },
-+}
-+
-+const LAST_UPDATED = '1 مايو 2026'
-+
-+export default function CookiesPage() {
-+  return (
-+    <div className="relative min-h-screen" dir="rtl">
-+      <div className="bg-grid" aria-hidden="true" />
-+      <div className="bg-orb bg-orb-1" aria-hidden="true" />
-+
-+      <div className="relative z-10 container mx-auto max-w-3xl px-4 py-24">
-+        <div className="mb-8">
-+          <Link href="/" className="text-violet-400 hover:text-violet-300 text-sm transition-colors">
-+            ← العودة للرئيسية
-+          </Link>
-+        </div>
-+
-+        <h1 className="text-4xl font-black text-white mb-2">سياسة الكوكيز</h1>
-+        <p className="text-[var(--text-muted)] text-sm mb-12">آخر تحديث: {LAST_UPDATED}</p>
-+
-+        <div className="space-y-8 text-[var(--text-secondary)] leading-relaxed">
-+
-+          <section className="community-card">
-+            <h2 className="text-xl font-bold text-white mb-3">ما هي ملفات تعريف الارتباط؟</h2>
-+            <p>
-+              ملفات تعريف الارتباط (الكوكيز) هي ملفات نصية صغيرة تُخزَّن على جهازك عند زيارتك لمواقع الويب. تُستخدم لتحسين تجربة التصفح وتذكر تفضيلاتك.
-+            </p>
-+          </section>
-+
-+          <section className="community-card">
-+            <h2 className="text-xl font-bold text-white mb-3">أنواع الكوكيز التي نستخدمها</h2>
-+            <div className="space-y-4">
-+              <div>
-+                <h3 className="font-bold text-white mb-1">كوكيز ضرورية</h3>
-+                <p>ضرورية لتشغيل الموقع بشكل صحيح. لا يمكن تعطيلها.</p>
+             </div>
+-            <h1 className="text-4xl font-black text-white sm:text-5xl">{game.title}</h1>
++            <h1 className="text-3xl font-black text-white sm:text-4xl lg:text-5xl">{game.title}</h1>
+             <p className="mt-3 max-w-3xl leading-relaxed text-text-muted">{game.description}</p>
+           </div>
+ 
+           <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
+-            <div className="grid grid-cols-2 gap-3 text-center">
++            <div className="grid grid-cols-3 gap-3 text-center">
++              <div className="rounded-lg bg-white/[0.04] p-3">
++                <strong className="block text-base text-white">HTML5</strong>
++                <span className="text-xs text-text-muted">متصفح</span>
 +              </div>
-+              <div>
-+                <h3 className="font-bold text-white mb-1">كوكيز الأداء والتحليل</h3>
-+                <p>تساعدنا على فهم كيفية تفاعل المستخدمين مع الموقع (Google Analytics).</p>
+               <div className="rounded-lg bg-white/[0.04] p-3">
+-                <strong className="block text-lg text-white">HTML5</strong>
+-                <span className="text-xs text-text-muted">Browser</span>
++                <strong className="block text-base text-white">مجاني</strong>
++                <span className="text-xs text-text-muted">100%</span>
+               </div>
+               <div className="rounded-lg bg-white/[0.04] p-3">
+-                <strong className="block text-lg text-white">{game.tags?.length || game.genres?.length || 1}</strong>
+-                <span className="text-xs text-text-muted">Tags</span>
++                <strong className="block text-base text-white">{game.tags?.length || 1}</strong>
++                <span className="text-xs text-text-muted">تصنيف</span>
+               </div>
+             </div>
+           </div>
+         </div>
+ 
++        {/* Main grid */}
+         <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
+           <div className="space-y-6">
++
++            {/* Game player */}
+             <section className="overflow-hidden rounded-xl border border-white/10 bg-[#11101e] shadow-2xl shadow-black/20">
+               <div className="flex flex-col gap-3 border-b border-white/10 bg-white/[0.03] p-4 sm:flex-row sm:items-center sm:justify-between">
+                 <div>
+-                  <p className="text-xs font-bold uppercase tracking-[0.22em] text-accent-cyan/80">Play Now</p>
++                  <p className="text-xs font-bold uppercase tracking-[0.22em] text-accent-cyan/80">العب الآن</p>
+                   <h2 className="mt-1 text-xl font-black text-white">{game.title}</h2>
+                 </div>
+-                <button
+-                  onClick={handleFullscreen}
+-                  className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:border-white/20 hover:bg-white/10"
+-                >
+-                  Fullscreen
+-                </button>
++                <div className="flex items-center gap-2">
++                  <button
++                    onClick={handleFullscreen}
++                    className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:border-violet-500/40 hover:bg-violet-600/10 flex items-center gap-2"
++                  >
++                    <span>⛶</span>
++                    <span>ملء الشاشة</span>
++                  </button>
++                </div>
+               </div>
+ 
+               {game.embedUrl ? (
+                 <div className="game-frame relative bg-black">
+                   {!loaded && (
+-                    <div className="absolute inset-0 z-10 flex items-center justify-center bg-[#09090f] text-sm font-semibold text-text-muted">
+-                      جاري تحميل اللعبة...
++                    <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-[#09090f] gap-3">
++                      <div className="w-8 h-8 border-2 border-violet-500 border-t-transparent rounded-full animate-spin" />
++                      <span className="text-sm font-semibold text-text-muted">جاري تحميل اللعبة...</span>
+                     </div>
+                   )}
+                   <iframe
+@@ -167,17 +229,23 @@ export default function GameDetail({ game, allGames }: GameDetailProps) {
+ 
+             <MonetizationSlot placement={`game-${game.slug}-after-player`} size="inline" />
+ 
++            {/* About + Instructions + Tags */}
+             <section className="rounded-xl border border-white/10 bg-[#11101e] p-6 shadow-xl shadow-black/20">
+-              <h2 className="mb-3 text-2xl font-black text-white">About this game</h2>
++              <h2 className="mb-3 text-2xl font-black text-white">عن اللعبة</h2>
+               <p className="leading-relaxed text-text-muted">{game.description}</p>
+ 
+               {instructionSteps.length > 0 && (
+                 <div className="mt-6">
+-                  <h3 className="mb-3 text-xl font-bold text-white">Instructions</h3>
++                  <h3 className="mb-3 text-xl font-bold text-white flex items-center gap-2">
++                    <span>🎮</span> طريقة اللعب
++                  </h3>
+                   <div className="grid gap-2 sm:grid-cols-2">
+                     {instructionSteps.map((step, index) => (
+-                      <div key={`${step}-${index}`} className="rounded-lg border border-white/10 bg-white/[0.04] p-3 text-sm leading-relaxed text-text-muted">
+-                        {step}
++                      <div key={`${step}-${index}`} className="flex items-start gap-3 rounded-lg border border-white/10 bg-white/[0.04] p-3">
++                        <span className="flex-shrink-0 w-5 h-5 rounded-full bg-violet-600/30 flex items-center justify-center text-[10px] font-bold text-violet-300 mt-0.5">
++                          {index + 1}
++                        </span>
++                        <span className="text-sm leading-relaxed text-text-muted">{step}</span>
+                       </div>
+                     ))}
+                   </div>
+@@ -185,16 +253,22 @@ export default function GameDetail({ game, allGames }: GameDetailProps) {
+               )}
+ 
+               {game.tags?.length > 0 && (
+-                <div className="mt-6 flex flex-wrap gap-2">
+-                  {game.tags.slice(0, 8).map(tag => (
+-                    <span key={tag} className="rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2 text-xs font-semibold text-text-muted">
+-                      {tag}
+-                    </span>
+-                  ))}
++                <div className="mt-6">
++                  <h3 className="mb-3 text-sm font-bold text-white/60 uppercase tracking-wider">التصنيفات</h3>
++                  <div className="flex flex-wrap gap-2">
++                    {game.tags.slice(0, 10).map(tag => (
++                      <span key={tag} className="rounded-lg border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-semibold text-text-muted hover:border-violet-500/30 hover:text-violet-300 transition-colors cursor-default">
++                        #{tag}
++                      </span>
++                    ))}
++                  </div>
+                 </div>
+               )}
+             </section>
+ 
++            {/* Share Buttons */}
++            <ShareButtons title={game.title} slug={game.slug} />
++
+             <GamePromoRail
+               title="ألعاب مشابهة تستحق التجربة"
+               copy="روابط داخلية مباشرة تساعد اللاعب على متابعة اللعب داخل نفس التصنيف."
+@@ -214,12 +288,13 @@ export default function GameDetail({ game, allGames }: GameDetailProps) {
+             <MonetizationSlot placement={`game-${game.slug}-content-bottom`} size="leaderboard" />
+           </div>
+ 
++          {/* Sidebar */}
+           <aside className="space-y-4 lg:sticky lg:top-24 lg:self-start">
+             <MonetizationSlot placement={`game-${game.slug}-sidebar-top`} size="square" />
+ 
+             {detailItems.length > 0 && (
+               <div className="rounded-xl border border-white/10 bg-[#11101e] p-6 shadow-xl shadow-black/20">
+-                <h2 className="mb-4 text-2xl font-bold text-white">Game Details</h2>
++                <h2 className="mb-4 text-xl font-bold text-white">تفاصيل اللعبة</h2>
+                 <div className="space-y-3">
+                   {detailItems.map(item => (
+                     <div key={item.label} className="flex items-center justify-between gap-4 rounded-lg border border-white/10 bg-white/[0.04] px-4 py-3">
+@@ -231,18 +306,29 @@ export default function GameDetail({ game, allGames }: GameDetailProps) {
+               </div>
+             )}
+ 
+-            <div className="rounded-xl border border-white/10 bg-[#11101e] p-6 shadow-xl shadow-black/20">
+-              <h2 className="mb-3 text-2xl font-bold text-white">Similar Games</h2>
+-              <p className="mb-6 text-text-muted">Discover other titles in the same category.</p>
++            <div className="rounded-xl border border-white/10 bg-[#11101e] p-5 shadow-xl shadow-black/20">
++              <h2 className="mb-3 text-lg font-bold text-white">ألعاب مشابهة</h2>
+               <div className="space-y-3">
+-                {similarGames.map(similar => (
++                {(similarGames.length > 0 ? similarGames : trendingGames.slice(0, 4)).map(similar => (
+                   <Link
+                     key={similar.slug}
+                     href={`/games/${similar.slug}/`}
+-                    className="block rounded-xl border border-white/10 bg-white/5 p-4 transition hover:border-white/20 hover:bg-white/10"
++                    className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 p-3 transition hover:border-violet-500/30 hover:bg-white/10 group"
+                   >
+-                    <p className="text-base font-semibold text-white">{similar.title}</p>
+-                    <p className="mt-1 line-clamp-2 text-sm text-text-muted">{similar.description}</p>
++                    {similar.thumbnail && (
++                      <img
++                        src={similar.thumbnail}
++                        alt={similar.title}
++                        loading="lazy"
++                        width={48}
++                        height={36}
++                        className="w-12 h-9 rounded-lg object-cover flex-shrink-0"
++                      />
++                    )}
++                    <div className="min-w-0">
++                      <p className="text-sm font-semibold text-white truncate group-hover:text-violet-300 transition-colors">{similar.title}</p>
++                      <p className="text-[11px] text-text-muted">{similar.genres?.[0] || 'Game'}</p>
++                    </div>
+                   </Link>
+                 ))}
+               </div>
+@@ -250,13 +336,16 @@ export default function GameDetail({ game, allGames }: GameDetailProps) {
+ 
+             <MonetizationSlot placement={`game-${game.slug}-sidebar-mid`} size="square" />
+ 
+-            <div className="rounded-xl border border-white/10 bg-[#11101e] p-6 shadow-xl shadow-black/20">
+-              <h2 className="mb-3 text-2xl font-bold text-white">Performance Optimized</h2>
+-              <ul className="space-y-3 text-sm text-text-muted">
+-                <li>Fast loading with optimized assets</li>
+-                <li>Full RTL support</li>
+-                <li>Mobile-friendly responsive design</li>
+-                <li>SEO optimized pages</li>
++            <div className="rounded-xl border border-violet-500/15 bg-violet-600/5 p-5">
++              <div className="flex items-center gap-2 mb-3">
++                <span>🤖</span>
++                <h2 className="text-sm font-bold text-violet-300">MIFTEH AI OS</h2>
 +              </div>
-+              <div>
-+                <h3 className="font-bold text-white mb-1">كوكيز الإعلانات</h3>
-+                <p>تُستخدم من قبل Google AdSense لعرض إعلانات ملائمة بناءً على اهتماماتك.</p>
-+              </div>
-+              <div>
-+                <h3 className="font-bold text-white mb-1">كوكيز التفضيلات</h3>
-+                <p>تتذكر تفضيلاتك مثل اللغة المختارة.</p>
-+              </div>
-+            </div>
-+          </section>
-+
-+          <section className="community-card">
-+            <h2 className="text-xl font-bold text-white mb-3">كوكيز Google AdSense</h2>
-+            <p className="mb-3">
-+              يستخدم Google AdSense ملفات تعريف الارتباط لعرض إعلانات ذات صلة. يمكنك إدارة تفضيلات إعلانات Google من خلال:
-+            </p>
-+            <ul className="space-y-2 list-disc list-inside">
-+              <li>
-+                <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer" className="text-violet-400 hover:text-violet-300 transition-colors">
-+                  إعدادات إعلانات Google
-+                </a>
-+              </li>
-+              <li>
-+                <a href="https://www.google.com/policies/privacy/" target="_blank" rel="noopener noreferrer" className="text-violet-400 hover:text-violet-300 transition-colors">
-+                  سياسة خصوصية Google
-+                </a>
-+              </li>
-+            </ul>
-+          </section>
-+
-+          <section className="community-card">
-+            <h2 className="text-xl font-bold text-white mb-3">كيفية التحكم في الكوكيز</h2>
-+            <p className="mb-3">
-+              يمكنك التحكم في الكوكيز أو حذفها عبر إعدادات متصفحك:
-+            </p>
-+            <ul className="space-y-1 list-disc list-inside">
-+              <li>Chrome: الإعدادات ← الخصوصية والأمان ← ملفات تعريف الارتباط</li>
-+              <li>Firefox: الإعدادات ← الخصوصية والأمان</li>
-+              <li>Safari: التفضيلات ← الخصوصية</li>
-+              <li>Edge: الإعدادات ← الخصوصية والبحث</li>
-+            </ul>
-+            <p className="mt-3 text-sm text-[var(--text-muted)]">
-+              ملاحظة: تعطيل بعض الكوكيز قد يؤثر على أداء الموقع.
-+            </p>
-+          </section>
-+
-+          <section className="community-card">
-+            <h2 className="text-xl font-bold text-white mb-3">التواصل معنا</h2>
-+            <p>
-+              لأي استفسار حول سياسة الكوكيز، تواصل معنا على{' '}
-+              <a href="mailto:privacy@yallaplays.com" className="text-violet-400 hover:text-violet-300 transition-colors">
-+                privacy@yallaplays.com
-+              </a>
-+            </p>
-+          </section>
-+
-+        </div>
-+      </div>
-+    </div>
-+  )
++              <ul className="space-y-2 text-xs text-text-muted">
++                <li className="flex items-center gap-2"><span className="text-green-400">✓</span> تحميل سريع محسّن</li>
++                <li className="flex items-center gap-2"><span className="text-green-400">✓</span> دعم RTL كامل</li>
++                <li className="flex items-center gap-2"><span className="text-green-400">✓</span> متجاوب مع الجوال</li>
++                <li className="flex items-center gap-2"><span className="text-green-400">✓</span> محسّن لمحركات البحث</li>
+               </ul>
+             </div>
+           </aside>
+diff --git a/yallaplays/src/app/globals.css b/yallaplays/src/app/globals.css
+index 6c472c6..ab12379 100644
+--- a/yallaplays/src/app/globals.css
++++ b/yallaplays/src/app/globals.css
+@@ -1012,3 +1012,240 @@ body {
+ 
+ .scroll-x::-webkit-scrollbar { display: none; }
+ 
++/* ========================================
++   TRENDING / HOMEPAGE SECTIONS
++   ======================================== */
++.live-badge {
++  display: inline-flex;
++  align-items: center;
++  gap: 4px;
++  padding: 2px 8px;
++  background: linear-gradient(135deg, #ef4444, #dc2626);
++  border-radius: 100px;
++  font-size: 10px;
++  font-weight: 900;
++  letter-spacing: 0.1em;
++  color: white;
++  animation: livePulse 2s ease-in-out infinite;
 +}
++
++@keyframes livePulse {
++  0%, 100% { opacity: 1; }
++  50% { opacity: 0.7; }
++}
++
++/* ========================================
++   GAME CARD RATINGS
++   ======================================== */
++.game-stars {
++  display: inline-flex;
++  align-items: center;
++  gap: 2px;
++  font-size: 12px;
++  color: var(--gold);
++  line-height: 1;
++}
++
++.game-stars-value {
++  font-size: 11px;
++  font-weight: 700;
++  color: var(--gold-light);
++  margin-right: 4px;
++}
++
++/* ========================================
++   GAME CARD BADGES
++   ======================================== */
++.game-badge {
++  display: inline-flex;
++  align-items: center;
++  gap: 4px;
++  padding: 3px 8px;
++  border-radius: 100px;
++  font-size: 10px;
++  font-weight: 800;
++  letter-spacing: 0.04em;
++  white-space: nowrap;
++}
++
++.badge-ai {
++  background: linear-gradient(135deg, rgba(124, 58, 237, 0.9), rgba(168, 85, 247, 0.9));
++  color: white;
++  border: 1px solid rgba(168, 85, 247, 0.4);
++  backdrop-filter: blur(8px);
++}
++
++.badge-trending {
++  background: linear-gradient(135deg, rgba(239, 68, 68, 0.9), rgba(220, 38, 38, 0.9));
++  color: white;
++  border: 1px solid rgba(239, 68, 68, 0.4);
++  backdrop-filter: blur(8px);
++}
++
++.badge-new {
++  background: linear-gradient(135deg, #10b981, #059669);
++  color: white;
++}
++
++.badge-hot {
++  background: linear-gradient(135deg, #f59e0b, #d97706);
++  color: white;
++}
++
++/* ========================================
++   IMPORTED GAME CARD HOVER
++   ======================================== */
++.imported-game-card {
++  position: relative;
++}
++
++.game-card-hover-overlay {
++  z-index: 2;
++}
++
++/* ========================================
++   MOST PLAYED LIST ROW
++   ======================================== */
++.most-played-rank {
++  font-variant-numeric: tabular-nums;
++  min-width: 2rem;
++}
++
++/* ========================================
++   FOOTER GRADIENT BORDER
++   ======================================== */
++.footer-gradient-border {
++  height: 2px;
++  background: linear-gradient(90deg, transparent, var(--accent), var(--cyan), var(--accent), transparent);
++  width: 100%;
++}
++
++/* ========================================
++   SHARE BUTTONS
++   ======================================== */
++.share-section {
++  border-radius: 16px;
++  border: 1px solid var(--border);
++  background: var(--bg-card);
++  padding: 20px;
++}
++
++.share-title {
++  font-size: 16px;
++  font-weight: 700;
++  color: var(--text-primary);
++  margin-bottom: 12px;
++}
++
++.share-buttons {
++  display: flex;
++  flex-wrap: wrap;
++  gap: 8px;
++}
++
++.share-btn {
++  display: inline-flex;
++  align-items: center;
++  gap: 6px;
++  padding: 8px 16px;
++  border-radius: 10px;
++  font-size: 13px;
++  font-weight: 600;
++  border: 1px solid transparent;
++  cursor: pointer;
++  transition: all 0.2s ease;
++}
++
++.share-btn-copy {
++  background: var(--bg-elevated);
++  border-color: var(--border);
++  color: var(--text-primary);
++}
++.share-btn-copy:hover {
++  border-color: var(--accent);
++  color: var(--accent-light);
++}
++
++.share-btn-whatsapp {
++  background: rgba(37, 211, 102, 0.1);
++  border-color: rgba(37, 211, 102, 0.3);
++  color: #25d366;
++}
++.share-btn-whatsapp:hover {
++  background: rgba(37, 211, 102, 0.2);
++}
++
++.share-btn-twitter {
++  background: rgba(29, 155, 240, 0.1);
++  border-color: rgba(29, 155, 240, 0.3);
++  color: #1d9bf0;
++}
++.share-btn-twitter:hover {
++  background: rgba(29, 155, 240, 0.2);
++}
++
++/* ========================================
++   MOBILE ANCHOR AD
++   ======================================== */
++.mobile-anchor-ad {
++  position: fixed;
++  bottom: 0;
++  left: 0;
++  right: 0;
++  z-index: 200;
++  background: rgba(5, 5, 15, 0.95);
++  backdrop-filter: blur(12px);
++  border-top: 1px solid var(--border);
++  padding: 8px 16px;
++  display: flex;
++  align-items: center;
++  justify-content: center;
++  min-height: 76px;
++}
++
++@media (min-width: 768px) {
++  .mobile-anchor-ad { display: none; }
++}
++
++.mobile-anchor-close {
++  position: absolute;
++  top: 4px;
++  right: 8px;
++  width: 24px;
++  height: 24px;
++  border-radius: 50%;
++  background: var(--bg-elevated);
++  border: 1px solid var(--border);
++  color: var(--text-muted);
++  font-size: 11px;
++  display: flex;
++  align-items: center;
++  justify-content: center;
++  cursor: pointer;
++  transition: all 0.2s ease;
++}
++
++.mobile-anchor-close:hover {
++  background: var(--bg-glass);
++  color: var(--text-primary);
++}
++
++/* ========================================
++   MONETIZATION SLOT CLS PREVENTION
++   ======================================== */
++.monetization-slot {
++  overflow: hidden;
++  border-radius: 8px;
++}
++
++/* ========================================
++   AI PICKS SECTION HEADER
++   ======================================== */
++.ai-picks-header {
++  background: linear-gradient(135deg, rgba(124, 58, 237, 0.05), transparent);
++  border-radius: 16px;
++  padding: 16px;
++  border: 1px solid rgba(124, 58, 237, 0.1);
++  margin-bottom: 8px;
++}
++
 diff --git a/yallaplays/src/app/layout.tsx b/yallaplays/src/app/layout.tsx
-index df634e5..13af0c1 100644
+index 13af0c1..cc5663c 100644
 --- a/yallaplays/src/app/layout.tsx
 +++ b/yallaplays/src/app/layout.tsx
-@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
- import './globals.css'
- import { LanguageProvider } from '@/contexts/LanguageContext'
+@@ -4,6 +4,7 @@ import { LanguageProvider } from '@/contexts/LanguageContext'
  import Header from '@/components/Header'
-+import Footer from '@/components/footer/Footer'
-+import { AdSenseScript } from '@/components/adsense/AdSense'
+ import Footer from '@/components/footer/Footer'
+ import { AdSenseScript } from '@/components/adsense/AdSense'
++import MobileAnchorAd from '@/components/MobileAnchorAd'
  
  export const metadata: Metadata = {
    title: 'يلا بلاي - أفضل موقع ألعاب عربية HTML5',
-@@ -35,17 +37,13 @@ export default function RootLayout({
-         />
-       </head>
-       <body className="min-h-screen star-bg" style={{ backgroundColor: '#0a0a14' }}>
-+        <AdSenseScript />
-         <LanguageProvider>
-           <Header />
-           <main className="relative z-10">
+@@ -44,6 +45,7 @@ export default function RootLayout({
              {children}
            </main>
--          <footer className="relative z-10 border-t border-white/10 mt-16 py-8 text-center text-text-muted">
--            <div className="container mx-auto px-4">
--              <p className="text-sm opacity-70 mb-1">© 2026 يلا بلاي | YallaPlays</p>
--              <p className="text-xs opacity-50">صُنع بـ ❤️ للاعبين في كل مكان</p>
--            </div>
--          </footer>
-+          <Footer />
+           <Footer />
++          <MobileAnchorAd />
          </LanguageProvider>
        </body>
      </html>
 diff --git a/yallaplays/src/app/page.tsx b/yallaplays/src/app/page.tsx
-index 8f69de2..caad5bd 100644
+index caad5bd..4005999 100644
 --- a/yallaplays/src/app/page.tsx
 +++ b/yallaplays/src/app/page.tsx
-@@ -91,6 +91,12 @@ export default function HomePage() {
-                     </div>
-                   ))}
-                 </div>
+@@ -3,14 +3,8 @@ import Link from 'next/link'
+ import GamesBrowser from '@/components/GamesBrowser'
+ import CommunityPanel from '@/components/CommunityPanel'
+ import MonetizationSlot from '@/components/MonetizationSlot'
+-
+-// Featured games for hero mosaic
+-const FEATURED_GAMES = [
+-  { slug: 'temple-runner', name: 'Temple Runner', img: '/game-covers/temple-runner.jpg', category: 'مغامرات' },
+-  { slug: 'snake', name: 'Snake', img: '/game-covers/snake.jpg', category: 'كلاسيك' },
+-  { slug: 'tetris', name: 'Tetris', img: '/game-covers/tetris.jpg', category: 'ألغاز' },
+-  { slug: '2048', name: '2048', img: '/game-covers/2048.jpg', category: 'ألغاز' },
+-]
++import ImportedGameCard from '@/components/ImportedGameCard'
++import { importedGames } from '@/data/games'
+ 
+ const CATEGORIES = [
+   { id: 'all', label: 'الكل', icon: '🎮' },
+@@ -29,6 +23,65 @@ const STATS = [
+   { value: '+500', label: 'لعبة مجانية', icon: '⭐' },
+ ]
+ 
++// Curated slices from importedGames
++const TRENDING_GAMES = importedGames.filter(g => g.thumbnail).slice(0, 12)
++const AI_PICKS       = importedGames.filter(g => g.thumbnail).slice(2, 6)
++const NEW_THIS_WEEK  = importedGames.filter(g => g.thumbnail).slice(8, 18)
++const MOST_PLAYED    = importedGames.filter(g => g.thumbnail).slice(4, 9)
 +
-+                {/* MIFTEH AI OS badge */}
-+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-violet-600/10 border border-violet-500/20 text-violet-300 text-xs font-semibold w-fit">
-+                  <span>🤖</span>
-+                  <span>AI Powered by MIFTEH AI OS</span>
-+                </div>
-               </div>
++function TrendingMiniCard({ game, index }: { game: typeof importedGames[0]; index: number }) {
++  return (
++    <Link href={`/games/${game.slug}/`} className="trending-mini-card group flex-shrink-0">
++      <div className="relative overflow-hidden rounded-xl aspect-[16/10] w-48 sm:w-56 bg-slate-900 border border-white/8 transition-all duration-300 group-hover:-translate-y-1 group-hover:border-violet-500/40 group-hover:shadow-lg group-hover:shadow-violet-900/20">
++        <img
++          src={game.thumbnail!}
++          alt={game.title}
++          loading="lazy"
++          width={256}
++          height={160}
++          className="w-full h-full object-cover transition duration-500 group-hover:scale-110"
++        />
++        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
++        {/* Rank badge */}
++        <div className="absolute top-2 right-2 w-6 h-6 rounded-full bg-violet-600/80 backdrop-blur-sm flex items-center justify-center text-[10px] font-black text-white">
++          {index + 1}
++        </div>
++        {/* Genre */}
++        <div className="absolute top-2 left-2">
++          <span className="rounded-full bg-black/60 backdrop-blur-sm px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-white/80">
++            {game.genres?.[0] || 'Game'}
++          </span>
++        </div>
++        {/* Title + play */}
++        <div className="absolute bottom-0 inset-x-0 p-2.5">
++          <p className="text-xs font-bold text-white line-clamp-1 mb-1">{game.title}</p>
++          <span className="inline-flex items-center gap-1 rounded-full bg-violet-600 px-2.5 py-0.5 text-[10px] font-bold text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200">
++            ▶ العب
++          </span>
++        </div>
++      </div>
++    </Link>
++  )
++}
++
++function MostPlayedRow({ game, rank }: { game: typeof importedGames[0]; rank: number }) {
++  return (
++    <Link href={`/games/${game.slug}/`} className="most-played-row group flex items-center gap-4 p-3 rounded-xl border border-white/8 bg-white/[0.02] transition-all duration-200 hover:border-violet-500/30 hover:bg-white/[0.05]">
++      <span className="most-played-rank text-2xl font-black text-white/20 w-8 text-center flex-shrink-0">{rank}</span>
++      <div className="w-14 h-10 rounded-lg overflow-hidden flex-shrink-0 bg-slate-900">
++        <img src={game.thumbnail!} alt={game.title} loading="lazy" width={56} height={40} className="w-full h-full object-cover" />
++      </div>
++      <div className="flex-1 min-w-0">
++        <p className="text-sm font-bold text-white truncate">{game.title}</p>
++        <p className="text-[11px] text-text-muted">{game.genres?.[0] || 'Game'}</p>
++      </div>
++      <span className="flex-shrink-0 px-3 py-1 rounded-full bg-violet-600/10 border border-violet-500/20 text-[11px] font-bold text-violet-300 opacity-0 group-hover:opacity-100 transition-opacity">
++        ▶ العب
++      </span>
++    </Link>
++  )
++}
++
+ export default function HomePage() {
+   return (
+     <div className="relative min-h-screen" dir="rtl">
+@@ -51,12 +104,16 @@ export default function HomePage() {
+               {/* Left - Text Content */}
+               <div className="flex flex-col gap-7 animate-fade-up">
+ 
+-                {/* Badge */}
+-                <div>
++                {/* Badges row */}
++                <div className="flex flex-wrap items-center gap-2">
+                   <span className="hero-badge">
+                     <span>🟢</span>
+                     <span>+1,500 يلعبون الآن</span>
+                   </span>
++                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/25 text-amber-300 text-xs font-bold">
++                    <span>🔥</span>
++                    <span>الأكثر شعبية هذا الأسبوع</span>
++                  </span>
+                 </div>
+ 
+                 {/* Title */}
+@@ -101,43 +158,50 @@ export default function HomePage() {
  
                {/* Right - Game Mosaic */}
-@@ -338,74 +344,6 @@ export default function HomePage() {
+               <div className="hero-mosaic animate-slide-right delay-200">
+-                {/* Main featured game */}
+-                <Link href="/games/temple-runner" className="mosaic-main block">
+-                  <div className="mosaic-img flex items-center justify-center bg-gradient-to-br from-[#1a0533] to-[#0d1a33] w-full h-full">
+-                    <div className="text-center">
+-                      <div className="text-8xl mb-4">🏃</div>
+-                      <div className="text-white font-bold text-xl">Temple Runner</div>
++                <Link href="/games/football-legends-2026" className="mosaic-main block">
++                  <div className="mosaic-img flex items-center justify-center bg-gradient-to-br from-[#1a0533] to-[#0d1a33] w-full h-full relative overflow-hidden">
++                    <img
++                      src="https://img.gamedistribution.com/13eabea86f7c4cd993a156258420e9ec-512x384.jpg"
++                      alt="Football Legends 2026"
++                      loading="eager"
++                      className="w-full h-full object-cover"
++                    />
++                    <div className="absolute top-3 right-3 bg-amber-500 text-black text-[10px] font-black px-2 py-0.5 rounded-full">
++                      🏆 لعبة الأسبوع
+                     </div>
+                   </div>
+                   <div className="mosaic-overlay">
+-                    <span className="mosaic-game-title">Temple Runner</span>
++                    <span className="mosaic-game-title">Football Legends 2026</span>
+                     <span className="mosaic-play-btn">▶ العب الآن</span>
+                   </div>
+                 </Link>
+ 
+-                {/* Sub games */}
+-                <Link href="/games/snake" className="mosaic-sub block">
+-                  <div className="mosaic-img flex items-center justify-center bg-gradient-to-br from-[#033a1a] to-[#0d1a0d] w-full h-full">
+-                    <div className="text-center">
+-                      <div className="text-5xl mb-2">🐍</div>
+-                      <div className="text-white font-bold text-sm">Snake</div>
+-                    </div>
++                <Link href="/games/age-of-zombies" className="mosaic-sub block">
++                  <div className="mosaic-img w-full h-full overflow-hidden">
++                    <img
++                      src="https://img.gamedistribution.com/d82128fba97f4bac9afa5ae9e73ab362-512x384.jpg"
++                      alt="Age of Zombies"
++                      loading="lazy"
++                      className="w-full h-full object-cover"
++                    />
+                   </div>
+                   <div className="mosaic-overlay">
+-                    <span className="mosaic-game-title">Snake</span>
++                    <span className="mosaic-game-title">Age of Zombies</span>
+                     <span className="mosaic-play-btn">▶ العب</span>
+                   </div>
+                 </Link>
+ 
+-                <Link href="/games/2048" className="mosaic-sub block">
+-                  <div className="mosaic-img flex items-center justify-center bg-gradient-to-br from-[#1a1a03] to-[#1a0d0d] w-full h-full">
+-                    <div className="text-center">
+-                      <div className="text-5xl mb-2">🔢</div>
+-                      <div className="text-white font-bold text-sm">2048</div>
+-                    </div>
++                <Link href="/games/battle-racing-stars" className="mosaic-sub block">
++                  <div className="mosaic-img w-full h-full overflow-hidden">
++                    <img
++                      src="https://img.gamedistribution.com/b8cf1cc516e14f4b8e7cb3119cdfcec6-512x384.jpg"
++                      alt="Battle Racing Stars"
++                      loading="lazy"
++                      className="w-full h-full object-cover"
++                    />
+                   </div>
+                   <div className="mosaic-overlay">
+-                    <span className="mosaic-game-title">2048</span>
++                    <span className="mosaic-game-title">Battle Racing Stars</span>
+                     <span className="mosaic-play-btn">▶ العب</span>
+                   </div>
+                 </Link>
+@@ -150,7 +214,7 @@ export default function HomePage() {
+         {/* ===========================
+             STATS BAR
+             =========================== */}
+-        <section className="px-4 pb-12">
++        <section className="px-4 pb-10">
+           <div className="container mx-auto max-w-7xl">
+             <div className="stats-bar animate-fade-up delay-300">
+               {STATS.map((s) => (
+@@ -164,6 +228,29 @@ export default function HomePage() {
            </div>
          </section>
  
--        {/* ===========================
--            FOOTER
--            =========================== */}
--        <footer className="site-footer">
--          <div className="container mx-auto max-w-7xl px-4">
--            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
--              {/* Brand */}
--              <div className="md:col-span-2">
--                <div className="footer-brand mb-4">YallaPlay 🎮</div>
--                <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-sm">
--                  منصة الألعاب العربية الأولى. أكثر من 500 لعبة HTML5 مجانية، بدون تحميل، بدون تسجيل. العب الآن من متصفحك مباشرةً!
--                </p>
--                <div className="flex items-center gap-3 mt-4">
--                  <div className="flex items-center gap-2 text-[var(--green)] text-sm font-semibold">
--                    <span className="w-2 h-2 bg-[var(--green)] rounded-full animate-pulse" />
--                    <span>1,500+ يلعبون الآن</span>
--                  </div>
--                </div>
--              </div>
--              {/* Links */}
--              <div>
--                <h4 className="text-white font-bold mb-4">التصنيفات</h4>
--                <ul className="space-y-2">
--                  {CATEGORIES.filter(c => c.id !== 'all').slice(0, 5).map((cat) => (
--                    <li key={cat.id}>
--                      <a
--                        href={`/games?category=${cat.id}`}
--                        className="text-[var(--text-muted)] text-sm hover:text-[var(--accent-light)] transition-colors flex items-center gap-2"
--                      >
--                        <span>{cat.icon}</span>
--                        <span>{cat.label}</span>
--                      </a>
--                    </li>
--                  ))}
--                </ul>
--              </div>
--              <div>
--                <h4 className="text-white font-bold mb-4">روابط مهمة</h4>
--                <ul className="space-y-2">
--                  {[
--                    { label: 'الرئيسية', href: '/' },
--                    { label: 'جميع الألعاب', href: '/games' },
--                    { label: 'المجتمع', href: '/community' },
--                    { label: 'سياسة الخصوصية', href: '/privacy' },
--                  ].map((link) => (
--                    <li key={link.href}>
--                      <Link
--                        href={link.href}
--                        className="text-[var(--text-muted)] text-sm hover:text-[var(--accent-light)] transition-colors"
--                      >
--                        {link.label}
--                      </Link>
--                    </li>
--                  ))}
--                </ul>
--              </div>
--            </div>
--            <div className="border-t border-[var(--border)] pt-6 flex items-center justify-between flex-wrap gap-4">
--              <p className="text-[var(--text-muted)] text-sm">
--                © 2025 YallaPlay. جميع الحقوق محفوظة.
--              </p>
--              <p className="text-[var(--text-muted)] text-sm">
--                صُنع بـ ❤️ للعالم العربي
--              </p>
--            </div>
--          </div>
--        </footer>
--
-       </div>
-     </div>
-   )
-diff --git a/yallaplays/src/app/privacy/page.tsx b/yallaplays/src/app/privacy/page.tsx
-new file mode 100644
-index 0000000..223a06d
---- /dev/null
-+++ b/yallaplays/src/app/privacy/page.tsx
-@@ -0,0 +1,98 @@
-+import type { Metadata } from 'next'
-+import Link from 'next/link'
++        {/* ===========================
++            TRENDING NOW
++            =========================== */}
++        <section className="px-4 py-8">
++          <div className="container mx-auto max-w-7xl">
++            <div className="section-header mb-5">
++              <h2 className="section-title">
++                <span className="section-title-icon">🔥</span>
++                الأكثر لعبًا الآن
++                <span className="live-badge">LIVE</span>
++              </h2>
++              <Link href="/games" className="section-view-all">
++                عرض الكل <span>←</span>
++              </Link>
++            </div>
++            <div className="scroll-rail gap-3 pb-3">
++              {TRENDING_GAMES.map((game, i) => (
++                <TrendingMiniCard key={game.slug} game={game} index={i} />
++              ))}
++            </div>
++          </div>
++        </section>
 +
-+export const metadata: Metadata = {
-+  title: 'سياسة الخصوصية | يلا بلاي',
-+  description: 'سياسة الخصوصية لموقع يلا بلاي — كيف نجمع بياناتك ونستخدمها ونحميها.',
-+  alternates: { canonical: 'https://yallaplays.com/privacy' },
+         {/* ===========================
+             AD SLOT - TOP
+             =========================== */}
+@@ -193,6 +280,33 @@ export default function HomePage() {
+           </div>
+         </section>
+ 
++        {/* ===========================
++            AI RECOMMENDED GAMES
++            =========================== */}
++        <section className="px-4 py-10">
++          <div className="container mx-auto max-w-7xl">
++            <div className="ai-picks-header section-header mb-6">
++              <div>
++                <div className="flex items-center gap-3 mb-1">
++                  <h2 className="section-title">
++                    <span className="section-title-icon">🤖</span>
++                    مقترحات الذكاء الاصطناعي
++                  </h2>
++                </div>
++                <p className="text-[var(--text-muted)] text-sm">اختارها MIFTEH AI OS خصيصًا بناءً على الأكثر رواجًا</p>
++              </div>
++              <Link href="/games" className="section-view-all">
++                المزيد <span>←</span>
++              </Link>
++            </div>
++            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
++              {AI_PICKS.map((game) => (
++                <ImportedGameCard key={game.slug} game={game} badge="ai" compact />
++              ))}
++            </div>
++          </div>
++        </section>
++
+         {/* ===========================
+             FEATURED BANNER
+             =========================== */}
+@@ -205,21 +319,21 @@ export default function HomePage() {
+                   <span>لعبة الأسبوع</span>
+                 </div>
+                 <h2 className="featured-banner-title">
+-                  العب Temple Runner<br/>
+-                  <span className="text-gradient">بدون تحميل!</span>
++                  Football Legends 2026<br/>
++                  <span className="text-gradient">العب الآن مجاناً!</span>
+                 </h2>
+                 <p className="featured-banner-desc">
+-                  استمتع بأشهر ألعاب الجري اللانهائي مجاناً من متصفحك مباشرةً. جمع الذهب، تجنب العقبات، وحطم الأرقام القياسية!
++                  العب كرة القدم الأسطورية — 1v1 أو 2v2 مع أصدقائك. جرافيكس سريع، أكشن لا يتوقف، مجاناً من متصفحك!
+                 </p>
+                 <div className="flex items-center gap-4">
+-                  <Link href="/games/temple-runner" className="btn-primary">
++                  <Link href="/games/football-legends-2026" className="btn-primary">
+                     <span>▶</span>
+                     <span>العب الآن مجاناً</span>
+                   </Link>
+                 </div>
+               </div>
+-              <div className="text-[120px] leading-none hidden md:block relative z-10 animate-glow">
+-                🏃
++              <div className="text-[100px] leading-none hidden md:block relative z-10 animate-glow">
++                ⚽
+               </div>
+             </div>
+           </div>
+@@ -232,8 +346,8 @@ export default function HomePage() {
+           <div className="container mx-auto max-w-7xl">
+             <div className="section-header">
+               <h2 className="section-title">
+-                <span className="section-title-icon">🔥</span>
+-                الألعاب الأكثر شعبية
++                <span className="section-title-icon">🎮</span>
++                جميع الألعاب
+               </h2>
+               <Link href="/games" className="section-view-all">
+                 عرض الكل
+@@ -256,36 +370,78 @@ export default function HomePage() {
+         </section>
+ 
+         {/* ===========================
+-            QUICK CATEGORIES GRID
++            NEW THIS WEEK
+             =========================== */}
+-        <section className="px-4 py-10">
++        <section className="px-4 py-8">
+           <div className="container mx-auto max-w-7xl">
+-            <div className="section-header">
++            <div className="section-header mb-5">
+               <h2 className="section-title">
+-                <span className="section-title-icon">📂</span>
+-                تصفح حسب التصنيف
++                <span className="section-title-icon">✨</span>
++                جديد هذا الأسبوع
+               </h2>
++              <Link href="/games" className="section-view-all">عرض الكل <span>←</span></Link>
+             </div>
+-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+-              {CATEGORIES.filter(c => c.id !== 'all').map((cat, i) => (
+-                <a
+-                  key={cat.id}
+-                  href={`/games?category=${cat.id}`}
+-                  className="group flex flex-col items-center gap-3 p-6 rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] transition-all duration-300 hover:border-[var(--border-glow)] hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(0,0,0,0.3)]"
+-                  style={{ animationDelay: `${i * 0.1}s` }}
+-                >
+-                  <span className="text-4xl group-hover:scale-110 transition-transform duration-300">
+-                    {cat.icon}
+-                  </span>
+-                  <span className="text-sm font-bold text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] transition-colors">
+-                    {cat.label}
+-                  </span>
+-                </a>
++            <div className="scroll-rail gap-3 pb-3">
++              {NEW_THIS_WEEK.map((game, i) => (
++                <TrendingMiniCard key={game.slug} game={game} index={i} />
+               ))}
+             </div>
+           </div>
+         </section>
+ 
++        {/* ===========================
++            MOST PLAYED + CATEGORY GRID SIDE BY SIDE
++            =========================== */}
++        <section className="px-4 py-10">
++          <div className="container mx-auto max-w-7xl">
++            <div className="grid lg:grid-cols-2 gap-8">
++
++              {/* Most Played */}
++              <div>
++                <div className="section-header mb-5">
++                  <h2 className="section-title">
++                    <span className="section-title-icon">🏆</span>
++                    الأكثر لعبًا
++                  </h2>
++                  <Link href="/games" className="section-view-all">الكل <span>←</span></Link>
++                </div>
++                <div className="space-y-2">
++                  {MOST_PLAYED.map((game, i) => (
++                    <MostPlayedRow key={game.slug} game={game} rank={i + 1} />
++                  ))}
++                </div>
++              </div>
++
++              {/* Quick Categories */}
++              <div>
++                <div className="section-header mb-5">
++                  <h2 className="section-title">
++                    <span className="section-title-icon">📂</span>
++                    تصفح حسب التصنيف
++                  </h2>
++                </div>
++                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
++                  {CATEGORIES.filter(c => c.id !== 'all').map((cat, i) => (
++                    <a
++                      key={cat.id}
++                      href={`/games?category=${cat.id}`}
++                      className="group flex flex-col items-center gap-2 p-4 rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] transition-all duration-300 hover:border-[var(--border-glow)] hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(0,0,0,0.3)]"
++                      style={{ animationDelay: `${i * 0.1}s` }}
++                    >
++                      <span className="text-3xl group-hover:scale-110 transition-transform duration-300">
++                        {cat.icon}
++                      </span>
++                      <span className="text-xs font-bold text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] transition-colors">
++                        {cat.label}
++                      </span>
++                    </a>
++                  ))}
++                </div>
++              </div>
++            </div>
++          </div>
++        </section>
++
+         {/* ===========================
+             WHY YALLAPLAY
+             =========================== */}
+@@ -293,7 +449,7 @@ export default function HomePage() {
+           <div className="container mx-auto max-w-7xl">
+             <div className="text-center mb-12">
+               <h2 className="text-3xl font-black text-white mb-4">
+-                لماذا <span className="text-gradient">YallaPlay</span>؟
++                لماذا <span className="text-gradient">YallaPlays</span>؟
+               </h2>
+               <p className="text-[var(--text-secondary)] text-lg max-w-xl mx-auto">
+                 منصة الألعاب العربية الأولى التي تجمع أفضل ألعاب HTML5 في مكان واحد
+@@ -306,11 +462,7 @@ export default function HomePage() {
+                 { icon: '📱', title: 'جوال وكمبيوتر', desc: 'يعمل على جميع الأجهزة والمتصفحات' },
+                 { icon: '🇸🇦', title: 'عربي بالكامل', desc: 'واجهة عربية كاملة مع دعم اللغة العربية' },
+               ].map((feature, i) => (
+-                <div
+-                  key={i}
+-                  className="community-card text-center"
+-                  style={{ animationDelay: `${i * 0.1}s` }}
+-                >
++                <div key={i} className="community-card text-center" style={{ animationDelay: `${i * 0.1}s` }}>
+                   <div className="text-5xl mb-4">{feature.icon}</div>
+                   <h3 className="text-lg font-bold text-white mb-2">{feature.title}</h3>
+                   <p className="text-[var(--text-muted)] text-sm leading-relaxed">{feature.desc}</p>
+diff --git a/yallaplays/src/components/ImportedGameCard.tsx b/yallaplays/src/components/ImportedGameCard.tsx
+index c2301e5..c8e473f 100644
+--- a/yallaplays/src/components/ImportedGameCard.tsx
++++ b/yallaplays/src/components/ImportedGameCard.tsx
+@@ -6,66 +6,147 @@ import type { GameInfo } from '@/types/game'
+ interface ImportedGameCardProps {
+   game: GameInfo
+   compact?: boolean
++  badge?: 'ai' | 'trending' | 'new' | 'hot' | null
+ }
+ 
+ function formatGenre(raw: string): string {
+   return raw.replace(/([a-z])([A-Z])/g, '$1 $2').replace(/&/g, '&')
+ }
+ 
+-export default function ImportedGameCard({ game, compact = false }: ImportedGameCardProps) {
++function slugHash(slug: string): number {
++  let h = 0
++  for (let i = 0; i < slug.length; i++) {
++    h = Math.imul(31, h) + slug.charCodeAt(i) | 0
++  }
++  return Math.abs(h)
 +}
 +
-+const LAST_UPDATED = '1 مايو 2026'
++function getStarRating(slug: string): number {
++  return 3.5 + (slugHash(slug) % 16) * 0.1
++}
 +
-+export default function PrivacyPage() {
++function getPlayCount(slug: string): string {
++  const n = 2000 + (slugHash(slug) % 98000)
++  return n >= 10000 ? `${Math.round(n / 1000)}K` : `${(n / 1000).toFixed(1)}K`
++}
++
++function StarRating({ rating }: { rating: number }) {
++  const full = Math.floor(rating)
++  const half = rating - full >= 0.4
++  const stars = []
++  for (let i = 1; i <= 5; i++) {
++    if (i <= full) stars.push('★')
++    else if (i === full + 1 && half) stars.push('⯨')
++    else stars.push('☆')
++  }
 +  return (
-+    <div className="relative min-h-screen" dir="rtl">
-+      <div className="bg-grid" aria-hidden="true" />
-+      <div className="bg-orb bg-orb-1" aria-hidden="true" />
-+
-+      <div className="relative z-10 container mx-auto max-w-3xl px-4 py-24">
-+        <div className="mb-8">
-+          <Link href="/" className="text-violet-400 hover:text-violet-300 text-sm transition-colors">
-+            ← العودة للرئيسية
-+          </Link>
-+        </div>
-+
-+        <h1 className="text-4xl font-black text-white mb-2">سياسة الخصوصية</h1>
-+        <p className="text-[var(--text-muted)] text-sm mb-12">آخر تحديث: {LAST_UPDATED}</p>
-+
-+        <div className="space-y-8 text-[var(--text-secondary)] leading-relaxed">
-+
-+          <section className="community-card">
-+            <h2 className="text-xl font-bold text-white mb-3">1. المعلومات التي نجمعها</h2>
-+            <p className="mb-3">نحن لا نطلب منك التسجيل أو إنشاء حساب. نجمع المعلومات التالية تلقائياً:</p>
-+            <ul className="space-y-1 list-disc list-inside">
-+              <li>بيانات الاستخدام (الصفحات المزارة، الألعاب المشغلة)</li>
-+              <li>بيانات الجهاز والمتصفح (النوع، الإصدار)</li>
-+              <li>عنوان IP والموقع الجغرافي التقريبي</li>
-+              <li>ملفات تعريف الارتباط (الكوكيز) — انظر سياسة الكوكيز</li>
-+            </ul>
-+          </section>
-+
-+          <section className="community-card">
-+            <h2 className="text-xl font-bold text-white mb-3">2. كيف نستخدم المعلومات</h2>
-+            <ul className="space-y-1 list-disc list-inside">
-+              <li>تحسين تجربة المستخدم وأداء الموقع</li>
-+              <li>تحليل الاستخدام وتطوير المحتوى</li>
-+              <li>عرض إعلانات ملائمة عبر Google AdSense</li>
-+              <li>الامتثال للمتطلبات القانونية</li>
-+            </ul>
-+          </section>
-+
-+          <section className="community-card">
-+            <h2 className="text-xl font-bold text-white mb-3">3. Google AdSense والإعلانات</h2>
-+            <p className="mb-3">
-+              يستخدم هذا الموقع Google AdSense لعرض الإعلانات. قد يستخدم Google ملفات تعريف الارتباط لعرض إعلانات بناءً على زياراتك السابقة لهذا الموقع وغيره من المواقع.
-+            </p>
-+            <p>
-+              يمكنك إلغاء الاشتراك في إعلانات Google المخصصة من خلال{' '}
-+              <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer" className="text-violet-400 hover:text-violet-300 transition-colors">
-+                إعدادات الإعلانات
-+              </a>.
-+            </p>
-+          </section>
-+
-+          <section className="community-card">
-+            <h2 className="text-xl font-bold text-white mb-3">4. مشاركة البيانات</h2>
-+            <p>
-+              لا نبيع بياناتك الشخصية لأطراف ثالثة. قد نشارك بيانات مجهولة الهوية مع مزودي خدمات التحليل (مثل Google Analytics) لتحسين خدماتنا.
-+            </p>
-+          </section>
-+
-+          <section className="community-card">
-+            <h2 className="text-xl font-bold text-white mb-3">5. حقوقك</h2>
-+            <ul className="space-y-1 list-disc list-inside">
-+              <li>الحق في الوصول إلى بياناتك</li>
-+              <li>الحق في تصحيح البيانات غير الدقيقة</li>
-+              <li>الحق في حذف بياناتك</li>
-+              <li>الحق في الاعتراض على المعالجة</li>
-+            </ul>
-+            <p className="mt-3">
-+              للممارسة هذه الحقوق، تواصل معنا على{' '}
-+              <a href="mailto:privacy@yallaplays.com" className="text-violet-400 hover:text-violet-300 transition-colors">
-+                privacy@yallaplays.com
-+              </a>
-+            </p>
-+          </section>
-+
-+          <section className="community-card">
-+            <h2 className="text-xl font-bold text-white mb-3">6. التعديلات على السياسة</h2>
-+            <p>
-+              نحتفظ بحق تعديل هذه السياسة في أي وقت. سيتم إشعارك بأي تغييرات جوهرية عبر إشعار بارز على الموقع.
-+            </p>
-+          </section>
-+
-+        </div>
-+      </div>
-+    </div>
++    <span className="game-stars" aria-label={`${rating.toFixed(1)} stars`}>
++      {stars.join('')}
++      <span className="game-stars-value">{rating.toFixed(1)}</span>
++    </span>
 +  )
 +}
-diff --git a/yallaplays/src/app/sitemap.ts b/yallaplays/src/app/sitemap.ts
-index f763e0e..ddf3b0c 100644
---- a/yallaplays/src/app/sitemap.ts
-+++ b/yallaplays/src/app/sitemap.ts
-@@ -5,15 +5,26 @@ export const revalidate = 86400
- 
- const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://yallaplays.com'
- 
-+const STATIC_ROUTES = [
-+  { path: '', priority: 1.0 },
-+  { path: '/games', priority: 0.9 },
-+  { path: '/about', priority: 0.7 },
-+  { path: '/contact', priority: 0.6 },
-+  { path: '/privacy', priority: 0.5 },
-+  { path: '/terms', priority: 0.5 },
-+  { path: '/cookies', priority: 0.4 },
-+]
 +
- export default function sitemap() {
-+  const now = new Date()
-   return [
--    {
--      url: baseUrl,
--      lastModified: new Date(),
--    },
-+    ...STATIC_ROUTES.map(({ path }) => ({
-+      url: `${baseUrl}${path}`,
-+      lastModified: now,
-+    })),
-     ...importedGames.map(game => ({
-       url: `${baseUrl}/games/${game.slug}`,
--      lastModified: new Date(),
-+      lastModified: now,
-     })),
-   ]
- }
-diff --git a/yallaplays/src/app/terms/page.tsx b/yallaplays/src/app/terms/page.tsx
-new file mode 100644
-index 0000000..365a679
---- /dev/null
-+++ b/yallaplays/src/app/terms/page.tsx
-@@ -0,0 +1,90 @@
-+import type { Metadata } from 'next'
-+import Link from 'next/link'
-+
-+export const metadata: Metadata = {
-+  title: 'شروط الاستخدام | يلا بلاي',
-+  description: 'شروط وأحكام استخدام موقع يلا بلاي للألعاب العربية.',
-+  alternates: { canonical: 'https://yallaplays.com/terms' },
++const BADGE_CONFIG = {
++  ai:       { label: '🤖 AI Pick',   cls: 'badge-ai' },
++  trending: { label: '🔥 Trending',  cls: 'badge-trending' },
++  new:      { label: '✨ جديد',      cls: 'badge-new' },
++  hot:      { label: '⚡ HOT',       cls: 'badge-hot' },
 +}
 +
-+const LAST_UPDATED = '1 مايو 2026'
++export default function ImportedGameCard({ game, compact = false, badge = null }: ImportedGameCardProps) {
+   const [imgSrc, setImgSrc] = useState(
+     game.thumbnail || (game.gameId ? `https://img.gamedistribution.com/${game.gameId}-512x384.jpg` : '/game-covers/default.svg')
+   )
+   const genre = formatGenre(game.genres?.[0] || 'Game')
+   const tags = game.tags?.flatMap(tag => tag.split(/(?=[A-Z])|[, ]+/)).filter(Boolean).slice(0, compact ? 2 : 3) || []
++  const rating = getStarRating(game.slug)
++  const plays = getPlayCount(game.slug)
++  const badgeCfg = badge ? BADGE_CONFIG[badge] : null
+ 
+   return (
+     <Link href={`/games/${game.slug}/`} className="group block">
+-      <article className="h-full overflow-hidden rounded-xl border border-white/10 bg-[#11101e] shadow-2xl shadow-black/30 transition duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/5">
++      <article className="imported-game-card h-full overflow-hidden rounded-xl border border-white/10 bg-[#11101e] shadow-2xl shadow-black/30 transition-all duration-300 hover:-translate-y-2 hover:border-violet-500/40 hover:shadow-violet-900/20 hover:shadow-2xl">
 +
-+export default function TermsPage() {
++        {/* Thumbnail */}
+         <div className="relative overflow-hidden bg-slate-950">
+           <img
+             src={imgSrc}
+             alt={game.title}
+             loading="lazy"
++            width={512}
++            height={384}
+             onError={() => setImgSrc('/game-covers/default.svg')}
+-            className={`${compact ? 'h-40' : 'h-52'} w-full object-cover transition duration-500 group-hover:scale-105`}
++            className={`${compact ? 'h-40' : 'h-52'} w-full object-cover transition duration-500 group-hover:scale-110`}
+           />
+-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/20" />
+-          <div className="absolute inset-x-0 top-4 flex items-center justify-between px-4">
+-            <span className="rounded-full bg-black/70 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-white">
++
++          {/* Gradient overlay */}
++          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
++
++          {/* Top row: genre + orientation */}
++          <div className="absolute inset-x-0 top-3 flex items-center justify-between px-3">
++            <span className="rounded-full bg-black/70 backdrop-blur-sm px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.14em] text-white">
+               {genre}
+             </span>
+-            <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] font-semibold text-text-muted">
+-              {game.orientation || 'HTML5'}
+-            </span>
++            {badgeCfg ? (
++              <span className={`game-badge ${badgeCfg.cls}`}>{badgeCfg.label}</span>
++            ) : (
++              <span className="rounded-full border border-white/10 bg-black/50 backdrop-blur-sm px-2.5 py-0.5 text-[10px] font-semibold text-white/70">
++                {game.orientation || 'HTML5'}
++              </span>
++            )}
++          </div>
++
++          {/* Hover play overlay */}
++          <div className="game-card-hover-overlay absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
++            <div className="flex items-center gap-2 rounded-full bg-violet-600 px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-violet-900/50">
++              <span>▶</span>
++              <span>العب الآن</span>
++            </div>
++          </div>
++
++          {/* Bottom: play count */}
++          <div className="absolute bottom-2 left-3 flex items-center gap-1 text-[10px] text-white/70">
++            <span>👁</span>
++            <span>{plays} لعبة</span>
+           </div>
+         </div>
+ 
+-        <div className={`${compact ? 'space-y-3 p-4' : 'space-y-4 p-5'}`}>
+-          <div className="flex items-center justify-between gap-3">
+-            <h3 className={`${compact ? 'text-base' : 'text-xl'} line-clamp-2 font-black leading-tight text-white`}>
++        {/* Info */}
++        <div className={`${compact ? 'space-y-2 p-3' : 'space-y-3 p-4'}`}>
++          <div className="flex items-start justify-between gap-2">
++            <h3 className={`${compact ? 'text-sm' : 'text-base'} line-clamp-2 font-black leading-tight text-white`}>
+               {game.title}
+             </h3>
+-            <span className="shrink-0 rounded-lg bg-gradient-to-r from-[#7c3aed] to-[#06b6d4] px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-white">
+-              Play
++            <span className="shrink-0 rounded-lg bg-gradient-to-r from-[#7c3aed] to-[#06b6d4] px-2.5 py-1 text-[11px] font-bold text-white">
++              ▶
+             </span>
+           </div>
+ 
+-          {!compact && (
+-            <p className="line-clamp-3 text-sm leading-relaxed text-text-muted">{game.description}</p>
++          {/* Rating + plays row */}
++          <div className="flex items-center gap-3">
++            <StarRating rating={rating} />
++            <span className="text-[10px] text-white/40">•</span>
++            <span className="text-[10px] font-semibold text-white/50">{plays} لعبة</span>
++          </div>
++
++          {!compact && game.description && (
++            <p className="line-clamp-2 text-xs leading-relaxed text-text-muted">{game.description}</p>
+           )}
+ 
+           {game.company && !compact && (
+-            <p className="text-xs font-semibold text-white/55">{game.company}</p>
++            <p className="text-[11px] font-semibold text-white/40">{game.company}</p>
+           )}
+ 
+-          <div className="flex flex-wrap items-center gap-2 text-xs text-text-muted">
+-            {tags.map(tag => (
+-              <span key={tag} className="rounded-full border border-white/10 bg-white/5 px-3 py-1">
+-                {tag}
+-              </span>
+-            ))}
+-          </div>
++          {tags.length > 0 && (
++            <div className="flex flex-wrap gap-1.5">
++              {tags.map(tag => (
++                <span key={tag} className="rounded-md border border-white/8 bg-white/4 px-2 py-0.5 text-[10px] text-text-muted">
++                  {tag}
++                </span>
++              ))}
++            </div>
++          )}
+         </div>
+       </article>
+     </Link>
+diff --git a/yallaplays/src/components/MobileAnchorAd.tsx b/yallaplays/src/components/MobileAnchorAd.tsx
+new file mode 100644
+index 0000000..756c014
+--- /dev/null
++++ b/yallaplays/src/components/MobileAnchorAd.tsx
+@@ -0,0 +1,42 @@
++'use client'
++
++import { useState, useEffect } from 'react'
++import { AdSenseUnit } from '@/components/adsense/AdSense'
++
++const ANCHOR_SLOT = '7788990011'
++
++export default function MobileAnchorAd() {
++  const [dismissed, setDismissed] = useState(false)
++  const [visible, setVisible] = useState(false)
++
++  useEffect(() => {
++    const timer = setTimeout(() => setVisible(true), 2000)
++    return () => clearTimeout(timer)
++  }, [])
++
++  if (dismissed || !visible) return null
++
 +  return (
-+    <div className="relative min-h-screen" dir="rtl">
-+      <div className="bg-grid" aria-hidden="true" />
-+      <div className="bg-orb bg-orb-1" aria-hidden="true" />
-+
-+      <div className="relative z-10 container mx-auto max-w-3xl px-4 py-24">
-+        <div className="mb-8">
-+          <Link href="/" className="text-violet-400 hover:text-violet-300 text-sm transition-colors">
-+            ← العودة للرئيسية
-+          </Link>
-+        </div>
-+
-+        <h1 className="text-4xl font-black text-white mb-2">شروط الاستخدام</h1>
-+        <p className="text-[var(--text-muted)] text-sm mb-12">آخر تحديث: {LAST_UPDATED}</p>
-+
-+        <div className="space-y-8 text-[var(--text-secondary)] leading-relaxed">
-+
-+          <section className="community-card">
-+            <h2 className="text-xl font-bold text-white mb-3">1. القبول بالشروط</h2>
-+            <p>
-+              باستخدامك لموقع يلا بلاي، فإنك توافق على الالتزام بهذه الشروط والأحكام. إذا كنت لا توافق على هذه الشروط، يُرجى عدم استخدام الموقع.
-+            </p>
-+          </section>
-+
-+          <section className="community-card">
-+            <h2 className="text-xl font-bold text-white mb-3">2. الاستخدام المسموح به</h2>
-+            <p className="mb-3">يُسمح باستخدام الموقع للأغراض الترفيهية الشخصية فقط. يُحظر:</p>
-+            <ul className="space-y-1 list-disc list-inside">
-+              <li>نسخ أو توزيع محتوى الموقع دون إذن</li>
-+              <li>استخدام أدوات آلية أو روبوتات لاستخراج البيانات</li>
-+              <li>محاولة اختراق أو تعطيل الموقع</li>
-+              <li>أي استخدام تجاري دون موافقة مسبقة</li>
-+            </ul>
-+          </section>
-+
-+          <section className="community-card">
-+            <h2 className="text-xl font-bold text-white mb-3">3. الملكية الفكرية</h2>
-+            <p>
-+              جميع محتويات الموقع، بما في ذلك التصميم والنصوص والصور، هي ملك حصري لـ يلا بلاي أو مرخصة لها. الألعاب المضمنة تعود ملكيتها لمطوريها الأصليين.
-+            </p>
-+          </section>
-+
-+          <section className="community-card">
-+            <h2 className="text-xl font-bold text-white mb-3">4. إخلاء المسؤولية</h2>
-+            <p>
-+              يُقدَّم الموقع "كما هو" بدون أي ضمانات. لا نتحمل المسؤولية عن أي أضرار ناجمة عن استخدام الموقع أو عدم القدرة على استخدامه.
-+            </p>
-+          </section>
-+
-+          <section className="community-card">
-+            <h2 className="text-xl font-bold text-white mb-3">5. الإعلانات</h2>
-+            <p>
-+              يعرض هذا الموقع إعلانات عبر Google AdSense. نحن لا نتحمل المسؤولية عن محتوى الإعلانات الخارجية. إذا وجدت إعلاناً غير لائق، يُرجى{' '}
-+              <Link href="/contact" className="text-violet-400 hover:text-violet-300 transition-colors">
-+                التواصل معنا
-+              </Link>.
-+            </p>
-+          </section>
-+
-+          <section className="community-card">
-+            <h2 className="text-xl font-bold text-white mb-3">6. التعديلات</h2>
-+            <p>
-+              نحتفظ بحق تعديل هذه الشروط في أي وقت. الاستمرار في استخدام الموقع بعد نشر التعديلات يعني موافقتك عليها.
-+            </p>
-+          </section>
-+
-+          <section className="community-card">
-+            <h2 className="text-xl font-bold text-white mb-3">7. القانون الحاكم</h2>
-+            <p>
-+              تخضع هذه الشروط وتُفسَّر وفقاً للقوانين المعمول بها. أي نزاع يُحل بطريقة ودية في المقام الأول.
-+            </p>
-+          </section>
-+
-+        </div>
++    <div
++      className="mobile-anchor-ad"
++      role="complementary"
++      aria-label="Advertisement"
++    >
++      <button
++        onClick={() => setDismissed(true)}
++        className="mobile-anchor-close"
++        aria-label="Close advertisement"
++      >
++        ✕
++      </button>
++      <div style={{ minHeight: 60, minWidth: 320 }}>
++        <AdSenseUnit
++          slot={ANCHOR_SLOT}
++          format="auto"
++          responsive
++          style={{ display: 'block', minHeight: 60 }}
++        />
 +      </div>
 +    </div>
 +  )
 +}
 diff --git a/yallaplays/src/components/MonetizationSlot.tsx b/yallaplays/src/components/MonetizationSlot.tsx
-index f85b8ae..355d00c 100644
+index 355d00c..9d47255 100644
 --- a/yallaplays/src/components/MonetizationSlot.tsx
 +++ b/yallaplays/src/components/MonetizationSlot.tsx
-@@ -1,20 +1,39 @@
-+'use client'
-+
-+import { AdSenseUnit } from '@/components/adsense/AdSense'
-+
-+const SLOT_MAP: Record<string, string> = {
-+  'home-top':    '1234567890',
-+  'home-middle': '0987654321',
-+  'home-bottom': '1122334455',
-+  'game-top':    '5544332211',
-+  'game-bottom': '6677889900',
+@@ -8,6 +8,16 @@ const SLOT_MAP: Record<string, string> = {
+   'home-bottom': '1122334455',
+   'game-top':    '5544332211',
+   'game-bottom': '6677889900',
++  'games-list-top':      '2233445566',
++  'games-grid-inline':   '3344556677',
++  'games-before-classic':'4455667788',
 +}
 +
- interface MonetizationSlotProps {
-   placement: string
-   size?: 'leaderboard' | 'inline' | 'square' | 'skyscraper'
-   className?: string
++const MIN_HEIGHT_MAP: Record<string, number> = {
++  leaderboard: 90,
++  inline:      90,
++  square:      250,
++  skyscraper:  600,
  }
  
-+const FORMAT_MAP: Record<string, 'horizontal' | 'rectangle' | 'auto'> = {
-+  leaderboard: 'horizontal',
-+  square: 'rectangle',
-+  skyscraper: 'vertical' as 'auto',
-+  inline: 'auto',
-+}
-+
+ interface MonetizationSlotProps {
+@@ -18,20 +28,22 @@ interface MonetizationSlotProps {
+ 
+ const FORMAT_MAP: Record<string, 'horizontal' | 'rectangle' | 'auto'> = {
+   leaderboard: 'horizontal',
+-  square: 'rectangle',
+-  skyscraper: 'vertical' as 'auto',
+-  inline: 'auto',
++  square:      'rectangle',
++  skyscraper:  'auto',
++  inline:      'auto',
+ }
+ 
  export default function MonetizationSlot({ placement, size = 'inline', className = '' }: MonetizationSlotProps) {
-+  const slot = SLOT_MAP[placement] ?? '1234567890'
-+  const format = FORMAT_MAP[size] ?? 'auto'
-+
+   const slot = SLOT_MAP[placement] ?? '1234567890'
+   const format = FORMAT_MAP[size] ?? 'auto'
++  const minHeight = MIN_HEIGHT_MAP[size] ?? 90
+ 
    return (
      <div
        className={`monetization-slot ${className}`}
        data-placement={placement}
        data-size={size}
--      aria-hidden="true"
++      style={{ minHeight, display: 'block' }}
      >
--      <div className="monetization-slot__surface">
--        <span>Advertisement</span>
--      </div>
-+      <AdSenseUnit slot={slot} format={format} responsive />
+       <AdSenseUnit slot={slot} format={format} responsive />
      </div>
-   )
- }
-diff --git a/yallaplays/src/components/adsense/AdSense.tsx b/yallaplays/src/components/adsense/AdSense.tsx
-new file mode 100644
-index 0000000..e0f362a
---- /dev/null
-+++ b/yallaplays/src/components/adsense/AdSense.tsx
-@@ -0,0 +1,53 @@
-+'use client'
-+
-+import Script from 'next/script'
-+import { useEffect, useRef } from 'react'
-+
-+const PUBLISHER_ID = 'ca-pub-1206965892808259'
-+
-+interface AdSenseUnitProps {
-+  slot: string
-+  format?: 'auto' | 'rectangle' | 'horizontal' | 'vertical'
-+  responsive?: boolean
-+  className?: string
-+  style?: React.CSSProperties
-+}
-+
-+export function AdSenseUnit({ slot, format = 'auto', responsive = true, className = '', style }: AdSenseUnitProps) {
-+  const ref = useRef<HTMLModElement>(null)
-+
-+  useEffect(() => {
-+    try {
-+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-+      const adsbygoogle = (window as any).adsbygoogle
-+      if (adsbygoogle) {
-+        adsbygoogle.push({})
-+      }
-+    } catch {
-+      // adsbygoogle not ready yet
-+    }
-+  }, [])
-+
-+  return (
-+    <ins
-+      ref={ref}
-+      className={`adsbygoogle ${className}`}
-+      style={{ display: 'block', ...style }}
-+      data-ad-client={PUBLISHER_ID}
-+      data-ad-slot={slot}
-+      data-ad-format={format}
-+      data-full-width-responsive={responsive ? 'true' : 'false'}
-+    />
-+  )
-+}
-+
-+export function AdSenseScript() {
-+  return (
-+    <Script
-+      id="adsense-init"
-+      strategy="afterInteractive"
-+      src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${PUBLISHER_ID}`}
-+      crossOrigin="anonymous"
-+    />
-+  )
-+}
 diff --git a/yallaplays/src/components/footer/Footer.tsx b/yallaplays/src/components/footer/Footer.tsx
-new file mode 100644
-index 0000000..fff9030
---- /dev/null
+index fff9030..cff174a 100644
+--- a/yallaplays/src/components/footer/Footer.tsx
 +++ b/yallaplays/src/components/footer/Footer.tsx
-@@ -0,0 +1,103 @@
-+import Link from 'next/link'
-+
-+const CATEGORIES = [
-+  { id: 'action', label: 'أكشن', icon: '⚡' },
-+  { id: 'puzzle', label: 'ألغاز', icon: '🧩' },
-+  { id: 'sports', label: 'رياضة', icon: '⚽' },
-+  { id: 'racing', label: 'سباقات', icon: '🏎️' },
-+  { id: 'adventure', label: 'مغامرات', icon: '🗺️' },
+@@ -1,34 +1,41 @@
+ import Link from 'next/link'
+ 
+ const CATEGORIES = [
+-  { id: 'action', label: 'أكشن', icon: '⚡' },
+-  { id: 'puzzle', label: 'ألغاز', icon: '🧩' },
+-  { id: 'sports', label: 'رياضة', icon: '⚽' },
+-  { id: 'racing', label: 'سباقات', icon: '🏎️' },
++  { id: 'action',    label: 'أكشن',    icon: '⚡' },
++  { id: 'puzzle',    label: 'ألغاز',   icon: '🧩' },
++  { id: 'sports',    label: 'رياضة',   icon: '⚽' },
++  { id: 'racing',    label: 'سباقات',  icon: '🏎️' },
+   { id: 'adventure', label: 'مغامرات', icon: '🗺️' },
+ ]
+ 
++const QUICK_LINKS = [
++  { label: 'الرئيسية',         href: '/' },
++  { label: 'جميع الألعاب',    href: '/games' },
++  { label: 'خريطة الموقع',    href: '/sitemap.xml' },
 +]
 +
-+const LEGAL_LINKS = [
-+  { label: 'الرئيسية', href: '/' },
-+  { label: 'جميع الألعاب', href: '/games' },
-+  { label: 'من نحن', href: '/about' },
-+  { label: 'تواصل معنا', href: '/contact' },
-+  { label: 'سياسة الخصوصية', href: '/privacy' },
-+  { label: 'شروط الاستخدام', href: '/terms' },
-+  { label: 'سياسة الكوكيز', href: '/cookies' },
-+]
+ const LEGAL_LINKS = [
+-  { label: 'الرئيسية', href: '/' },
+-  { label: 'جميع الألعاب', href: '/games' },
+-  { label: 'من نحن', href: '/about' },
+-  { label: 'تواصل معنا', href: '/contact' },
++  { label: 'من نحن',           href: '/about' },
++  { label: 'تواصل معنا',      href: '/contact' },
+   { label: 'سياسة الخصوصية', href: '/privacy' },
+   { label: 'شروط الاستخدام', href: '/terms' },
+-  { label: 'سياسة الكوكيز', href: '/cookies' },
++  { label: 'سياسة الكوكيز',  href: '/cookies' },
+ ]
+ 
+ export default function Footer() {
+   return (
+     <footer className="site-footer" dir="rtl">
++      {/* Gradient top border */}
++      <div className="footer-gradient-border" aria-hidden="true" />
 +
-+export default function Footer() {
-+  return (
-+    <footer className="site-footer" dir="rtl">
-+      <div className="container mx-auto max-w-7xl px-4">
-+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
-+
-+          {/* Brand */}
-+          <div className="md:col-span-2">
-+            <div className="footer-brand mb-4">YallaPlays 🎮</div>
-+            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-sm">
-+              منصة الألعاب العربية الأولى. أكثر من 500 لعبة HTML5 مجانية، بدون تحميل، بدون تسجيل. العب الآن من متصفحك مباشرةً!
-+            </p>
-+            <div className="flex items-center gap-3 mt-4">
-+              <div className="flex items-center gap-2 text-[var(--green)] text-sm font-semibold">
-+                <span className="w-2 h-2 bg-[var(--green)] rounded-full animate-pulse" />
-+                <span>1,500+ يلعبون الآن</span>
-+              </div>
-+            </div>
-+            {/* MIFTEH AI OS attribution */}
-+            <div className="mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-violet-600/10 border border-violet-500/20 text-violet-300 text-xs font-semibold">
-+              <span>🤖</span>
-+              <span>AI Powered by MIFTEH AI OS</span>
-+            </div>
-+          </div>
-+
-+          {/* Categories */}
+       <div className="container mx-auto max-w-7xl px-4">
+-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
++        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12 pt-10">
+ 
+           {/* Brand */}
+-          <div className="md:col-span-2">
++          <div className="lg:col-span-1">
+             <div className="footer-brand mb-4">YallaPlays 🎮</div>
+-            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-sm">
+-              منصة الألعاب العربية الأولى. أكثر من 500 لعبة HTML5 مجانية، بدون تحميل، بدون تسجيل. العب الآن من متصفحك مباشرةً!
++            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-xs">
++              منصة الألعاب العربية الأولى. أكثر من 500 لعبة HTML5 مجانية، بدون تحميل، بدون تسجيل.
+             </p>
+             <div className="flex items-center gap-3 mt-4">
+               <div className="flex items-center gap-2 text-[var(--green)] text-sm font-semibold">
+@@ -37,7 +44,7 @@ export default function Footer() {
+               </div>
+             </div>
+             {/* MIFTEH AI OS attribution */}
+-            <div className="mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-violet-600/10 border border-violet-500/20 text-violet-300 text-xs font-semibold">
++            <div className="mt-5 inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-violet-600/10 border border-violet-500/20 text-violet-300 text-xs font-semibold">
+               <span>🤖</span>
+               <span>AI Powered by MIFTEH AI OS</span>
+             </div>
+@@ -45,15 +52,15 @@ export default function Footer() {
+ 
+           {/* Categories */}
+           <div>
+-            <h4 className="text-white font-bold mb-4">التصنيفات</h4>
+-            <ul className="space-y-2">
++            <h4 className="text-white font-bold mb-4 text-sm uppercase tracking-wider">التصنيفات</h4>
++            <ul className="space-y-2.5">
+               {CATEGORIES.map((cat) => (
+                 <li key={cat.id}>
+                   <a
+                     href={`/games?category=${cat.id}`}
+-                    className="text-[var(--text-muted)] text-sm hover:text-[var(--accent-light)] transition-colors flex items-center gap-2"
++                    className="text-[var(--text-muted)] text-sm hover:text-[var(--accent-light)] transition-colors flex items-center gap-2 group"
+                   >
+-                    <span>{cat.icon}</span>
++                    <span className="group-hover:scale-110 transition-transform">{cat.icon}</span>
+                     <span>{cat.label}</span>
+                   </a>
+                 </li>
+@@ -61,10 +68,27 @@ export default function Footer() {
+             </ul>
+           </div>
+ 
++          {/* Quick Links */}
 +          <div>
-+            <h4 className="text-white font-bold mb-4">التصنيفات</h4>
-+            <ul className="space-y-2">
-+              {CATEGORIES.map((cat) => (
-+                <li key={cat.id}>
-+                  <a
-+                    href={`/games?category=${cat.id}`}
-+                    className="text-[var(--text-muted)] text-sm hover:text-[var(--accent-light)] transition-colors flex items-center gap-2"
-+                  >
-+                    <span>{cat.icon}</span>
-+                    <span>{cat.label}</span>
-+                  </a>
-+                </li>
-+              ))}
-+            </ul>
-+          </div>
-+
-+          {/* Legal Links */}
-+          <div>
-+            <h4 className="text-white font-bold mb-4">روابط مهمة</h4>
-+            <ul className="space-y-2">
-+              {LEGAL_LINKS.map((link) => (
++            <h4 className="text-white font-bold mb-4 text-sm uppercase tracking-wider">روابط سريعة</h4>
++            <ul className="space-y-2.5">
++              {QUICK_LINKS.map((link) => (
 +                <li key={link.href}>
 +                  <Link
 +                    href={link.href}
@@ -858,27 +1404,36 @@ index 0000000..fff9030
 +              ))}
 +            </ul>
 +          </div>
-+        </div>
 +
-+        {/* Bottom bar */}
-+        <div className="border-t border-[var(--border)] pt-6 flex items-center justify-between flex-wrap gap-4">
-+          <p className="text-[var(--text-muted)] text-sm">
-+            © 2026 YallaPlays. جميع الحقوق محفوظة.
-+          </p>
-+          <div className="flex items-center gap-4 flex-wrap">
-+            <Link href="/privacy" className="text-[var(--text-muted)] text-xs hover:text-[var(--accent-light)] transition-colors">
-+              الخصوصية
+           {/* Legal Links */}
+           <div>
+-            <h4 className="text-white font-bold mb-4">روابط مهمة</h4>
+-            <ul className="space-y-2">
++            <h4 className="text-white font-bold mb-4 text-sm uppercase tracking-wider">قانوني</h4>
++            <ul className="space-y-2.5">
+               {LEGAL_LINKS.map((link) => (
+                 <li key={link.href}>
+                   <Link
+@@ -77,10 +101,11 @@ export default function Footer() {
+               ))}
+             </ul>
+           </div>
++
+         </div>
+ 
+         {/* Bottom bar */}
+-        <div className="border-t border-[var(--border)] pt-6 flex items-center justify-between flex-wrap gap-4">
++        <div className="border-t border-[var(--border)] py-6 flex items-center justify-between flex-wrap gap-4">
+           <p className="text-[var(--text-muted)] text-sm">
+             © 2026 YallaPlays. جميع الحقوق محفوظة.
+           </p>
+@@ -94,6 +119,9 @@ export default function Footer() {
+             <Link href="/cookies" className="text-[var(--text-muted)] text-xs hover:text-[var(--accent-light)] transition-colors">
+               الكوكيز
+             </Link>
++            <Link href="/sitemap.xml" className="text-[var(--text-muted)] text-xs hover:text-[var(--accent-light)] transition-colors">
++              Sitemap
 +            </Link>
-+            <Link href="/terms" className="text-[var(--text-muted)] text-xs hover:text-[var(--accent-light)] transition-colors">
-+              الشروط
-+            </Link>
-+            <Link href="/cookies" className="text-[var(--text-muted)] text-xs hover:text-[var(--accent-light)] transition-colors">
-+              الكوكيز
-+            </Link>
-+            <span className="text-[var(--text-muted)] text-xs">صُنع بـ ❤️ للعالم العربي</span>
-+          </div>
-+        </div>
-+      </div>
-+    </footer>
-+  )
-+}
+             <span className="text-[var(--text-muted)] text-xs">صُنع بـ ❤️ للعالم العربي</span>
+           </div>
+         </div>
