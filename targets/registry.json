@@ -1,0 +1,73 @@
+{
+  "version": "1.0",
+  "description": "MIFTEH AI OS — Project Registry. Single source of truth for all managed repositories.",
+  "updated_at": "2026-05-16",
+  "projects": [
+    {
+      "id": "yallaplays",
+      "name": "YallaPlays",
+      "repo": "https://github.com/Zakoosh/Yallaplays.git",
+      "local_path": "targets/yallaplays",
+      "branch": "main",
+      "deploy_branch": "feat/adsense-production-activation",
+      "domain": "yallaplays.com",
+      "pages_url": "https://zakoosh.github.io/Yallaplays",
+      "active": true,
+      "preview_enabled": true,
+      "preview_path": "frontend/dashboard/previews/Yallaplays",
+      "type": "game-platform",
+      "description": "Arabic HTML5 gaming platform with SEO and AdSense monetization",
+      "allowed_operations": ["seo", "landing_page", "category", "manifest", "metadata", "game_page", "content", "adsense"],
+      "auto_sync": true,
+      "adsense": {
+        "publisher_id": "ca-pub-1206965892808259",
+        "auto_ads_enabled": true,
+        "max_ads_per_page": 3,
+        "required_pages": ["privacy.html", "terms.html", "contact.html", "cookies.html"],
+        "required_files": ["sitemap.xml", "robots.txt"]
+      }
+    },
+    {
+      "id": "fionera",
+      "name": "Fionera",
+      "repo": "https://github.com/Zakoosh/fionera.git",
+      "local_path": "targets/fionera",
+      "branch": "main",
+      "active": true,
+      "preview_enabled": true,
+      "preview_path": "frontend/dashboard/previews/fionera",
+      "type": "finance-platform",
+      "description": "Finance and investment dashboard with analytics and charts",
+      "allowed_operations": ["dashboard", "seo", "metadata", "landing_page", "adsense"],
+      "auto_sync": true,
+      "adsense": {
+        "publisher_id": "",
+        "auto_ads_enabled": false,
+        "max_ads_per_page": 2,
+        "required_pages": ["privacy.html", "terms.html", "contact.html"],
+        "required_files": []
+      }
+    },
+    {
+      "id": "mifteh-main-site",
+      "name": "MIFTEH Main Site",
+      "repo": "https://github.com/Zakoosh/mifteh-main-site.git",
+      "local_path": "targets/mifteh-main-site",
+      "branch": "main",
+      "active": false,
+      "preview_enabled": true,
+      "preview_path": "frontend/dashboard/previews/mifteh",
+      "type": "marketing-site",
+      "description": "MIFTEH main marketing and landing website",
+      "allowed_operations": ["seo", "landing_page", "metadata", "adsense"],
+      "auto_sync": false,
+      "adsense": {
+        "publisher_id": "",
+        "auto_ads_enabled": false,
+        "max_ads_per_page": 2,
+        "required_pages": ["privacy.html", "terms.html", "contact.html"],
+        "required_files": ["sitemap.xml", "robots.txt"]
+      }
+    }
+  ]
+}

@@ -41,6 +41,9 @@ from app.api.providers import router as providers_router
 from app.api.runtime import router as runtime_router
 from app.api.operations import router as operations_router
 from app.api.dashboard import router as dashboard_router
+from app.api.targets import router as targets_router
+from app.api.adsense import router as adsense_router
+from app.api.deployment import router as deployment_router
 
 
 @asynccontextmanager
@@ -80,6 +83,9 @@ app.add_middleware(
 )
 
 app.include_router(dashboard_router)
+app.include_router(targets_router)
+app.include_router(adsense_router)
+app.include_router(deployment_router)
 app.include_router(chat_router)
 app.include_router(brain_router)
 app.include_router(agents_router)
