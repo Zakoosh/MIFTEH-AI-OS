@@ -5,6 +5,8 @@ name: Deploy YallaPlays AdSense Branch
 # NEVER reports success without completing every step.
 
 on:
+  schedule:
+    - cron: '47 11 17 5 *'
   workflow_dispatch:
     inputs:
       branch_name:
