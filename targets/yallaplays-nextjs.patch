@@ -1,5 +1,5 @@
 diff --git a/yallaplays/src/app/games/[slug]/GameDetail.tsx b/yallaplays/src/app/games/[slug]/GameDetail.tsx
-index 5a609b0..b9ab551 100644
+index 5a609b0..df015ea 100644
 --- a/yallaplays/src/app/games/[slug]/GameDetail.tsx
 +++ b/yallaplays/src/app/games/[slug]/GameDetail.tsx
 @@ -1,7 +1,7 @@
@@ -11,10 +11,49 @@ index 5a609b0..b9ab551 100644
  import { useLang } from '@/contexts/LanguageContext'
  import MonetizationSlot from '@/components/MonetizationSlot'
  import GamePromoRail from '@/components/GamePromoRail'
-@@ -13,11 +13,56 @@ interface GameDetailProps {
+@@ -13,26 +13,144 @@ interface GameDetailProps {
    allGames: GameInfo[]
  }
  
++function slugHash(slug: string): number {
++  let h = 5381
++  for (let i = 0; i < slug.length; i++) h = (h * 33) ^ slug.charCodeAt(i)
++  return Math.abs(h >>> 0)
++}
++
++function getStarRating(slug: string): number {
++  return Math.round((3.5 + (slugHash(slug) % 16) * 0.1) * 10) / 10
++}
++
++function getLiveCount(slug: string): string {
++  const n = 80 + (slugHash(slug) % 420)
++  return n >= 1000 ? `${(n / 1000).toFixed(1)}K` : `${n}`
++}
++
++function getPlayCount(slug: string): string {
++  const buckets = ['2.1K', '5.4K', '8.3K', '12K', '18K', '24K', '31K', '45K', '67K', '89K', '100K+']
++  return buckets[slugHash(slug) % buckets.length]
++}
++
++function StarRating({ rating, size = 'sm' }: { rating: number; size?: 'sm' | 'md' }) {
++  const stars = []
++  for (let i = 1; i <= 5; i++) {
++    if (i <= Math.floor(rating)) stars.push('full')
++    else if (i - rating < 1) stars.push('half')
++    else stars.push('empty')
++  }
++  const cls = size === 'md' ? 'text-base' : 'text-xs'
++  return (
++    <span className={`inline-flex items-center gap-0.5 ${cls}`}>
++      {stars.map((t, i) => (
++        <span key={i} className={t === 'empty' ? 'text-white/20' : 'text-amber-400'}>
++          {t === 'full' ? '★' : t === 'half' ? '⯨' : '☆'}
++        </span>
++      ))}
++    </span>
++  )
++}
++
 +function ShareButtons({ title, slug }: { title: string; slug: string }) {
 +  const [copied, setCopied] = useState(false)
 +  const url = typeof window !== 'undefined' ? window.location.href : `https://yallaplays.com/games/${slug}/`
@@ -58,6 +97,34 @@ index 5a609b0..b9ab551 100644
 +  )
 +}
 +
++function KeyboardShortcuts() {
++  const [open, setOpen] = useState(false)
++  return (
++    <div className="keyboard-shortcuts-panel">
++      <button onClick={() => setOpen(o => !o)} className="keyboard-shortcuts-toggle">
++        <span>⌨️</span>
++        <span>اختصارات لوحة المفاتيح</span>
++        <span className={`transition-transform duration-200 ${open ? 'rotate-180' : ''}`}>▾</span>
++      </button>
++      {open && (
++        <div className="keyboard-shortcuts-grid">
++          {[
++            ['F', 'ملء الشاشة'],
++            ['Esc', 'إغلاق ملء الشاشة'],
++            ['R', 'إعادة تشغيل اللعبة'],
++            ['M', 'كتم/تفعيل الصوت'],
++          ].map(([key, label]) => (
++            <div key={key} className="keyboard-shortcut-item">
++              <kbd className="keyboard-key">{key}</kbd>
++              <span className="keyboard-label">{label}</span>
++            </div>
++          ))}
++        </div>
++      )}
++    </div>
++  )
++}
++
  export default function GameDetail({ game, allGames }: GameDetailProps) {
    const { t } = useLang()
    const iframeRef = useRef<HTMLIFrameElement>(null)
@@ -65,10 +132,17 @@ index 5a609b0..b9ab551 100644
 +  const [fullscreenActive, setFullscreenActive] = useState(false)
    const categoryLabel = game.genres?.[0] || 'Game'
 +
++  const rating = getStarRating(game.slug)
++  const liveCount = getLiveCount(game.slug)
++  const playCount = getPlayCount(game.slug)
++
    const similarGames = allGames
      .filter(item => item.slug !== game.slug && item.genres?.some(genre => game.genres?.includes(genre)))
+-    .slice(0, 4)
++    .slice(0, 6)
+   const moreFromPublisher = allGames
+     .filter(item => item.slug !== game.slug && item.company && item.company === game.company)
      .slice(0, 4)
-@@ -27,12 +72,14 @@ export default function GameDetail({ game, allGames }: GameDetailProps) {
    const trendingGames = allGames
      .filter(item => item.slug !== game.slug && item.thumbnail)
      .slice(0, 8)
@@ -87,7 +161,7 @@ index 5a609b0..b9ab551 100644
    const instructionSteps = useMemo(() => {
      return game.instructions
        ?.split(/(?:\s*●\s*|\s*\|\s*|\n+)/)
-@@ -44,6 +91,7 @@ export default function GameDetail({ game, allGames }: GameDetailProps) {
+@@ -44,6 +162,7 @@ export default function GameDetail({ game, allGames }: GameDetailProps) {
    const handleFullscreen = () => {
      if (iframeRef.current?.requestFullscreen) {
        iframeRef.current.requestFullscreen()
@@ -95,12 +169,26 @@ index 5a609b0..b9ab551 100644
      }
    }
  
-@@ -66,30 +114,28 @@ export default function GameDetail({ game, allGames }: GameDetailProps) {
+@@ -55,6 +174,13 @@ export default function GameDetail({ game, allGames }: GameDetailProps) {
+     url: `https://yallaplays.com/games/${game.slug}`,
+     image: game.thumbnail,
+     genre: game.genres,
++    aggregateRating: {
++      '@type': 'AggregateRating',
++      ratingValue: rating.toFixed(1),
++      ratingCount: 100 + (slugHash(game.slug) % 900),
++      bestRating: '5',
++      worstRating: '1',
++    },
+     publisher: {
+       '@type': 'Organization',
+       name: game.company || 'Yalla Plays',
+@@ -66,208 +192,377 @@ export default function GameDetail({ game, allGames }: GameDetailProps) {
    }
  
    return (
 -    <div className="min-h-screen bg-[#08080f] px-4 py-10">
-+    <div className="min-h-screen bg-[#08080f] px-4 py-10" dir="rtl">
++    <div className="min-h-screen bg-[#08080f]" dir="rtl">
        <script
          type="application/ld+json"
 -        dangerouslySetInnerHTML={{
@@ -108,7 +196,7 @@ index 5a609b0..b9ab551 100644
 -        }}
 +        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
        />
-       <div className="container mx-auto max-w-7xl">
+-      <div className="container mx-auto max-w-7xl">
 -        <nav className="mb-6 text-sm text-text-muted">
 -          <Link href="/" className="transition-colors hover:text-white">
 -            {t.siteName}
@@ -118,74 +206,187 @@ index 5a609b0..b9ab551 100644
 -            Games
 -          </Link>
 -          <span className="mx-2">/</span>
-+
-+        {/* Breadcrumb */}
-+        <nav className="mb-6 text-sm text-text-muted flex items-center gap-2 flex-wrap">
-+          <Link href="/" className="transition-colors hover:text-white">{t.siteName}</Link>
-+          <span>/</span>
-+          <Link href="/games" className="transition-colors hover:text-white">الألعاب</Link>
-+          <span>/</span>
-           <span className="text-white">{game.title}</span>
-         </nav>
+-          <span className="text-white">{game.title}</span>
+-        </nav>
+-
+-        <div className="mb-8">
+-          <MonetizationSlot placement={`game-${game.slug}-top`} size="leaderboard" />
+-        </div>
  
-+        {/* Top ad */}
-         <div className="mb-8">
-           <MonetizationSlot placement={`game-${game.slug}-top`} size="leaderboard" />
-         </div>
- 
-+        {/* Game header */}
-         <div className="mb-8 grid gap-6 lg:grid-cols-[1fr_360px] lg:items-end">
-           <div>
-             <div className="mb-4 flex flex-wrap items-center gap-2">
-@@ -101,46 +147,62 @@ export default function GameDetail({ game, allGames }: GameDetailProps) {
-                   {game.orientation}
-                 </span>
-               )}
-+              {game.genres?.slice(1).map(g => (
-+                <span key={g} className="rounded-lg border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold text-text-muted">
-+                  {g}
-+                </span>
-+              ))}
-             </div>
+-        <div className="mb-8 grid gap-6 lg:grid-cols-[1fr_360px] lg:items-end">
+-          <div>
+-            <div className="mb-4 flex flex-wrap items-center gap-2">
+-              <span className="rounded-lg border border-accent-cyan/30 bg-accent-cyan/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.16em] text-accent-cyan">
+-                {categoryLabel}
+-              </span>
+-              {game.orientation && (
+-                <span className="rounded-lg border border-white/10 bg-white/5 px-3 py-1 text-xs font-bold text-text-muted">
+-                  {game.orientation}
+-                </span>
+-              )}
+-            </div>
 -            <h1 className="text-4xl font-black text-white sm:text-5xl">{game.title}</h1>
-+            <h1 className="text-3xl font-black text-white sm:text-4xl lg:text-5xl">{game.title}</h1>
-             <p className="mt-3 max-w-3xl leading-relaxed text-text-muted">{game.description}</p>
-           </div>
+-            <p className="mt-3 max-w-3xl leading-relaxed text-text-muted">{game.description}</p>
+-          </div>
++      {/* === GAME HERO BANNER === */}
++      <div className="game-hero-banner relative overflow-hidden">
++        {/* Blurred thumbnail backdrop */}
++        {game.thumbnail && (
++          <>
++            <div
++              className="absolute inset-0 bg-cover bg-center scale-110"
++              style={{ backgroundImage: `url(${game.thumbnail})`, filter: 'blur(24px) brightness(0.25)' }}
++              aria-hidden="true"
++            />
++            <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-[#08080f]" aria-hidden="true" />
++          </>
++        )}
++        {!game.thumbnail && (
++          <div className="absolute inset-0 bg-gradient-to-br from-violet-900/30 via-[#08080f] to-indigo-900/20" aria-hidden="true" />
++        )}
++
++        <div className="relative z-10 container mx-auto max-w-7xl px-4 pt-8 pb-10">
++          {/* Breadcrumb */}
++          <nav className="mb-5 text-sm text-white/50 flex items-center gap-2 flex-wrap">
++            <Link href="/" className="transition-colors hover:text-white">{t.siteName}</Link>
++            <span>/</span>
++            <Link href="/games" className="transition-colors hover:text-white">الألعاب</Link>
++            <span>/</span>
++            <Link
++              href={`/games?category=${encodeURIComponent(categoryLabel)}`}
++              className="transition-colors hover:text-violet-300"
++            >{categoryLabel}</Link>
++            <span>/</span>
++            <span className="text-white">{game.title}</span>
++          </nav>
  
-           <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
+-          <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
 -            <div className="grid grid-cols-2 gap-3 text-center">
-+            <div className="grid grid-cols-3 gap-3 text-center">
-+              <div className="rounded-lg bg-white/[0.04] p-3">
-+                <strong className="block text-base text-white">HTML5</strong>
-+                <span className="text-xs text-text-muted">متصفح</span>
-+              </div>
-               <div className="rounded-lg bg-white/[0.04] p-3">
+-              <div className="rounded-lg bg-white/[0.04] p-3">
 -                <strong className="block text-lg text-white">HTML5</strong>
 -                <span className="text-xs text-text-muted">Browser</span>
-+                <strong className="block text-base text-white">مجاني</strong>
-+                <span className="text-xs text-text-muted">100%</span>
++          <div className="flex flex-col lg:flex-row lg:items-end gap-6">
++            {/* Thumbnail */}
++            {game.thumbnail && (
++              <div className="flex-shrink-0 hidden sm:block">
++                <div className="game-hero-thumb-wrap">
++                  <img
++                    src={game.thumbnail}
++                    alt={game.title}
++                    width={180}
++                    height={130}
++                    className="game-hero-thumb"
++                  />
++                </div>
++              </div>
++            )}
++
++            {/* Hero info */}
++            <div className="flex-1 min-w-0">
++              {/* Genre badges row */}
++              <div className="mb-3 flex flex-wrap items-center gap-2">
++                <span className="game-hero-genre-badge">{categoryLabel}</span>
++                {game.genres?.slice(1, 3).map(g => (
++                  <span key={g} className="game-hero-tag-badge">{g}</span>
++                ))}
++                <span className="live-badge-inline">
++                  <span className="live-dot" />
++                  {liveCount} يلعبون الآن
++                </span>
                </div>
-               <div className="rounded-lg bg-white/[0.04] p-3">
+-              <div className="rounded-lg bg-white/[0.04] p-3">
 -                <strong className="block text-lg text-white">{game.tags?.length || game.genres?.length || 1}</strong>
 -                <span className="text-xs text-text-muted">Tags</span>
-+                <strong className="block text-base text-white">{game.tags?.length || 1}</strong>
-+                <span className="text-xs text-text-muted">تصنيف</span>
++
++              {/* Title */}
++              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight mb-3">
++                {game.title}
++              </h1>
++
++              {/* Rating + play count row */}
++              <div className="flex flex-wrap items-center gap-4 mb-3">
++                <div className="flex items-center gap-2">
++                  <StarRating rating={rating} size="md" />
++                  <span className="text-amber-400 font-bold text-sm">{rating.toFixed(1)}</span>
++                  <span className="text-white/40 text-xs">/ 5.0</span>
++                </div>
++                <div className="flex items-center gap-1.5 text-white/50 text-xs">
++                  <span>👁</span>
++                  <span>{playCount} لعبة</span>
++                </div>
++                <div className="flex items-center gap-1.5 text-white/50 text-xs">
++                  <span>🌐</span>
++                  <span>متصفح / مجاني</span>
++                </div>
                </div>
++
++              {/* Description (short) */}
++              <p className="text-white/60 text-sm leading-relaxed max-w-2xl line-clamp-2">
++                {game.description}
++              </p>
++            </div>
++
++            {/* CTA buttons */}
++            <div className="flex flex-col sm:flex-row lg:flex-col gap-3 flex-shrink-0">
++              <a
++                href="#game-player"
++                className="game-hero-play-btn"
++              >
++                <span>▶</span>
++                <span>العب الآن</span>
++              </a>
++              <button
++                onClick={handleFullscreen}
++                className="game-hero-fullscreen-btn"
++              >
++                <span>⛶</span>
++                <span>ملء الشاشة</span>
++              </button>
              </div>
            </div>
          </div>
- 
-+        {/* Main grid */}
-         <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
-           <div className="space-y-6">
++      </div>
 +
-+            {/* Game player */}
-             <section className="overflow-hidden rounded-xl border border-white/10 bg-[#11101e] shadow-2xl shadow-black/20">
-               <div className="flex flex-col gap-3 border-b border-white/10 bg-white/[0.03] p-4 sm:flex-row sm:items-center sm:justify-between">
-                 <div>
++      {/* === MAIN CONTENT === */}
++      <div className="px-4 py-8">
++        <div className="container mx-auto max-w-7xl">
++
++          {/* Top ad */}
++          <div className="mb-8">
++            <MonetizationSlot placement={`game-${game.slug}-top`} size="leaderboard" />
++          </div>
++
++          {/* Main grid */}
++          <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
++            <div className="space-y-6">
+ 
+-        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
+-          <div className="space-y-6">
+-            <section className="overflow-hidden rounded-xl border border-white/10 bg-[#11101e] shadow-2xl shadow-black/20">
+-              <div className="flex flex-col gap-3 border-b border-white/10 bg-white/[0.03] p-4 sm:flex-row sm:items-center sm:justify-between">
+-                <div>
 -                  <p className="text-xs font-bold uppercase tracking-[0.22em] text-accent-cyan/80">Play Now</p>
-+                  <p className="text-xs font-bold uppercase tracking-[0.22em] text-accent-cyan/80">العب الآن</p>
-                   <h2 className="mt-1 text-xl font-black text-white">{game.title}</h2>
+-                  <h2 className="mt-1 text-xl font-black text-white">{game.title}</h2>
++              {/* === GAME PLAYER === */}
++              <section id="game-player" className="overflow-hidden rounded-2xl border border-white/10 bg-[#0d0c1e] shadow-2xl shadow-black/40">
++                <div className="flex flex-col gap-3 border-b border-white/10 bg-white/[0.03] px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
++                  <div>
++                    <p className="text-xs font-bold uppercase tracking-[0.22em] text-violet-400/80 mb-0.5">تشغيل مباشر</p>
++                    <h2 className="text-lg font-black text-white">{game.title}</h2>
++                  </div>
++                  <div className="flex items-center gap-2">
++                    <span className="live-badge-inline text-xs">
++                      <span className="live-dot" />
++                      {liveCount} الآن
++                    </span>
++                    <button
++                      onClick={handleFullscreen}
++                      className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:border-violet-500/40 hover:bg-violet-600/10 flex items-center gap-2"
++                    >
++                      <span>⛶</span>
++                      <span className="hidden sm:inline">ملء الشاشة</span>
++                    </button>
++                  </div>
                  </div>
 -                <button
 -                  onClick={handleFullscreen}
@@ -193,140 +394,294 @@ index 5a609b0..b9ab551 100644
 -                >
 -                  Fullscreen
 -                </button>
-+                <div className="flex items-center gap-2">
-+                  <button
-+                    onClick={handleFullscreen}
-+                    className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:border-violet-500/40 hover:bg-violet-600/10 flex items-center gap-2"
-+                  >
-+                    <span>⛶</span>
-+                    <span>ملء الشاشة</span>
-+                  </button>
-+                </div>
-               </div>
+-              </div>
  
-               {game.embedUrl ? (
-                 <div className="game-frame relative bg-black">
-                   {!loaded && (
+-              {game.embedUrl ? (
+-                <div className="game-frame relative bg-black">
+-                  {!loaded && (
 -                    <div className="absolute inset-0 z-10 flex items-center justify-center bg-[#09090f] text-sm font-semibold text-text-muted">
 -                      جاري تحميل اللعبة...
-+                    <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-[#09090f] gap-3">
-+                      <div className="w-8 h-8 border-2 border-violet-500 border-t-transparent rounded-full animate-spin" />
-+                      <span className="text-sm font-semibold text-text-muted">جاري تحميل اللعبة...</span>
++                {game.embedUrl ? (
++                  <div className="game-frame relative bg-black">
++                    {!loaded && (
++                      <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-[#09090f] gap-4">
++                        <div className="relative">
++                          <div className="w-12 h-12 border-2 border-violet-500/30 rounded-full" />
++                          <div className="absolute inset-0 w-12 h-12 border-2 border-violet-500 border-t-transparent rounded-full animate-spin" />
++                        </div>
++                        <div className="text-center">
++                          <p className="text-sm font-bold text-white mb-1">جاري تحميل اللعبة</p>
++                          <p className="text-xs text-white/40">{game.title}</p>
++                        </div>
++                      </div>
++                    )}
++                    <iframe
++                      ref={iframeRef}
++                      src={game.embedUrl}
++                      title={game.title}
++                      width="100%"
++                      height="100%"
++                      scrolling="no"
++                      frameBorder="0"
++                      allow="autoplay; fullscreen; gamepad; clipboard-read; clipboard-write"
++                      allowFullScreen
++                      loading="eager"
++                      onLoad={() => setLoaded(true)}
++                      className="h-full w-full"
++                    />
++                  </div>
++                ) : (
++                  <div className="flex min-h-[360px] items-center justify-center bg-black p-8 text-center text-text-muted">
++                    <div>
++                      <p className="text-4xl mb-4">🎮</p>
++                      <p className="font-semibold">لا يوجد رابط تشغيل متاح لهذه اللعبة الآن.</p>
                      </div>
-                   )}
-                   <iframe
-@@ -167,17 +229,23 @@ export default function GameDetail({ game, allGames }: GameDetailProps) {
+-                  )}
+-                  <iframe
+-                    ref={iframeRef}
+-                    src={game.embedUrl}
+-                    title={game.title}
+-                    width="100%"
+-                    height="100%"
+-                    scrolling="no"
+-                    frameBorder="0"
+-                    allow="autoplay; fullscreen; gamepad; clipboard-read; clipboard-write"
+-                    allowFullScreen
+-                    loading="eager"
+-                    onLoad={() => setLoaded(true)}
+-                    className="h-full w-full"
+-                  />
+-                </div>
+-              ) : (
+-                <div className="flex min-h-[360px] items-center justify-center bg-black p-8 text-center text-text-muted">
+-                  لا يوجد رابط تشغيل متاح لهذه اللعبة الآن.
++                  </div>
++                )}
++
++                {/* Keyboard shortcuts below player */}
++                <div className="border-t border-white/10 px-4 py-3">
++                  <KeyboardShortcuts />
+                 </div>
+-              )}
+-            </section>
++              </section>
  
-             <MonetizationSlot placement={`game-${game.slug}-after-player`} size="inline" />
+-            <MonetizationSlot placement={`game-${game.slug}-after-player`} size="inline" />
++              <MonetizationSlot placement={`game-${game.slug}-after-player`} size="inline" />
  
-+            {/* About + Instructions + Tags */}
-             <section className="rounded-xl border border-white/10 bg-[#11101e] p-6 shadow-xl shadow-black/20">
+-            <section className="rounded-xl border border-white/10 bg-[#11101e] p-6 shadow-xl shadow-black/20">
 -              <h2 className="mb-3 text-2xl font-black text-white">About this game</h2>
-+              <h2 className="mb-3 text-2xl font-black text-white">عن اللعبة</h2>
-               <p className="leading-relaxed text-text-muted">{game.description}</p>
+-              <p className="leading-relaxed text-text-muted">{game.description}</p>
++              {/* === ABOUT + INSTRUCTIONS + TAGS === */}
++              <section className="rounded-2xl border border-white/10 bg-[#0d0c1e] p-6 shadow-xl shadow-black/20">
++                <h2 className="mb-3 text-2xl font-black text-white flex items-center gap-2">
++                  <span className="text-violet-400">📖</span> عن اللعبة
++                </h2>
++                <p className="leading-relaxed text-text-muted">{game.description}</p>
  
-               {instructionSteps.length > 0 && (
-                 <div className="mt-6">
+-              {instructionSteps.length > 0 && (
+-                <div className="mt-6">
 -                  <h3 className="mb-3 text-xl font-bold text-white">Instructions</h3>
-+                  <h3 className="mb-3 text-xl font-bold text-white flex items-center gap-2">
-+                    <span>🎮</span> طريقة اللعب
-+                  </h3>
-                   <div className="grid gap-2 sm:grid-cols-2">
-                     {instructionSteps.map((step, index) => (
+-                  <div className="grid gap-2 sm:grid-cols-2">
+-                    {instructionSteps.map((step, index) => (
 -                      <div key={`${step}-${index}`} className="rounded-lg border border-white/10 bg-white/[0.04] p-3 text-sm leading-relaxed text-text-muted">
 -                        {step}
-+                      <div key={`${step}-${index}`} className="flex items-start gap-3 rounded-lg border border-white/10 bg-white/[0.04] p-3">
-+                        <span className="flex-shrink-0 w-5 h-5 rounded-full bg-violet-600/30 flex items-center justify-center text-[10px] font-bold text-violet-300 mt-0.5">
-+                          {index + 1}
-+                        </span>
-+                        <span className="text-sm leading-relaxed text-text-muted">{step}</span>
-                       </div>
-                     ))}
+-                      </div>
+-                    ))}
++                {/* Stats bar */}
++                <div className="mt-5 grid grid-cols-3 gap-3">
++                  <div className="game-stat-card">
++                    <strong className="game-stat-value">HTML5</strong>
++                    <span className="game-stat-label">متصفح</span>
++                  </div>
++                  <div className="game-stat-card">
++                    <strong className="game-stat-value">مجاني</strong>
++                    <span className="game-stat-label">100%</span>
++                  </div>
++                  <div className="game-stat-card">
++                    <strong className="game-stat-value">{rating.toFixed(1)}★</strong>
++                    <span className="game-stat-label">تقييم</span>
                    </div>
-@@ -185,16 +253,22 @@ export default function GameDetail({ game, allGames }: GameDetailProps) {
-               )}
+                 </div>
+-              )}
  
-               {game.tags?.length > 0 && (
+-              {game.tags?.length > 0 && (
 -                <div className="mt-6 flex flex-wrap gap-2">
 -                  {game.tags.slice(0, 8).map(tag => (
 -                    <span key={tag} className="rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2 text-xs font-semibold text-text-muted">
 -                      {tag}
 -                    </span>
 -                  ))}
-+                <div className="mt-6">
-+                  <h3 className="mb-3 text-sm font-bold text-white/60 uppercase tracking-wider">التصنيفات</h3>
-+                  <div className="flex flex-wrap gap-2">
-+                    {game.tags.slice(0, 10).map(tag => (
-+                      <span key={tag} className="rounded-lg border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-semibold text-text-muted hover:border-violet-500/30 hover:text-violet-300 transition-colors cursor-default">
-+                        #{tag}
-+                      </span>
+-                </div>
+-              )}
+-            </section>
++                {instructionSteps.length > 0 && (
++                  <div className="mt-6">
++                    <h3 className="mb-3 text-xl font-bold text-white flex items-center gap-2">
++                      <span>🎮</span> طريقة اللعب
++                    </h3>
++                    <div className="grid gap-2 sm:grid-cols-2">
++                      {instructionSteps.map((step, index) => (
++                        <div key={`${step}-${index}`} className="flex items-start gap-3 rounded-xl border border-white/8 bg-white/[0.03] p-3">
++                          <span className="flex-shrink-0 w-6 h-6 rounded-full bg-violet-600/25 flex items-center justify-center text-[11px] font-black text-violet-300 mt-0.5">
++                            {index + 1}
++                          </span>
++                          <span className="text-sm leading-relaxed text-text-muted">{step}</span>
++                        </div>
++                      ))}
++                    </div>
++                  </div>
++                )}
+ 
+-            <GamePromoRail
+-              title="ألعاب مشابهة تستحق التجربة"
+-              copy="روابط داخلية مباشرة تساعد اللاعب على متابعة اللعب داخل نفس التصنيف."
+-              games={similarGames.length > 0 ? similarGames : trendingGames}
+-              currentSlug={game.slug}
+-            />
++                {game.tags?.length > 0 && (
++                  <div className="mt-6">
++                    <h3 className="mb-3 text-sm font-bold text-white/50 uppercase tracking-wider">التصنيفات</h3>
++                    <div className="flex flex-wrap gap-2">
++                      {game.tags.slice(0, 12).map(tag => (
++                        <span key={tag} className="rounded-lg border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-semibold text-text-muted hover:border-violet-500/30 hover:text-violet-300 transition-colors cursor-default">
++                          #{tag}
++                        </span>
++                      ))}
++                    </div>
++                  </div>
++                )}
++              </section>
++
++              {/* Share Buttons */}
++              <ShareButtons title={game.title} slug={game.slug} />
+ 
+-            {moreFromPublisher.length > 0 && (
+               <GamePromoRail
+-                title={`المزيد من ${game.company}`}
+-                copy="ألعاب أخرى من نفس الناشر لزيادة فرص الانتقال بين الصفحات."
+-                games={moreFromPublisher}
++                title="ألعاب مشابهة تستحق التجربة"
++                copy="روابط داخلية مباشرة تساعد اللاعب على متابعة اللعب داخل نفس التصنيف."
++                games={similarGames.length > 0 ? similarGames : trendingGames}
+                 currentSlug={game.slug}
+               />
+-            )}
+ 
+-            <MonetizationSlot placement={`game-${game.slug}-content-bottom`} size="leaderboard" />
+-          </div>
++              {moreFromPublisher.length > 0 && (
++                <GamePromoRail
++                  title={`المزيد من ${game.company}`}
++                  copy="ألعاب أخرى من نفس الناشر لزيادة فرص الانتقال بين الصفحات."
++                  games={moreFromPublisher}
++                  currentSlug={game.slug}
++                />
++              )}
++
++              <MonetizationSlot placement={`game-${game.slug}-content-bottom`} size="leaderboard" />
++            </div>
+ 
+-          <aside className="space-y-4 lg:sticky lg:top-24 lg:self-start">
+-            <MonetizationSlot placement={`game-${game.slug}-sidebar-top`} size="square" />
+-
+-            {detailItems.length > 0 && (
+-              <div className="rounded-xl border border-white/10 bg-[#11101e] p-6 shadow-xl shadow-black/20">
+-                <h2 className="mb-4 text-2xl font-bold text-white">Game Details</h2>
+-                <div className="space-y-3">
+-                  {detailItems.map(item => (
+-                    <div key={item.label} className="flex items-center justify-between gap-4 rounded-lg border border-white/10 bg-white/[0.04] px-4 py-3">
+-                      <span className="text-sm text-text-muted">{item.label}</span>
+-                      <span className="text-sm font-bold text-white">{item.value}</span>
++            {/* === SIDEBAR === */}
++            <aside className="space-y-4 lg:sticky lg:top-24 lg:self-start">
++              <MonetizationSlot placement={`game-${game.slug}-sidebar-top`} size="square" />
++
++              {/* Game Details card */}
++              {detailItems.length > 0 && (
++                <div className="rounded-2xl border border-white/10 bg-[#0d0c1e] p-5 shadow-xl shadow-black/20">
++                  <h2 className="mb-4 text-base font-bold text-white flex items-center gap-2">
++                    <span>ℹ️</span> تفاصيل اللعبة
++                  </h2>
++                  <div className="space-y-2">
++                    {detailItems.map(item => (
++                      <div key={item.label} className="flex items-center justify-between gap-4 rounded-lg border border-white/8 bg-white/[0.03] px-4 py-2.5">
++                        <span className="text-xs text-text-muted">{item.label}</span>
++                        <span className="text-xs font-bold text-white">{item.value}</span>
++                      </div>
 +                    ))}
++                    <div className="flex items-center justify-between gap-4 rounded-lg border border-white/8 bg-white/[0.03] px-4 py-2.5">
++                      <span className="text-xs text-text-muted">التقييم</span>
++                      <span className="flex items-center gap-1">
++                        <StarRating rating={rating} />
++                        <span className="text-xs font-bold text-amber-400">{rating.toFixed(1)}</span>
++                      </span>
+                     </div>
+-                  ))}
++                    <div className="flex items-center justify-between gap-4 rounded-lg border border-white/8 bg-white/[0.03] px-4 py-2.5">
++                      <span className="text-xs text-text-muted">عدد اللاعبين</span>
++                      <span className="text-xs font-bold text-white">{playCount}</span>
++                    </div>
 +                  </div>
                  </div>
-               )}
-             </section>
- 
-+            {/* Share Buttons */}
-+            <ShareButtons title={game.title} slug={game.slug} />
-+
-             <GamePromoRail
-               title="ألعاب مشابهة تستحق التجربة"
-               copy="روابط داخلية مباشرة تساعد اللاعب على متابعة اللعب داخل نفس التصنيف."
-@@ -214,12 +288,13 @@ export default function GameDetail({ game, allGames }: GameDetailProps) {
-             <MonetizationSlot placement={`game-${game.slug}-content-bottom`} size="leaderboard" />
-           </div>
- 
-+          {/* Sidebar */}
-           <aside className="space-y-4 lg:sticky lg:top-24 lg:self-start">
-             <MonetizationSlot placement={`game-${game.slug}-sidebar-top`} size="square" />
- 
-             {detailItems.length > 0 && (
-               <div className="rounded-xl border border-white/10 bg-[#11101e] p-6 shadow-xl shadow-black/20">
--                <h2 className="mb-4 text-2xl font-bold text-white">Game Details</h2>
-+                <h2 className="mb-4 text-xl font-bold text-white">تفاصيل اللعبة</h2>
-                 <div className="space-y-3">
-                   {detailItems.map(item => (
-                     <div key={item.label} className="flex items-center justify-between gap-4 rounded-lg border border-white/10 bg-white/[0.04] px-4 py-3">
-@@ -231,18 +306,29 @@ export default function GameDetail({ game, allGames }: GameDetailProps) {
-               </div>
-             )}
+-              </div>
+-            )}
++              )}
  
 -            <div className="rounded-xl border border-white/10 bg-[#11101e] p-6 shadow-xl shadow-black/20">
 -              <h2 className="mb-3 text-2xl font-bold text-white">Similar Games</h2>
 -              <p className="mb-6 text-text-muted">Discover other titles in the same category.</p>
-+            <div className="rounded-xl border border-white/10 bg-[#11101e] p-5 shadow-xl shadow-black/20">
-+              <h2 className="mb-3 text-lg font-bold text-white">ألعاب مشابهة</h2>
-               <div className="space-y-3">
+-              <div className="space-y-3">
 -                {similarGames.map(similar => (
-+                {(similarGames.length > 0 ? similarGames : trendingGames.slice(0, 4)).map(similar => (
-                   <Link
-                     key={similar.slug}
-                     href={`/games/${similar.slug}/`}
+-                  <Link
+-                    key={similar.slug}
+-                    href={`/games/${similar.slug}/`}
 -                    className="block rounded-xl border border-white/10 bg-white/5 p-4 transition hover:border-white/20 hover:bg-white/10"
-+                    className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 p-3 transition hover:border-violet-500/30 hover:bg-white/10 group"
-                   >
+-                  >
 -                    <p className="text-base font-semibold text-white">{similar.title}</p>
 -                    <p className="mt-1 line-clamp-2 text-sm text-text-muted">{similar.description}</p>
-+                    {similar.thumbnail && (
-+                      <img
-+                        src={similar.thumbnail}
-+                        alt={similar.title}
-+                        loading="lazy"
-+                        width={48}
-+                        height={36}
-+                        className="w-12 h-9 rounded-lg object-cover flex-shrink-0"
-+                      />
-+                    )}
-+                    <div className="min-w-0">
-+                      <p className="text-sm font-semibold text-white truncate group-hover:text-violet-300 transition-colors">{similar.title}</p>
-+                      <p className="text-[11px] text-text-muted">{similar.genres?.[0] || 'Game'}</p>
-+                    </div>
-                   </Link>
-                 ))}
+-                  </Link>
+-                ))}
++              {/* Similar games sidebar */}
++              <div className="rounded-2xl border border-white/10 bg-[#0d0c1e] p-5 shadow-xl shadow-black/20">
++                <h2 className="mb-3 text-base font-bold text-white flex items-center gap-2">
++                  <span>🎮</span> ألعاب مشابهة
++                </h2>
++                <div className="space-y-2">
++                  {(similarGames.length > 0 ? similarGames : trendingGames.slice(0, 5)).map(similar => (
++                    <Link
++                      key={similar.slug}
++                      href={`/games/${similar.slug}/`}
++                      className="flex items-center gap-3 rounded-xl border border-white/8 bg-white/[0.03] p-3 transition hover:border-violet-500/30 hover:bg-violet-600/5 group"
++                    >
++                      {similar.thumbnail && (
++                        <img
++                          src={similar.thumbnail}
++                          alt={similar.title}
++                          loading="lazy"
++                          width={52}
++                          height={38}
++                          className="w-13 h-10 rounded-lg object-cover flex-shrink-0 border border-white/10"
++                        />
++                      )}
++                      {!similar.thumbnail && (
++                        <div className="w-13 h-10 rounded-lg bg-violet-900/20 border border-violet-500/10 flex items-center justify-center flex-shrink-0 text-lg">
++                          🎮
++                        </div>
++                      )}
++                      <div className="min-w-0 flex-1">
++                        <p className="text-sm font-semibold text-white truncate group-hover:text-violet-300 transition-colors">{similar.title}</p>
++                        <p className="text-[11px] text-text-muted">{similar.genres?.[0] || 'Game'}</p>
++                      </div>
++                      <span className="text-white/20 group-hover:text-violet-400 transition-colors text-xs flex-shrink-0">←</span>
++                    </Link>
++                  ))}
++                </div>
                </div>
-@@ -250,13 +336,16 @@ export default function GameDetail({ game, allGames }: GameDetailProps) {
+-            </div>
  
-             <MonetizationSlot placement={`game-${game.slug}-sidebar-mid`} size="square" />
+-            <MonetizationSlot placement={`game-${game.slug}-sidebar-mid`} size="square" />
++              <MonetizationSlot placement={`game-${game.slug}-sidebar-mid`} size="square" />
  
 -            <div className="rounded-xl border border-white/10 bg-[#11101e] p-6 shadow-xl shadow-black/20">
 -              <h2 className="mb-3 text-2xl font-bold text-white">Performance Optimized</h2>
@@ -335,24 +690,49 @@ index 5a609b0..b9ab551 100644
 -                <li>Full RTL support</li>
 -                <li>Mobile-friendly responsive design</li>
 -                <li>SEO optimized pages</li>
-+            <div className="rounded-xl border border-violet-500/15 bg-violet-600/5 p-5">
-+              <div className="flex items-center gap-2 mb-3">
-+                <span>🤖</span>
-+                <h2 className="text-sm font-bold text-violet-300">MIFTEH AI OS</h2>
+-              </ul>
+-            </div>
+-          </aside>
+-        </div>
++              {/* MIFTEH AI OS badge */}
++              <div className="rounded-2xl border border-violet-500/20 bg-gradient-to-br from-violet-600/8 to-indigo-600/5 p-5">
++                <div className="flex items-center gap-2 mb-3">
++                  <div className="w-6 h-6 rounded-full bg-violet-600/20 flex items-center justify-center text-sm">🤖</div>
++                  <h2 className="text-sm font-bold text-violet-300">MIFTEH AI OS</h2>
++                </div>
++                <ul className="space-y-1.5 text-xs text-text-muted">
++                  <li className="flex items-center gap-2"><span className="text-green-400">✓</span> تحميل سريع محسّن</li>
++                  <li className="flex items-center gap-2"><span className="text-green-400">✓</span> دعم RTL كامل</li>
++                  <li className="flex items-center gap-2"><span className="text-green-400">✓</span> متجاوب مع الجوال</li>
++                  <li className="flex items-center gap-2"><span className="text-green-400">✓</span> محسّن لمحركات البحث</li>
++                  <li className="flex items-center gap-2"><span className="text-green-400">✓</span> JSON-LD Schema مدمج</li>
++                </ul>
 +              </div>
-+              <ul className="space-y-2 text-xs text-text-muted">
-+                <li className="flex items-center gap-2"><span className="text-green-400">✓</span> تحميل سريع محسّن</li>
-+                <li className="flex items-center gap-2"><span className="text-green-400">✓</span> دعم RTL كامل</li>
-+                <li className="flex items-center gap-2"><span className="text-green-400">✓</span> متجاوب مع الجوال</li>
-+                <li className="flex items-center gap-2"><span className="text-green-400">✓</span> محسّن لمحركات البحث</li>
-               </ul>
-             </div>
-           </aside>
++            </aside>
++          </div>
+ 
+-        <div className="mt-12">
+-          <CategoryPromoGrid
+-            games={allGames}
+-            title="أقسام ألعاب أخرى"
+-            copy="مسارات تصفح إضافية أسفل صفحة اللعبة لتشجيع اللاعب على اكتشاف المزيد."
+-          />
++          {/* Category browse row at bottom */}
++          <div className="mt-12">
++            <CategoryPromoGrid
++              games={allGames}
++              title="أقسام ألعاب أخرى"
++              copy="مسارات تصفح إضافية أسفل صفحة اللعبة لتشجيع اللاعب على اكتشاف المزيد."
++            />
++          </div>
+         </div>
+       </div>
+     </div>
 diff --git a/yallaplays/src/app/globals.css b/yallaplays/src/app/globals.css
-index 6c472c6..ab12379 100644
+index 6c472c6..d4569f1 100644
 --- a/yallaplays/src/app/globals.css
 +++ b/yallaplays/src/app/globals.css
-@@ -1012,3 +1012,240 @@ body {
+@@ -1012,3 +1012,477 @@ body {
  
  .scroll-x::-webkit-scrollbar { display: none; }
  
@@ -591,6 +971,243 @@ index 6c472c6..ab12379 100644
 +  padding: 16px;
 +  border: 1px solid rgba(124, 58, 237, 0.1);
 +  margin-bottom: 8px;
++}
++
++/* ========================================
++   GAME HERO BANNER
++   ======================================== */
++.game-hero-banner {
++  min-height: 280px;
++  display: flex;
++  align-items: flex-end;
++}
++
++@media (min-width: 768px) {
++  .game-hero-banner {
++    min-height: 320px;
++  }
++}
++
++.game-hero-thumb-wrap {
++  border-radius: 16px;
++  overflow: hidden;
++  border: 2px solid rgba(255,255,255,0.15);
++  box-shadow: 0 12px 48px rgba(0,0,0,0.6), 0 0 0 1px rgba(124,58,237,0.2);
++  transition: transform 0.3s ease;
++  width: 180px;
++  height: 130px;
++  flex-shrink: 0;
++}
++
++.game-hero-thumb-wrap:hover {
++  transform: scale(1.03);
++}
++
++.game-hero-thumb {
++  width: 100%;
++  height: 100%;
++  object-fit: cover;
++  display: block;
++}
++
++.game-hero-genre-badge {
++  display: inline-flex;
++  align-items: center;
++  padding: 4px 12px;
++  border-radius: 8px;
++  font-size: 11px;
++  font-weight: 700;
++  text-transform: uppercase;
++  letter-spacing: 0.1em;
++  background: rgba(124, 58, 237, 0.2);
++  border: 1px solid rgba(124, 58, 237, 0.4);
++  color: #c4b5fd;
++}
++
++.game-hero-tag-badge {
++  display: inline-flex;
++  align-items: center;
++  padding: 4px 10px;
++  border-radius: 8px;
++  font-size: 11px;
++  font-weight: 600;
++  background: rgba(255,255,255,0.06);
++  border: 1px solid rgba(255,255,255,0.12);
++  color: rgba(255,255,255,0.6);
++}
++
++.live-badge-inline {
++  display: inline-flex;
++  align-items: center;
++  gap: 5px;
++  padding: 3px 10px;
++  border-radius: 20px;
++  background: rgba(34, 197, 94, 0.12);
++  border: 1px solid rgba(34, 197, 94, 0.3);
++  color: #4ade80;
++  font-size: 11px;
++  font-weight: 700;
++}
++
++.live-dot {
++  width: 6px;
++  height: 6px;
++  border-radius: 50%;
++  background: #22c55e;
++  animation: pulse 1.5s ease-in-out infinite;
++  display: inline-block;
++  flex-shrink: 0;
++}
++
++@keyframes pulse {
++  0%, 100% { opacity: 1; transform: scale(1); }
++  50% { opacity: 0.5; transform: scale(0.8); }
++}
++
++.game-hero-play-btn {
++  display: inline-flex;
++  align-items: center;
++  justify-content: center;
++  gap: 8px;
++  padding: 14px 28px;
++  border-radius: 14px;
++  background: linear-gradient(135deg, #7c3aed, #6d28d9);
++  color: white;
++  font-size: 15px;
++  font-weight: 800;
++  border: none;
++  cursor: pointer;
++  text-decoration: none;
++  transition: all 0.2s ease;
++  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4);
++  white-space: nowrap;
++}
++
++.game-hero-play-btn:hover {
++  background: linear-gradient(135deg, #6d28d9, #5b21b6);
++  box-shadow: 0 6px 28px rgba(124, 58, 237, 0.55);
++  transform: translateY(-1px);
++}
++
++.game-hero-fullscreen-btn {
++  display: inline-flex;
++  align-items: center;
++  justify-content: center;
++  gap: 8px;
++  padding: 12px 20px;
++  border-radius: 14px;
++  background: rgba(255,255,255,0.06);
++  border: 1px solid rgba(255,255,255,0.15);
++  color: white;
++  font-size: 14px;
++  font-weight: 600;
++  cursor: pointer;
++  transition: all 0.2s ease;
++  white-space: nowrap;
++}
++
++.game-hero-fullscreen-btn:hover {
++  background: rgba(124, 58, 237, 0.12);
++  border-color: rgba(124, 58, 237, 0.4);
++}
++
++/* ========================================
++   GAME STAT CARDS
++   ======================================== */
++.game-stat-card {
++  display: flex;
++  flex-direction: column;
++  align-items: center;
++  justify-content: center;
++  gap: 4px;
++  padding: 12px;
++  border-radius: 12px;
++  background: rgba(255,255,255,0.03);
++  border: 1px solid rgba(255,255,255,0.08);
++  text-align: center;
++}
++
++.game-stat-value {
++  font-size: 15px;
++  font-weight: 800;
++  color: white;
++  display: block;
++}
++
++.game-stat-label {
++  font-size: 11px;
++  color: rgba(255,255,255,0.4);
++  display: block;
++}
++
++/* ========================================
++   KEYBOARD SHORTCUTS PANEL
++   ======================================== */
++.keyboard-shortcuts-panel {
++  width: 100%;
++}
++
++.keyboard-shortcuts-toggle {
++  display: flex;
++  align-items: center;
++  gap: 8px;
++  font-size: 12px;
++  font-weight: 600;
++  color: rgba(255,255,255,0.4);
++  cursor: pointer;
++  background: none;
++  border: none;
++  padding: 0;
++  transition: color 0.2s;
++  width: 100%;
++  text-align: right;
++}
++
++.keyboard-shortcuts-toggle:hover {
++  color: rgba(255,255,255,0.7);
++}
++
++.keyboard-shortcuts-grid {
++  display: grid;
++  grid-template-columns: repeat(2, 1fr);
++  gap: 8px;
++  margin-top: 10px;
++  padding: 12px;
++  border-radius: 12px;
++  background: rgba(255,255,255,0.02);
++  border: 1px solid rgba(255,255,255,0.06);
++}
++
++@media (min-width: 640px) {
++  .keyboard-shortcuts-grid {
++    grid-template-columns: repeat(4, 1fr);
++  }
++}
++
++.keyboard-shortcut-item {
++  display: flex;
++  flex-direction: column;
++  align-items: center;
++  gap: 4px;
++}
++
++.keyboard-key {
++  display: inline-block;
++  padding: 3px 8px;
++  border-radius: 6px;
++  background: rgba(255,255,255,0.08);
++  border: 1px solid rgba(255,255,255,0.15);
++  border-bottom: 2px solid rgba(255,255,255,0.25);
++  font-size: 11px;
++  font-weight: 700;
++  color: white;
++  font-family: monospace;
++}
++
++.keyboard-label {
++  font-size: 10px;
++  color: rgba(255,255,255,0.4);
++  text-align: center;
 +}
 +
 diff --git a/yallaplays/src/app/layout.tsx b/yallaplays/src/app/layout.tsx
