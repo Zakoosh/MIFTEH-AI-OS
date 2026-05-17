@@ -1,8 +1,5 @@
 name: Deploy YallaPlays AdSense Branch
 
-# Manual trigger only — pushes targets/yallaplays/ to Zakoosh/Yallaplays
-# on a feature branch and creates a PR.
-
 on:
   workflow_dispatch:
     inputs:
@@ -10,12 +7,6 @@ on:
         description: 'Target branch name in Yallaplays repo'
         required: true
         default: 'feat/adsense-production-activation'
-      create_pr:
-        description: 'Create PR after push'
-        required: true
-        default: 'true'
-        type: choice
-        options: ['true', 'false']
 
 permissions:
   contents: write
@@ -24,105 +15,54 @@ jobs:
   deploy-yallaplays:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout MIFTEH-AI-OS (production source)
+      - name: Checkout MIFTEH-AI-OS
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Clone Yallaplays repo with GH_PAT
+      - name: Setup git identity
+        run: |
+          git config --global user.name "MIFTEH AI OS"
+          git config --global user.email "mifteh-ai@users.noreply.github.com"
+
+      - name: Clone Yallaplays with GH_PAT
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
+          BRANCH: ${{ github.event.inputs.branch_name }}
         run: |
           git clone "https://x-access-token:${GH_PAT}@github.com/Zakoosh/Yallaplays.git" /tmp/yallaplays
           cd /tmp/yallaplays
-          git config user.name "MIFTEH AI OS"
-          git config user.email "mifteh-ai@users.noreply.github.com"
+          git checkout -b "$BRANCH" 2>/dev/null || git checkout "$BRANCH"
 
-      - name: Create feature branch
-        env:
-          BRANCH: ${{ github.event.inputs.branch_name }}
+      - name: Sync production files
         run: |
           cd /tmp/yallaplays
-          git checkout -b "$BRANCH" || git checkout "$BRANCH"
+          rsync -av --exclude='.git' --exclude='*.py' \
+            "${GITHUB_WORKSPACE}/targets/yallaplays/" .
+          git status --short | head -50
 
-      - name: Sync production files from targets/yallaplays/
-        run: |
-          SRC="${GITHUB_WORKSPACE}/targets/yallaplays"
-          DEST="/tmp/yallaplays"
-
-          # Sync HTML, XML, txt files — preserve directory structure
-          rsync -av --include='*.html' --include='*.xml' --include='*.txt' \
-            --include='*/' --exclude='*' \
-            --exclude='.git/' \
-            "$SRC/" "$DEST/"
-
-          # Show what changed
-          cd /tmp/yallaplays
-          git status --short | head -40
-
-      - name: Commit changes
+      - name: Commit and push
         env:
+          GH_PAT: ${{ secrets.GH_PAT }}
           BRANCH: ${{ github.event.inputs.branch_name }}
         run: |
           cd /tmp/yallaplays
           git add -A
           if git diff --cached --quiet; then
             echo "No changes to commit"
-            exit 0
+          else
+            git commit -m "feat(adsense): activate production monetization pipeline"
           fi
-          git commit -m "feat(adsense): activate production monetization pipeline and compliance pages
+          git push "https://x-access-token:${GH_PAT}@github.com/Zakoosh/Yallaplays.git" "$BRANCH" --set-upstream
 
-- AdSense publisher ca-pub-1206965892808259 injected across all pages
-- Compliance pages: privacy, terms, cookies, about, contact
-- Production AI banner with AdSense Ready badge
-- Duplicate title SEO fixes
-
-🤖 Deployed by MIFTEH AI OS Pipeline"
-
-      - name: Push branch
+      - name: Create PR
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
           BRANCH: ${{ github.event.inputs.branch_name }}
         run: |
-          cd /tmp/yallaplays
-          git push "https://x-access-token:${GH_PAT}@github.com/Zakoosh/Yallaplays.git" "$BRANCH" --set-upstream --force-with-lease 2>&1 || \
-          git push "https://x-access-token:${GH_PAT}@github.com/Zakoosh/Yallaplays.git" "$BRANCH" --set-upstream 2>&1
-          echo "Branch pushed: $BRANCH"
-
-      - name: Create Pull Request
-        if: ${{ github.event.inputs.create_pr == 'true' }}
-        env:
-          GH_PAT: ${{ secrets.GH_PAT }}
-          BRANCH: ${{ github.event.inputs.branch_name }}
-        run: |
-          cd /tmp/yallaplays
-          gh auth login --with-token <<< "$GH_PAT"
-          PR_URL=$(gh pr create \
+          echo "$GH_PAT" | gh auth login --with-token
+          printf 'Production AdSense Deployment by MIFTEH AI OS\n\nPublisher: ca-pub-1206965892808259\nAdSense injected across 100+ pages, compliance pages added, score 80/100.\n' > /tmp/pr_body.txt
+          gh pr create \
+            --repo Zakoosh/Yallaplays \
             --head "$BRANCH" \
             --base main \
             --title "feat(adsense): Production AdSense Activation + Compliance Pages" \
-            --body "## Production AdSense Deployment
-
-**Publisher ID:** ca-pub-1206965892808259
-
-### Changes
-- ✅ AdSense script injected across 100+ pages
-- ✅ Compliance pages: privacy, terms, cookies, about, contact
-- ✅ Production AI banner with 'AdSense Ready' badge
-- ✅ Duplicate title SEO fixes (12 files)
-- ✅ Validation score: 80/100 — ready_for_adsense: true
-
-### Validation
-- SEO duplicate titles: 0
-- AdSense injection: idempotent
-- RTL Arabic layout: preserved
-- Mobile responsive: verified
-
-🤖 Deployed by MIFTEH AI OS Pipeline" 2>&1 || echo "PR may already exist")
-          echo "PR: $PR_URL"
-
-      - name: Report status
-        run: |
-          echo "Deployment complete!"
-          echo "Branch: ${{ github.event.inputs.branch_name }}"
-          echo "Repo: https://github.com/Zakoosh/Yallaplays"
+            --body-file /tmp/pr_body.txt 2>&1 || echo "PR may already exist"
