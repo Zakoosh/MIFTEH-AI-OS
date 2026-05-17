@@ -1,0 +1,53 @@
+⚪ <b>MIFTEH OS — Weekly Report</b>
+📅 Week: 2026-05-10 → 2026-05-17
+YallaPlays 7-Day Focus Mode | Expires: 2026-05-23
+System: <b>UNKNOWN</b>
+
+━━━━━━━━━━━━━━━━━━━━
+<b>🎯 Weekly Targets Summary</b>
+  Days tracked: 0/7
+  Days all targets met: 0
+  Total games generated: 0
+  Total SEO pages: 0
+  Total indexed: 0
+  Avg QA score: 0/100
+
+━━━━━━━━━━━━━━━━━━━━
+<b>🎮 Games (Week)</b>
+  1️⃣  Generated: 0
+  2️⃣  Approved: 0
+  3️⃣  Blocked: 0
+  Total in platform: 0/30
+  Factory errors: 0
+
+<b>🔍 SEO & Indexing (Week)</b>
+  4️⃣  Indexing Growth: +0 URLs
+       Total indexed all time: 0
+  5️⃣  SEO Pages: 0 (0% coverage)
+       Missing: 0 games
+  9️⃣  QA Avg: 0/100
+
+<b>🚀 Deployment</b>
+  🔟 Deploy Rate: 0%
+       Deployed: 0 | Pending: 0
+
+<b>💰 Revenue</b>
+  6️⃣  MRR: $0.00 | Stage: pre-revenue
+  1️⃣1️⃣ CTR Est: 0.0% avg
+  1️⃣2️⃣ RPM: $0.00 (target $0.80–$3.50)
+
+<b>⚙️ AI Providers</b>
+  🟡 OpenAI: unknown (0 failures this week)
+  ⚪ Gemini: unknown
+
+<b>🔧 GitHub Actions</b>
+  Healthy: 0/0
+  Failed: 0 | Missing: 0
+
+<b>⚡ Runtime</b>
+  Status: unknown
+  Daily reports sent: 1/7
+  Total issues: 0
+  Critical: 0 | Warning: 0
+
+<i>Generated 2026-05-17T07:50:44Z</i>

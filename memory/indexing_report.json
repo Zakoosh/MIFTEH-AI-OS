@@ -1,0 +1,21 @@
+{
+  "generated_at": "2026-05-17T06:05:23Z",
+  "auth_mode": "google-auth",
+  "credentials_configured": true,
+  "queue_size": 0,
+  "total_indexed_all_time": 0,
+  "indexed_today": 0,
+  "failed_count": 0,
+  "daily_quota": 200,
+  "quota_used_today": 0,
+  "quota_remaining": 200,
+  "success_rate": "N/A",
+  "queue_by_priority": {
+    "high": 0,
+    "normal": 0,
+    "low": 0
+  },
+  "recent_indexed": [],
+  "recent_failed": [],
+  "queue_preview": []
+}
