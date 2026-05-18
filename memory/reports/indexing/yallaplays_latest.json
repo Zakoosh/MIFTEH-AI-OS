@@ -1,0 +1,296 @@
+{
+  "report_type": "indexing",
+  "project_id": "yallaplays",
+  "generated_at": "2026-05-18T06:27:26.694512+00:00",
+  "domain": "yallaplays.com",
+  "analyzed_at": "2026-05-18T06:27:26.694395+00:00",
+  "indexing_score": 85,
+  "indexing_status": "healthy",
+  "sitemap": {
+    "ok": true,
+    "url": "https://yallaplays.com/sitemap.xml",
+    "status": 200,
+    "total_urls": 37,
+    "is_sitemap_index": false,
+    "has_lastmod": true,
+    "latest_lastmod": "2026-05-17T20:39:42.730000+00:00",
+    "freshness_days": 0,
+    "stale_count": 0,
+    "missing_lastmod": 0,
+    "priority_distribution": {},
+    "changefreq_values": [],
+    "sample_urls": [
+      "https://yallaplays.com",
+      "https://yallaplays.com/games",
+      "https://yallaplays.com/about",
+      "https://yallaplays.com/contact",
+      "https://yallaplays.com/privacy",
+      "https://yallaplays.com/terms",
+      "https://yallaplays.com/cookies",
+      "https://yallaplays.com/games/magic-christmas-tree-match-3",
+      "https://yallaplays.com/games/traffic-racing-1",
+      "https://yallaplays.com/games/max-speed"
+    ],
+    "issues": [
+      "No <priority> tags \u2014 add to guide crawler focus",
+      "No URLs with priority \u22650.8 \u2014 homepage should be 1.0"
+    ]
+  },
+  "robots": {
+    "ok": true,
+    "url": "https://yallaplays.com/robots.txt",
+    "status": 200,
+    "user_agents": 1,
+    "disallow_count": 1,
+    "allow_count": 1,
+    "sitemap_urls": [
+      "https://yallaplays.com/sitemap.xml"
+    ],
+    "blocks_all": false,
+    "crawl_delay": null,
+    "blocked_paths": [
+      "/_next/"
+    ],
+    "important_blocked": [],
+    "issues": []
+  },
+  "indexability": {
+    "checked": 20,
+    "indexable": 20,
+    "not_indexable": 0,
+    "noindex_count": 0,
+    "broken_count": 0,
+    "indexability_pct": 100,
+    "pages": {
+      "/": {
+        "url": "https://yallaplays.com",
+        "status": 200,
+        "accessible": true,
+        "noindex": false,
+        "indexable": true,
+        "canonical_ok": true
+      },
+      "/games": {
+        "url": "https://yallaplays.com/games",
+        "status": 200,
+        "accessible": true,
+        "noindex": false,
+        "indexable": true,
+        "canonical_ok": true
+      },
+      "/about": {
+        "url": "https://yallaplays.com/about",
+        "status": 200,
+        "accessible": true,
+        "noindex": false,
+        "indexable": true,
+        "canonical_ok": true
+      },
+      "/contact": {
+        "url": "https://yallaplays.com/contact",
+        "status": 200,
+        "accessible": true,
+        "noindex": false,
+        "indexable": true,
+        "canonical_ok": true
+      },
+      "/privacy": {
+        "url": "https://yallaplays.com/privacy",
+        "status": 200,
+        "accessible": true,
+        "noindex": false,
+        "indexable": true,
+        "canonical_ok": true
+      },
+      "/terms": {
+        "url": "https://yallaplays.com/terms",
+        "status": 200,
+        "accessible": true,
+        "noindex": false,
+        "indexable": true,
+        "canonical_ok": true
+      },
+      "/cookies": {
+        "url": "https://yallaplays.com/cookies",
+        "status": 200,
+        "accessible": true,
+        "noindex": false,
+        "indexable": true,
+        "canonical_ok": true
+      },
+      "/games/magic-christmas-tree-match-3": {
+        "url": "https://yallaplays.com/games/magic-christmas-tree-match-3",
+        "status": 200,
+        "accessible": true,
+        "noindex": false,
+        "indexable": true,
+        "canonical_ok": true
+      },
+      "/games/traffic-racing-1": {
+        "url": "https://yallaplays.com/games/traffic-racing-1",
+        "status": 200,
+        "accessible": true,
+        "noindex": false,
+        "indexable": true,
+        "canonical_ok": true
+      },
+      "/games/max-speed": {
+        "url": "https://yallaplays.com/games/max-speed",
+        "status": 200,
+        "accessible": true,
+        "noindex": false,
+        "indexable": true,
+        "canonical_ok": true
+      },
+      "/games/i8-city-driver": {
+        "url": "https://yallaplays.com/games/i8-city-driver",
+        "status": 200,
+        "accessible": true,
+        "noindex": false,
+        "indexable": true,
+        "canonical_ok": true
+      },
+      "/games/island-expander": {
+        "url": "https://yallaplays.com/games/island-expander",
+        "status": 200,
+        "accessible": true,
+        "noindex": false,
+        "indexable": true,
+        "canonical_ok": true
+      },
+      "/games/67-clicker": {
+        "url": "https://yallaplays.com/games/67-clicker",
+        "status": 200,
+        "accessible": true,
+        "noindex": false,
+        "indexable": true,
+        "canonical_ok": true
+      },
+      "/games/break-a-lucky-egg-brainrots": {
+        "url": "https://yallaplays.com/games/break-a-lucky-egg-brainrots",
+        "status": 200,
+        "accessible": true,
+        "noindex": false,
+        "indexable": true,
+        "canonical_ok": true
+      },
+      "/games/screw-masters-3d-puzzle": {
+        "url": "https://yallaplays.com/games/screw-masters-3d-puzzle",
+        "status": 200,
+        "accessible": true,
+        "noindex": false,
+        "indexable": true,
+        "canonical_ok": true
+      },
+      "/games/magic-sort": {
+        "url": "https://yallaplays.com/games/magic-sort",
+        "status": 200,
+        "accessible": true,
+        "noindex": false,
+        "indexable": true,
+        "canonical_ok": true
+      },
+      "/games/football-legends-2026": {
+        "url": "https://yallaplays.com/games/football-legends-2026",
+        "status": 200,
+        "accessible": true,
+        "noindex": false,
+        "indexable": true,
+        "canonical_ok": true
+      },
+      "/games/hexa-stack": {
+        "url": "https://yallaplays.com/games/hexa-stack",
+        "status": 200,
+        "accessible": true,
+        "noindex": false,
+        "indexable": true,
+        "canonical_ok": true
+      },
+      "/games/age-of-zombies": {
+        "url": "https://yallaplays.com/games/age-of-zombies",
+        "status": 200,
+        "accessible": true,
+        "noindex": false,
+        "indexable": true,
+        "canonical_ok": true
+      },
+      "/games/battle-racing-stars": {
+        "url": "https://yallaplays.com/games/battle-racing-stars",
+        "status": 200,
+        "accessible": true,
+        "noindex": false,
+        "indexable": true,
+        "canonical_ok": true
+      }
+    }
+  },
+  "orphans": {
+    "sitemap_urls": 37,
+    "crawled_linked_urls": 26,
+    "orphan_count": 12,
+    "orphans": [
+      "https://yallaplays.com/games/jungle-solitaire",
+      "https://yallaplays.com/games/popsortica",
+      "https://yallaplays.com/games/67-clicker-tap-tap",
+      "https://yallaplays.com/games/butterfly-match-mastery",
+      "https://yallaplays.com/games/fireboy-watergirl-5",
+      "https://yallaplays.com/games/flower-sort",
+      "https://yallaplays.com/games/garden-tales-4",
+      "https://yallaplays.com/games/jigsolitaire",
+      "https://yallaplays.com/games/merge-flowers",
+      "https://yallaplays.com/games/mojicon-spring-connect",
+      "https://yallaplays.com/games/pop-adventure",
+      "https://yallaplays.com/games/royal-garden-match-2"
+    ],
+    "orphan_pct": 32
+  },
+  "gsc_plan": {
+    "domain": "yallaplays.com",
+    "sitemap_submission": {
+      "url": "https://yallaplays.com/sitemap.xml",
+      "gsc_url": "https://search.google.com/search-console/sitemaps?resource_id=sc-domain%3Ayallaplays.com",
+      "action": "Submit sitemap in Google Search Console"
+    },
+    "url_inspection": {
+      "tool": "https://search.google.com/search-console/inspect?resource_id=sc-domain%3Ayallaplays.com",
+      "priority_urls": [
+        "https://yallaplays.com",
+        "https://yallaplays.com/games",
+        "https://yallaplays.com/about",
+        "https://yallaplays.com/contact",
+        "https://yallaplays.com/privacy",
+        "https://yallaplays.com/terms",
+        "https://yallaplays.com/cookies",
+        "https://yallaplays.com/games/magic-christmas-tree-match-3",
+        "https://yallaplays.com/games/traffic-racing-1",
+        "https://yallaplays.com/games/max-speed"
+      ],
+      "action": "Request indexing for high-priority URLs via URL Inspection tool"
+    },
+    "indexing_api": {
+      "endpoint": "https://indexing.googleapis.com/v3/urlNotifications:publish",
+      "type": "URL_UPDATED",
+      "note": "Requires Google Search Console API credentials (service account)",
+      "sample_payload": {
+        "url": "https://yallaplays.com/",
+        "type": "URL_UPDATED"
+      }
+    },
+    "checklist": [
+      "Verify domain ownership in Google Search Console",
+      "Submit sitemap.xml",
+      "Request indexing for homepage and top 10 pages",
+      "Check Coverage report for crawl errors",
+      "Monitor Index Coverage > Pages report weekly"
+    ]
+  },
+  "total_issues": 3,
+  "issues": [
+    "No <priority> tags \u2014 add to guide crawler focus",
+    "No URLs with priority \u22650.8 \u2014 homepage should be 1.0",
+    "12 orphan pages not linked from homepage"
+  ],
+  "recommendations": [
+    "Fix 12 orphan pages by adding internal links"
+  ]
+}
