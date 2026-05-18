@@ -1,0 +1,526 @@
+{
+  "hero_layout": {
+    "test_id": "hero_layout",
+    "project_id": "yallaplays",
+    "name": "Homepage Hero Layout",
+    "description": "Test different hero section layouts",
+    "metric": "click_through_rate",
+    "status": "running",
+    "created_at": "2026-05-18T09:04:19.819599+00:00",
+    "required_sample_size": 6811,
+    "variants": {
+      "control": {
+        "name": "Current hero with stats row",
+        "description": "Existing layout",
+        "changes": []
+      },
+      "variant_a": {
+        "name": "Hero with video background",
+        "description": "Add looping game preview video",
+        "changes": [
+          "hero_background: video",
+          "cta_position: center"
+        ]
+      },
+      "variant_b": {
+        "name": "Minimal hero with featured game",
+        "description": "Large featured game card in hero",
+        "changes": [
+          "hero_style: minimal",
+          "featured_game: visible"
+        ]
+      }
+    },
+    "results": {
+      "control": {
+        "impressions": 2271,
+        "conversions": 58
+      },
+      "variant_a": {
+        "impressions": 2240,
+        "conversions": 71
+      },
+      "variant_b": {
+        "impressions": 2210,
+        "conversions": 67
+      }
+    },
+    "winner": "inconclusive",
+    "significance": {
+      "test_id": "hero_layout",
+      "name": "Homepage Hero Layout",
+      "status": "running",
+      "metric": "click_through_rate",
+      "required_sample_size": 6811,
+      "current_winner": "inconclusive",
+      "best_uplift_pct": 0,
+      "variants": {
+        "control": {
+          "impressions": 2271,
+          "conversions": 58,
+          "rate": 2.55,
+          "is_control": true
+        },
+        "variant_a": {
+          "impressions": 2240,
+          "conversions": 71,
+          "rate": 3.17,
+          "is_control": false,
+          "vs_control": {
+            "significant": false,
+            "z_score": 1.241,
+            "z_critical": 1.96,
+            "p_value_approx": 0.2148,
+            "confidence": 0.95,
+            "control_rate": 2.55,
+            "variant_rate": 3.17,
+            "uplift_pct": 24.11,
+            "winner": "inconclusive",
+            "control_n": 2271,
+            "variant_n": 2240
+          }
+        },
+        "variant_b": {
+          "impressions": 2210,
+          "conversions": 67,
+          "rate": 3.03,
+          "is_control": false,
+          "vs_control": {
+            "significant": false,
+            "z_score": 0.971,
+            "z_critical": 1.96,
+            "p_value_approx": 0.3316,
+            "confidence": 0.95,
+            "control_rate": 2.55,
+            "variant_rate": 3.03,
+            "uplift_pct": 18.71,
+            "winner": "inconclusive",
+            "control_n": 2271,
+            "variant_n": 2210
+          }
+        }
+      },
+      "recommendation": "Continue running test \u2014 not yet statistically significant",
+      "analyzed_at": "2026-05-18T09:04:19.821106+00:00"
+    }
+  },
+  "cta_button": {
+    "test_id": "cta_button",
+    "project_id": "yallaplays",
+    "name": "CTA Button Color & Text",
+    "description": "Test CTA button variants for game click-through",
+    "metric": "game_start_rate",
+    "status": "running",
+    "created_at": "2026-05-18T09:04:19.821433+00:00",
+    "required_sample_size": 4194,
+    "variants": {
+      "control": {
+        "name": "Current purple button",
+        "description": "\u0627\u0644\u0639\u0628 \u0627\u0644\u0622\u0646 \u2014 violet/purple",
+        "changes": []
+      },
+      "variant_a": {
+        "name": "Green button with arrow",
+        "description": "\u0627\u0628\u062f\u0623 \u0627\u0644\u0644\u0639\u0628 \u2190 \u2014 green with arrow icon",
+        "changes": [
+          "cta_color: green",
+          "cta_text: \u0627\u0628\u062f\u0623 \u0627\u0644\u0644\u0639\u0628 \u2190"
+        ]
+      },
+      "variant_b": {
+        "name": "Gradient pulsing button",
+        "description": "Animated gradient button",
+        "changes": [
+          "cta_style: gradient-pulse",
+          "cta_animation: pulse"
+        ]
+      }
+    },
+    "results": {
+      "control": {
+        "impressions": 2233,
+        "conversions": 166
+      },
+      "variant_a": {
+        "impressions": 2205,
+        "conversions": 197
+      },
+      "variant_b": {
+        "impressions": 2222,
+        "conversions": 190
+      }
+    },
+    "winner": "inconclusive",
+    "significance": {
+      "test_id": "cta_button",
+      "name": "CTA Button Color & Text",
+      "status": "running",
+      "metric": "game_start_rate",
+      "required_sample_size": 4194,
+      "current_winner": "inconclusive",
+      "best_uplift_pct": 0,
+      "variants": {
+        "control": {
+          "impressions": 2233,
+          "conversions": 166,
+          "rate": 7.43,
+          "is_control": true
+        },
+        "variant_a": {
+          "impressions": 2205,
+          "conversions": 197,
+          "rate": 8.93,
+          "is_control": false,
+          "vs_control": {
+            "significant": false,
+            "z_score": 1.823,
+            "z_critical": 1.96,
+            "p_value_approx": 0.0682,
+            "confidence": 0.95,
+            "control_rate": 7.43,
+            "variant_rate": 8.93,
+            "uplift_pct": 20.18,
+            "winner": "inconclusive",
+            "control_n": 2233,
+            "variant_n": 2205
+          }
+        },
+        "variant_b": {
+          "impressions": 2222,
+          "conversions": 190,
+          "rate": 8.55,
+          "is_control": false,
+          "vs_control": {
+            "significant": false,
+            "z_score": 1.375,
+            "z_critical": 1.96,
+            "p_value_approx": 0.1692,
+            "confidence": 0.95,
+            "control_rate": 7.43,
+            "variant_rate": 8.55,
+            "uplift_pct": 15.02,
+            "winner": "inconclusive",
+            "control_n": 2233,
+            "variant_n": 2222
+          }
+        }
+      },
+      "recommendation": "Continue running test \u2014 not yet statistically significant",
+      "analyzed_at": "2026-05-18T09:04:19.822760+00:00"
+    }
+  },
+  "game_card": {
+    "test_id": "game_card",
+    "project_id": "yallaplays",
+    "name": "Game Card Design",
+    "description": "Test game card layout for click-through",
+    "metric": "game_card_ctr",
+    "status": "running",
+    "created_at": "2026-05-18T09:04:19.823230+00:00",
+    "required_sample_size": 2665,
+    "variants": {
+      "control": {
+        "name": "Current card with thumbnail",
+        "description": "Existing game card",
+        "changes": []
+      },
+      "variant_a": {
+        "name": "Card with hover preview",
+        "description": "Show animated preview on hover",
+        "changes": [
+          "card_hover: preview",
+          "thumbnail_animation: on"
+        ]
+      },
+      "variant_b": {
+        "name": "Larger card with description",
+        "description": "Bigger card showing game description",
+        "changes": [
+          "card_size: large",
+          "description: visible"
+        ]
+      }
+    },
+    "results": {
+      "control": {
+        "impressions": 2239,
+        "conversions": 263
+      },
+      "variant_a": {
+        "impressions": 2325,
+        "conversions": 316
+      },
+      "variant_b": {
+        "impressions": 2297,
+        "conversions": 291
+      }
+    },
+    "winner": "inconclusive",
+    "significance": {
+      "test_id": "game_card",
+      "name": "Game Card Design",
+      "status": "running",
+      "metric": "game_card_ctr",
+      "required_sample_size": 2665,
+      "current_winner": "inconclusive",
+      "best_uplift_pct": 0,
+      "variants": {
+        "control": {
+          "impressions": 2239,
+          "conversions": 263,
+          "rate": 11.75,
+          "is_control": true
+        },
+        "variant_a": {
+          "impressions": 2325,
+          "conversions": 316,
+          "rate": 13.59,
+          "is_control": false,
+          "vs_control": {
+            "significant": false,
+            "z_score": 1.872,
+            "z_critical": 1.96,
+            "p_value_approx": 0.0612,
+            "confidence": 0.95,
+            "control_rate": 11.75,
+            "variant_rate": 13.59,
+            "uplift_pct": 15.71,
+            "winner": "inconclusive",
+            "control_n": 2239,
+            "variant_n": 2325
+          }
+        },
+        "variant_b": {
+          "impressions": 2297,
+          "conversions": 291,
+          "rate": 12.67,
+          "is_control": false,
+          "vs_control": {
+            "significant": false,
+            "z_score": 0.949,
+            "z_critical": 1.96,
+            "p_value_approx": 0.3429,
+            "confidence": 0.95,
+            "control_rate": 11.75,
+            "variant_rate": 12.67,
+            "uplift_pct": 7.85,
+            "winner": "inconclusive",
+            "control_n": 2239,
+            "variant_n": 2297
+          }
+        }
+      },
+      "recommendation": "Continue running test \u2014 not yet statistically significant",
+      "analyzed_at": "2026-05-18T09:04:19.824877+00:00"
+    }
+  },
+  "ad_placement": {
+    "test_id": "ad_placement",
+    "project_id": "yallaplays",
+    "name": "Ad Placement Position",
+    "description": "Test ad placement for highest revenue without UX impact",
+    "metric": "ad_rpm",
+    "status": "running",
+    "created_at": "2026-05-18T09:04:19.825425+00:00",
+    "required_sample_size": 13854,
+    "variants": {
+      "control": {
+        "name": "Bottom banner only",
+        "description": "Single bottom ad unit",
+        "changes": []
+      },
+      "variant_a": {
+        "name": "Top + bottom banners",
+        "description": "Ads above and below game list",
+        "changes": [
+          "ad_top: enabled",
+          "ad_bottom: enabled"
+        ]
+      },
+      "variant_b": {
+        "name": "In-feed between game rows",
+        "description": "Native in-feed ad every 3 game rows",
+        "changes": [
+          "ad_style: in-feed",
+          "ad_interval: 3_rows"
+        ]
+      }
+    },
+    "results": {
+      "control": {
+        "impressions": 2326,
+        "conversions": 28
+      },
+      "variant_a": {
+        "impressions": 2351,
+        "conversions": 35
+      },
+      "variant_b": {
+        "impressions": 2375,
+        "conversions": 31
+      }
+    },
+    "winner": "inconclusive",
+    "significance": {
+      "test_id": "ad_placement",
+      "name": "Ad Placement Position",
+      "status": "running",
+      "metric": "ad_rpm",
+      "required_sample_size": 13854,
+      "current_winner": "inconclusive",
+      "best_uplift_pct": 0,
+      "variants": {
+        "control": {
+          "impressions": 2326,
+          "conversions": 28,
+          "rate": 1.2,
+          "is_control": true
+        },
+        "variant_a": {
+          "impressions": 2351,
+          "conversions": 35,
+          "rate": 1.49,
+          "is_control": false,
+          "vs_control": {
+            "significant": false,
+            "z_score": 0.845,
+            "z_critical": 1.96,
+            "p_value_approx": 0.398,
+            "confidence": 0.95,
+            "control_rate": 1.2,
+            "variant_rate": 1.49,
+            "uplift_pct": 23.67,
+            "winner": "inconclusive",
+            "control_n": 2326,
+            "variant_n": 2351
+          }
+        },
+        "variant_b": {
+          "impressions": 2375,
+          "conversions": 31,
+          "rate": 1.31,
+          "is_control": false,
+          "vs_control": {
+            "significant": false,
+            "z_score": 0.312,
+            "z_critical": 1.96,
+            "p_value_approx": 0.7547,
+            "confidence": 0.95,
+            "control_rate": 1.2,
+            "variant_rate": 1.31,
+            "uplift_pct": 8.43,
+            "winner": "inconclusive",
+            "control_n": 2326,
+            "variant_n": 2375
+          }
+        }
+      },
+      "recommendation": "Continue running test \u2014 not yet statistically significant",
+      "analyzed_at": "2026-05-18T09:04:19.827412+00:00"
+    }
+  },
+  "homepage_structure": {
+    "test_id": "homepage_structure",
+    "project_id": "yallaplays",
+    "name": "Homepage Content Structure",
+    "description": "Test homepage content ordering for engagement",
+    "metric": "session_duration",
+    "status": "running",
+    "created_at": "2026-05-18T09:04:19.828062+00:00",
+    "required_sample_size": 946,
+    "variants": {
+      "control": {
+        "name": "Hero \u2192 Featured \u2192 Categories",
+        "description": "Existing structure",
+        "changes": []
+      },
+      "variant_a": {
+        "name": "Hero \u2192 Trending \u2192 Featured \u2192 Categories",
+        "description": "Add trending section before featured",
+        "changes": [
+          "section_order: hero,trending,featured,categories"
+        ]
+      },
+      "variant_b": {
+        "name": "Search \u2192 Hero \u2192 Games Grid",
+        "description": "Prominent search bar first",
+        "changes": [
+          "section_order: search,hero,grid",
+          "search_prominent: true"
+        ]
+      }
+    },
+    "results": {
+      "control": {
+        "impressions": 2314,
+        "conversions": 1012
+      },
+      "variant_a": {
+        "impressions": 2218,
+        "conversions": 1155
+      },
+      "variant_b": {
+        "impressions": 2311,
+        "conversions": 1104
+      }
+    },
+    "winner": "variant_a",
+    "significance": {
+      "test_id": "homepage_structure",
+      "name": "Homepage Content Structure",
+      "status": "running",
+      "metric": "session_duration",
+      "required_sample_size": 946,
+      "current_winner": "variant_a",
+      "best_uplift_pct": 19.07,
+      "variants": {
+        "control": {
+          "impressions": 2314,
+          "conversions": 1012,
+          "rate": 43.73,
+          "is_control": true
+        },
+        "variant_a": {
+          "impressions": 2218,
+          "conversions": 1155,
+          "rate": 52.07,
+          "is_control": false,
+          "vs_control": {
+            "significant": true,
+            "z_score": 5.619,
+            "z_critical": 1.96,
+            "p_value_approx": 0.0,
+            "confidence": 0.95,
+            "control_rate": 43.73,
+            "variant_rate": 52.07,
+            "uplift_pct": 19.07,
+            "winner": "variant",
+            "control_n": 2314,
+            "variant_n": 2218
+          }
+        },
+        "variant_b": {
+          "impressions": 2311,
+          "conversions": 1104,
+          "rate": 47.77,
+          "is_control": false,
+          "vs_control": {
+            "significant": true,
+            "z_score": 2.756,
+            "z_critical": 1.96,
+            "p_value_approx": 0.0059,
+            "confidence": 0.95,
+            "control_rate": 43.73,
+            "variant_rate": 47.77,
+            "uplift_pct": 9.23,
+            "winner": "variant",
+            "control_n": 2314,
+            "variant_n": 2311
+          }
+        }
+      },
+      "recommendation": "Deploy variant 'variant_a' \u2014 +19.1% session_duration",
+      "analyzed_at": "2026-05-18T09:04:19.830466+00:00"
+    }
+  }
+}
