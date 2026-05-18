@@ -1,0 +1,175 @@
+{
+  "report_type": "monetization",
+  "project_id": "yallaplays",
+  "generated_at": "2026-05-18T08:28:35.365045+00:00",
+  "domain": "yallaplays.com",
+  "analyzed_at": "2026-05-18T08:28:35.364933+00:00",
+  "optimization_score": 95,
+  "status": "healthy",
+  "pages_analyzed": 2,
+  "critical_issues": 0,
+  "high_issues": 0,
+  "page_reports": {
+    "/": {
+      "cls": {
+        "estimated_cls": 0.15,
+        "cls_level": "needs_improvement",
+        "passes_core_web_vitals": true,
+        "risk_factors": [
+          {
+            "type": "unsized_images",
+            "count": 3,
+            "cls_contribution": 0.03,
+            "fix": "Add explicit width/height to all <img> tags or use CSS aspect-ratio"
+          },
+          {
+            "type": "ads_without_reserved_space",
+            "count": 3,
+            "cls_contribution": 0.12,
+            "fix": "Add min-height to all ad containers before ad loads (e.g., min-height:90px)"
+          }
+        ],
+        "recommendation": "Fix unsized images and reserve ad space to improve CLS"
+      },
+      "density": {
+        "url": "https://yallaplays.com/",
+        "ad_unit_count": 3,
+        "content_words": 9281,
+        "ads_per_screen_estimate": 0.05,
+        "screens_of_content": 61,
+        "content_ad_ratio": 0.7,
+        "policy_compliant": true,
+        "issues": [],
+        "recommendation": "Ad density is within policy limits"
+      },
+      "placements": {
+        "slot_count": 3,
+        "unique_formats": [
+          "horizontal",
+          "auto"
+        ],
+        "has_auto_ads": true,
+        "lazy_loaded": true,
+        "missing_high_value_formats": [
+          "in-article",
+          "in-feed"
+        ],
+        "format_analysis": [
+          {
+            "format": "auto",
+            "relative_rpm": 1.0,
+            "note": "Auto-sized \u2014 best for responsive"
+          },
+          {
+            "format": "horizontal",
+            "relative_rpm": 0.8,
+            "note": "Standard format"
+          }
+        ],
+        "avg_relative_rpm": 0.9,
+        "recommendations": [
+          "Add in-article format \u2014 higher RPM and CTR",
+          "Add in-feed format \u2014 higher RPM and CTR"
+        ]
+      },
+      "policy": {
+        "url": "https://yallaplays.com/",
+        "risk_count": 0,
+        "critical_count": 0,
+        "high_count": 0,
+        "policy_clear": true,
+        "risks": []
+      },
+      "speed": {
+        "ttfb_ms": 279,
+        "speed_rating": "moderate"
+      }
+    },
+    "/games": {
+      "cls": {
+        "estimated_cls": 0.0,
+        "cls_level": "good",
+        "passes_core_web_vitals": true,
+        "risk_factors": [],
+        "recommendation": "CLS is acceptable"
+      },
+      "density": {
+        "url": "https://yallaplays.com/games",
+        "ad_unit_count": 0,
+        "content_words": 1699,
+        "ads_per_screen_estimate": 0.0,
+        "screens_of_content": 11,
+        "content_ad_ratio": 1.0,
+        "policy_compliant": true,
+        "issues": [
+          "No ads detected \u2014 monetization opportunity missed"
+        ],
+        "recommendation": "Add more ad units to increase coverage"
+      },
+      "placements": {
+        "slot_count": 0,
+        "unique_formats": [],
+        "has_auto_ads": true,
+        "lazy_loaded": false,
+        "missing_high_value_formats": [
+          "in-article",
+          "in-feed"
+        ],
+        "format_analysis": [],
+        "avg_relative_rpm": 0.0,
+        "recommendations": [
+          "Add in-article format \u2014 higher RPM and CTR",
+          "Add in-feed format \u2014 higher RPM and CTR",
+          "Enable lazy loading for below-fold ads to improve page speed"
+        ]
+      },
+      "policy": {
+        "url": "https://yallaplays.com/games",
+        "risk_count": 0,
+        "critical_count": 0,
+        "high_count": 0,
+        "policy_clear": true,
+        "risks": []
+      },
+      "speed": {
+        "ttfb_ms": 360,
+        "speed_rating": "moderate"
+      }
+    }
+  },
+  "top_recommendations": [
+    "Add in-article format \u2014 higher RPM and CTR",
+    "Add in-feed format \u2014 higher RPM and CTR",
+    "Enable lazy loading for below-fold ads to improve page speed"
+  ],
+  "policy_format_reference": {
+    "auto": {
+      "base": 1.0,
+      "note": "Auto-sized \u2014 best for responsive"
+    },
+    "rectangle": {
+      "base": 0.9,
+      "note": "Medium rectangle (300\u00d7250) \u2014 high fill rate"
+    },
+    "leaderboard": {
+      "base": 0.85,
+      "note": "728\u00d790 \u2014 good for desktop headers"
+    },
+    "skyscraper": {
+      "base": 0.7,
+      "note": "160\u00d7600 \u2014 desktop sidebars"
+    },
+    "in-article": {
+      "base": 1.2,
+      "note": "Native \u2014 highest CTR, best for content sites"
+    },
+    "in-feed": {
+      "base": 1.1,
+      "note": "Blends with content \u2014 2nd highest CTR"
+    },
+    "anchor": {
+      "base": 0.8,
+      "note": "Sticky \u2014 good mobile supplement"
+    }
+  }
+}
