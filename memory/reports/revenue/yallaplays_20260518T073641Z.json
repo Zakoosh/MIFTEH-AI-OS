@@ -1,0 +1,158 @@
+{
+  "report_type": "revenue",
+  "project_id": "yallaplays",
+  "generated_at": "2026-05-18T07:36:41.534509+00:00",
+  "domain": "yallaplays.com",
+  "analyzed_at": "2026-05-18T07:36:41.534390+00:00",
+  "monthly_pageviews_assumption": 10000,
+  "benchmark": "gaming_mena",
+  "adsense": {
+    "publisher_id": "ca-pub-1206965892808259",
+    "pages_checked": 3,
+    "pages_with_ads": 3,
+    "coverage_pct": 100,
+    "avg_quality_score": 2.9,
+    "pages": {
+      "/": {
+        "ok": true,
+        "status": 200,
+        "has_adsense_script": true,
+        "has_publisher_id": true,
+        "has_auto_ads": false,
+        "ad_units": 3,
+        "ad_slots": [
+          "1234567890",
+          "0987654321",
+          "1122334455"
+        ],
+        "ad_formats": [
+          "horizontal",
+          "auto",
+          "horizontal"
+        ],
+        "quality_score": 8.7
+      },
+      "/games": {
+        "ok": true,
+        "status": 200,
+        "has_adsense_script": true,
+        "has_publisher_id": true,
+        "has_auto_ads": false,
+        "ad_units": 0,
+        "ad_slots": [],
+        "ad_formats": [],
+        "quality_score": 0.0
+      },
+      "/about": {
+        "ok": true,
+        "status": 200,
+        "has_adsense_script": true,
+        "has_publisher_id": true,
+        "has_auto_ads": false,
+        "ad_units": 0,
+        "ad_slots": [],
+        "ad_formats": [],
+        "quality_score": 0.0
+      }
+    }
+  },
+  "ctr": {
+    "niche": "gaming",
+    "ad_units_per_page": 1.0,
+    "has_auto_ads": false,
+    "ctr_estimate": {
+      "low": 0.5,
+      "mid": 1.5,
+      "high": 2.5
+    },
+    "ctr_notes": "CTR in percent. Actual CTR visible in AdSense dashboard."
+  },
+  "revenue": {
+    "monthly_pageviews": 10000,
+    "effective_monetized_views": 10000,
+    "coverage_pct": 100,
+    "quality_multiplier": 1.08,
+    "benchmark": "gaming_mena",
+    "rpm_range": {
+      "min": 0.2,
+      "mid": 0.65,
+      "max": 1.8
+    },
+    "revenue_usd": {
+      "low": 2.16,
+      "mid": 7.02,
+      "high": 19.44
+    },
+    "annual_usd": {
+      "low": 25.92,
+      "mid": 84.24,
+      "high": 233.28
+    }
+  },
+  "scoring": {
+    "monetization_score": 67,
+    "status": "good",
+    "factors": [
+      {
+        "factor": "AdSense coverage \u226580%",
+        "points": 40
+      },
+      {
+        "factor": "Ad quality score 2.9",
+        "points": 5
+      },
+      {
+        "factor": "SEO score 68/100",
+        "points": 17
+      },
+      {
+        "factor": "Page count 37",
+        "points": 5
+      }
+    ]
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "category": "auto_ads",
+      "action": "Enable Google Auto Ads (Page-level ads) for automatic placement",
+      "estimated_uplift_usd": 1.05,
+      "effort": "low",
+      "detail": "Auto Ads use ML to find optimal placements. Typical uplift: +10-25%"
+    },
+    {
+      "priority": "high",
+      "category": "seo_traffic",
+      "action": "Improve SEO score from 68 to 80+ to grow organic traffic",
+      "estimated_uplift_usd": 2.11,
+      "effort": "high",
+      "detail": "Every 10% traffic increase = ~10% revenue increase with same ad setup"
+    },
+    {
+      "priority": "medium",
+      "category": "placement",
+      "action": "Add above-fold ad unit to homepage and game pages",
+      "estimated_uplift_usd": 1.4,
+      "effort": "medium",
+      "detail": "Above-fold ads have 2-3x higher viewability and CPM vs below-fold"
+    },
+    {
+      "priority": "medium",
+      "category": "content_expansion",
+      "action": "Add 20+ SEO game landing pages to capture long-tail search traffic",
+      "estimated_uplift_usd": 1.75,
+      "effort": "medium",
+      "detail": "Long-tail game pages convert 3x better for ad revenue than homepage traffic"
+    },
+    {
+      "priority": "low",
+      "category": "anchor_ads",
+      "action": "Enable anchor ads (sticky bottom bar) for mobile traffic",
+      "estimated_uplift_usd": 0.56,
+      "effort": "low",
+      "detail": "Mobile anchor ads: high viewability, non-intrusive, typically +8-15% mobile RPM"
+    }
+  ],
+  "suggestion_count": 5,
+  "total_estimated_uplift_usd": 6.31
+}
